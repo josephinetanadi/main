@@ -4,51 +4,50 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-_{The dummy content given below serves as a placeholder to be used by future forks of the project.}_ +
-{empty} +
+NoteNote was developed by the https://github.com/CS2113-AY1819S2-T09-3[T09-3] team. +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == The Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
-
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+=== Yow Ren Jie
+image::yowrenjie.jpg[width="150", align="left"]
+{empty}[http://github.com/andreathniah[github]] [<<yowrenjie#, portfolio>>]
 
 Role: Team Lead +
-Responsibilities: UI
+Responsibilities: Logic
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Gautam Rajulu
+image::gautamrajulu.jpg[width="150", align="left"]
+{empty}[https://github.com/gautamrajulu[github]] [<<gautamrajulu#, portfolio>>]
+
+Role: Developer +
+Responsibility: Model
+
+'''
+
+=== Andrea Thniah
+image::andreathniah.jpg[width="150", align="left"]
+{empty}[http://github.com/andreathniah[github]] [<<andreathniah#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Data
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Josephine Tanadi
+image::josephinetanadi.jpg[width="150", align="left"]
+{empty}[http://github.com/josephinetanadi[github]] [<<josephinetanadi#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: Model 
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Rachel Lim
+image::rachellim.jpg[width="150", align="left"]
+{empty}[http://github.com/rachellim10[github]] [<<rachellim#, portfolio>>]
 
 Role: Developer +
 Responsibilities: UI
