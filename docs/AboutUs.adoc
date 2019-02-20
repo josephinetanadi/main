@@ -11,7 +11,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Yow Ren Jie
 image::yowrenjie.jpg[width="150", align="left"]
-{empty}[http://github.com/andreathniah[github]] [<<yowrenjie#, portfolio>>]
+{empty}[http://github.com/arhjaye[github]] [<<yowrenjie#, portfolio>>]
 
 Role: Team Lead +
 Responsibilities: Logic
