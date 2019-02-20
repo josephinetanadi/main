@@ -1,4 +1,4 @@
-= NoteNote 
+= NoteNote
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 
 https://api.travis-ci.org/cs2113-ay1819s2-03/main[image:https://travis-ci.org/CS2113-AY1819S2-T09-3/main.svg?branch=master[Build Status]]
