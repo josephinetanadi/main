@@ -33,5 +33,4 @@ _Marco Jakob_.
 * This application was built using the source code found in https://github.com/se-edu/addressbook-level4[AddressBook-level4] by SE-EDU.
 
 
-
 == Licence : link:LICENSE[MIT]
