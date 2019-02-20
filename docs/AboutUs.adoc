@@ -41,7 +41,7 @@ image::josephinetanadi.jpg[width="150", align="left"]
 {empty}[http://github.com/josephinetanadi[github]] [<<josephinetanadi#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Model 
+Responsibilities: Model
 
 '''
 
