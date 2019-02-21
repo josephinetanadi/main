@@ -134,14 +134,14 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Selecting a project / task / sub-task : `select`
 
-Selects the person identified by the index number used in the displayed person list. +
+Selects the project / task / sub-task identified by the index number used in the displayed project / task / sub-task list. +
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
+* Selects the project / task / sub-task and loads the relevant information at the specified `INDEX`.
+* The index refers to the index number shown in the displayed list.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
@@ -149,10 +149,13 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
+Selects the 2nd project in the displayed project list.
+* `find Research` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+`list` +
+`select 1` +
+Selects the 1st project in the results of the `find` command. +
+Selects the 1st task in the displayed task list of 1st project.
 
 === Listing entered commands : `history`
 
