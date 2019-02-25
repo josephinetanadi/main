@@ -56,18 +56,25 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a project/task/subtask: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+* Adds a new project to the system +
+Format: `add p/NAME`
+
+* Adds a task to the project identified by the index number used in the displayed project list +
+Format: `add INDEX n/NAME [d/DESCRIPTION] [by/DEADLINE] [t/TAG]`
+
+* Adds a subtask to a task identified by the index number used in the displayed task list +
+Format: `add INDEX n/NAME d/DESCRIPTION [by/DEADLINE] [t/TAG]`
 
 [TIP]
-A person can have any number of tags (including 0)
+A task/subtask can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add p/History Research Paper`
+* `add n/Decide on Research Paper Topic by/01/01/2020`
+* `add 1 n/Book consultation with lecturer by/01/01/2020`
 
 === Listing all persons : `list`
 
