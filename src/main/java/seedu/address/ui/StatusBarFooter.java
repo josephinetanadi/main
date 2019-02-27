@@ -5,12 +5,12 @@ import java.nio.file.Paths;
 import java.time.Clock;
 import java.util.Date;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
-import seedu.address.logic.Logic;
+//import seedu.address.logic.Logic;
 import seedu.address.model.ReadOnlyAddressBook;
-import javafx.application.Platform;
 
 
 /**

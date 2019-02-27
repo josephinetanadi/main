@@ -907,7 +907,6 @@ Use case resumes at step 5
 
 [discrete]
 === Use case: Manage existing task (managing tags)
-
 *MSS*
 
 1.  User request to view all project listings
@@ -932,7 +931,6 @@ Use case resumes at step 5
 
 [discrete]
 === Use case: Delete existing task
-
 *MSS*
 
 1.  User request to view all project listings
