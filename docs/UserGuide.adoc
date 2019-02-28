@@ -56,47 +56,68 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a project/task/subtask: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+* Adds a new project to the System. +
+Format: `add p/NAME`
+
+* Adds a task to the project identified by the index number used in the displayed project list. +
+Format: `add INDEX n/NAME [d/DESCRIPTION] [by/DEADLINE] [t/TAG]`
+
+* Adds a subtask to a task identified by the index number used in the displayed task list. +
+Format: `add INDEX n/NAME d/DESCRIPTION [by/DEADLINE] [t/TAG]`
 
 [TIP]
-A person can have any number of tags (including 0)
+A task/subtask can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add p/History Research Paper`
+* `add n/Decide on Research Paper Topic by/01/01/2020`
+* `add 1 n/Book consultation with lecturer by/01/01/2020`
 
-=== Listing all persons : `list`
+=== Listing all projects/tasks/subtasks : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all project, tasks and subtasks in System. +
 Format: `list`
 
-=== Editing a person : `edit`
+=== Listing all tags : `listtags`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Shows a list of all available tags prefix. +
+Format: `listtags`
+
+=== Editing a project/task/subtask : `edit`
+
+* Edits an existing project in the System. +
+Format: `edit p/NAME`
+
+* Edits an existing task identified by the index number used in the displayed task list. +
+Format: `edit INDEX n/NAME [d/DESCRIPTION] [by/DEADLINE] [t/TAG]`
+
+* Edits an existing subtask identified by the index number used in the displayed subtask list. +
+Format: `edit INDEX n/NAME [d/DESCRIPTION] [by/DEADLINE] [t/TAG]`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the task/subtask at the specified `INDEX`. The index refers to the index number shown in the displayed task list. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing tags, the existing tags of the task/subtask will be removed i.e adding of tags is not cumulative.
+* You can remove all the task/subtask's tags by typing `t/` without specifying any tags after it.
 ****
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit p/History Research Paper 2` +
+Edits the project name to be `History Research Paper 2`
+* `edit 1 n/Decide on Research Paper Topic by/02/02/2020` +
+Edits the name and deadline of the task at index 1 to be `Decide on Research Paper Topic` and `02/02/2020` respectively.
+* `edit 1 n/Book consultation with lecturer by/02/02/2020` +
+Edits the name and deadline of the subtask at index 1 to be `Book consultation with lecturer` and `02/02/2020` respectively.
 
-=== Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
+=== Locating tasks by name: `find`
+
+Finds a project, task or subtask whose name contains any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
@@ -109,19 +130,26 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `find Research` +
+Returns `research` and `Book Research`
+* `find book consult` +
+Returns any project/task/subtask having words `book` or `consult` in them
 
-=== Deleting a person : `delete`
+=== Deleting a project/task/subtask : `delete`
 
-Deletes the specified person from the address book. +
+* Deletes the specified project from the System. +
 Format: `delete INDEX`
 
+* Deletes the specified task identified by the index number used in the displayed task list. +
+Format: `delete INDEX`
+
+* Deletes the specified subtask identified by the index number used in the displayed subtask list. +
+Format: `delete INDEX`
+
+
 ****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
+* Deletes the project/task/subtask at the specified `INDEX`.
+* The index refers to the index number shown in the displayed task list.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
@@ -129,10 +157,10 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
+Deletes the 2nd task/subtask in the address book.
+* `find Consult` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st project/task/subtask in the results of the `find` command.
 
 === Selecting a person : `select`
 
