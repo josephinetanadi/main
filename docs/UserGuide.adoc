@@ -162,14 +162,14 @@ Deletes the 2nd task/subtask in the address book.
 `delete 1` +
 Deletes the 1st project/task/subtask in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Selecting a project / task / sub-task : `select`
 
-Selects the person identified by the index number used in the displayed person list. +
+Selects the project / task / sub-task identified by the index number used in the displayed project / task / sub-task list. +
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
+* Selects the project / task / sub-task and loads the relevant information at the specified `INDEX`.
+* The index refers to the index number shown in the displayed list.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
@@ -177,10 +177,45 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
+Selects the 2nd project in the displayed project list.
+* `find Research` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+`list` +
+`select 1` +
+Selects the 1st project in the results of the `find` command. +
+Selects the 1st task in the displayed task list of 1st project.
+
+=== Sorting project / task / sub-task : `sort`
+
+Sorts project / task / sub-task by specified category. +
+Format: `sort CATEGORY [ascend|descend]`
+
+****
+* Sorts the project / task / sub-task that is currently displayed
+* Sort by name, deadline and tags
+****
+
+Examples:
+
+* `sort name descend` +
+Sorts displayed project / task / sub-task name in descending order.
+
+=== Inserting tags : `insert`
+
+Inserts tags to project / task / sub-task identified by index number in the displayed project / task / sub-task list. +
+Format: `insert INDEX TAG [MORE_TAGS]`
+
+Examples:
+
+* `list` +
+`select 1` +
+`insert 1 priority:4` +
+Inserts priority of 4 to 1st task of 1st project.
+
+=== Viewing tasks in project phase : `view`
+
+Displays tasks and sub-tasks within a project phase view. +
+Format: `view`
 
 === Listing entered commands : `history`
 
@@ -195,7 +230,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the task management system to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
@@ -244,8 +279,13 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all projects, tasks and sub-tasks from the task management system. +
 Format: `clear`
+
+=== Exporting outstanding projects : `export`
+
+Exports all outstanding projects and its tasks and sub-tasks to PDF format for offline viewing. +
+Format: `export`
 
 === Exiting the program : `exit`
 
@@ -254,7 +294,7 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Task management system data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 // tag::dataencryption[]
@@ -283,6 +323,14 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Sort*: `sort CATEGORY [ascend|descend]` +
+e.g. `sort name descend`
+* *Insert tags*: `insert INDEX TAG [MORE_TAGS]` +
+e.g. `insert 1 priority:4`
+* *View* : `view`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Clear* : `clear`
+* *Export* : `export`
+* *Exit* : `exit`
