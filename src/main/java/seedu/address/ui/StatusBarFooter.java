@@ -41,9 +41,12 @@ public class StatusBarFooter extends UiPart<Region> {
     @FXML
     private Label totalPersonsStatus;
 
+    //private Logic logic;
+
+
     public StatusBarFooter(Path saveLocation, ReadOnlyAddressBook addressBook, int totalPersons) {
         super(FXML);
-        addressBook.addListener(observable -> updateSyncStatus());
+        addressBook.addListener(observable -> updateSyncStatus(addressBook.getPersonList().size()));
         syncStatus.setText(SYNC_STATUS_INITIAL);
         saveLocationStatus.setText(Paths.get(".").resolve(saveLocation).toString());
         setTotalPersons(totalPersons);
@@ -70,11 +73,11 @@ public class StatusBarFooter extends UiPart<Region> {
     /**
      * Updates "last updated" status to the current time.
      */
-    private void updateSyncStatus() {
+    private void updateSyncStatus(int personsListSize) {
         long now = clock.millis();
         String lastUpdated = new Date(now).toString();
         syncStatus.setText(String.format(SYNC_STATUS_UPDATED, lastUpdated));
-        // setTotalPersons(Logic.getFilteredPersonList().size());
+        setTotalPersons(personsListSize);
     }
 
 }

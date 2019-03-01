@@ -18,6 +18,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import guitests.guihandles.StatusBarFooterHandle;
+import seedu.address.logic.Logic;
 import seedu.address.model.AddressBook;
 
 public class StatusBarFooterTest extends GuiUnitTest {
@@ -32,6 +33,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
 
     private StatusBarFooterHandle statusBarFooterHandle;
     private final AddressBook addressBook = new AddressBook();
+    private Logic logic;
 
     @BeforeClass
     public static void setUpBeforeClass() {
@@ -47,7 +49,8 @@ public class StatusBarFooterTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        StatusBarFooter statusBarFooter = new StatusBarFooter(STUB_SAVE_LOCATION, addressBook, INITIAL_TOTAL_PERSONS);
+        StatusBarFooter statusBarFooter = new StatusBarFooter(STUB_SAVE_LOCATION, addressBook,
+                INITIAL_TOTAL_PERSONS);
         uiPartRule.setUiPart(statusBarFooter);
 
         statusBarFooterHandle = new StatusBarFooterHandle(statusBarFooter.getRoot());
