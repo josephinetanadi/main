@@ -10,7 +10,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 == The Project Team
 
 === Yow Ren Jie
-image::yowrenjie.jpg[width="150", align="left"]
+image::yowrenjie.png[width="150", align="left"]
 {empty}[http://github.com/arhjaye[github]] [<<yowrenjie#, portfolio>>]
 
 Role: Team Lead +
@@ -19,7 +19,7 @@ Responsibilities: Logic
 '''
 
 === Gautam Rajulu
-image::gautamrajulu.jpg[width="150", align="left"]
+image::gautamrajulu.png[width="150", align="left"]
 {empty}[https://github.com/gautamrajulu[github]] [<<gautamrajulu#, portfolio>>]
 
 Role: Developer +
@@ -28,7 +28,7 @@ Responsibility: Model
 '''
 
 === Andrea Thniah
-image::andreathniah.jpg[width="150", align="left"]
+image::andreathniah.png[width="150", align="left"]
 {empty}[http://github.com/andreathniah[github]] [<<andreathniah#, portfolio>>]
 
 Role: Developer +
@@ -37,7 +37,7 @@ Responsibilities: Data
 '''
 
 === Josephine Tanadi
-image::josephinetanadi.jpg[width="150", align="left"]
+image::josephinetanadi.png[width="150", align="left"]
 {empty}[http://github.com/josephinetanadi[github]] [<<josephinetanadi#, portfolio>>]
 
 Role: Developer +
@@ -46,7 +46,7 @@ Responsibilities: Model
 '''
 
 === Rachel Lim
-image::rachellim.jpg[width="150", align="left"]
+image::rachellim.png[width="150", align="left"]
 {empty}[http://github.com/rachellim10[github]] [<<rachellim#, portfolio>>]
 
 Role: Developer +
