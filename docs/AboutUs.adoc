@@ -10,8 +10,8 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 == The Project Team
 
 === Yow Ren Jie
-image::yowrenjie.png[width="150", align="left"]
-{empty}[http://github.com/arhjaye[github]] [<<yowrenjie#, portfolio>>]
+image::arhjaye.png[width="150", align="left"]
+{empty}[http://github.com/arhjaye[github]] [<<arhjaye#, portfolio>>]
 
 Role: Team Lead +
 Responsibilities: Logic
@@ -46,8 +46,8 @@ Responsibilities: Model
 '''
 
 === Rachel Lim
-image::rachellim.png[width="150", align="left"]
-{empty}[http://github.com/rachellim10[github]] [<<rachellim#, portfolio>>]
+image::rachellim10.png[width="150", align="left"]
+{empty}[http://github.com/rachellim10[github]] [<<rachellim10#, portfolio>>]
 
 Role: Developer +
 Responsibilities: UI
