@@ -50,6 +50,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* The `add`, `edit` and `delete` commands each have a shorthand equivalent alias, and their usage can be viewed below at their respective sections in the User Guide.
 ====
 
 === Viewing help : `help`
@@ -66,6 +67,8 @@ Format: `add INDEX n/NAME [d/DESCRIPTION] [by/DEADLINE] [t/TAG]`
 
 * Adds a subtask to a task identified by the index number used in the displayed task list. +
 Format: `add INDEX n/NAME d/DESCRIPTION [by/DEADLINE] [t/TAG]`
+
+* Alias: `a`
 
 [TIP]
 A task/subtask can have any number of tags (including 0)
@@ -96,6 +99,8 @@ Format: `edit INDEX n/NAME [d/DESCRIPTION] [by/DEADLINE] [t/TAG]`
 
 * Edits an existing subtask identified by the index number used in the displayed subtask list. +
 Format: `edit INDEX n/NAME [d/DESCRIPTION] [by/DEADLINE] [t/TAG]`
+
+* Alias: `e`
 
 ****
 * Edits the task/subtask at the specified `INDEX`. The index refers to the index number shown in the displayed task list. The index *must be a positive integer* 1, 2, 3, ...
@@ -146,6 +151,7 @@ Format: `delete INDEX`
 * Deletes the specified subtask identified by the index number used in the displayed subtask list. +
 Format: `delete INDEX`
 
+* Alias: `d`
 
 ****
 * Deletes the project/task/subtask at the specified `INDEX`.

@@ -13,13 +13,16 @@ import seedu.address.model.person.Person;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static final String[] TAG_COLORS = { "teal", "red", "yellow", "blue",
+        "orange", "brown", "green", "pink", "black", "grey" };
 
     /**
-     * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
-     * As a consequence, UI elements' variable names cannot be set to such keywords
-     * or an exception will be thrown by JavaFX during runtime.
+     * Note: Certain keywords such as "location" and "resources" are reserved
+     * keywords in JavaFX. As a consequence, UI elements' variable names cannot be
+     * set to such keywords or an exception will be thrown by JavaFX during runtime.
      *
-     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
+     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The
+     *      issue on AddressBook level 4</a>
      */
 
     public final Person person;
@@ -47,7 +50,19 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        setTagColor(person);
+    }
+
+    // Create tag labels for person
+    public void setTagColor(Person person) {
+        person.getTags().forEach(tag -> {
+            // Todo: Allow defining of tag colors through CLI instead of randomization
+            // Throw out color name from TAG_COLOR array based on randomized value
+            String tagColor = TAG_COLORS[Math.abs(tag.tagName.hashCode()) % TAG_COLORS.length];
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.getStyleClass().add(tagColor);
+            tags.getChildren().add(tagLabel);
+        });
     }
 
     @Override
@@ -64,7 +79,6 @@ public class PersonCard extends UiPart<Region> {
 
         // state check
         PersonCard card = (PersonCard) other;
-        return id.getText().equals(card.id.getText())
-                && person.equals(card.person);
+        return id.getText().equals(card.id.getText()) && person.equals(card.person);
     }
 }

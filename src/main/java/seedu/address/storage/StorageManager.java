@@ -74,4 +74,10 @@ public class StorageManager implements Storage {
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
 
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        logger.fine("Backing up to temporary location");
+        addressBookStorage.backupAddressBook(addressBook);
+    }
+
 }
