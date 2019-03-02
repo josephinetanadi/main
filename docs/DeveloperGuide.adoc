@@ -15,7 +15,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `T09-3`      Since: `22 Feb 2019`      Licence: `MIT`
 
 == Setting up
 
@@ -811,13 +811,11 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* COM Students who need to manage multiple projects simultaneously
+* Prefers typing over mouse input
+* Is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: Manage multiple projects and to manage the individual tasks within a project
 
 [appendix]
 == User Stories
@@ -827,51 +825,122 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`***` | user | add project | manage multiple projects
+|`***` | user | insert task| record tasks that need to be done
+|`***` | user | delele task | get rid of tasks that are completed or no longer need to be done
+|`***` | user| update task | change details of a particular task when changes are necessary
+|`***` | user| read task | look through and be reminded of the details of a specific task
+|`*` | user| break down tasks into subtasks | easily view and complete them step-by-step
+|`*` | user| insert subtask | record smaller tasks or more specific action items to be done
+|`*` | user| delete subtask | get rid of subtasks that are completed or no longer needs to be done
+|`*` | user| update subtask | change details of a particular subtask when changes are necessary
+|`*` | user| read subtask | look through and be reminded of the details of a specific subtask
+|`*` | user| set recurring subtask | spare myself from the need to manually add the same task to future dates
+|`*` | user| delete recurring subtask | get rid of tasks that I no longer want to have repeated reminders of
+|`*` | user| update recurring subtask | change details of a particular recurring task when changes are necessary and have such changes be reflected across all its future recurring subtasks
+|`*` | user| read recurring subtask | look through and be reminded of the details of a specific recurring subtask
+|`**` | user| have a calendar view of tasks | find upcoming tasks via a calendar overview
+|`**` | user| have a table view | have an overall view to store and view any kind of structured data
+|`***` | user| insert tags to tasks | categorize tasks based on projects/priority/etc
+|`***` | user| delete tags | remove tags that is unnecessary
+|`***` | user| update tags | change how I want a particular task to be categorised
+|`***` | user| have coloured tags | easily view the categories of tasks at one glance
+|`***` | user| prioritize tasks | complete them in order of importance, especially if they have roughly the same deadlines
+|`*` | user| share / sync task | make sure that my collaborators are aware of what needs to be done
+|`***` | user| set task deadlines | be reminded when the task is due soon
+|`**` | user| show task by creation date | be reminded not to neglect low priority tasks
+|`**` | user| have a progress overview | keep track of my productivity based on how much of a project has been completed
+|`***` | user| have a ‘help’ manual | learn how to use various commands to operate this product
+|`***` | advance user| have command shortcuts | type a command faster
+|`***` | user| have export and import function | share task format easily with another user using the same format structure
+|`*` | user| attach files to task | easily find the corresponding files to work on
+|`***` | user| find task by keywords | easily navigate to the specific task
+|`***` | user| view tasks by alphabetical order | easily find a specific task
+|`***` | user| view task by priority | know what will be due first
+|`***` | user| undo/redo a command | remove/redo a command that I entered/removed by mistake
+|`**` | user| view a analysis of my current progress | have a overview of how much I have completed / not completed
 
-|`* * *` |user |delete a person |remove entries that I no longer need
-
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
-
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
-
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
-
-_{More to be added}_
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `ProjectManager` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Creating a project listing
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to create a project listing
+*1a. User submits the following information. Project ID || Project Name || Project description || Project end date || Module
+2.  ProjectManager creates the project listing
+
++
+Use case ends.
+
+[discrete]
+=== Use case: Adding a task within a project
+
+*MSS*
+
+1.  User request to view all project listings
+2.  ProjectManager shows all project listings
+3.  User request to view all task within a chosen project
+4.  ProjectManager shows all tasks within the chosen project
+5.  User request to create task within selected project
+*5a. User submits the following information: Task ID| Task Name | Deadline | Description | Tags (Priority Level, collaborators, etc...)
+6.  ProjectManager creates task
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+* 5a1 Missing information
++
+[none]
+**5a1a ProjectManager displays error message
++
+Use case resumes at step 5
+
+[discrete]
+=== Use case: Manage existing task (managing tags)
+*MSS*
+
+1.  User request to view all project listings
+2.  ProjectManager shows all project listings
+3.  User request to view all task within a chosen project
+4.  ProjectManager shows all tasks within the chosen project
+5.  User request to edit tags of chosen tag
+*5a. User submits the following information: Task ID| Current Tag Name | New Tag Name
+6.  ProjectManager updates tag
 +
 Use case ends.
 
-* 3a. The given index is invalid.
+*Extensions*
+
+[none]
+* 5a1 Task ID not found / Current Tag Name not found
 +
 [none]
-** 3a1. AddressBook shows an error message.
+**5a1a ProjectManager displays error message
 +
-Use case resumes at step 2.
+Use case resumes at step 5
+
+[discrete]
+=== Use case: Delete existing task
+*MSS*
+
+1.  User request to view all project listings
+2.  ProjectManager shows all project listings
+3.  User request to view all task within a chosen project
+4.  ProjectManager shows all tasks within the chosen project
+5.  User request to delete a specific task
+6.  ProjectManager deletes task
++
+Use case ends.
 
 _{More to be added}_
 
@@ -934,24 +1003,16 @@ These instructions only provide a starting point for testers to work on; testers
 
 _{ more test cases ... }_
 
-=== Deleting a person
+=== Deleting a task
 
-. Deleting a person while all persons are listed
+. Deleting a task while all task of a chosen project are listed
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Prerequisites: List all task using the `list _x_` command from the project listing page (where _x_ is the project ID). Multiple tasks in the list.
 .. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   Expected: First task is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+   Expected: No task is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
-
-_{ more test cases ... }_
-
-=== Saving data
-
-. Dealing with missing/corrupted data files
-
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
