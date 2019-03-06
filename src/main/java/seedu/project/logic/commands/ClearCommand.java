@@ -3,8 +3,8 @@ package seedu.project.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import seedu.project.logic.CommandHistory;
-import seedu.project.model.Project;
 import seedu.project.model.Model;
+import seedu.project.model.Project;
 
 /**
  * Clears the address book.

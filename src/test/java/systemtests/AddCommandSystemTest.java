@@ -37,12 +37,12 @@ import seedu.project.logic.commands.AddCommand;
 import seedu.project.logic.commands.RedoCommand;
 import seedu.project.logic.commands.UndoCommand;
 import seedu.project.model.Model;
+import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Address;
 import seedu.project.model.task.Email;
 import seedu.project.model.task.Name;
-import seedu.project.model.task.Task;
 import seedu.project.model.task.Phone;
-import seedu.project.model.tag.Tag;
+import seedu.project.model.task.Task;
 import seedu.project.testutil.TaskBuilder;
 import seedu.project.testutil.TaskUtil;
 

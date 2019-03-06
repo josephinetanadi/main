@@ -6,12 +6,12 @@ import java.util.stream.Collectors;
 
 import seedu.project.model.Project;
 import seedu.project.model.ReadOnlyProject;
+import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Address;
 import seedu.project.model.task.Email;
 import seedu.project.model.task.Name;
-import seedu.project.model.task.Task;
 import seedu.project.model.task.Phone;
-import seedu.project.model.tag.Tag;
+import seedu.project.model.task.Task;
 
 /**
  * Contains utility methods for populating {@code Project} with sample data.

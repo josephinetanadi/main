@@ -5,12 +5,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.project.logic.commands.EditCommand.EditTaskDescriptor;
+import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Address;
 import seedu.project.model.task.Email;
 import seedu.project.model.task.Name;
-import seedu.project.model.task.Task;
 import seedu.project.model.task.Phone;
-import seedu.project.model.tag.Tag;
+import seedu.project.model.task.Task;
 
 /**
  * A utility class to help with building EditTaskDescriptor objects.

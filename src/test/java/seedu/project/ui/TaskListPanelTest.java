@@ -20,8 +20,8 @@ import javafx.collections.ObservableList;
 import seedu.project.model.task.Address;
 import seedu.project.model.task.Email;
 import seedu.project.model.task.Name;
-import seedu.project.model.task.Task;
 import seedu.project.model.task.Phone;
+import seedu.project.model.task.Task;
 
 public class TaskListPanelTest extends GuiUnitTest {
     private static final ObservableList<Task> TYPICAL_TASKS = FXCollections.observableList(getTypicalTasks());

@@ -16,11 +16,11 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.project.logic.parser.exceptions.ParseException;
+import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Address;
 import seedu.project.model.task.Email;
 import seedu.project.model.task.Name;
 import seedu.project.model.task.Phone;
-import seedu.project.model.tag.Tag;
 import seedu.project.testutil.Assert;
 
 public class ParserUtilTest {

@@ -9,11 +9,11 @@ import java.util.Set;
 import seedu.project.commons.core.index.Index;
 import seedu.project.commons.util.StringUtil;
 import seedu.project.logic.parser.exceptions.ParseException;
+import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Address;
 import seedu.project.model.task.Email;
 import seedu.project.model.task.Name;
 import seedu.project.model.task.Phone;
-import seedu.project.model.tag.Tag;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.

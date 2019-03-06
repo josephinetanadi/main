@@ -20,12 +20,12 @@ import seedu.project.commons.util.CollectionUtil;
 import seedu.project.logic.CommandHistory;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
+import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Address;
 import seedu.project.model.task.Email;
 import seedu.project.model.task.Name;
-import seedu.project.model.task.Task;
 import seedu.project.model.task.Phone;
-import seedu.project.model.tag.Tag;
+import seedu.project.model.task.Task;
 
 /**
  * Edits the details of an existing task in the address book.

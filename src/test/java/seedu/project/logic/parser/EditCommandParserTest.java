@@ -34,13 +34,13 @@ import static seedu.project.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import org.junit.Test;
 
 import seedu.project.commons.core.index.Index;
-import seedu.project.logic.commands.EditCommand;
 import seedu.project.logic.commands.EditCommand.EditTaskDescriptor;
+import seedu.project.logic.commands.EditCommand;
+import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Address;
 import seedu.project.model.task.Email;
 import seedu.project.model.task.Name;
 import seedu.project.model.task.Phone;
-import seedu.project.model.tag.Tag;
 import seedu.project.testutil.EditTaskDescriptorBuilder;
 
 public class EditCommandParserTest {

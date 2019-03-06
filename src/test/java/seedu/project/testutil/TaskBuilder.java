@@ -3,12 +3,12 @@ package seedu.project.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Address;
 import seedu.project.model.task.Email;
 import seedu.project.model.task.Name;
-import seedu.project.model.task.Task;
 import seedu.project.model.task.Phone;
-import seedu.project.model.tag.Tag;
+import seedu.project.model.task.Task;
 import seedu.project.model.util.SampleDataUtil;
 
 /**

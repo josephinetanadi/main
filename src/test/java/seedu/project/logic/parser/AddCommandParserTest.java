@@ -32,12 +32,12 @@ import static seedu.project.testutil.TypicalTasks.BOB;
 import org.junit.Test;
 
 import seedu.project.logic.commands.AddCommand;
+import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Address;
 import seedu.project.model.task.Email;
 import seedu.project.model.task.Name;
-import seedu.project.model.task.Task;
 import seedu.project.model.task.Phone;
-import seedu.project.model.tag.Tag;
+import seedu.project.model.task.Task;
 import seedu.project.testutil.TaskBuilder;
 
 public class AddCommandParserTest {

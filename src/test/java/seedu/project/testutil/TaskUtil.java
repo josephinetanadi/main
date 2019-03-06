@@ -10,8 +10,8 @@ import java.util.Set;
 
 import seedu.project.logic.commands.AddCommand;
 import seedu.project.logic.commands.EditCommand.EditTaskDescriptor;
-import seedu.project.model.task.Task;
 import seedu.project.model.tag.Tag;
+import seedu.project.model.task.Task;
 
 /**
  * A utility class for Task.

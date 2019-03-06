@@ -6,9 +6,9 @@ import static seedu.project.testutil.TypicalTasks.getTypicalProject;
 import org.junit.Test;
 
 import seedu.project.logic.CommandHistory;
-import seedu.project.model.Project;
 import seedu.project.model.Model;
 import seedu.project.model.ModelManager;
+import seedu.project.model.Project;
 import seedu.project.model.UserPrefs;
 
 public class ClearCommandTest {
