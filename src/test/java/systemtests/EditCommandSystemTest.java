@@ -121,7 +121,7 @@ public class EditCommandSystemTest extends ProjectSystemTest {
          */
 
         /*
-         * Case: filtered task list, edit index within bounds of address book and task
+         * Case: filtered task list, edit index within bounds of project and task
          * list -> edited
          */
         showTasksWithName(KEYWORD_MATCHING_MEIER);
@@ -133,7 +133,7 @@ public class EditCommandSystemTest extends ProjectSystemTest {
         assertCommandSuccess(command, index, editedTask);
 
         /*
-         * Case: filtered task list, edit index within bounds of address book but out of
+         * Case: filtered task list, edit index within bounds of project but out of
          * bounds of task list -> rejected
          */
         showTasksWithName(KEYWORD_MATCHING_MEIER);

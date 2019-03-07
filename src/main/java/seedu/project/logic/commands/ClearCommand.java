@@ -7,12 +7,12 @@ import seedu.project.model.Model;
 import seedu.project.model.Project;
 
 /**
- * Clears the address book.
+ * Clears the project.
  */
 public class ClearCommand extends Command {
 
     public static final String COMMAND_WORD = "clear";
-    public static final String MESSAGE_SUCCESS = "Address book has been cleared!";
+    public static final String MESSAGE_SUCCESS = "Project has been cleared!";
 
 
     @Override

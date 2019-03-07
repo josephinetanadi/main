@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.project.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Task's email in the address book.
+ * Represents a Task's email in the project.
  * Guarantees: immutable; is valid as declared in {@link #isValidEmail(String)}
  */
 public class Email {

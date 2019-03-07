@@ -26,7 +26,7 @@ public class FindCommandSystemTest extends ProjectSystemTest {
     @Test
     public void find() {
         /*
-         * Case: find multiple tasks in address book, command with leading spaces and
+         * Case: find multiple tasks in project, command with leading spaces and
          * trailing spaces -> 2 tasks found
          */
         String command = "   " + FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER + "   ";
@@ -52,14 +52,14 @@ public class FindCommandSystemTest extends ProjectSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find multiple tasks in address book, 2 keywords -> 2 tasks found */
+        /* Case: find multiple tasks in project, 2 keywords -> 2 tasks found */
         command = FindCommand.COMMAND_WORD + " Benson Daniel";
         ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /*
-         * Case: find multiple tasks in address book, 2 keywords in reversed order -> 2
+         * Case: find multiple tasks in project, 2 keywords in reversed order -> 2
          * tasks found
          */
         command = FindCommand.COMMAND_WORD + " Daniel Benson";
@@ -67,7 +67,7 @@ public class FindCommandSystemTest extends ProjectSystemTest {
         assertSelectedCardUnchanged();
 
         /*
-         * Case: find multiple tasks in address book, 2 keywords with 1 repeat -> 2
+         * Case: find multiple tasks in project, 2 keywords with 1 repeat -> 2
          * tasks found
          */
         command = FindCommand.COMMAND_WORD + " Daniel Benson Daniel";
@@ -75,7 +75,7 @@ public class FindCommandSystemTest extends ProjectSystemTest {
         assertSelectedCardUnchanged();
 
         /*
-         * Case: find multiple tasks in address book, 2 matching keywords and 1
+         * Case: find multiple tasks in project, 2 matching keywords and 1
          * non-matching keyword -> 2 tasks found
          */
         command = FindCommand.COMMAND_WORD + " Daniel Benson NonMatchingKeyWord";
@@ -93,7 +93,7 @@ public class FindCommandSystemTest extends ProjectSystemTest {
         assertCommandFailure(command, expectedResultMessage);
 
         /*
-         * Case: find same tasks in address book after deleting 1 of them -> 1 task
+         * Case: find same tasks in project after deleting 1 of them -> 1 task
          * found
          */
         executeCommand(DeleteCommand.COMMAND_WORD + " 1");
@@ -105,7 +105,7 @@ public class FindCommandSystemTest extends ProjectSystemTest {
         assertSelectedCardUnchanged();
 
         /*
-         * Case: find task in address book, keyword is same as name but of different
+         * Case: find task in project, keyword is same as name but of different
          * case -> 1 task found
          */
         command = FindCommand.COMMAND_WORD + " MeIeR";
@@ -113,7 +113,7 @@ public class FindCommandSystemTest extends ProjectSystemTest {
         assertSelectedCardUnchanged();
 
         /*
-         * Case: find task in address book, keyword is substring of name -> 0 tasks
+         * Case: find task in project, keyword is substring of name -> 0 tasks
          * found
          */
         command = FindCommand.COMMAND_WORD + " Mei";
@@ -122,7 +122,7 @@ public class FindCommandSystemTest extends ProjectSystemTest {
         assertSelectedCardUnchanged();
 
         /*
-         * Case: find task in address book, name is substring of keyword -> 0 tasks
+         * Case: find task in project, name is substring of keyword -> 0 tasks
          * found
          */
         command = FindCommand.COMMAND_WORD + " Meiers";
@@ -130,27 +130,27 @@ public class FindCommandSystemTest extends ProjectSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find task not in address book -> 0 tasks found */
+        /* Case: find task not in project -> 0 tasks found */
         command = FindCommand.COMMAND_WORD + " Mark";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find phone number of task in address book -> 0 tasks found */
+        /* Case: find phone number of task in project -> 0 tasks found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find address of task in address book -> 0 tasks found */
+        /* Case: find address of task in project -> 0 tasks found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getAddress().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find email of task in address book -> 0 tasks found */
+        /* Case: find email of task in project -> 0 tasks found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find tags of task in address book -> 0 tasks found */
+        /* Case: find tags of task in project -> 0 tasks found */
         List<Tag> tags = new ArrayList<>(DANIEL.getTags());
         command = FindCommand.COMMAND_WORD + " " + tags.get(0).tagName;
         assertCommandSuccess(command, expectedModel);
@@ -165,7 +165,7 @@ public class FindCommandSystemTest extends ProjectSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardDeselected();
 
-        /* Case: find task in empty address book -> 0 tasks found */
+        /* Case: find task in empty project -> 0 tasks found */
         deleteAllTasks();
         command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
         expectedModel = getModel();

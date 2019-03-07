@@ -12,7 +12,7 @@ import seedu.project.model.Model;
 import seedu.project.model.task.Task;
 
 /**
- * Deletes a task identified using it's displayed index from the address book.
+ * Deletes a task identified using it's displayed index from the project.
  */
 public class DeleteCommand extends Command {
 

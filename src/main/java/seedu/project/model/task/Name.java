@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.project.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Task's name in the address book.
+ * Represents a Task's name in the project.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Name {

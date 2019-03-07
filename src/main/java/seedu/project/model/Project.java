@@ -63,7 +63,7 @@ public class Project implements ReadOnlyProject {
     //// task-level operations
 
     /**
-     * Returns true if a task with the same identity as {@code task} exists in the address book.
+     * Returns true if a task with the same identity as {@code task} exists in the project.
      */
     public boolean hasTask(Task task) {
         requireNonNull(task);
@@ -71,8 +71,8 @@ public class Project implements ReadOnlyProject {
     }
 
     /**
-     * Adds a task to the address book.
-     * The task must not already exist in the address book.
+     * Adds a task to the project.
+     * The task must not already exist in the project.
      */
     public void addTask(Task p) {
         tasks.add(p);
@@ -81,8 +81,8 @@ public class Project implements ReadOnlyProject {
 
     /**
      * Replaces the given task {@code target} in the list with {@code editedTask}.
-     * {@code target} must exist in the address book.
-     * The task identity of {@code editedTask} must not be the same as another existing task in the address book.
+     * {@code target} must exist in the project.
+     * The task identity of {@code editedTask} must not be the same as another existing task in the project.
      */
     public void setTask(Task target, Task editedTask) {
         requireNonNull(editedTask);
@@ -93,7 +93,7 @@ public class Project implements ReadOnlyProject {
 
     /**
      * Removes {@code key} from this {@code Project}.
-     * {@code key} must exist in the address book.
+     * {@code key} must exist in the project.
      */
     public void removeTask(Task key) {
         tasks.remove(key);
@@ -111,7 +111,7 @@ public class Project implements ReadOnlyProject {
     }
 
     /**
-     * Notifies listeners that the address book has been modified.
+     * Notifies listeners that the project has been modified.
      */
     protected void indicateModified() {
         invalidationListenerManager.callListeners(this);

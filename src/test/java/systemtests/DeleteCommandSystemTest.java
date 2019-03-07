@@ -58,13 +58,13 @@ public class DeleteCommandSystemTest extends ProjectSystemTest {
 
         /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
 
-        /* Case: filtered task list, delete index within bounds of address book and task list -> deleted */
+        /* Case: filtered task list, delete index within bounds of project and task list -> deleted */
         showTasksWithName(KEYWORD_MATCHING_MEIER);
         Index index = INDEX_FIRST_PERSON;
         assertTrue(index.getZeroBased() < getModel().getFilteredTaskList().size());
         assertCommandSuccess(index);
 
-        /* Case: filtered task list, delete index within bounds of address book but out of bounds of task list
+        /* Case: filtered task list, delete index within bounds of project but out of bounds of task list
          * -> rejected
          */
         showTasksWithName(KEYWORD_MATCHING_MEIER);
@@ -112,7 +112,7 @@ public class DeleteCommandSystemTest extends ProjectSystemTest {
     }
 
     /**
-     * Removes the {@code Task} at the specified {@code index} in {@code model}'s address book.
+     * Removes the {@code Task} at the specified {@code index} in {@code model}'s project.
      * @return the removed task
      */
     private Task removeTask(Model model, Index index) {

@@ -134,7 +134,7 @@ public abstract class ProjectSystemTest {
     }
 
     /**
-     * Displays all tasks in the address book.
+     * Displays all tasks in the project.
      */
     protected void showAllTasks() {
         executeCommand(ListCommand.COMMAND_WORD);
@@ -158,7 +158,7 @@ public abstract class ProjectSystemTest {
     }
 
     /**
-     * Deletes all tasks in the address book.
+     * Deletes all tasks in the project.
      */
     protected void deleteAllTasks() {
         executeCommand(ClearCommand.COMMAND_WORD);

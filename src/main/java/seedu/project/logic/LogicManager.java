@@ -37,7 +37,7 @@ public class LogicManager implements Logic {
         history = new CommandHistory();
         projectParser = new ProjectParser();
 
-        // Set projectModified to true whenever the models' address book is modified.
+        // Set projectModified to true whenever the models' project is modified.
         model.getProject().addListener(observable -> projectModified = true);
     }
 
@@ -55,7 +55,7 @@ public class LogicManager implements Logic {
         }
 
         if (projectModified) {
-            logger.info("Address book modified, saving to file.");
+            logger.info("Project modified, saving to file.");
             try {
                 storage.saveProject(model.getProject());
             } catch (IOException ioe) {

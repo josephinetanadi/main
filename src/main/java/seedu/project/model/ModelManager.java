@@ -19,7 +19,7 @@ import seedu.project.model.task.Task;
 import seedu.project.model.task.exceptions.TaskNotFoundException;
 
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the project data.
  */
 public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
@@ -36,7 +36,7 @@ public class ModelManager implements Model {
         super();
         requireAllNonNull(project, userPrefs);
 
-        logger.fine("Initializing with address book: " + project + " and user prefs " + userPrefs);
+        logger.fine("Initializing with project: " + project + " and user prefs " + userPrefs);
 
         versionedProject = new VersionedProject(project);
         this.userPrefs = new UserPrefs(userPrefs);

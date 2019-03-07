@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.project.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Task's phone number in the address book.
+ * Represents a Task's phone number in the project.
  * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
  */
 public class Phone {

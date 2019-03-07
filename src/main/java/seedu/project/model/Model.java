@@ -36,17 +36,17 @@ public interface Model {
     void setGuiSettings(GuiSettings guiSettings);
 
     /**
-     * Returns the user prefs' address book file path.
+     * Returns the user prefs' project file path.
      */
     Path getProjectFilePath();
 
     /**
-     * Sets the user prefs' address book file path.
+     * Sets the user prefs' project file path.
      */
     void setProjectFilePath(Path projectFilePath);
 
     /**
-     * Replaces address book data with the data in {@code project}.
+     * Replaces project data with the data in {@code project}.
      */
     void setProject(ReadOnlyProject project);
 
@@ -55,25 +55,25 @@ public interface Model {
 
     /**
      * Returns true if a task with the same identity as {@code task} exists in the
-     * address book.
+     * project.
      */
     boolean hasTask(Task task);
 
     /**
-     * Deletes the given task. The task must exist in the address book.
+     * Deletes the given task. The task must exist in the project.
      */
     void deleteTask(Task target);
 
     /**
-     * Adds the given task. {@code task} must not already exist in the address book.
+     * Adds the given task. {@code task} must not already exist in the project.
      */
     void addTask(Task task);
 
     /**
      * Replaces the given task {@code target} with {@code editedTask}.
-     * {@code target} must exist in the address book. The task identity of
+     * {@code target} must exist in the project. The task identity of
      * {@code editedTask} must not be the same as another existing task in the
-     * address book.
+     * project.
      */
     void setTask(Task target, Task editedTask);
 
@@ -89,27 +89,27 @@ public interface Model {
     void updateFilteredTaskList(Predicate<Task> predicate);
 
     /**
-     * Returns true if the model has previous address book states to restore.
+     * Returns true if the model has previous project states to restore.
      */
     boolean canUndoProject();
 
     /**
-     * Returns true if the model has undone address book states to restore.
+     * Returns true if the model has undone project states to restore.
      */
     boolean canRedoProject();
 
     /**
-     * Restores the model's address book to its previous state.
+     * Restores the model's project to its previous state.
      */
     void undoProject();
 
     /**
-     * Restores the model's address book to its previously undone state.
+     * Restores the model's project to its previously undone state.
      */
     void redoProject();
 
     /**
-     * Saves the current address book state for undo/redo.
+     * Saves the current project state for undo/redo.
      */
     void commitProject();
 

@@ -8,7 +8,7 @@ import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
 
 /**
- * Reverts the {@code model}'s address book to its previous state.
+ * Reverts the {@code model}'s project to its previous state.
  */
 public class UndoCommand extends Command {
 

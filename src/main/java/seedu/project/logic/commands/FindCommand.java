@@ -8,7 +8,7 @@ import seedu.project.model.Model;
 import seedu.project.model.task.NameContainsKeywordsPredicate;
 
 /**
- * Finds and lists all tasks in address book whose name contains any of the
+ * Finds and lists all tasks in project whose name contains any of the
  * argument keywords. Keyword matching is case insensitive.
  */
 public class FindCommand extends Command {

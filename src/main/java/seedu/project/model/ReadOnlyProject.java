@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 import seedu.project.model.task.Task;
 
 /**
- * Unmodifiable view of an address book
+ * Unmodifiable view of an project
  */
 public interface ReadOnlyProject extends Observable {
 

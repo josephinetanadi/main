@@ -30,7 +30,7 @@ endif::[]
 _Marco Jakob_.
 * Libraries used: https://github.com/TestFX/TestFX[TextFX], https://github.com/FasterXML/jackson[Jackson], https://github.com/google/guava[Guava], https://github.com/junit-team/junit5[JUnit5]
 
-* This application was built using the source code found in https://github.com/se-edu/addressbook-level4[Project-level4] by SE-EDU.
+* This application was built using the source code found in https://github.com/se-edu/addressbook-level4[AddressBook-level4] by SE-EDU.
 
 
 == Licence : link:LICENSE[MIT]

@@ -149,7 +149,7 @@ public class LogicManagerTest {
      * parts of the LogicManager object's state are as expected:<br>
      * - the internal model manager data are same as those in the
      * {@code expectedModel} <br>
-     * - {@code expectedModel}'s address book was saved to the storage file.
+     * - {@code expectedModel}'s project was saved to the storage file.
      */
     private void assertCommandBehavior(Class<?> expectedException, String inputCommand, String expectedMessage,
             Model expectedModel) {
