@@ -26,11 +26,9 @@ import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.logic.parser.exceptions.ParseException;
 import seedu.project.model.Model;
 import seedu.project.model.ModelManager;
-import seedu.project.model.ReadOnlyProjectList;
+import seedu.project.model.ReadOnlyProject;
 import seedu.project.model.UserPrefs;
-import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.task.Task;
-import seedu.project.storage.JsonProjectListStorage;
 import seedu.project.storage.JsonProjectStorage;
 import seedu.project.storage.JsonUserPrefsStorage;
 import seedu.project.storage.StorageManager;
@@ -50,10 +48,9 @@ public class LogicManagerTest {
 
     @Before
     public void setUp() throws Exception {
-        JsonProjectListStorage projectListStorage = new JsonProjectListStorage(temporaryFolder.newFile().toPath());
         JsonProjectStorage projectStorage = new JsonProjectStorage(temporaryFolder.newFile().toPath());
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.newFile().toPath());
-        StorageManager storage = new StorageManager(projectListStorage, projectStorage, userPrefsStorage);
+        StorageManager storage = new StorageManager(projectStorage, userPrefsStorage);
         logic = new LogicManager(model, storage);
     }
 
@@ -81,11 +78,9 @@ public class LogicManagerTest {
     @Test
     public void execute_storageThrowsIoException_throwsCommandException() throws Exception {
         // Setup LogicManager with JsonProjectIoExceptionThrowingStub
-        JsonProjectListStorage projectListStorage;
-        projectListStorage = new JsonProjectListIoExceptionThrowingStub(temporaryFolder.newFile().toPath());
         JsonProjectStorage projectStorage = new JsonProjectIoExceptionThrowingStub(temporaryFolder.newFile().toPath());
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.newFile().toPath());
-        StorageManager storage = new StorageManager(projectListStorage, projectStorage, userPrefsStorage);
+        StorageManager storage = new StorageManager(projectStorage, userPrefsStorage);
         logic = new LogicManager(model, storage);
 
         // Execute add command
@@ -144,7 +139,7 @@ public class LogicManagerTest {
      * @see #assertCommandBehavior(Class, String, String, Model)
      */
     private void assertCommandFailure(String inputCommand, Class<?> expectedException, String expectedMessage) {
-        Model expectedModel = new ModelManager(model.getProjectList(), model.getProject(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getProject(), new UserPrefs());
         assertCommandBehavior(expectedException, inputCommand, expectedMessage, expectedModel);
     }
 
@@ -195,20 +190,6 @@ public class LogicManagerTest {
 
         @Override
         public void saveProject(ReadOnlyProject project, Path filePath) throws IOException {
-            throw DUMMY_IO_EXCEPTION;
-        }
-    }
-
-    /**
-     * A stub class to throw an {@code IOException} when the save method is called.
-     */
-    private static class JsonProjectListIoExceptionThrowingStub extends JsonProjectListStorage {
-        private JsonProjectListIoExceptionThrowingStub(Path filePath) {
-            super(filePath);
-        }
-
-        @Override
-        public void saveProjectList(ReadOnlyProjectList projectList, Path filePath) throws IOException {
             throw DUMMY_IO_EXCEPTION;
         }
     }

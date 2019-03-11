@@ -15,9 +15,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.project.commons.core.GuiSettings;
 import seedu.project.commons.core.LogsCenter;
-import seedu.project.model.project.Project;
-import seedu.project.model.project.ReadOnlyProject;
-import seedu.project.model.project.VersionedProject;
 import seedu.project.model.task.Task;
 import seedu.project.model.task.exceptions.TaskNotFoundException;
 
@@ -25,10 +22,8 @@ import seedu.project.model.task.exceptions.TaskNotFoundException;
  * Represents the in-memory model of the project data.
  */
 public class ModelManager implements Model {
-
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final VersionedProjectList versionedProjectList;
     private final VersionedProject versionedProject;
     private final UserPrefs userPrefs;
     private final FilteredList<Task> filteredTasks;
@@ -37,14 +32,12 @@ public class ModelManager implements Model {
     /**
      * Initializes a ModelManager with the given project and userPrefs.
      */
-    public ModelManager(ReadOnlyProjectList projectList, ReadOnlyProject project, ReadOnlyUserPrefs userPrefs) {
+    public ModelManager(ReadOnlyProject project, ReadOnlyUserPrefs userPrefs) {
         super();
-        requireAllNonNull(projectList, project, userPrefs);
+        requireAllNonNull(project, userPrefs);
 
-        logger.fine("Initializing with project list: " + projectList + " and project: " + project
-                + " and user prefs " + userPrefs);
+        logger.fine("Initializing with project: " + project + " and user prefs " + userPrefs);
 
-        versionedProjectList = new VersionedProjectList(projectList);
         versionedProject = new VersionedProject(project);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredTasks = new FilteredList<>(versionedProject.getTaskList());
@@ -52,7 +45,7 @@ public class ModelManager implements Model {
     }
 
     public ModelManager() {
-        this(new ProjectList(), new Project(), new UserPrefs());
+        this(new Project(), new UserPrefs());
     }
 
     // =========== UserPrefs
@@ -81,17 +74,6 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public Path getProjectListFilePath() {
-        return userPrefs.getProjectListFilePath();
-    }
-
-    @Override
-    public void setProjectListFilePath(Path projectListFilePath) {
-        requireNonNull(projectListFilePath);
-        userPrefs.setProjectListFilePath(projectListFilePath);
-    }
-
-    @Override
     public Path getProjectFilePath() {
         return userPrefs.getProjectFilePath();
     }
@@ -100,43 +82,6 @@ public class ModelManager implements Model {
     public void setProjectFilePath(Path projectFilePath) {
         requireNonNull(projectFilePath);
         userPrefs.setProjectFilePath(projectFilePath);
-    }
-
-    // =========== ProjectList
-    // ================================================================================
-
-    @Override
-    public void setProjectList(ReadOnlyProjectList projectList) {
-        versionedProjectList.resetData(projectList);
-    }
-
-    @Override
-    public ReadOnlyProjectList getProjectList() {
-        return versionedProjectList;
-    }
-
-    @Override
-    public boolean hasProject(Project project) {
-        requireNonNull(project);
-        return versionedProjectList.hasProject(project);
-    }
-
-    @Override
-    public void deleteProject(Project target) {
-        versionedProjectList.removeProject(target);
-    }
-
-    @Override
-    public void addProject(Project project) {
-        versionedProjectList.addProject(project);
-        //updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
-    }
-
-    @Override
-    public void setProject(Project target, Project editedProject) {
-        requireAllNonNull(target, editedProject);
-
-        versionedProjectList.setProject(target, editedProject);
     }
 
     // =========== Project
@@ -292,9 +237,7 @@ public class ModelManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
-        return versionedProjectList.equals(other.versionedProjectList)
-                && versionedProject.equals(other.versionedProject)
-                && userPrefs.equals(other.userPrefs)
+        return versionedProject.equals(other.versionedProject) && userPrefs.equals(other.userPrefs)
                 && filteredTasks.equals(other.filteredTasks)
                 && Objects.equals(selectedTask.get(), other.selectedTask.get());
     }

@@ -14,7 +14,6 @@ import static seedu.project.logic.commands.CommandTestUtil.showTaskAtIndex;
 import static seedu.project.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.project.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.project.testutil.TypicalTasks.getTypicalProject;
-import static seedu.project.testutil.TypicalTasks.getTypicalProjectList;
 
 import org.junit.Test;
 
@@ -24,9 +23,8 @@ import seedu.project.logic.CommandHistory;
 import seedu.project.logic.commands.EditCommand.EditTaskDescriptor;
 import seedu.project.model.Model;
 import seedu.project.model.ModelManager;
-import seedu.project.model.ProjectList;
+import seedu.project.model.Project;
 import seedu.project.model.UserPrefs;
-import seedu.project.model.project.Project;
 import seedu.project.model.task.Task;
 import seedu.project.testutil.EditTaskDescriptorBuilder;
 import seedu.project.testutil.TaskBuilder;
@@ -36,7 +34,7 @@ import seedu.project.testutil.TaskBuilder;
  */
 public class EditCommandTest {
 
-    private Model model = new ModelManager(getTypicalProjectList(), getTypicalProject(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalProject(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
@@ -47,8 +45,7 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedTask);
 
-        Model expectedModel = new ModelManager(
-                new ProjectList(model.getProjectList()), new Project(model.getProject()), new UserPrefs());
+        Model expectedModel = new ModelManager(new Project(model.getProject()), new UserPrefs());
         expectedModel.setTask(model.getFilteredTaskList().get(0), editedTask);
         expectedModel.commitProject();
 
@@ -70,8 +67,7 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedTask);
 
-        Model expectedModel = new ModelManager(
-                new ProjectList(model.getProjectList()), new Project(model.getProject()), new UserPrefs());
+        Model expectedModel = new ModelManager(new Project(model.getProject()), new UserPrefs());
         expectedModel.setTask(lastTask, editedTask);
         expectedModel.commitProject();
 
@@ -85,8 +81,7 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedTask);
 
-        Model expectedModel = new ModelManager(
-                new ProjectList(model.getProjectList()), new Project(model.getProject()), new UserPrefs());
+        Model expectedModel = new ModelManager(new Project(model.getProject()), new UserPrefs());
         expectedModel.commitProject();
 
         assertCommandSuccess(editCommand, model, commandHistory, expectedMessage, expectedModel);
@@ -103,8 +98,7 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedTask);
 
-        Model expectedModel = new ModelManager(
-                new ProjectList(model.getProjectList()), new Project(model.getProject()), new UserPrefs());
+        Model expectedModel = new ModelManager(new Project(model.getProject()), new UserPrefs());
         expectedModel.setTask(model.getFilteredTaskList().get(0), editedTask);
         expectedModel.commitProject();
 
@@ -164,8 +158,7 @@ public class EditCommandTest {
         Task taskToEdit = model.getFilteredTaskList().get(INDEX_FIRST_PERSON.getZeroBased());
         EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder(editedTask).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
-        Model expectedModel = new ModelManager(
-                new ProjectList(model.getProjectList()), new Project(model.getProject()), new UserPrefs());
+        Model expectedModel = new ModelManager(new Project(model.getProject()), new UserPrefs());
         expectedModel.setTask(taskToEdit, editedTask);
         expectedModel.commitProject();
 
@@ -207,8 +200,7 @@ public class EditCommandTest {
         Task editedTask = new TaskBuilder().build();
         EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder(editedTask).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
-        Model expectedModel = new ModelManager(
-                new ProjectList(model.getProjectList()), new Project(model.getProject()), new UserPrefs());
+        Model expectedModel = new ModelManager(new Project(model.getProject()), new UserPrefs());
 
         showTaskAtIndex(model, INDEX_SECOND_PERSON);
         Task taskToEdit = model.getFilteredTaskList().get(INDEX_FIRST_PERSON.getZeroBased());

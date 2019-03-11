@@ -17,17 +17,13 @@ import seedu.project.logic.Logic;
 import seedu.project.logic.LogicManager;
 import seedu.project.model.Model;
 import seedu.project.model.ModelManager;
-import seedu.project.model.ProjectList;
-import seedu.project.model.ReadOnlyProjectList;
+import seedu.project.model.Project;
+import seedu.project.model.ReadOnlyProject;
 import seedu.project.model.ReadOnlyUserPrefs;
 import seedu.project.model.UserPrefs;
-import seedu.project.model.project.Project;
-import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.util.SampleDataUtil;
-import seedu.project.storage.JsonProjectListStorage;
 import seedu.project.storage.JsonProjectStorage;
 import seedu.project.storage.JsonUserPrefsStorage;
-import seedu.project.storage.ProjectListStorage;
 import seedu.project.storage.ProjectStorage;
 import seedu.project.storage.Storage;
 import seedu.project.storage.StorageManager;
@@ -60,9 +56,8 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
-        ProjectListStorage projectListStorage = new JsonProjectListStorage(userPrefs.getProjectListFilePath());
         ProjectStorage projectStorage = new JsonProjectStorage(userPrefs.getProjectFilePath());
-        storage = new StorageManager(projectListStorage, projectStorage, userPrefsStorage);
+        storage = new StorageManager(projectStorage, userPrefsStorage);
 
         initLogging(config);
 
@@ -81,38 +76,23 @@ public class MainApp extends Application {
      * used instead if errors occur when reading {@code storage}'s project.
      */
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
-        Optional<ReadOnlyProjectList> projectListOptional;
         Optional<ReadOnlyProject> projectOptional;
-        ReadOnlyProjectList initialProjectList;
-        ReadOnlyProject initialProject;
+        ReadOnlyProject initialData;
         try {
             projectOptional = storage.readProject();
             if (!projectOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample Project");
             }
-            initialProject = projectOptional.orElseGet(SampleDataUtil::getSampleProject);
+            initialData = projectOptional.orElseGet(SampleDataUtil::getSampleProject);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty Project");
-            initialProject = new Project();
+            initialData = new Project();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty Project");
-            initialProject = new Project();
+            initialData = new Project();
         }
 
-        try {
-            projectListOptional = storage.readProjectList();
-            if (!projectListOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a sample ProjectList");
-            }
-            initialProjectList = projectListOptional.orElseGet(SampleDataUtil::getSampleProjectList);
-        } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty ProjectList");
-            initialProjectList = new ProjectList();
-        } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty ProjectList");
-            initialProjectList = new ProjectList();
-        }
-        return new ModelManager(initialProjectList, initialProject, userPrefs);
+        return new ModelManager(initialData, userPrefs);
     }
 
     private void initLogging(Config config) {

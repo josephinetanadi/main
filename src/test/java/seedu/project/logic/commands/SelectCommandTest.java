@@ -9,7 +9,6 @@ import static seedu.project.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.project.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.project.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.project.testutil.TypicalTasks.getTypicalProject;
-import static seedu.project.testutil.TypicalTasks.getTypicalProjectList;
 
 import org.junit.Test;
 
@@ -24,8 +23,8 @@ import seedu.project.model.UserPrefs;
  * Contains integration tests (interaction with the Model) for {@code SelectCommand}.
  */
 public class SelectCommandTest {
-    private Model model = new ModelManager(getTypicalProjectList(), getTypicalProject(), new UserPrefs());
-    private Model expectedModel = new ModelManager(getTypicalProjectList(), getTypicalProject(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalProject(), new UserPrefs());
+    private Model expectedModel = new ModelManager(getTypicalProject(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test

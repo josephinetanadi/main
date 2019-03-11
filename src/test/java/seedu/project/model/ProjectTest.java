@@ -21,8 +21,6 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.project.model.project.Project;
-import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.task.Task;
 import seedu.project.model.task.exceptions.DuplicateTaskException;
 import seedu.project.testutil.TaskBuilder;

@@ -20,10 +20,9 @@ import seedu.project.commons.core.GuiSettings;
 import seedu.project.logic.CommandHistory;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
-import seedu.project.model.ReadOnlyProjectList;
+import seedu.project.model.Project;
+import seedu.project.model.ReadOnlyProject;
 import seedu.project.model.ReadOnlyUserPrefs;
-import seedu.project.model.project.Project;
-import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.task.Task;
 import seedu.project.testutil.TaskBuilder;
 
@@ -114,51 +113,6 @@ public class AddCommandTest {
         }
 
         @Override
-        public Path getProjectListFilePath() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setProjectListFilePath(Path projectListFilePath) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setProjectList(ReadOnlyProjectList projectList) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyProjectList getProjectList() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public boolean hasProject(Project project) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void deleteProject(Project project) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void addProject(Project project) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setProject(ReadOnlyProject newData) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setProject(Project target, Project editedProject) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
         public Path getProjectFilePath() {
             throw new AssertionError("This method should not be called.");
         }
@@ -170,6 +124,11 @@ public class AddCommandTest {
 
         @Override
         public void addTask(Task task) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setProject(ReadOnlyProject newData) {
             throw new AssertionError("This method should not be called.");
         }
 

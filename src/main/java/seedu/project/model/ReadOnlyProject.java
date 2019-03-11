@@ -1,4 +1,4 @@
-package seedu.project.model.project;
+package seedu.project.model;
 
 import javafx.beans.Observable;
 import javafx.collections.ObservableList;

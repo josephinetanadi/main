@@ -9,8 +9,7 @@ import org.testfx.api.FxToolkit;
 import guitests.guihandles.MainWindowHandle;
 import javafx.stage.Stage;
 import seedu.project.TestApp;
-import seedu.project.model.ReadOnlyProjectList;
-import seedu.project.model.project.ReadOnlyProject;
+import seedu.project.model.ReadOnlyProject;
 
 /**
  * Contains helper methods that system tests require.
@@ -22,12 +21,10 @@ public class SystemTestSetupHelper {
     /**
      * Sets up a new {@code TestApp} and returns it.
      */
-    public TestApp setupApplication(Supplier<ReadOnlyProjectList> projectList, Supplier<ReadOnlyProject> project,
-                                    Path projectListFileLocation, Path projectFileLocation) {
+    public TestApp setupApplication(Supplier<ReadOnlyProject> project, Path saveFileLocation) {
         try {
             FxToolkit.registerStage(Stage::new);
-            FxToolkit.setupApplication(() -> testApp =
-                    new TestApp(projectList, project, projectListFileLocation, projectFileLocation));
+            FxToolkit.setupApplication(() -> testApp = new TestApp(project, saveFileLocation));
         } catch (TimeoutException te) {
             throw new AssertionError("Application takes too long to set up.", te);
         }

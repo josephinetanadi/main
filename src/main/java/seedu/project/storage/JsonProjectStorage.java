@@ -13,7 +13,7 @@ import seedu.project.commons.exceptions.DataConversionException;
 import seedu.project.commons.exceptions.IllegalValueException;
 import seedu.project.commons.util.FileUtil;
 import seedu.project.commons.util.JsonUtil;
-import seedu.project.model.project.ReadOnlyProject;
+import seedu.project.model.ReadOnlyProject;
 
 /**
  * A class to access Project data stored as a json file on the hard disk.

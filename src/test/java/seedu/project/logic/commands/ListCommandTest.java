@@ -4,7 +4,6 @@ import static seedu.project.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.project.logic.commands.CommandTestUtil.showTaskAtIndex;
 import static seedu.project.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.project.testutil.TypicalTasks.getTypicalProject;
-import static seedu.project.testutil.TypicalTasks.getTypicalProjectList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,8 +24,8 @@ public class ListCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalProjectList(), getTypicalProject(), new UserPrefs());
-        expectedModel = new ModelManager(model.getProjectList(), model.getProject(), new UserPrefs());
+        model = new ModelManager(getTypicalProject(), new UserPrefs());
+        expectedModel = new ModelManager(model.getProject(), new UserPrefs());
     }
 
     @Test
