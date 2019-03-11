@@ -35,7 +35,7 @@ import seedu.project.logic.commands.FindCommand;
 import seedu.project.logic.commands.ListCommand;
 import seedu.project.logic.commands.SelectCommand;
 import seedu.project.model.Model;
-import seedu.project.model.Project;
+import seedu.project.model.project.Project;
 import seedu.project.testutil.TypicalTasks;
 import seedu.project.ui.BrowserPanel;
 import seedu.project.ui.CommandBox;

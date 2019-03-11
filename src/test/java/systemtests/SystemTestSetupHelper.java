@@ -9,7 +9,7 @@ import org.testfx.api.FxToolkit;
 import guitests.guihandles.MainWindowHandle;
 import javafx.stage.Stage;
 import seedu.project.TestApp;
-import seedu.project.model.ReadOnlyProject;
+import seedu.project.model.project.ReadOnlyProject;
 
 /**
  * Contains helper methods that system tests require.

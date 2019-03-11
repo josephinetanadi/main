@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.collections.ObservableList;
 import seedu.project.commons.core.GuiSettings;
+import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.task.Task;
 
 /**

@@ -8,7 +8,7 @@ import java.nio.file.Path;
 
 import org.junit.Test;
 
-import seedu.project.model.Project;
+import seedu.project.model.project.Project;
 import seedu.project.model.task.Task;
 import seedu.project.model.util.SampleDataUtil;
 import seedu.project.testutil.TestUtil;

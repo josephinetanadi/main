@@ -12,8 +12,8 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.project.commons.core.GuiSettings;
-import seedu.project.model.Project;
-import seedu.project.model.ReadOnlyProject;
+import seedu.project.model.project.Project;
+import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.UserPrefs;
 
 public class StorageManagerTest {

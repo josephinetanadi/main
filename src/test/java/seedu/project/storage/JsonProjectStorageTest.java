@@ -17,8 +17,8 @@ import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.project.commons.exceptions.DataConversionException;
-import seedu.project.model.Project;
-import seedu.project.model.ReadOnlyProject;
+import seedu.project.model.project.Project;
+import seedu.project.model.project.ReadOnlyProject;
 
 public class JsonProjectStorageTest {
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonProjectStorageTest");

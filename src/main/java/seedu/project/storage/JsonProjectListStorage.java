@@ -13,48 +13,48 @@ import seedu.project.commons.exceptions.DataConversionException;
 import seedu.project.commons.exceptions.IllegalValueException;
 import seedu.project.commons.util.FileUtil;
 import seedu.project.commons.util.JsonUtil;
-import seedu.project.model.project.ReadOnlyProject;
+import seedu.project.model.ReadOnlyProjectList;
 
 /**
  * A class to access Project data stored as a json file on the hard disk.
  */
-public class JsonProjectStorage implements ProjectStorage {
+public class JsonProjectListStorage implements ProjectListStorage {
 
-    private static final Logger logger = LogsCenter.getLogger(JsonProjectStorage.class);
+    private static final Logger logger = LogsCenter.getLogger(JsonProjectListStorage.class);
 
     private Path filePath;
     private Path backupFilePath;
 
-    public JsonProjectStorage(Path filePath) {
+    public JsonProjectListStorage(Path filePath) {
         this.filePath = filePath;
         backupFilePath = Paths.get(filePath.toString() + ".backup");
     }
 
-    public Path getProjectFilePath() {
+    public Path getProjectListFilePath() {
         return filePath;
     }
 
     @Override
-    public Optional<ReadOnlyProject> readProject() throws DataConversionException {
-        return readProject(filePath);
+    public Optional<ReadOnlyProjectList> readProjectList() throws DataConversionException {
+        return readProjectList(filePath);
     }
 
     /**
-     * Similar to {@link #readProject()}.
+     * Similar to {@link #readProjectList()}.
      *
      * @param filePath location of the data. Cannot be null.
      * @throws DataConversionException if the file is not in the correct format.
      */
-    public Optional<ReadOnlyProject> readProject(Path filePath) throws DataConversionException {
+    public Optional<ReadOnlyProjectList> readProjectList(Path filePath) throws DataConversionException {
         requireNonNull(filePath);
 
-        Optional<JsonSerializableProject> jsonProject = JsonUtil.readJsonFile(filePath, JsonSerializableProject.class);
-        if (!jsonProject.isPresent()) {
+        Optional<JsonSerializableProjectList> jsonProjectList = JsonUtil.readJsonFile(filePath, JsonSerializableProjectList.class);
+        if (!jsonProjectList.isPresent()) {
             return Optional.empty();
         }
 
         try {
-            return Optional.of(jsonProject.get().toModelType());
+            return Optional.of(jsonProjectList.get().toModelType());
         } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
             throw new DataConversionException(ive);
@@ -62,25 +62,25 @@ public class JsonProjectStorage implements ProjectStorage {
     }
 
     @Override
-    public void saveProject(ReadOnlyProject project) throws IOException {
-        saveProject(project, filePath);
+    public void saveProjectList(ReadOnlyProjectList projectList) throws IOException {
+        saveProjectList(projectList, filePath);
     }
 
     /**
-     * Similar to {@link #saveProject(ReadOnlyProject)}.
+     * Similar to {@link #saveProjectList(ReadOnlyProjectList)}.
      *
      * @param filePath location of the data. Cannot be null.
      */
-    public void saveProject(ReadOnlyProject project, Path filePath) throws IOException {
-        requireNonNull(project);
+    public void saveProjectList(ReadOnlyProjectList projectList, Path filePath) throws IOException {
+        requireNonNull(projectList);
         requireNonNull(filePath);
 
         FileUtil.createIfMissing(filePath);
-        JsonUtil.saveJsonFile(new JsonSerializableProject(project), filePath);
+        JsonUtil.saveJsonFile(new JsonSerializableProjectList(projectList), filePath);
     }
 
-    public void backupProject(ReadOnlyProject project) throws IOException {
-        saveProject(project, backupFilePath);
+    public void backupProjectList(ReadOnlyProjectList projectList) throws IOException {
+        saveProjectList(projectList, backupFilePath);
     }
 
 }

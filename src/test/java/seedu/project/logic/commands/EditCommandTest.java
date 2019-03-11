@@ -23,7 +23,7 @@ import seedu.project.logic.CommandHistory;
 import seedu.project.logic.commands.EditCommand.EditTaskDescriptor;
 import seedu.project.model.Model;
 import seedu.project.model.ModelManager;
-import seedu.project.model.Project;
+import seedu.project.model.project.Project;
 import seedu.project.model.UserPrefs;
 import seedu.project.model.task.Task;
 import seedu.project.testutil.EditTaskDescriptorBuilder;

@@ -1,4 +1,4 @@
-package seedu.project.model;
+package seedu.project.model.project;
 
 import static java.util.Objects.requireNonNull;
 
@@ -16,6 +16,9 @@ import seedu.project.model.task.UniqueTaskList;
  */
 public class Project implements ReadOnlyProject {
 
+    // Identity fields
+    private final Name name;
+
     private final UniqueTaskList tasks;
     private final InvalidationListenerManager invalidationListenerManager = new InvalidationListenerManager();
 
@@ -32,12 +35,25 @@ public class Project implements ReadOnlyProject {
 
     public Project() {}
 
-    /**
-     * Creates an Project using the Tasks in the {@code toBeCopied}
-     */
+    public Project(Name name) {
+        this.name = name;
+    }
+
     public Project(ReadOnlyProject toBeCopied) {
         this();
         resetData(toBeCopied);
+    }
+
+    /**
+     * Creates an Project using the Tasks in the {@code toBeCopied}
+     */
+    public Project(ReadOnlyProject toBeCopied, Name name) {
+        this.name = name;
+        resetData(toBeCopied);
+    }
+
+    public Name getName() {
+        return name;
     }
 
     //// list overwrite operations
@@ -98,6 +114,19 @@ public class Project implements ReadOnlyProject {
     public void removeTask(Task key) {
         tasks.remove(key);
         indicateModified();
+    }
+
+    /**
+     * Returns true if both tasks of the same name have at least one other identity field that is the same.
+     * This defines a weaker notion of equality between two tasks.
+     */
+    public boolean isSameProject(Project otherProject) {
+        if (otherProject == this) {
+            return true;
+        }
+
+        return otherProject != null
+                && otherProject.getName().equals(getName());
     }
 
     @Override

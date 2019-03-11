@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import seedu.project.model.Project;
-import seedu.project.model.ReadOnlyProject;
+import seedu.project.model.project.Project;
+import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Address;
 import seedu.project.model.task.Email;

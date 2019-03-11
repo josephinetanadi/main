@@ -1,4 +1,4 @@
-package seedu.project.model;
+package seedu.project.model.project;
 
 import java.util.ArrayList;
 import java.util.List;

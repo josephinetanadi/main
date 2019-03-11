@@ -15,6 +15,9 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.project.commons.core.GuiSettings;
 import seedu.project.commons.core.LogsCenter;
+import seedu.project.model.project.Project;
+import seedu.project.model.project.ReadOnlyProject;
+import seedu.project.model.project.VersionedProject;
 import seedu.project.model.task.Task;
 import seedu.project.model.task.exceptions.TaskNotFoundException;
 

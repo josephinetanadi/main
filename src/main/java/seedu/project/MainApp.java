@@ -17,13 +17,15 @@ import seedu.project.logic.Logic;
 import seedu.project.logic.LogicManager;
 import seedu.project.model.Model;
 import seedu.project.model.ModelManager;
-import seedu.project.model.Project;
-import seedu.project.model.ReadOnlyProject;
+import seedu.project.model.project.Project;
+import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.ReadOnlyUserPrefs;
 import seedu.project.model.UserPrefs;
 import seedu.project.model.util.SampleDataUtil;
+import seedu.project.storage.JsonProjectListStorage;
 import seedu.project.storage.JsonProjectStorage;
 import seedu.project.storage.JsonUserPrefsStorage;
+import seedu.project.storage.ProjectListStorage;
 import seedu.project.storage.ProjectStorage;
 import seedu.project.storage.Storage;
 import seedu.project.storage.StorageManager;
@@ -56,8 +58,9 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
+        ProjectListStorage projectListStorage = new JsonProjectListStorage(userPrefs.getProjectListFilePath());
         ProjectStorage projectStorage = new JsonProjectStorage(userPrefs.getProjectFilePath());
-        storage = new StorageManager(projectStorage, userPrefsStorage);
+        storage = new StorageManager(projectListStorage, projectStorage, userPrefsStorage);
 
         initLogging(config);
 
