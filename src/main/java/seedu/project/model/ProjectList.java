@@ -8,7 +8,6 @@ import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 import seedu.project.commons.util.InvalidationListenerManager;
 import seedu.project.model.project.Project;
-import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.project.UniqueProjectList;
 
 /**
@@ -83,7 +82,8 @@ public class ProjectList implements ReadOnlyProjectList {
     /**
      * Replaces the given project {@code target} in the list with {@code editedProject}.
      * {@code target} must exist in the project list.
-     * The project identity of {@code editedProject} must not be the same as another existing project in the project list.
+     * The project identity of {@code editedProject} must not be the same as another
+     * existing project in the project list.
      */
     public void setProject(Project target, Project editedProject) {
         requireNonNull(editedProject);

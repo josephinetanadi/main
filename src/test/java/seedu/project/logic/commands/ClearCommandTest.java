@@ -8,8 +8,8 @@ import org.junit.Test;
 import seedu.project.logic.CommandHistory;
 import seedu.project.model.Model;
 import seedu.project.model.ModelManager;
-import seedu.project.model.project.Project;
 import seedu.project.model.UserPrefs;
+import seedu.project.model.project.Project;
 
 public class ClearCommandTest {
 

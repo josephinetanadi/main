@@ -8,16 +8,15 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.project.model.project.Project;
 import seedu.project.model.task.exceptions.DuplicateTaskException;
 import seedu.project.model.task.exceptions.TaskNotFoundException;
 
 /**
  * A list of projects that enforces uniqueness between its elements and does not allow nulls.
- * A project is considered unique by comparing using {@code Project#isSameProject(Project)}. As such, adding and updating of
- * tasks uses Project#isSameProject(Project) for equality so as to ensure that the task being added or updated is
- * unique in terms of identity in the UniqueProjectList. However, the removal of a project uses Project#equals(Object) so
- * as to ensure that the task with exactly the same fields will be removed.
+ * A project is considered unique by comparing using {@code Project#isSameProject(Project)}. As such, adding and
+ * updating of tasks uses Project#isSameProject(Project) for equality so as to ensure that the task being added or
+ * updated is unique in terms of identity in the UniqueProjectList. However, the removal of a project uses
+ * Project#equals(Object) so as to ensure that the task with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
  *

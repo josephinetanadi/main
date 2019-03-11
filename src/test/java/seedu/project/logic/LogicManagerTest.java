@@ -27,8 +27,8 @@ import seedu.project.logic.parser.exceptions.ParseException;
 import seedu.project.model.Model;
 import seedu.project.model.ModelManager;
 import seedu.project.model.ReadOnlyProjectList;
-import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.UserPrefs;
+import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.task.Task;
 import seedu.project.storage.JsonProjectListStorage;
 import seedu.project.storage.JsonProjectStorage;
@@ -81,7 +81,8 @@ public class LogicManagerTest {
     @Test
     public void execute_storageThrowsIoException_throwsCommandException() throws Exception {
         // Setup LogicManager with JsonProjectIoExceptionThrowingStub
-        JsonProjectListStorage projectListStorage = new JsonProjectListIoExceptionThrowingStub(temporaryFolder.newFile().toPath());
+        JsonProjectListStorage projectListStorage;
+        projectListStorage = new JsonProjectListIoExceptionThrowingStub(temporaryFolder.newFile().toPath());
         JsonProjectStorage projectStorage = new JsonProjectIoExceptionThrowingStub(temporaryFolder.newFile().toPath());
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.newFile().toPath());
         StorageManager storage = new StorageManager(projectListStorage, projectStorage, userPrefsStorage);

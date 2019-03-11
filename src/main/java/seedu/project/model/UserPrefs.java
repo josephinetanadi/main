@@ -79,7 +79,8 @@ public class UserPrefs implements ReadOnlyUserPrefs {
 
         UserPrefs o = (UserPrefs) other;
 
-        return guiSettings.equals(o.guiSettings) && projectListFilePath.equals(o.projectListFilePath) && projectFilePath.equals(o.projectFilePath);
+        return guiSettings.equals(o.guiSettings) && projectListFilePath.equals(o.projectListFilePath)
+                && projectFilePath.equals(o.projectFilePath);
     }
 
     @Override

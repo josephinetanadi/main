@@ -48,7 +48,8 @@ public class JsonProjectListStorage implements ProjectListStorage {
     public Optional<ReadOnlyProjectList> readProjectList(Path filePath) throws DataConversionException {
         requireNonNull(filePath);
 
-        Optional<JsonSerializableProjectList> jsonProjectList = JsonUtil.readJsonFile(filePath, JsonSerializableProjectList.class);
+        Optional<JsonSerializableProjectList> jsonProjectList = JsonUtil.readJsonFile(filePath,
+                JsonSerializableProjectList.class);
         if (!jsonProjectList.isPresent()) {
             return Optional.empty();
         }

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.project.commons.exceptions.IllegalValueException;
-import seedu.project.model.project.Project;
 import seedu.project.model.project.Name;
+import seedu.project.model.project.Project;
 
 /**
  * Jackson-friendly version of {@link Project}.

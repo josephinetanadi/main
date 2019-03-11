@@ -7,10 +7,10 @@ import java.util.logging.Logger;
 
 import seedu.project.commons.core.LogsCenter;
 import seedu.project.commons.exceptions.DataConversionException;
-import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.ReadOnlyProjectList;
 import seedu.project.model.ReadOnlyUserPrefs;
 import seedu.project.model.UserPrefs;
+import seedu.project.model.project.ReadOnlyProject;
 
 /**
  * Manages storage of Project data in local storage.
@@ -22,7 +22,8 @@ public class StorageManager implements Storage {
     private ProjectStorage projectStorage;
     private UserPrefsStorage userPrefsStorage;
 
-    public StorageManager(ProjectListStorage projectListStorage, ProjectStorage projectStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(ProjectListStorage projectListStorage, ProjectStorage projectStorage,
+                          UserPrefsStorage userPrefsStorage) {
         super();
         this.projectListStorage = projectListStorage;
         this.projectStorage = projectStorage;

@@ -5,8 +5,8 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import seedu.project.commons.exceptions.DataConversionException;
-import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.project.Project;
+import seedu.project.model.project.ReadOnlyProject;
 
 /**
  * Represents a storage for {@link Project}.
