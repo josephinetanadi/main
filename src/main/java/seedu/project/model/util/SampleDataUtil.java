@@ -4,8 +4,9 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import seedu.project.model.ProjectList;
+import seedu.project.model.ReadOnlyProjectList;
 import seedu.project.model.project.Project;
-import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Address;
 import seedu.project.model.task.Email;
@@ -40,12 +41,19 @@ public class SampleDataUtil {
         };
     }
 
-    public static ReadOnlyProject getSampleProject() {
-        Project sampleAb = new Project();
+    public static Project getSampleProject() {
+        Project sampleProject = new Project();
+        sampleProject.setName("CS2101 Project");
         for (Task sampleTask : getSampleTasks()) {
-            sampleAb.addTask(sampleTask);
+            sampleProject.addTask(sampleTask);
         }
-        return sampleAb;
+        return sampleProject;
+    }
+
+    public static ReadOnlyProjectList getSampleProjectList() {
+        ProjectList sampleProjectList = new ProjectList();
+        sampleProjectList.addProject(getSampleProject());
+        return sampleProjectList;
     }
 
     /**

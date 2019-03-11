@@ -3,6 +3,7 @@ package seedu.project.model.project;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.Objects;
 
 import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
@@ -57,6 +58,10 @@ public class Project implements ReadOnlyProject {
 
     public Name getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = new Name(name);
     }
 
     //// list overwrite operations
@@ -170,6 +175,6 @@ public class Project implements ReadOnlyProject {
 
     @Override
     public int hashCode() {
-        return tasks.hashCode();
+        return Objects.hash(name, tasks);
     }
 }

@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.collections.ObservableList;
 import seedu.project.commons.core.GuiSettings;
+import seedu.project.model.project.Project;
 import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.task.Task;
 
@@ -39,6 +40,53 @@ public interface Model {
     /**
      * Returns the user prefs' project file path.
      */
+    Path getProjectListFilePath();
+
+    /**
+     * Sets the user prefs' project file path.
+     */
+    void setProjectListFilePath(Path projectListFilePath);
+
+    /**
+     * Replaces project list data with the data in {@code projectList}.
+     */
+    void setProjectList(ReadOnlyProjectList projectList);
+
+    /** Returns the ProjectList */
+    ReadOnlyProjectList getProjectList();
+
+    /**
+     * Returns true if a project with the same identity as {@code project} exists in the
+     * project.
+     */
+    boolean hasProject(Project project);
+
+    /**
+     * Deletes the given task. The task must exist in the project.
+     */
+    void deleteProject(Project project);
+
+    /**
+     * Adds the given project. {@code project} must not already exist in the project list.
+     */
+    void addProject(Project project);
+
+    /**
+     * Replaces project data with the data in {@code project}.
+     */
+    void setProject(ReadOnlyProject project);
+
+    /**
+     * Replaces the given project {@code target} with {@code editedProject}.
+     * {@code target} must exist in the project list. The project identity of
+     * {@code editedProject} must not be the same as another existing project in the
+     * project list.
+     */
+    void setProject(Project target, Project editedProject);
+
+    /**
+     * Returns the user prefs' project file path.
+     */
     Path getProjectFilePath();
 
     /**
@@ -46,10 +94,6 @@ public interface Model {
      */
     void setProjectFilePath(Path projectFilePath);
 
-    /**
-     * Replaces project data with the data in {@code project}.
-     */
-    void setProject(ReadOnlyProject project);
 
     /** Returns the Project */
     ReadOnlyProject getProject();

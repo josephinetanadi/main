@@ -35,6 +35,7 @@ import seedu.project.logic.commands.FindCommand;
 import seedu.project.logic.commands.ListCommand;
 import seedu.project.logic.commands.SelectCommand;
 import seedu.project.model.Model;
+import seedu.project.model.ProjectList;
 import seedu.project.model.project.Project;
 import seedu.project.testutil.TypicalTasks;
 import seedu.project.ui.BrowserPanel;
@@ -64,7 +65,8 @@ public abstract class ProjectSystemTest {
     @Before
     public void setUp() {
         setupHelper = new SystemTestSetupHelper();
-        testApp = setupHelper.setupApplication(this::getInitialData, getDataFileLocation());
+        testApp = setupHelper.setupApplication(this::getInitialProjectList, this::getInitialProject,
+                getProjectListSaveLocation(), getProjectSaveLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
         waitUntilBrowserLoaded(getBrowserPanel());
@@ -77,17 +79,31 @@ public abstract class ProjectSystemTest {
     }
 
     /**
-     * Returns the data to be loaded into the file in {@link #getDataFileLocation()}.
+     * Returns the data to be loaded into the file in {@link #getProjectListSaveLocation()}.
      */
-    protected Project getInitialData() {
+    protected ProjectList getInitialProjectList() {
+        return TypicalTasks.getTypicalProjectList();
+    }
+
+    /**
+     * Returns the data to be loaded into the file in {@link #getProjectSaveLocation()}.
+     */
+    protected Project getInitialProject() {
         return TypicalTasks.getTypicalProject();
     }
 
     /**
-     * Returns the directory of the data file.
+     * Returns the directory of the project list file.
      */
-    protected Path getDataFileLocation() {
-        return TestApp.SAVE_LOCATION_FOR_TESTING;
+    protected Path getProjectListSaveLocation() {
+        return TestApp.SAVE_LOCATION_FOR_TESTING_PL;
+    }
+
+    /**
+     * Returns the directory of the project file.
+     */
+    protected Path getProjectSaveLocation() {
+        return TestApp.SAVE_LOCATION_FOR_TESTING_P;
     }
 
     public MainWindowHandle getMainWindowHandle() {
@@ -273,7 +289,7 @@ public abstract class ProjectSystemTest {
         assertEquals("", getResultDisplay().getText());
         assertListMatching(getTaskListPanel(), getModel().getFilteredTaskList());
         assertEquals(BrowserPanel.DEFAULT_PAGE, getBrowserPanel().getLoadedUrl());
-        assertEquals(Paths.get(".").resolve(testApp.getStorageSaveLocation()).toString(),
+        assertEquals(Paths.get(".").resolve(testApp.getProjectSaveLocation()).toString(),
                 getStatusBarFooter().getSaveLocation());
         assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
     }

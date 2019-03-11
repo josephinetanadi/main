@@ -8,6 +8,7 @@ import static seedu.project.model.Model.PREDICATE_SHOW_ALL_TASKS;
 import static seedu.project.testutil.TypicalTasks.ALICE;
 import static seedu.project.testutil.TypicalTasks.BENSON;
 import static seedu.project.testutil.TypicalTasks.BOB;
+import static seedu.project.testutil.TypicalTasks.CS2101;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -24,6 +25,7 @@ import seedu.project.model.task.NameContainsKeywordsPredicate;
 import seedu.project.model.task.Task;
 import seedu.project.model.task.exceptions.TaskNotFoundException;
 import seedu.project.testutil.ProjectBuilder;
+import seedu.project.testutil.ProjectListBuilder;
 import seedu.project.testutil.TaskBuilder;
 
 public class ModelManagerTest {
@@ -152,13 +154,14 @@ public class ModelManagerTest {
 
     @Test
     public void equals() {
+        ProjectList projectList = new ProjectListBuilder().withProject(CS2101).build();
         Project project = new ProjectBuilder().withTask(ALICE).withTask(BENSON).build();
         Project differentProject = new Project();
         UserPrefs userPrefs = new UserPrefs();
 
         // same values -> returns true
-        modelManager = new ModelManager(project, userPrefs);
-        ModelManager modelManagerCopy = new ModelManager(project, userPrefs);
+        ModelManager modelManager = new ModelManager(projectList, project, userPrefs);
+        ModelManager modelManagerCopy = new ModelManager(projectList, project, userPrefs);
         assertTrue(modelManager.equals(modelManagerCopy));
 
         // same object -> returns true
@@ -171,12 +174,12 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(5));
 
         // different project -> returns false
-        assertFalse(modelManager.equals(new ModelManager(differentProject, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(projectList, differentProject, userPrefs)));
 
         // different filteredList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
         modelManager.updateFilteredTaskList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
-        assertFalse(modelManager.equals(new ModelManager(project, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(projectList, project, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
         modelManager.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
@@ -184,6 +187,6 @@ public class ModelManagerTest {
         // different userPrefs -> returns false
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setProjectFilePath(Paths.get("differentFilePath"));
-        assertFalse(modelManager.equals(new ModelManager(project, differentUserPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(projectList, project, differentUserPrefs)));
     }
 }

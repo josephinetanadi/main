@@ -2,6 +2,7 @@ package seedu.project.logic.commands;
 
 import static seedu.project.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.project.testutil.TypicalTasks.getTypicalProject;
+import static seedu.project.testutil.TypicalTasks.getTypicalProjectList;
 
 import org.junit.Test;
 
@@ -26,8 +27,8 @@ public class ClearCommandTest {
 
     @Test
     public void execute_nonEmptyProject_success() {
-        Model model = new ModelManager(getTypicalProject(), new UserPrefs());
-        Model expectedModel = new ModelManager(getTypicalProject(), new UserPrefs());
+        Model model = new ModelManager(getTypicalProjectList(), getTypicalProject(), new UserPrefs());
+        Model expectedModel = new ModelManager(getTypicalProjectList(), getTypicalProject(), new UserPrefs());
         expectedModel.setProject(new Project());
         expectedModel.commitProject();
 

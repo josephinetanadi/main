@@ -134,7 +134,7 @@ public class ProjectList implements ReadOnlyProjectList {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Project // instanceof handles nulls
+                || (other instanceof ProjectList // instanceof handles nulls
                 && projects.equals(((ProjectList) other).projects));
     }
 
