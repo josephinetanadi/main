@@ -5,10 +5,11 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import seedu.project.commons.exceptions.DataConversionException;
-import seedu.project.model.ReadOnlyProject;
+import seedu.project.model.project.Project;
+import seedu.project.model.project.ReadOnlyProject;
 
 /**
- * Represents a storage for {@link seedu.project.model.Project}.
+ * Represents a storage for {@link Project}.
  */
 public interface ProjectStorage {
 

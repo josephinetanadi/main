@@ -3,6 +3,7 @@ package seedu.project.logic.commands;
 import static seedu.project.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.project.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.project.testutil.TypicalTasks.getTypicalProject;
+import static seedu.project.testutil.TypicalTasks.getTypicalProjectList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,14 +25,14 @@ public class AddCommandIntegrationTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalProject(), new UserPrefs());
+        model = new ModelManager(getTypicalProjectList(), getTypicalProject(), new UserPrefs());
     }
 
     @Test
     public void execute_newTask_success() {
         Task validTask = new TaskBuilder().build();
 
-        Model expectedModel = new ModelManager(model.getProject(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getProjectList(), model.getProject(), new UserPrefs());
         expectedModel.addTask(validTask);
         expectedModel.commitProject();
 

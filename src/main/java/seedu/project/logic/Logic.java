@@ -8,7 +8,7 @@ import seedu.project.commons.core.GuiSettings;
 import seedu.project.logic.commands.CommandResult;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.logic.parser.exceptions.ParseException;
-import seedu.project.model.ReadOnlyProject;
+import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.task.Task;
 
 /**

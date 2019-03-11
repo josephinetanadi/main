@@ -4,6 +4,7 @@ import static seedu.project.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.project.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.project.logic.commands.CommandTestUtil.deleteFirstTask;
 import static seedu.project.testutil.TypicalTasks.getTypicalProject;
+import static seedu.project.testutil.TypicalTasks.getTypicalProjectList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,8 +16,8 @@ import seedu.project.model.UserPrefs;
 
 public class UndoCommandTest {
 
-    private final Model model = new ModelManager(getTypicalProject(), new UserPrefs());
-    private final Model expectedModel = new ModelManager(getTypicalProject(), new UserPrefs());
+    private final Model model = new ModelManager(getTypicalProjectList(), getTypicalProject(), new UserPrefs());
+    private final Model expectedModel = new ModelManager(getTypicalProjectList(), getTypicalProject(), new UserPrefs());
     private final CommandHistory commandHistory = new CommandHistory();
 
     @Before

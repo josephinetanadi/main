@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.project.logic.CommandHistory;
 import seedu.project.model.Model;
-import seedu.project.model.Project;
+import seedu.project.model.project.Project;
 
 /**
  * Clears the project.
