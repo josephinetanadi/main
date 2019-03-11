@@ -19,7 +19,7 @@ import org.junit.Test;
 
 import guitests.guihandles.StatusBarFooterHandle;
 import seedu.project.logic.Logic;
-import seedu.project.model.Project;
+import seedu.project.model.project.Project;
 
 public class StatusBarFooterTest extends GuiUnitTest {
 

@@ -14,6 +14,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import seedu.project.model.project.Project;
+import seedu.project.model.project.ReadOnlyProject;
+import seedu.project.model.project.VersionedProject;
 import seedu.project.testutil.ProjectBuilder;
 
 public class VersionedProjectTest {

@@ -16,7 +16,7 @@ import seedu.project.commons.core.index.Index;
 import seedu.project.logic.CommandHistory;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
-import seedu.project.model.Project;
+import seedu.project.model.project.Project;
 import seedu.project.model.task.NameContainsKeywordsPredicate;
 import seedu.project.model.task.Task;
 import seedu.project.testutil.EditTaskDescriptorBuilder;
