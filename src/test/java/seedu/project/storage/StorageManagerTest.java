@@ -25,9 +25,10 @@ public class StorageManagerTest {
 
     @Before
     public void setUp() {
-        JsonProjectStorage projectStorage = new JsonProjectStorage(getTempFilePath("ab"));
+        JsonProjectListStorage projectListStorage = new JsonProjectListStorage(getTempFilePath("pl"));
+        JsonProjectStorage projectStorage = new JsonProjectStorage(getTempFilePath("p"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(projectStorage, userPrefsStorage);
+        storageManager = new StorageManager(projectListStorage, projectStorage, userPrefsStorage);
     }
 
     private Path getTempFilePath(String fileName) {

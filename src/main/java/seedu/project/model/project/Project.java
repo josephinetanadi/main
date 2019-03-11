@@ -17,7 +17,7 @@ import seedu.project.model.task.UniqueTaskList;
 public class Project implements ReadOnlyProject {
 
     // Identity fields
-    private final Name name;
+    private Name name;
 
     private final UniqueTaskList tasks;
     private final InvalidationListenerManager invalidationListenerManager = new InvalidationListenerManager();
@@ -30,12 +30,14 @@ public class Project implements ReadOnlyProject {
      *   among constructors.
      */
     {
+        name = new Name("");
         tasks = new UniqueTaskList();
     }
 
     public Project() {}
 
     public Project(Name name) {
+        this();
         this.name = name;
     }
 
@@ -48,6 +50,7 @@ public class Project implements ReadOnlyProject {
      * Creates an Project using the Tasks in the {@code toBeCopied}
      */
     public Project(ReadOnlyProject toBeCopied, Name name) {
+        this();
         this.name = name;
         resetData(toBeCopied);
     }
@@ -72,7 +75,6 @@ public class Project implements ReadOnlyProject {
      */
     public void resetData(ReadOnlyProject newData) {
         requireNonNull(newData);
-
         setTasks(newData.getTaskList());
     }
 
