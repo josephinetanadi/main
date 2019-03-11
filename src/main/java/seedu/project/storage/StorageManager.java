@@ -7,9 +7,10 @@ import java.util.logging.Logger;
 
 import seedu.project.commons.core.LogsCenter;
 import seedu.project.commons.exceptions.DataConversionException;
-import seedu.project.model.ReadOnlyProject;
+import seedu.project.model.ReadOnlyProjectList;
 import seedu.project.model.ReadOnlyUserPrefs;
 import seedu.project.model.UserPrefs;
+import seedu.project.model.project.ReadOnlyProject;
 
 /**
  * Manages storage of Project data in local storage.
@@ -17,11 +18,14 @@ import seedu.project.model.UserPrefs;
 public class StorageManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
+    private ProjectListStorage projectListStorage;
     private ProjectStorage projectStorage;
     private UserPrefsStorage userPrefsStorage;
 
-    public StorageManager(ProjectStorage projectStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(ProjectListStorage projectListStorage, ProjectStorage projectStorage,
+                          UserPrefsStorage userPrefsStorage) {
         super();
+        this.projectListStorage = projectListStorage;
         this.projectStorage = projectStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
@@ -41,6 +45,41 @@ public class StorageManager implements Storage {
     @Override
     public void saveUserPrefs(ReadOnlyUserPrefs userPrefs) throws IOException {
         userPrefsStorage.saveUserPrefs(userPrefs);
+    }
+
+    // ================ ProjectList methods ==========================
+
+    @Override
+    public Path getProjectListFilePath() {
+        return projectListStorage.getProjectListFilePath();
+    }
+
+    @Override
+    public Optional<ReadOnlyProjectList> readProjectList() throws DataConversionException, IOException {
+        return readProjectList(projectListStorage.getProjectListFilePath());
+    }
+
+    @Override
+    public Optional<ReadOnlyProjectList> readProjectList(Path filePath) throws DataConversionException, IOException {
+        logger.fine("Attempting to read data from file: " + filePath);
+        return projectListStorage.readProjectList(filePath);
+    }
+
+    @Override
+    public void saveProjectList(ReadOnlyProjectList projectList) throws IOException {
+        saveProjectList(projectList, projectListStorage.getProjectListFilePath());
+    }
+
+    @Override
+    public void saveProjectList(ReadOnlyProjectList projectList, Path filePath) throws IOException {
+        logger.fine("Attempting to write to data file: " + filePath);
+        projectListStorage.saveProjectList(projectList, filePath);
+    }
+
+    @Override
+    public void backupProjectList(ReadOnlyProjectList projectList) throws IOException {
+        logger.fine("Backing up to temporary location");
+        projectListStorage.backupProjectList(projectList);
     }
 
     // ================ Project methods ==============================

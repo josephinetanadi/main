@@ -15,7 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import seedu.project.model.Project;
+import seedu.project.model.ProjectList;
+import seedu.project.model.project.Project;
 import seedu.project.model.task.Task;
 
 /**
@@ -55,19 +56,31 @@ public class TypicalTasks {
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .build();
 
+    public static final Project CS2101 = new ProjectBuilder().withTask(BOB).build();
+
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
     private TypicalTasks() {} // prevents instantiation
 
     /**
+     * Returns an {@code ProjectList} with the typical projects.
+     */
+    public static ProjectList getTypicalProjectList() {
+        ProjectList pl = new ProjectList();
+        pl.addProject(getTypicalProject());
+        return pl;
+    }
+
+    /**
      * Returns an {@code Project} with all the typical tasks.
      */
     public static Project getTypicalProject() {
-        Project ab = new Project();
+        Project p = new Project();
+        p.setName("Typical Project");
         for (Task task : getTypicalTasks()) {
-            ab.addTask(task);
+            p.addTask(task);
         }
-        return ab;
+        return p;
     }
 
     public static List<Task> getTypicalTasks() {

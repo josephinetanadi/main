@@ -14,7 +14,7 @@ import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.logic.parser.ProjectParser;
 import seedu.project.logic.parser.exceptions.ParseException;
 import seedu.project.model.Model;
-import seedu.project.model.ReadOnlyProject;
+import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.task.Task;
 import seedu.project.storage.Storage;
 
