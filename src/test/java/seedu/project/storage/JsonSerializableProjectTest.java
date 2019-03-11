@@ -11,7 +11,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.project.commons.exceptions.IllegalValueException;
 import seedu.project.commons.util.JsonUtil;
-import seedu.project.model.Project;
+import seedu.project.model.project.Project;
 import seedu.project.testutil.TypicalTasks;
 
 public class JsonSerializableProjectTest {

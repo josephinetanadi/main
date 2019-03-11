@@ -1,6 +1,6 @@
 package seedu.project.testutil;
 
-import seedu.project.model.Project;
+import seedu.project.model.project.Project;
 import seedu.project.model.task.Task;
 
 /**

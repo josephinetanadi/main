@@ -1,8 +1,9 @@
-package seedu.project.model;
+package seedu.project.model.project;
 
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.Objects;
 
 import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
@@ -16,6 +17,9 @@ import seedu.project.model.task.UniqueTaskList;
  */
 public class Project implements ReadOnlyProject {
 
+    // Identity fields
+    private Name name;
+
     private final UniqueTaskList tasks;
     private final InvalidationListenerManager invalidationListenerManager = new InvalidationListenerManager();
 
@@ -27,17 +31,37 @@ public class Project implements ReadOnlyProject {
      *   among constructors.
      */
     {
+        name = new Name("");
         tasks = new UniqueTaskList();
     }
 
     public Project() {}
 
-    /**
-     * Creates an Project using the Tasks in the {@code toBeCopied}
-     */
+    public Project(Name name) {
+        this();
+        this.name = name;
+    }
+
     public Project(ReadOnlyProject toBeCopied) {
         this();
         resetData(toBeCopied);
+    }
+
+    /**
+     * Creates an Project using the Tasks in the {@code toBeCopied}
+     */
+    public Project(ReadOnlyProject toBeCopied, Name name) {
+        this();
+        this.name = name;
+        resetData(toBeCopied);
+    }
+
+    public Name getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = new Name(name);
     }
 
     //// list overwrite operations
@@ -56,7 +80,6 @@ public class Project implements ReadOnlyProject {
      */
     public void resetData(ReadOnlyProject newData) {
         requireNonNull(newData);
-
         setTasks(newData.getTaskList());
     }
 
@@ -100,6 +123,19 @@ public class Project implements ReadOnlyProject {
         indicateModified();
     }
 
+    /**
+     * Returns true if both tasks of the same name have at least one other identity field that is the same.
+     * This defines a weaker notion of equality between two tasks.
+     */
+    public boolean isSameProject(Project otherProject) {
+        if (otherProject == this) {
+            return true;
+        }
+
+        return otherProject != null
+                && otherProject.getName().equals(getName());
+    }
+
     @Override
     public void addListener(InvalidationListener listener) {
         invalidationListenerManager.addListener(listener);
@@ -139,6 +175,6 @@ public class Project implements ReadOnlyProject {
 
     @Override
     public int hashCode() {
-        return tasks.hashCode();
+        return Objects.hash(name, tasks);
     }
 }

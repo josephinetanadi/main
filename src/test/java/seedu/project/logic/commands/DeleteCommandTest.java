@@ -9,6 +9,7 @@ import static seedu.project.logic.commands.CommandTestUtil.showTaskAtIndex;
 import static seedu.project.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.project.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.project.testutil.TypicalTasks.getTypicalProject;
+import static seedu.project.testutil.TypicalTasks.getTypicalProjectList;
 
 import org.junit.Test;
 
@@ -26,7 +27,7 @@ import seedu.project.model.task.Task;
  */
 public class DeleteCommandTest {
 
-    private Model model = new ModelManager(getTypicalProject(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalProjectList(), getTypicalProject(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
@@ -36,7 +37,7 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, taskToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getProject(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getProjectList(), model.getProject(), new UserPrefs());
         expectedModel.deleteTask(taskToDelete);
         expectedModel.commitProject();
 
@@ -60,7 +61,7 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, taskToDelete);
 
-        Model expectedModel = new ModelManager(model.getProject(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getProjectList(), model.getProject(), new UserPrefs());
         expectedModel.deleteTask(taskToDelete);
         expectedModel.commitProject();
         showNoTask(expectedModel);
@@ -85,7 +86,7 @@ public class DeleteCommandTest {
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
         Task taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_PERSON);
-        Model expectedModel = new ModelManager(model.getProject(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getProjectList(), model.getProject(), new UserPrefs());
         expectedModel.deleteTask(taskToDelete);
         expectedModel.commitProject();
 
@@ -124,7 +125,7 @@ public class DeleteCommandTest {
     @Test
     public void executeUndoRedo_validIndexFilteredList_sameTaskDeleted() throws Exception {
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_PERSON);
-        Model expectedModel = new ModelManager(model.getProject(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getProjectList(), model.getProject(), new UserPrefs());
 
         showTaskAtIndex(model, INDEX_SECOND_PERSON);
         Task taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST_PERSON.getZeroBased());

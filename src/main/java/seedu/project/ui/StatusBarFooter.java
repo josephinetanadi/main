@@ -10,7 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 //import seedu.project.logic.Logic;
-import seedu.project.model.ReadOnlyProject;
+import seedu.project.model.project.ReadOnlyProject;
 
 /**
  * A ui for the status bar that is displayed at the footer of the application.

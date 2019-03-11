@@ -9,6 +9,7 @@ import static seedu.project.testutil.TypicalTasks.CARL;
 import static seedu.project.testutil.TypicalTasks.ELLE;
 import static seedu.project.testutil.TypicalTasks.FIONA;
 import static seedu.project.testutil.TypicalTasks.getTypicalProject;
+import static seedu.project.testutil.TypicalTasks.getTypicalProjectList;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,8 +27,8 @@ import seedu.project.model.task.NameContainsKeywordsPredicate;
  * {@code FindCommand}.
  */
 public class FindCommandTest {
-    private Model model = new ModelManager(getTypicalProject(), new UserPrefs());
-    private Model expectedModel = new ModelManager(getTypicalProject(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalProjectList(), getTypicalProject(), new UserPrefs());
+    private Model expectedModel = new ModelManager(getTypicalProjectList(), getTypicalProject(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
