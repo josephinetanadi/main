@@ -148,6 +148,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public Task compareTask(Task target) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void setTask(Task target, Task editedTask) {
             throw new AssertionError("This method should not be called.");
         }

@@ -115,6 +115,7 @@ public class ProjectTest {
      */
     private static class ProjectStub implements ReadOnlyProject {
         private final ObservableList<Task> tasks = FXCollections.observableArrayList();
+        private int index;
 
         ProjectStub(Collection<Task> tasks) {
             this.tasks.setAll(tasks);
@@ -123,6 +124,11 @@ public class ProjectTest {
         @Override
         public ObservableList<Task> getTaskList() {
             return tasks;
+        }
+
+        @Override
+        public int getIndex(int taskId) {
+            return index;
         }
 
         @Override

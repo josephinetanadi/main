@@ -15,4 +15,10 @@ public interface ReadOnlyProject extends Observable {
      */
     ObservableList<Task> getTaskList();
 
+    /**
+     * Returns index of a {@code taskID} in the list.
+     * {@code taskID} must exist in the project
+     */
+    int getIndex(int taskId);
+
 }

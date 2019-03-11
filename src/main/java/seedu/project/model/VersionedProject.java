@@ -3,6 +3,8 @@ package seedu.project.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import seedu.project.model.task.Task;
+
 /**
  * {@code Project} that keeps track of its own history.
  */
@@ -10,6 +12,7 @@ public class VersionedProject extends Project {
 
     private final List<ReadOnlyProject> projectStateList;
     private int currentStatePointer;
+    private CompareTask compareTask;
 
     public VersionedProject(ReadOnlyProject initialState) {
         super(initialState);
@@ -87,6 +90,32 @@ public class VersionedProject extends Project {
         // state check
         return super.equals(otherVersionedProject) && projectStateList.equals(otherVersionedProject.projectStateList)
                 && currentStatePointer == otherVersionedProject.currentStatePointer;
+    }
+
+    /**
+     * Compares the target task with the previous edited version
+     */
+    public Task compareTask(Task target1) {
+        int targetTaskId = target1.getTaskId();
+        int movingStatePointer = currentStatePointer;
+        System.out.print("CSP IS : " + currentStatePointer + "\n");
+        compareTask = new CompareTask();
+        movingStatePointer--;
+        while (movingStatePointer >= 0) {
+            System.out.print("MSP IS : " + movingStatePointer + "\n");
+            System.out.print("Tasklist is: " + projectStateList.get(movingStatePointer).getTaskList() + "\n");
+            int taskIndex = projectStateList.get(movingStatePointer).getIndex(targetTaskId);
+            if (compareTask.compareTask(target1, projectStateList.get(movingStatePointer).getTaskList()
+                    .get(taskIndex))) {
+                System.out.println("got diff");
+                return projectStateList.get(movingStatePointer).getTaskList().get(taskIndex);
+            } else {
+                movingStatePointer--;
+            }
+        }
+
+        System.out.print("nothing to compare");
+        return null;
     }
 
     /**

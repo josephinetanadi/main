@@ -42,6 +42,7 @@ public class Project implements ReadOnlyProject {
 
     //// list overwrite operations
 
+
     /**
      * Replaces the contents of the task list with {@code tasks}.
      * {@code tasks} must not contain duplicate tasks.
@@ -56,7 +57,6 @@ public class Project implements ReadOnlyProject {
      */
     public void resetData(ReadOnlyProject newData) {
         requireNonNull(newData);
-
         setTasks(newData.getTaskList());
     }
 
@@ -141,4 +141,13 @@ public class Project implements ReadOnlyProject {
     public int hashCode() {
         return tasks.hashCode();
     }
+
+    /**
+     * Returns index of a {@code taskID} in the list.
+     * {@code taskID} must exist in the project
+     */
+    public int getIndex(int taskId) {
+        return tasks.getIndexOfTask(taskId);
+    }
+
 }
