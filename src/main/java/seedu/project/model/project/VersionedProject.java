@@ -102,7 +102,7 @@ public class VersionedProject extends Project {
             System.out.print("MSP IS : " + movingStatePointer + "\n");
             System.out.print("Tasklist is: " + projectStateList.get(movingStatePointer).getTaskList() + "\n");
             int taskIndex = projectStateList.get(movingStatePointer).getIndex(targetTaskId);
-            if (GetDiff(target1, projectStateList.get(movingStatePointer).getTaskList()
+            if (getDiff(target1, projectStateList.get(movingStatePointer).getTaskList()
                     .get(taskIndex))) {
                 System.out.println("got diff");
                 return projectStateList.get(movingStatePointer).getTaskList().get(taskIndex);
@@ -115,7 +115,12 @@ public class VersionedProject extends Project {
         return null;
     }
 
-    public boolean GetDiff(Task task1, Task task2) {
+    /**
+     * Returns true if there is a difference between {@code task1, task}.
+     * Else returns false
+     * {@code task1, task2} must exist in the project
+     */
+    public boolean getDiff(Task task1, Task task2) {
         System.out.print("XXXXXX\n");
         System.out.print(task1 + "\n");
         System.out.print(task2 + "\n\n");
