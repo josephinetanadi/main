@@ -3,7 +3,6 @@ package seedu.project.model.project;
 import java.util.ArrayList;
 import java.util.List;
 
-import seedu.project.model.CompareTask;
 import seedu.project.model.task.Task;
 
 /**
@@ -13,8 +12,6 @@ public class VersionedProject extends Project {
 
     private final List<ReadOnlyProject> projectStateList;
     private int currentStatePointer;
-    private CompareTask compareTask;
-
     public VersionedProject(ReadOnlyProject initialState) {
         super(initialState);
 
@@ -100,13 +97,12 @@ public class VersionedProject extends Project {
         int targetTaskId = target1.getTaskId();
         int movingStatePointer = currentStatePointer;
         System.out.print("CSP IS : " + currentStatePointer + "\n");
-        compareTask = new CompareTask();
         movingStatePointer--;
         while (movingStatePointer >= 0) {
             System.out.print("MSP IS : " + movingStatePointer + "\n");
             System.out.print("Tasklist is: " + projectStateList.get(movingStatePointer).getTaskList() + "\n");
             int taskIndex = projectStateList.get(movingStatePointer).getIndex(targetTaskId);
-            if (compareTask.compareTask(target1, projectStateList.get(movingStatePointer).getTaskList()
+            if (GetDiff(target1, projectStateList.get(movingStatePointer).getTaskList()
                     .get(taskIndex))) {
                 System.out.println("got diff");
                 return projectStateList.get(movingStatePointer).getTaskList().get(taskIndex);
@@ -117,6 +113,21 @@ public class VersionedProject extends Project {
 
         System.out.print("nothing to compare");
         return null;
+    }
+
+    public boolean GetDiff(Task task1, Task task2) {
+        System.out.print("XXXXXX\n");
+        System.out.print(task1 + "\n");
+        System.out.print(task2 + "\n\n");
+        if (task1.getName() != task2.getName()) {
+            return true;
+        } else if (task1.getAddress() != task2.getAddress()) {
+            return true;
+        } else if (task1.getEmail() != task2.getEmail()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
