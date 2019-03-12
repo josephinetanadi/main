@@ -3,6 +3,7 @@ package seedu.project.model.project;
 import java.util.ArrayList;
 import java.util.List;
 
+import seedu.project.model.CompareTask;
 import seedu.project.model.task.Task;
 
 /**
