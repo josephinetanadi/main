@@ -15,6 +15,8 @@ import seedu.project.model.tag.Tag;
  */
 public class Task {
 
+    private static int numberOfTask = 0;
+
     // Identity fields
     private final Name name;
     private final Phone phone;
@@ -23,6 +25,8 @@ public class Task {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
+
+    private int taskId;
 
     /**
      * Every field must be present and not null.
@@ -34,6 +38,21 @@ public class Task {
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+
+        //numberOfTask++;
+        this.taskId = hashCode();
+    }
+
+    public int getTaskId() {
+        return taskId;
+    }
+
+    public void updateTaskId(int newTaskId) {
+        this.taskId = newTaskId;
+    }
+
+    public int getNumberOfTask() {
+        return numberOfTask;
     }
 
     public Name getName() {

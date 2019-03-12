@@ -110,6 +110,11 @@ public interface Model {
     void deleteTask(Task target);
 
     /**
+     * Compares the given task with the last edited version. The task must exist in the project.
+     */
+    Task compareTask(Task target);
+
+    /**
      * Adds the given task. {@code task} must not already exist in the project.
      */
     void addTask(Task task);

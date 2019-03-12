@@ -37,11 +37,13 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the task identified "
             + "by the index number used in the displayed task list. "
-            + "Existing values will be overwritten by the input values.\n"
+            + "Existing values will be overwritten by the i"
+            + "nput values.\n"
             + "Parameters: INDEX (must be a positive integer) " + "[" + PREFIX_NAME + "NAME] " + "[" + PREFIX_PHONE
             + "PHONE] " + "[" + PREFIX_EMAIL + "EMAIL] " + "[" + PREFIX_ADDRESS + "ADDRESS] " + "[" + PREFIX_TAG
             + "TAG]...\n" + "Example: " + COMMAND_WORD + " 1 " + PREFIX_PHONE + "91234567 " + PREFIX_EMAIL
             + "johndoe@example.com";
+
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Task: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -96,8 +98,11 @@ public class EditCommand extends Command {
         Email updatedEmail = editTaskDescriptor.getEmail().orElse(taskToEdit.getEmail());
         Address updatedAddress = editTaskDescriptor.getAddress().orElse(taskToEdit.getAddress());
         Set<Tag> updatedTags = editTaskDescriptor.getTags().orElse(taskToEdit.getTags());
+        int taskId = taskToEdit.getTaskId();
+        Task newTask = new Task(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        newTask.updateTaskId(taskId);
 
-        return new Task(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return newTask;
     }
 
     @Override
