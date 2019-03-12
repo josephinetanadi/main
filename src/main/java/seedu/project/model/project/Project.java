@@ -2,14 +2,17 @@ package seedu.project.model.project;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 import seedu.project.commons.util.InvalidationListenerManager;
 import seedu.project.model.task.Task;
 import seedu.project.model.task.UniqueTaskList;
+import seedu.project.model.tag.Tag;
 
 /**
  * Wraps all data at the address-book level
@@ -121,6 +124,26 @@ public class Project implements ReadOnlyProject {
     public void removeTask(Task key) {
         tasks.remove(key);
         indicateModified();
+    }
+
+    /**
+     * Removes tag from a specific person.
+     */
+    private void removeTagTask(Tag tag, Task name) {
+        Set<Tag> newTags = new HashSet<>(name.getTags());
+
+        if (!newTags.remove(tag)) {
+            return;
+        }
+
+        Task update = new Task(name.getName(), name.getPhone(), name.getEmail(),
+                name.getAddress(), newTags);
+        setTask(name, update);
+        removeTask(update);
+    }
+
+    public void removeTag(Tag tag) {
+        tasks.forEach(person -> removeTagTask(tag, person));
     }
 
     /**

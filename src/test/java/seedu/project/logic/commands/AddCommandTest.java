@@ -26,6 +26,7 @@ import seedu.project.model.project.Project;
 import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.task.Task;
 import seedu.project.testutil.TaskBuilder;
+import seedu.project.model.tag.Tag;
 
 public class AddCommandTest {
 
@@ -190,6 +191,11 @@ public class AddCommandTest {
 
         @Override
         public void setTask(Task target, Task editedTask) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteTag(Tag tag) {
             throw new AssertionError("This method should not be called.");
         }
 

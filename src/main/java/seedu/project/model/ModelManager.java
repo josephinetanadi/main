@@ -17,9 +17,11 @@ import seedu.project.commons.core.GuiSettings;
 import seedu.project.commons.core.LogsCenter;
 import seedu.project.model.project.Project;
 import seedu.project.model.project.ReadOnlyProject;
+import seedu.project.model.project.UniqueProjectList;
 import seedu.project.model.project.VersionedProject;
 import seedu.project.model.task.Task;
 import seedu.project.model.task.exceptions.TaskNotFoundException;
+import seedu.project.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the project data.
@@ -274,6 +276,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void deleteTag(Tag tag) {
+        versionedProject.removeTag(tag);
+    }
+
+    @Override
     public boolean equals(Object obj) {
         // short circuit if same object
         if (obj == this) {
@@ -293,5 +300,6 @@ public class ModelManager implements Model {
                 && filteredTasks.equals(other.filteredTasks)
                 && Objects.equals(selectedTask.get(), other.selectedTask.get());
     }
+
 
 }

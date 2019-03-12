@@ -9,6 +9,7 @@ import seedu.project.commons.core.GuiSettings;
 import seedu.project.model.project.Project;
 import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.task.Task;
+import seedu.project.model.tag.Tag;
 
 /**
  * The API of the Model component.
@@ -173,4 +174,9 @@ public interface Model {
      * Sets the selected task in the filtered task list.
      */
     void setSelectedTask(Task task);
+
+    /**
+     * Removes the given tag from all persons.
+     */
+    void deleteTag(Tag tag);
 }
