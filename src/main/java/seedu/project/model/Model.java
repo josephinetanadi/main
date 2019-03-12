@@ -8,8 +8,8 @@ import javafx.collections.ObservableList;
 import seedu.project.commons.core.GuiSettings;
 import seedu.project.model.project.Project;
 import seedu.project.model.project.ReadOnlyProject;
-import seedu.project.model.task.Task;
 import seedu.project.model.tag.Tag;
+import seedu.project.model.task.Task;
 
 /**
  * The API of the Model component.
