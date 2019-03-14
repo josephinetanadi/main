@@ -1,33 +1,28 @@
 package systemtests;
 
 import static seedu.project.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.project.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static seedu.project.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static seedu.project.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static seedu.project.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
+import static seedu.project.logic.commands.CommandTestUtil.DEADLINE_DESC_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.DEADLINE_DESC_CS2101;
+import static seedu.project.logic.commands.CommandTestUtil.DESC_DESC_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.DESC_DESC_CS2101;
+import static seedu.project.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC;
+import static seedu.project.logic.commands.CommandTestUtil.INVALID_DESC_DESC;
 import static seedu.project.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static seedu.project.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.project.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.project.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.project.logic.commands.CommandTestUtil.NAME_DESC_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-import static seedu.project.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.project.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.project.logic.commands.CommandTestUtil.NAME_DESC_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.NAME_DESC_CS2101;
+import static seedu.project.logic.commands.CommandTestUtil.TAG_DESC_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.TAG_DESC_CS2101;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_DEADLINE_CS2101;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_DESCRIPTION_CS2101;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_CP2106;
 import static seedu.project.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.project.testutil.TypicalTasks.ALICE;
-import static seedu.project.testutil.TypicalTasks.AMY;
-import static seedu.project.testutil.TypicalTasks.BOB;
-import static seedu.project.testutil.TypicalTasks.CARL;
-import static seedu.project.testutil.TypicalTasks.HOON;
-import static seedu.project.testutil.TypicalTasks.IDA;
-import static seedu.project.testutil.TypicalTasks.KEYWORD_MATCHING_MEIER;
+import static seedu.project.testutil.TypicalTasks.CP2106_MILESTONE;
+import static seedu.project.testutil.TypicalTasks.CS2101_MILESTONE;
+import static seedu.project.testutil.TypicalTasks.GROUP_MEETING;
+import static seedu.project.testutil.TypicalTasks.KEYWORD_MATCHING_TEST;
+import static seedu.project.testutil.TypicalTasks.LECTURE;
+import static seedu.project.testutil.TypicalTasks.QUIZ;
 
 import org.junit.Test;
 
@@ -38,10 +33,9 @@ import seedu.project.logic.commands.RedoCommand;
 import seedu.project.logic.commands.UndoCommand;
 import seedu.project.model.Model;
 import seedu.project.model.tag.Tag;
-import seedu.project.model.task.Address;
-import seedu.project.model.task.Email;
+import seedu.project.model.task.Deadline;
+import seedu.project.model.task.Description;
 import seedu.project.model.task.Name;
-import seedu.project.model.task.Phone;
 import seedu.project.model.task.Task;
 import seedu.project.testutil.TaskBuilder;
 import seedu.project.testutil.TaskUtil;
@@ -57,9 +51,9 @@ public class AddCommandSystemTest extends ProjectSystemTest {
         /* Case: add a task without tags to a non-empty project, command with leading spaces and trailing spaces
          * -> added
          */
-        Task toAdd = AMY;
-        String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
-                + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   " + TAG_DESC_FRIEND + " ";
+        Task toAdd = CS2101_MILESTONE;
+        String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_CS2101 + "  "
+                + DESC_DESC_CS2101 + "   " + DEADLINE_DESC_CS2101 + "   " + TAG_DESC_CS2101 + " ";
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
@@ -74,82 +68,66 @@ public class AddCommandSystemTest extends ProjectSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: add a task with all fields same as another task in the project except name -> added */
-        toAdd = new TaskBuilder(AMY).withName(VALID_NAME_BOB).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd);
-
-        /* Case: add a task with all fields same as another task in the project except phone and email
-         * -> added
-         */
-        toAdd = new TaskBuilder(AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).build();
-        command = TaskUtil.getAddCommand(toAdd);
+        toAdd = new TaskBuilder(CS2101_MILESTONE).withName(VALID_NAME_CP2106).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_CP2106 + DESC_DESC_CS2101 + DEADLINE_DESC_CS2101
+                + TAG_DESC_CS2101;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add to empty project -> added */
         deleteAllTasks();
-        assertCommandSuccess(ALICE);
+        assertCommandSuccess(CS2101_MILESTONE);
 
         /* Case: add a task with tags, command with parameters in random order -> added */
-        toAdd = BOB;
-        command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + PHONE_DESC_BOB + ADDRESS_DESC_BOB + NAME_DESC_BOB
-                + TAG_DESC_HUSBAND + EMAIL_DESC_BOB;
+        toAdd = CP2106_MILESTONE;
+        command = AddCommand.COMMAND_WORD + TAG_DESC_CP2106 + DEADLINE_DESC_CP2106 + NAME_DESC_CP2106
+                + DESC_DESC_CP2106;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a task, missing tags -> added */
-        assertCommandSuccess(HOON);
+        assertCommandSuccess(LECTURE);
 
         /* -------------------------- Perform add operation on the shown filtered list ------------------------------ */
 
         /* Case: filters the task list before adding -> added */
-        showTasksWithName(KEYWORD_MATCHING_MEIER);
-        assertCommandSuccess(IDA);
+        showTasksWithName(KEYWORD_MATCHING_TEST);
+        assertCommandSuccess(GROUP_MEETING);
 
         /* ------------------------ Perform add operation while a task card is selected --------------------------- */
 
         /* Case: selects first card in the task list, add a task -> added, card selection remains unchanged */
         selectTask(Index.fromOneBased(1));
-        assertCommandSuccess(CARL);
+        assertCommandSuccess(QUIZ);
 
         /* ----------------------------------- Perform invalid add operations --------------------------------------- */
 
         /* Case: add a duplicate task -> rejected */
-        command = TaskUtil.getAddCommand(HOON);
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        command = TaskUtil.getAddCommand(LECTURE);
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_TASK);
 
-        /* Case: add a duplicate task except with different phone -> rejected */
-        toAdd = new TaskBuilder(HOON).withPhone(VALID_PHONE_BOB).build();
+        /* Case: add a duplicate task except with different description -> rejected */
+        toAdd = new TaskBuilder(LECTURE).withDescription(VALID_DESCRIPTION_CS2101).build();
         command = TaskUtil.getAddCommand(toAdd);
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_TASK);
 
-        /* Case: add a duplicate task except with different email -> rejected */
-        toAdd = new TaskBuilder(HOON).withEmail(VALID_EMAIL_BOB).build();
+        /* Case: add a duplicate task except with different deadline -> rejected */
+        toAdd = new TaskBuilder(LECTURE).withDeadline(VALID_DEADLINE_CS2101).build();
         command = TaskUtil.getAddCommand(toAdd);
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
-
-        /* Case: add a duplicate task except with different address -> rejected */
-        toAdd = new TaskBuilder(HOON).withAddress(VALID_ADDRESS_BOB).build();
-        command = TaskUtil.getAddCommand(toAdd);
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_TASK);
 
         /* Case: add a duplicate task except with different tags -> rejected */
-        command = TaskUtil.getAddCommand(HOON) + " " + PREFIX_TAG.getPrefix() + "friends";
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        command = TaskUtil.getAddCommand(LECTURE) + " " + PREFIX_TAG.getPrefix() + "CS2101";
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_TASK);
 
         /* Case: missing name -> rejected */
-        command = AddCommand.COMMAND_WORD + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + DESC_DESC_CS2101 + DEADLINE_DESC_CS2101;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing phone -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+        /* Case: missing description -> rejected */
+        command = AddCommand.COMMAND_WORD + NAME_DESC_CS2101 + DEADLINE_DESC_CS2101;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing email -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-
-        /* Case: missing address -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY;
+        /* Case: missing deadline -> rejected */
+        command = AddCommand.COMMAND_WORD + NAME_DESC_CS2101 + DESC_DESC_CS2101;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */
@@ -157,23 +135,19 @@ public class AddCommandSystemTest extends ProjectSystemTest {
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: invalid name -> rejected */
-        command = AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + INVALID_NAME_DESC + DESC_DESC_CS2101 + DEADLINE_DESC_CS2101;
         assertCommandFailure(command, Name.MESSAGE_CONSTRAINTS);
 
-        /* Case: invalid phone -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + INVALID_PHONE_DESC + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
-        assertCommandFailure(command, Phone.MESSAGE_CONSTRAINTS);
+        /* Case: invalid description -> rejected */
+        command = AddCommand.COMMAND_WORD + NAME_DESC_CS2101 + INVALID_DESC_DESC + DEADLINE_DESC_CS2101;
+        assertCommandFailure(command, Description.MESSAGE_CONSTRAINTS);
 
-        /* Case: invalid email -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + INVALID_EMAIL_DESC + ADDRESS_DESC_AMY;
-        assertCommandFailure(command, Email.MESSAGE_CONSTRAINTS);
-
-        /* Case: invalid address -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + INVALID_ADDRESS_DESC;
-        assertCommandFailure(command, Address.MESSAGE_CONSTRAINTS);
+        /* Case: invalid deadline -> rejected */
+        command = AddCommand.COMMAND_WORD + NAME_DESC_CS2101 + DESC_DESC_CS2101 + INVALID_DEADLINE_DESC;
+        assertCommandFailure(command, Deadline.MESSAGE_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+        command = AddCommand.COMMAND_WORD + NAME_DESC_CS2101 + DESC_DESC_CS2101 + DEADLINE_DESC_CS2101
                 + INVALID_TAG_DESC;
         assertCommandFailure(command, Tag.MESSAGE_CONSTRAINTS);
     }

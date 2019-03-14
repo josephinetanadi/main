@@ -3,33 +3,28 @@ package systemtests;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.project.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static seedu.project.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static seedu.project.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static seedu.project.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
+import static seedu.project.logic.commands.CommandTestUtil.DEADLINE_DESC_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.DEADLINE_DESC_CS2101;
+import static seedu.project.logic.commands.CommandTestUtil.DESC_DESC_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.DESC_DESC_CS2101;
+import static seedu.project.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC;
+import static seedu.project.logic.commands.CommandTestUtil.INVALID_DESC_DESC;
 import static seedu.project.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static seedu.project.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.project.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.project.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.project.logic.commands.CommandTestUtil.NAME_DESC_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-import static seedu.project.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.project.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.project.logic.commands.CommandTestUtil.NAME_DESC_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.NAME_DESC_CS2101;
+import static seedu.project.logic.commands.CommandTestUtil.TAG_DESC_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.TAG_DESC_CS2101;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_CS2101;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_CP2106;
 import static seedu.project.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.project.model.Model.PREDICATE_SHOW_ALL_TASKS;
-import static seedu.project.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.project.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.project.testutil.TypicalTasks.AMY;
-import static seedu.project.testutil.TypicalTasks.BOB;
-import static seedu.project.testutil.TypicalTasks.KEYWORD_MATCHING_MEIER;
+import static seedu.project.testutil.TypicalIndexes.INDEX_FIRST_TASK;
+import static seedu.project.testutil.TypicalIndexes.INDEX_SECOND_TASK;
+import static seedu.project.testutil.TypicalTasks.CP2106_MILESTONE;
+import static seedu.project.testutil.TypicalTasks.CS2101_MILESTONE;
+import static seedu.project.testutil.TypicalTasks.KEYWORD_MATCHING_TEST;
 
 import org.junit.Test;
 
@@ -40,10 +35,9 @@ import seedu.project.logic.commands.RedoCommand;
 import seedu.project.logic.commands.UndoCommand;
 import seedu.project.model.Model;
 import seedu.project.model.tag.Tag;
-import seedu.project.model.task.Address;
-import seedu.project.model.task.Email;
+import seedu.project.model.task.Deadline;
+import seedu.project.model.task.Description;
 import seedu.project.model.task.Name;
-import seedu.project.model.task.Phone;
 import seedu.project.model.task.Task;
 import seedu.project.testutil.TaskBuilder;
 import seedu.project.testutil.TaskUtil;
@@ -63,11 +57,10 @@ public class EditCommandSystemTest extends ProjectSystemTest {
          * Case: edit all fields, command with leading spaces, trailing spaces and
          * multiple spaces between each field -> edited
          */
-        Index index = INDEX_FIRST_PERSON;
-        String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + NAME_DESC_BOB
-                + "  " + PHONE_DESC_BOB + " " + EMAIL_DESC_BOB + "  " + ADDRESS_DESC_BOB + " "
-                + TAG_DESC_HUSBAND + " ";
-        Task editedTask = new TaskBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
+        Index index = INDEX_FIRST_TASK;
+        String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + NAME_DESC_CP2106
+                + "  " + DESC_DESC_CP2106 + " " + DEADLINE_DESC_CP2106 + " " + TAG_DESC_CP2106 + " ";
+        Task editedTask = new TaskBuilder(CP2106_MILESTONE).withTags(VALID_TAG_CP2106).build();
         assertCommandSuccess(command, index, editedTask);
 
         /* Case: undo editing the last task in the list -> last task restored */
@@ -78,38 +71,28 @@ public class EditCommandSystemTest extends ProjectSystemTest {
         /* Case: redo editing the last task in the list -> last task edited again */
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        model.setTask(getModel().getFilteredTaskList().get(INDEX_FIRST_PERSON.getZeroBased()), editedTask);
+        model.setTask(getModel().getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased()), editedTask);
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: edit a task with new values same as existing values -> edited */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        assertCommandSuccess(command, index, BOB);
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_CP2106 + DESC_DESC_CP2106
+                + DEADLINE_DESC_CP2106 + TAG_DESC_CP2106;
+        assertCommandSuccess(command, index, CP2106_MILESTONE);
 
         /*
          * Case: edit a task with new values same as another task's values but with
          * different name -> edited
          */
-        assertTrue(getModel().getProject().getTaskList().contains(BOB));
-        index = INDEX_SECOND_PERSON;
-        assertNotEquals(getModel().getFilteredTaskList().get(index.getZeroBased()), BOB);
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        editedTask = new TaskBuilder(BOB).withName(VALID_NAME_AMY).build();
-        assertCommandSuccess(command, index, editedTask);
-
-        /*
-         * Case: edit a task with new values same as another task's values but with
-         * different phone and email -> edited
-         */
-        index = INDEX_SECOND_PERSON;
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        editedTask = new TaskBuilder(BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).build();
+        assertTrue(getModel().getProject().getTaskList().contains(CP2106_MILESTONE));
+        index = INDEX_SECOND_TASK;
+        assertNotEquals(getModel().getFilteredTaskList().get(index.getZeroBased()), CP2106_MILESTONE);
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_CS2101 + DESC_DESC_CP2106
+                + DEADLINE_DESC_CP2106 + TAG_DESC_CP2106;
+        editedTask = new TaskBuilder(CP2106_MILESTONE).withName(VALID_NAME_CS2101).build();
         assertCommandSuccess(command, index, editedTask);
 
         /* Case: clear tags -> cleared */
-        index = INDEX_FIRST_PERSON;
+        index = INDEX_FIRST_TASK;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_TAG.getPrefix();
         Task taskToEdit = getModel().getFilteredTaskList().get(index.getZeroBased());
         editedTask = new TaskBuilder(taskToEdit).withTags().build();
@@ -124,22 +107,22 @@ public class EditCommandSystemTest extends ProjectSystemTest {
          * Case: filtered task list, edit index within bounds of project and task
          * list -> edited
          */
-        showTasksWithName(KEYWORD_MATCHING_MEIER);
-        index = INDEX_FIRST_PERSON;
+        showTasksWithName(KEYWORD_MATCHING_TEST);
+        index = INDEX_FIRST_TASK;
         assertTrue(index.getZeroBased() < getModel().getFilteredTaskList().size());
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_BOB;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_CP2106;
         taskToEdit = getModel().getFilteredTaskList().get(index.getZeroBased());
-        editedTask = new TaskBuilder(taskToEdit).withName(VALID_NAME_BOB).build();
+        editedTask = new TaskBuilder(taskToEdit).withName(VALID_NAME_CP2106).build();
         assertCommandSuccess(command, index, editedTask);
 
         /*
          * Case: filtered task list, edit index within bounds of project but out of
          * bounds of task list -> rejected
          */
-        showTasksWithName(KEYWORD_MATCHING_MEIER);
+        showTasksWithName(KEYWORD_MATCHING_TEST);
         int invalidIndex = getModel().getProject().getTaskList().size();
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
-                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_CP2106,
+                Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
 
         /*
          * --------------------- Performing edit operation while a task card is selected
@@ -151,13 +134,13 @@ public class EditCommandSystemTest extends ProjectSystemTest {
          * selection remains unchanged but browser url changes
          */
         showAllTasks();
-        index = INDEX_FIRST_PERSON;
+        index = INDEX_FIRST_TASK;
         selectTask(index);
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + TAG_DESC_FRIEND;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_CS2101 + DESC_DESC_CS2101
+                + DEADLINE_DESC_CS2101 + TAG_DESC_CS2101;
         // this can be misleading: card selection actually remains unchanged but the
         // browser's url is updated to reflect the new task's name
-        assertCommandSuccess(command, index, AMY, index);
+        assertCommandSuccess(command, index, CS2101_MILESTONE, index);
 
         /*
          * --------------------------------- Performing invalid edit operation
@@ -165,92 +148,79 @@ public class EditCommandSystemTest extends ProjectSystemTest {
          */
 
         /* Case: invalid index (0) -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " 0" + NAME_DESC_BOB,
+        assertCommandFailure(EditCommand.COMMAND_WORD + " 0" + NAME_DESC_CP2106,
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (-1) -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " -1" + NAME_DESC_BOB,
+        assertCommandFailure(EditCommand.COMMAND_WORD + " -1" + NAME_DESC_CP2106,
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (size + 1) -> rejected */
         invalidIndex = getModel().getFilteredTaskList().size() + 1;
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
-                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_CP2106,
+                Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
 
         /* Case: missing index -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + NAME_DESC_BOB,
+        assertCommandFailure(EditCommand.COMMAND_WORD + NAME_DESC_CP2106,
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 
         /* Case: missing all fields -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(),
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased(),
                 EditCommand.MESSAGE_NOT_EDITED);
 
         /* Case: invalid name -> rejected */
         assertCommandFailure(
-                EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_NAME_DESC,
+                EditCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased() + INVALID_NAME_DESC,
                 Name.MESSAGE_CONSTRAINTS);
 
-        /* Case: invalid phone -> rejected */
+        /* Case: invalid description -> rejected */
         assertCommandFailure(
-                EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_PHONE_DESC,
-                Phone.MESSAGE_CONSTRAINTS);
+                EditCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased() + INVALID_DESC_DESC,
+                Description.MESSAGE_CONSTRAINTS);
 
-        /* Case: invalid email -> rejected */
-        assertCommandFailure(
-                EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_EMAIL_DESC,
-                Email.MESSAGE_CONSTRAINTS);
-
-        /* Case: invalid address -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
-                + INVALID_ADDRESS_DESC, Address.MESSAGE_CONSTRAINTS);
+        /* Case: invalid deadline -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased()
+                + INVALID_DEADLINE_DESC, Deadline.MESSAGE_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
         assertCommandFailure(
-                EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_TAG_DESC,
+                EditCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased() + INVALID_TAG_DESC,
                 Tag.MESSAGE_CONSTRAINTS);
 
         /*
          * Case: edit a task with new values same as another task's values -> rejected
          */
-        executeCommand(TaskUtil.getAddCommand(BOB));
-        assertTrue(getModel().getProject().getTaskList().contains(BOB));
-        index = INDEX_FIRST_PERSON;
-        assertFalse(getModel().getFilteredTaskList().get(index.getZeroBased()).equals(BOB));
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
+        executeCommand(TaskUtil.getAddCommand(CP2106_MILESTONE));
+        assertTrue(getModel().getProject().getTaskList().contains(CP2106_MILESTONE));
+        index = INDEX_FIRST_TASK;
+        assertFalse(getModel().getFilteredTaskList().get(index.getZeroBased()).equals(CP2106_MILESTONE));
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_CP2106 + DESC_DESC_CP2106
+                + DEADLINE_DESC_CP2106 + TAG_DESC_CP2106;
+        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_TASK);
 
         /*
          * Case: edit a task with new values same as another task's values but with
          * different tags -> rejected
          */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND;
-        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_CP2106 + DESC_DESC_CP2106
+                + DEADLINE_DESC_CP2106 + TAG_DESC_CS2101;
+        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_TASK);
 
         /*
          * Case: edit a task with new values same as another task's values but with
-         * different address -> rejected
+         * different deadline -> rejected
          */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_AMY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_CP2106 + DESC_DESC_CP2106
+                + DEADLINE_DESC_CS2101 + TAG_DESC_CP2106;
+        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_TASK);
 
         /*
          * Case: edit a task with new values same as another task's values but with
-         * different phone -> rejected
+         * different description -> rejected
          */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_AMY
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
-
-        /*
-         * Case: edit a task with new values same as another task's values but with
-         * different email -> rejected
-         */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_AMY + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_CP2106 + DESC_DESC_CS2101
+                + DEADLINE_DESC_CP2106 + TAG_DESC_CP2106;
+        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_TASK);
     }
 
     /**
@@ -285,7 +255,7 @@ public class EditCommandSystemTest extends ProjectSystemTest {
         expectedModel.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
 
         assertCommandSuccess(command, expectedModel,
-                String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedTask),
+                String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, editedTask),
                 expectedSelectedCardIndex);
     }
 

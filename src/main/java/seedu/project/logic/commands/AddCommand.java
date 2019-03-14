@@ -1,10 +1,9 @@
 package seedu.project.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.project.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.project.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.project.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static seedu.project.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.project.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.project.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.project.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.project.logic.CommandHistory;
@@ -21,13 +20,13 @@ public class AddCommand extends Command {
     public static final String COMMAND_ALIAS = "a";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the project. " + "Parameters: "
-            + PREFIX_NAME + "NAME " + PREFIX_PHONE + "PHONE " + PREFIX_EMAIL + "EMAIL " + PREFIX_ADDRESS + "ADDRESS "
-            + "[" + PREFIX_TAG + "TAG]...\n" + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "John Doe "
-            + PREFIX_PHONE + "98765432 " + PREFIX_EMAIL + "johnd@example.com " + PREFIX_ADDRESS
-            + "311, Clementi Ave 2, #02-25 " + PREFIX_TAG + "friends " + PREFIX_TAG + "owesMoney";
+            + PREFIX_NAME + "NAME " + PREFIX_DESCRIPTION + "DESCRIPTION " + PREFIX_DEADLINE + "DEADLINE "
+            + "[" + PREFIX_TAG + "TAG]...\n" + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "Report submission "
+            + PREFIX_DESCRIPTION + " " + PREFIX_DEADLINE + "1-1-2011 "
+            + PREFIX_TAG + "cs2101 " + PREFIX_TAG + "submission";
 
     public static final String MESSAGE_SUCCESS = "New task added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This task already exists in the project";
+    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the project";
 
     private final Task toAdd;
 
@@ -44,7 +43,7 @@ public class AddCommand extends Command {
         requireNonNull(model);
 
         if (model.hasTask(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_TASK);
         }
 
         model.addTask(toAdd);

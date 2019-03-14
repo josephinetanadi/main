@@ -3,10 +3,11 @@ package systemtests;
 import static org.junit.Assert.assertFalse;
 import static seedu.project.commons.core.Messages.MESSAGE_TASKS_LISTED_OVERVIEW;
 import static seedu.project.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.project.testutil.TypicalTasks.BENSON;
-import static seedu.project.testutil.TypicalTasks.CARL;
-import static seedu.project.testutil.TypicalTasks.DANIEL;
-import static seedu.project.testutil.TypicalTasks.KEYWORD_MATCHING_MEIER;
+import static seedu.project.testutil.TypicalTasks.FEEDBACK;
+import static seedu.project.testutil.TypicalTasks.KEYWORD_MATCHING_TEST;
+import static seedu.project.testutil.TypicalTasks.QUIZ;
+import static seedu.project.testutil.TypicalTasks.TEACHING_FEEDBACK;
+import static seedu.project.testutil.TypicalTasks.TUTORIAL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +30,9 @@ public class FindCommandSystemTest extends ProjectSystemTest {
          * Case: find multiple tasks in project, command with leading spaces and
          * trailing spaces -> 2 tasks found
          */
-        String command = "   " + FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER + "   ";
+        String command = "   " + FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_TEST + "   ";
         Model expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL); // first names of Benson and Daniel are "Meier"
+        ModelHelper.setFilteredList(expectedModel, FEEDBACK, TEACHING_FEEDBACK); // both task contains feedback
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -39,7 +40,7 @@ public class FindCommandSystemTest extends ProjectSystemTest {
          * Case: repeat previous find command where task list is displaying the tasks we
          * are finding -> 2 tasks found
          */
-        command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
+        command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_TEST;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -47,14 +48,14 @@ public class FindCommandSystemTest extends ProjectSystemTest {
          * Case: find task where task list is not displaying the task we are finding ->
          * 1 task found
          */
-        command = FindCommand.COMMAND_WORD + " Carl";
-        ModelHelper.setFilteredList(expectedModel, CARL);
+        command = FindCommand.COMMAND_WORD + " Quiz";
+        ModelHelper.setFilteredList(expectedModel, QUIZ);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find multiple tasks in project, 2 keywords -> 2 tasks found */
-        command = FindCommand.COMMAND_WORD + " Benson Daniel";
-        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL);
+        command = FindCommand.COMMAND_WORD + " Teaching Feedback";
+        ModelHelper.setFilteredList(expectedModel, TEACHING_FEEDBACK, FEEDBACK);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -62,7 +63,7 @@ public class FindCommandSystemTest extends ProjectSystemTest {
          * Case: find multiple tasks in project, 2 keywords in reversed order -> 2
          * tasks found
          */
-        command = FindCommand.COMMAND_WORD + " Daniel Benson";
+        command = FindCommand.COMMAND_WORD + " Feedback Teaching";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -70,7 +71,7 @@ public class FindCommandSystemTest extends ProjectSystemTest {
          * Case: find multiple tasks in project, 2 keywords with 1 repeat -> 2
          * tasks found
          */
-        command = FindCommand.COMMAND_WORD + " Daniel Benson Daniel";
+        command = FindCommand.COMMAND_WORD + " Teaching Feedback Teaching";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -78,7 +79,7 @@ public class FindCommandSystemTest extends ProjectSystemTest {
          * Case: find multiple tasks in project, 2 matching keywords and 1
          * non-matching keyword -> 2 tasks found
          */
-        command = FindCommand.COMMAND_WORD + " Daniel Benson NonMatchingKeyWord";
+        command = FindCommand.COMMAND_WORD + " Teaching Feedback NonMatchingKeyWord";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -97,10 +98,10 @@ public class FindCommandSystemTest extends ProjectSystemTest {
          * found
          */
         executeCommand(DeleteCommand.COMMAND_WORD + " 1");
-        assertFalse(getModel().getProject().getTaskList().contains(BENSON));
-        command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
+        assertFalse(getModel().getProject().getTaskList().contains(FEEDBACK));
+        command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_TEST;
         expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        ModelHelper.setFilteredList(expectedModel, TEACHING_FEEDBACK);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -108,7 +109,7 @@ public class FindCommandSystemTest extends ProjectSystemTest {
          * Case: find task in project, keyword is same as name but of different
          * case -> 1 task found
          */
-        command = FindCommand.COMMAND_WORD + " MeIeR";
+        command = FindCommand.COMMAND_WORD + " FeEdBaCk";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -116,7 +117,7 @@ public class FindCommandSystemTest extends ProjectSystemTest {
          * Case: find task in project, keyword is substring of name -> 0 tasks
          * found
          */
-        command = FindCommand.COMMAND_WORD + " Mei";
+        command = FindCommand.COMMAND_WORD + " Fee";
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
@@ -125,33 +126,28 @@ public class FindCommandSystemTest extends ProjectSystemTest {
          * Case: find task in project, name is substring of keyword -> 0 tasks
          * found
          */
-        command = FindCommand.COMMAND_WORD + " Meiers";
+        command = FindCommand.COMMAND_WORD + " Feedbacks";
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find task not in project -> 0 tasks found */
-        command = FindCommand.COMMAND_WORD + " Mark";
+        command = FindCommand.COMMAND_WORD + " Tutorial";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find phone number of task in project -> 0 tasks found */
-        command = FindCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
+        /* Case: find deadline of task in project -> 0 tasks found */
+        command = FindCommand.COMMAND_WORD + " " + TEACHING_FEEDBACK.getDeadline().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find address of task in project -> 0 tasks found */
-        command = FindCommand.COMMAND_WORD + " " + DANIEL.getAddress().value;
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: find email of task in project -> 0 tasks found */
-        command = FindCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
+        /* Case: find description of task in project -> 0 tasks found */
+        command = FindCommand.COMMAND_WORD + " " + TUTORIAL.getDescription().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find tags of task in project -> 0 tasks found */
-        List<Tag> tags = new ArrayList<>(DANIEL.getTags());
+        List<Tag> tags = new ArrayList<>(TUTORIAL.getTags());
         command = FindCommand.COMMAND_WORD + " " + tags.get(0).tagName;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
@@ -159,22 +155,23 @@ public class FindCommandSystemTest extends ProjectSystemTest {
         /* Case: find while a task is selected -> selected card deselected */
         showAllTasks();
         selectTask(Index.fromOneBased(1));
-        assertFalse(getTaskListPanel().getHandleToSelectedCard().getName().equals(DANIEL.getName().fullName));
-        command = FindCommand.COMMAND_WORD + " Daniel";
-        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        assertFalse(getTaskListPanel().getHandleToSelectedCard().getName().equals(TEACHING_FEEDBACK
+                .getName().fullName));
+        command = FindCommand.COMMAND_WORD + " Teaching";
+        ModelHelper.setFilteredList(expectedModel, TEACHING_FEEDBACK);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardDeselected();
 
         /* Case: find task in empty project -> 0 tasks found */
         deleteAllTasks();
-        command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
+        command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_TEST;
         expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        ModelHelper.setFilteredList(expectedModel, TEACHING_FEEDBACK);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: mixed case command word -> rejected */
-        command = "FiNd Meier";
+        command = "FiNd Teaching";
         assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
     }
 

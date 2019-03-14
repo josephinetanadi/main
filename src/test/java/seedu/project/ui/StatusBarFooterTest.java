@@ -1,7 +1,7 @@
 package seedu.project.ui;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.project.testutil.TypicalTasks.ALICE;
+import static seedu.project.testutil.TypicalTasks.CS2101_MILESTONE;
 import static seedu.project.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.project.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 
@@ -61,7 +61,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
         assertStatusBarContent(RELATIVE_PATH.resolve(STUB_SAVE_LOCATION).toString(), SYNC_STATUS_INITIAL);
 
         // after project is updated
-        guiRobot.interact(() -> project.addTask(ALICE));
+        guiRobot.interact(() -> project.addTask(CS2101_MILESTONE));
         assertStatusBarContent(RELATIVE_PATH.resolve(STUB_SAVE_LOCATION).toString(),
                 String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
     }

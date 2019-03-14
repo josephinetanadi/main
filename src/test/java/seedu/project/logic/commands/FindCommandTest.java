@@ -5,9 +5,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.project.commons.core.Messages.MESSAGE_TASKS_LISTED_OVERVIEW;
 import static seedu.project.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.project.testutil.TypicalTasks.CARL;
-import static seedu.project.testutil.TypicalTasks.ELLE;
-import static seedu.project.testutil.TypicalTasks.FIONA;
+import static seedu.project.testutil.TypicalTasks.FEEDBACK;
+import static seedu.project.testutil.TypicalTasks.QUIZ;
+import static seedu.project.testutil.TypicalTasks.TEACHING_FEEDBACK;
 import static seedu.project.testutil.TypicalTasks.getTypicalProject;
 import static seedu.project.testutil.TypicalTasks.getTypicalProjectList;
 
@@ -71,11 +71,11 @@ public class FindCommandTest {
     @Test
     public void execute_multipleKeywords_multipleTasksFound() {
         String expectedMessage = String.format(MESSAGE_TASKS_LISTED_OVERVIEW, 3);
-        NameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
+        NameContainsKeywordsPredicate predicate = preparePredicate("Teaching Feedback Quiz");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredTaskList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredTaskList());
+        assertEquals(Arrays.asList(FEEDBACK, TEACHING_FEEDBACK, QUIZ), model.getFilteredTaskList());
     }
 
     /**

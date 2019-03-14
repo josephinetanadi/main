@@ -10,10 +10,9 @@ import seedu.project.commons.core.index.Index;
 import seedu.project.commons.util.StringUtil;
 import seedu.project.logic.parser.exceptions.ParseException;
 import seedu.project.model.tag.Tag;
-import seedu.project.model.task.Address;
-import seedu.project.model.task.Email;
+import seedu.project.model.task.Deadline;
+import seedu.project.model.task.Description;
 import seedu.project.model.task.Name;
-import seedu.project.model.task.Phone;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -51,48 +50,33 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String phone} into a {@code Phone}.
+     * Parses a {@code String description} into an {@code Description}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code phone} is invalid.
+     * @throws ParseException if the given {@code description} is invalid.
      */
-    public static Phone parsePhone(String phone) throws ParseException {
-        requireNonNull(phone);
-        String trimmedPhone = phone.trim();
-        if (!Phone.isValidPhone(trimmedPhone)) {
-            throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
+    public static Description parseDescription(String description) throws ParseException {
+        requireNonNull(description);
+        String trimmedDescription = description.trim();
+        if (!Description.isValidDescription(trimmedDescription)) {
+            throw new ParseException(Description.MESSAGE_CONSTRAINTS);
         }
-        return new Phone(trimmedPhone);
+        return new Description(trimmedDescription);
     }
 
     /**
-     * Parses a {@code String address} into an {@code Address}.
+     * Parses a {@code String deadline} into an {@code Deadline}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code address} is invalid.
+     * @throws ParseException if the given {@code deadline} is invalid.
      */
-    public static Address parseAddress(String address) throws ParseException {
-        requireNonNull(address);
-        String trimmedAddress = address.trim();
-        if (!Address.isValidAddress(trimmedAddress)) {
-            throw new ParseException(Address.MESSAGE_CONSTRAINTS);
+    public static Deadline parseDeadline(String deadline) throws ParseException {
+        requireNonNull(deadline);
+        String trimmedDeadline = deadline.trim();
+        if (!Deadline.isValidDeadline(trimmedDeadline)) {
+            throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
         }
-        return new Address(trimmedAddress);
-    }
-
-    /**
-     * Parses a {@code String email} into an {@code Email}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code email} is invalid.
-     */
-    public static Email parseEmail(String email) throws ParseException {
-        requireNonNull(email);
-        String trimmedEmail = email.trim();
-        if (!Email.isValidEmail(trimmedEmail)) {
-            throw new ParseException(Email.MESSAGE_CONSTRAINTS);
-        }
-        return new Email(trimmedEmail);
+        return new Deadline(trimmedDeadline);
     }
 
     /**

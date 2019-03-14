@@ -61,7 +61,7 @@ public class AddCommandTest {
         ModelStub modelStub = new ModelStubWithTask(validTask);
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_TASK);
         addCommand.execute(modelStub, commandHistory);
     }
 

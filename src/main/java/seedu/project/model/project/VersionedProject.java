@@ -126,9 +126,9 @@ public class VersionedProject extends Project {
         System.out.print(task2 + "\n\n");
         if (task1.getName() != task2.getName()) {
             return true;
-        } else if (task1.getAddress() != task2.getAddress()) {
+        } else if (task1.getDescription() != task2.getDescription()) {
             return true;
-        } else if (task1.getEmail() != task2.getEmail()) {
+        } else if (task1.getDeadline() != task2.getDeadline()) {
             return true;
         } else {
             return false;

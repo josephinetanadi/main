@@ -4,12 +4,12 @@ import static java.util.Objects.requireNonNull;
 import static seedu.project.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Task's address in the project.
- * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
+ * Represents a Task's description in the project.
+ * Guarantees: immutable; is valid as declared in {@link #isValidDescription(String)}
  */
-public class Address {
+public class Description {
 
-    public static final String MESSAGE_CONSTRAINTS = "Addresses can take any values, and it should not be blank";
+    public static final String MESSAGE_CONSTRAINTS = "Description can take any values, and it should not be blank";
 
     /*
      * The first character of the address must not be a whitespace,
@@ -20,20 +20,20 @@ public class Address {
     public final String value;
 
     /**
-     * Constructs an {@code Address}.
+     * Constructs an {@code Description}.
      *
-     * @param address A valid address.
+     * @param description A valid description.
      */
-    public Address(String address) {
-        requireNonNull(address);
-        checkArgument(isValidAddress(address), MESSAGE_CONSTRAINTS);
-        value = address;
+    public Description(String description) {
+        requireNonNull(description);
+        checkArgument(isValidDescription(description), MESSAGE_CONSTRAINTS);
+        value = description;
     }
 
     /**
      * Returns true if a given string is a valid email.
      */
-    public static boolean isValidAddress(String test) {
+    public static boolean isValidDescription(String test) {
         return test.matches(VALIDATION_REGEX);
     }
 
@@ -45,8 +45,8 @@ public class Address {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Address // instanceof handles nulls
-                && value.equals(((Address) other).value)); // state check
+                || (other instanceof Description // instanceof handles nulls
+                && value.equals(((Description) other).value)); // state check
     }
 
     @Override

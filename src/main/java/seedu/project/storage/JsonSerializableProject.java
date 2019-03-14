@@ -19,7 +19,7 @@ import seedu.project.model.task.Task;
 @JsonRootName(value = "project")
 class JsonSerializableProject {
 
-    public static final String MESSAGE_DUPLICATE_PERSON = "Tasks list contains duplicate task(s).";
+    public static final String MESSAGE_DUPLICATE_TASK = "Tasks list contains duplicate task(s).";
 
     private final List<JsonAdaptedTask> tasks = new ArrayList<>();
 
@@ -51,7 +51,7 @@ class JsonSerializableProject {
         for (JsonAdaptedTask jsonAdaptedTask : tasks) {
             Task task = jsonAdaptedTask.toModelType();
             if (project.hasTask(task)) {
-                throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
+                throw new IllegalValueException(MESSAGE_DUPLICATE_TASK);
             }
             project.addTask(task);
         }

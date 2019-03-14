@@ -2,7 +2,7 @@ package seedu.project.ui;
 
 import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
-import static seedu.project.testutil.TypicalTasks.ALICE;
+import static seedu.project.testutil.TypicalTasks.CS2101_MILESTONE;
 
 import java.net.URL;
 
@@ -32,8 +32,9 @@ public class BrowserPanelTest extends GuiUnitTest {
         assertEquals(BrowserPanel.DEFAULT_PAGE, browserPanelHandle.getLoadedUrl());
 
         // associated web page of a task
-        guiRobot.interact(() -> selectedTask.set(ALICE));
-        URL expectedTaskUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + ALICE.getName().fullName.replaceAll(" ", "%20"));
+        guiRobot.interact(() -> selectedTask.set(CS2101_MILESTONE));
+        URL expectedTaskUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + CS2101_MILESTONE.getName().fullName
+                .replaceAll(" ", "%20"));
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedTaskUrl, browserPanelHandle.getLoadedUrl());

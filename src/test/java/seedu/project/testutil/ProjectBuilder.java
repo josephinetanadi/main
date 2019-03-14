@@ -1,34 +1,54 @@
 package seedu.project.testutil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import seedu.project.model.project.Name;
 import seedu.project.model.project.Project;
 import seedu.project.model.task.Task;
 
 /**
- * A utility class to help with building Addressbook objects. Example usage:
- * <br>
- * {@code Project ab = new ProjectBuilder().withTask("John", "Doe").build();}
+ * A utility class to help with building Task objects.
  */
 public class ProjectBuilder {
 
-    private Project project;
+    public static final String DEFAULT_NAME = "TYPICAL";
+
+    private Name name;
+    private List<Task> tasks;
 
     public ProjectBuilder() {
-        project = new Project();
-    }
-
-    public ProjectBuilder(Project project) {
-        this.project = project;
+        name = new Name(DEFAULT_NAME);
+        tasks = new ArrayList<>();
     }
 
     /**
-     * Adds a new {@code Task} to the {@code Project} that we are building.
+     * Initializes the ProjectBuilder with the data of {@code projectToCopy}.
      */
-    public ProjectBuilder withTask(Task task) {
-        project.addTask(task);
+    public ProjectBuilder(Project projectToCopy) {
+        name = projectToCopy.getName();
+        tasks = projectToCopy.getTaskList();
+    }
+
+    /**
+     * Sets the {@code Name} of the {@code Project} that we are building.
+     */
+    public ProjectBuilder withName(String name) {
+        this.name = new Name(name);
+        return this;
+    }
+
+    /**
+     * Parses the {@code task} into a {@code List<Task>} and set it to the {@code Project} that we are building.
+     */
+    public ProjectBuilder withTask(Task ... task) {
+        this.tasks = new ArrayList<>(Arrays.asList(task));
         return this;
     }
 
     public Project build() {
-        return project;
+        return new Project(name, tasks);
     }
+
 }

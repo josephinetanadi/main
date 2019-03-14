@@ -1,13 +1,12 @@
 package seedu.project.logic;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.project.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.project.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
 import static seedu.project.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.project.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static seedu.project.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static seedu.project.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.project.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-import static seedu.project.testutil.TypicalTasks.AMY;
+import static seedu.project.logic.commands.CommandTestUtil.DEADLINE_DESC_CS2101;
+import static seedu.project.logic.commands.CommandTestUtil.DESC_DESC_CS2101;
+import static seedu.project.logic.commands.CommandTestUtil.NAME_DESC_CS2101;
+import static seedu.project.testutil.TypicalTasks.CS2101_MILESTONE;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -67,7 +66,7 @@ public class LogicManagerTest {
     @Test
     public void execute_commandExecutionError_throwsCommandException() {
         String deleteCommand = "delete 9";
-        assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandException(deleteCommand, MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         assertHistoryCorrect(deleteCommand);
     }
 
@@ -89,9 +88,8 @@ public class LogicManagerTest {
         logic = new LogicManager(model, storage);
 
         // Execute add command
-        String addCommand = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + ADDRESS_DESC_AMY;
-        Task expectedTask = new TaskBuilder(AMY).withTags().build();
+        String addCommand = AddCommand.COMMAND_WORD + NAME_DESC_CS2101 + DESC_DESC_CS2101 + DEADLINE_DESC_CS2101;
+        Task expectedTask = new TaskBuilder(CS2101_MILESTONE).withTags().build();
         ModelManager expectedModel = new ModelManager();
         expectedModel.addTask(expectedTask);
         expectedModel.commitProject();

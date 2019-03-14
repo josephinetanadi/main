@@ -2,9 +2,9 @@ package seedu.project.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.project.testutil.TypicalTasks.ALICE;
-import static seedu.project.testutil.TypicalTasks.HOON;
-import static seedu.project.testutil.TypicalTasks.IDA;
+import static seedu.project.testutil.TypicalTasks.FEEDBACK;
+import static seedu.project.testutil.TypicalTasks.LECTURE;
+import static seedu.project.testutil.TypicalTasks.TUTORIAL;
 import static seedu.project.testutil.TypicalTasks.getTypicalProject;
 
 import java.io.IOException;
@@ -83,14 +83,14 @@ public class JsonProjectStorageTest {
         assertEquals(original, new Project(readBack));
 
         // Modify data, overwrite exiting file, and read back
-        original.addTask(HOON);
-        original.removeTask(ALICE);
+        original.addTask(LECTURE);
+        original.removeTask(FEEDBACK);
         jsonProjectStorage.saveProject(original, filePath);
         readBack = jsonProjectStorage.readProject(filePath).get();
         assertEquals(original, new Project(readBack));
 
         // Save and read without specifying file path
-        original.addTask(IDA);
+        original.addTask(TUTORIAL);
         jsonProjectStorage.saveProject(original); // file path not specified
         readBack = jsonProjectStorage.readProject().get(); // file path not specified
         assertEquals(original, new Project(readBack));
