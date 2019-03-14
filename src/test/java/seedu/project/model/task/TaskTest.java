@@ -2,13 +2,12 @@ package seedu.project.model.task;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.project.testutil.TypicalTasks.ALICE;
-import static seedu.project.testutil.TypicalTasks.BOB;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_DEADLINE_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_DESCRIPTION_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_CP2106;
+import static seedu.project.testutil.TypicalTasks.CP2106_MILESTONE;
+import static seedu.project.testutil.TypicalTasks.CS2101_MILESTONE;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -30,70 +29,67 @@ public class TaskTest {
     @Test
     public void isSameTask() {
         // same object -> returns true
-        assertTrue(ALICE.isSameTask(ALICE));
+        assertTrue(CS2101_MILESTONE.isSameTask(CS2101_MILESTONE));
 
         // null -> returns false
-        assertFalse(ALICE.isSameTask(null));
+        assertFalse(CS2101_MILESTONE.isSameTask(null));
 
-        // different phone and email -> returns false
-        Task editedAlice = new TaskBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).build();
-        assertFalse(ALICE.isSameTask(editedAlice));
+        // different description and deadline -> returns false
+        Task editedCS2101Milestone = new TaskBuilder(CS2101_MILESTONE).withDescription(VALID_DESCRIPTION_CP2106)
+                .withDeadline(VALID_DEADLINE_CP2106).build();
+        assertFalse(CS2101_MILESTONE.isSameTask(editedCS2101Milestone));
 
         // different name -> returns false
-        editedAlice = new TaskBuilder(ALICE).withName(VALID_NAME_BOB).build();
-        assertFalse(ALICE.isSameTask(editedAlice));
+        editedCS2101Milestone = new TaskBuilder(CS2101_MILESTONE).withName(VALID_NAME_CP2106).build();
+        assertFalse(CS2101_MILESTONE.isSameTask(editedCS2101Milestone));
 
-        // same name, same phone, different attributes -> returns true
-        editedAlice = new TaskBuilder(ALICE).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withTags(VALID_TAG_HUSBAND).build();
-        assertTrue(ALICE.isSameTask(editedAlice));
+        // same name, same description, different attributes -> returns true
+        editedCS2101Milestone = new TaskBuilder(CS2101_MILESTONE).withDeadline(VALID_DEADLINE_CP2106)
+                .withTags(VALID_TAG_CP2106).build();
+        assertTrue(CS2101_MILESTONE.isSameTask(editedCS2101Milestone));
 
-        // same name, same email, different attributes -> returns true
-        editedAlice = new TaskBuilder(ALICE).withPhone(VALID_PHONE_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withTags(VALID_TAG_HUSBAND).build();
-        assertTrue(ALICE.isSameTask(editedAlice));
+        // same name, same deadline, different attributes -> returns true
+        editedCS2101Milestone = new TaskBuilder(CS2101_MILESTONE).withDescription(VALID_DESCRIPTION_CP2106)
+                .withTags(VALID_TAG_CP2106).build();
+        assertTrue(CS2101_MILESTONE.isSameTask(editedCS2101Milestone));
 
-        // same name, same phone, same email, different attributes -> returns true
-        editedAlice = new TaskBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
-        assertTrue(ALICE.isSameTask(editedAlice));
+        // same name, same description, same deadline, different attributes -> returns true
+        editedCS2101Milestone = new TaskBuilder(CS2101_MILESTONE).withTags(VALID_TAG_CP2106).build();
+        assertTrue(CS2101_MILESTONE.isSameTask(editedCS2101Milestone));
     }
 
     @Test
     public void equals() {
         // same values -> returns true
-        Task aliceCopy = new TaskBuilder(ALICE).build();
-        assertTrue(ALICE.equals(aliceCopy));
+        Task cs2101MilestoneCopy = new TaskBuilder(CS2101_MILESTONE).build();
+        assertTrue(CS2101_MILESTONE.equals(cs2101MilestoneCopy));
 
         // same object -> returns true
-        assertTrue(ALICE.equals(ALICE));
+        assertTrue(CS2101_MILESTONE.equals(CS2101_MILESTONE));
 
         // null -> returns false
-        assertFalse(ALICE.equals(null));
+        assertFalse(CS2101_MILESTONE.equals(null));
 
         // different type -> returns false
-        assertFalse(ALICE.equals(5));
+        assertFalse(CS2101_MILESTONE.equals(5));
 
         // different task -> returns false
-        assertFalse(ALICE.equals(BOB));
+        assertFalse(CS2101_MILESTONE.equals(CP2106_MILESTONE));
 
         // different name -> returns false
-        Task editedAlice = new TaskBuilder(ALICE).withName(VALID_NAME_BOB).build();
-        assertFalse(ALICE.equals(editedAlice));
+        Task editedCS2101Milestone = new TaskBuilder(CS2101_MILESTONE).withName(VALID_NAME_CP2106).build();
+        assertFalse(CS2101_MILESTONE.equals(editedCS2101Milestone));
 
-        // different phone -> returns false
-        editedAlice = new TaskBuilder(ALICE).withPhone(VALID_PHONE_BOB).build();
-        assertFalse(ALICE.equals(editedAlice));
+        // different description -> returns false
+        editedCS2101Milestone = new TaskBuilder(CS2101_MILESTONE).withDescription(VALID_DESCRIPTION_CP2106).build();
+        assertFalse(CS2101_MILESTONE.equals(editedCS2101Milestone));
 
-        // different email -> returns false
-        editedAlice = new TaskBuilder(ALICE).withEmail(VALID_EMAIL_BOB).build();
-        assertFalse(ALICE.equals(editedAlice));
-
-        // different address -> returns false
-        editedAlice = new TaskBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).build();
-        assertFalse(ALICE.equals(editedAlice));
+        // different deadline -> returns false
+        editedCS2101Milestone = new TaskBuilder(CS2101_MILESTONE).withDeadline(VALID_DEADLINE_CP2106).build();
+        assertFalse(CS2101_MILESTONE.equals(editedCS2101Milestone));
 
         // different tags -> returns false
-        editedAlice = new TaskBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
-        assertFalse(ALICE.equals(editedAlice));
+        editedCS2101Milestone = new TaskBuilder(CS2101_MILESTONE).withTags(VALID_TAG_CP2106).build();
+        assertFalse(CS2101_MILESTONE.equals(editedCS2101Milestone));
     }
 }

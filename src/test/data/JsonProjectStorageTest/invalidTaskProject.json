@@ -1,10 +1,9 @@
 {
 	"tasks": [
 		{
-			"name": "Task with invalid name field: Ha!ns Mu@ster",
-			"phone": "9482424",
-			"email": "hans@example.com",
-			"address": "4th street"
+			"name": "Task with invalid name field: Gr0up Meet!ing",
+			"description": "asdfghjkl",
+			"deadline": "1-1-2011"
 		}
 	]
 }

@@ -1,15 +1,13 @@
 package seedu.project.testutil;
 
-import static seedu.project.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_DEADLINE_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_DEADLINE_CS2101;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_DESCRIPTION_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_DESCRIPTION_CS2101;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_CS2101;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_CS2101;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,41 +22,50 @@ import seedu.project.model.task.Task;
  */
 public class TypicalTasks {
 
-    public static final Task ALICE = new TaskBuilder().withName("Alice Pauline")
-            .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
-            .withPhone("94351253")
-            .withTags("friends").build();
-    public static final Task BENSON = new TaskBuilder().withName("Benson Meier")
-            .withAddress("311, Clementi Ave 2, #02-25")
-            .withEmail("johnd@example.com").withPhone("98765432")
-            .withTags("owesMoney", "friends").build();
-    public static final Task CARL = new TaskBuilder().withName("Carl Kurz").withPhone("95352563")
-            .withEmail("heinz@example.com").withAddress("wall street").build();
-    public static final Task DANIEL = new TaskBuilder().withName("Daniel Meier").withPhone("87652533")
-            .withEmail("cornelia@example.com").withAddress("10th street").withTags("friends").build();
-    public static final Task ELLE = new TaskBuilder().withName("Elle Meyer").withPhone("9482224")
-            .withEmail("werner@example.com").withAddress("michegan ave").build();
-    public static final Task FIONA = new TaskBuilder().withName("Fiona Kunz").withPhone("9482427")
-            .withEmail("lydia@example.com").withAddress("little tokyo").build();
-    public static final Task GEORGE = new TaskBuilder().withName("George Best").withPhone("9482442")
-            .withEmail("anna@example.com").withAddress("4th street").build();
+    public static final Task GROUP_MEETING = new TaskBuilder().withName("Group meeting")
+            .withDescription("find teammates for group discussion on presentation")
+            .withDeadline("1-1-2011")
+            .withTags("TYPICAL").build();
+    public static final Task REPORT_SUBMISSION = new TaskBuilder().withName("Report submission")
+            .withDescription("submit report to John Doe")
+            .withDeadline("1-1-2011")
+            .withTags("TYPICAL").build();
+    public static final Task FEEDBACK = new TaskBuilder().withName("Feedback")
+            .withDescription("submit feedback")
+            .withDeadline("1-1-2011").build();
+    public static final Task TEACHING_FEEDBACK = new TaskBuilder().withName("Teaching Feedback")
+            .withDescription("submit teaching feedback via portal")
+            .withDeadline("1-1-2011").withTags("TYPICAL").build();
+    public static final Task PRINT = new TaskBuilder().withName("Print slides")
+            .withDescription("print chapter 4 slides")
+            .withDeadline("1-1-2011").build();
+    public static final Task QUIZ = new TaskBuilder().withName("Complete quiz")
+            .withDescription("attempt quiz at portal, multiple attempts possible")
+            .withDeadline("1-1-2011").build();
+    public static final Task CONSULTATION = new TaskBuilder().withName("Go for consultation")
+            .withDescription("find mr john doe for consultation at office 04-15")
+            .withDeadline("1-1-2011").build();
 
     // Manually added
-    public static final Task HOON = new TaskBuilder().withName("Hoon Meier").withPhone("8482424")
-            .withEmail("stefan@example.com").withAddress("little india").build();
-    public static final Task IDA = new TaskBuilder().withName("Ida Mueller").withPhone("8482131")
-            .withEmail("hans@example.com").withAddress("chicago ave").build();
+    public static final Task LECTURE = new TaskBuilder().withName("Attend lecture")
+            .withDescription("attend lecture at utown lecture theatre")
+            .withDeadline("1-1-2011").build();
+    public static final Task TUTORIAL = new TaskBuilder().withName("Attend tutorial")
+            .withDescription("attend tutorial at utown classroom")
+            .withDeadline("1-1-2011").withTags("TUTORIAL").build();
 
     // Manually added - Task's details found in {@code CommandTestUtil}
-    public static final Task AMY = new TaskBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-            .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
-    public static final Task BOB = new TaskBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-            .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-            .build();
+    public static final Task CS2101_MILESTONE = new TaskBuilder().withName(VALID_NAME_CS2101)
+            .withDescription(VALID_DESCRIPTION_CS2101).withDeadline(VALID_DEADLINE_CS2101)
+            .withTags(VALID_TAG_CS2101).build();
+    public static final Task CP2106_MILESTONE = new TaskBuilder().withName(VALID_NAME_CP2106)
+            .withDescription(VALID_DESCRIPTION_CP2106).withDeadline(VALID_DEADLINE_CP2106)
+            .withTags(VALID_TAG_CP2106).build();
 
-    public static final Project CS2101 = new ProjectBuilder().withTask(BOB).build();
+    public static final Project CS2101 = new ProjectBuilder().withTask(CS2101_MILESTONE, QUIZ).build();
+    public static final Project CP2106 = new ProjectBuilder().withTask(CP2106_MILESTONE).build();
 
-    public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
+    public static final String KEYWORD_MATCHING_TEST = "Feedback"; // A keyword that matches Feedback
 
     private TypicalTasks() {} // prevents instantiation
 
@@ -67,7 +74,10 @@ public class TypicalTasks {
      */
     public static ProjectList getTypicalProjectList() {
         ProjectList pl = new ProjectList();
-        pl.addProject(getTypicalProject());
+        pl.addProject(CS2101);
+        //for (Project project : getTypicalProjects()) {
+        //pl.addProject(project);
+        //}
         return pl;
     }
 
@@ -76,14 +86,19 @@ public class TypicalTasks {
      */
     public static Project getTypicalProject() {
         Project p = new Project();
-        p.setName("Typical Project");
+        p.setName("TYPICAL");
         for (Task task : getTypicalTasks()) {
             p.addTask(task);
         }
         return p;
     }
 
+    public static List<Project> getTypicalProjects() {
+        return new ArrayList<>(Arrays.asList(CS2101, CP2106));
+    }
+
     public static List<Task> getTypicalTasks() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+        return new ArrayList<>(Arrays.asList(GROUP_MEETING, REPORT_SUBMISSION, FEEDBACK, TEACHING_FEEDBACK, PRINT,
+                QUIZ, CONSULTATION));
     }
 }

@@ -24,7 +24,7 @@ public class CompareCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_COMPARE_PERSON_SUCCESS = "Compared Task: %1$s \nCompared To: %2$s\n";
+    public static final String MESSAGE_COMPARE_TASK_SUCCESS = "Compared Task: %1$s \nCompared To: %2$s\n";
 
     private final Index targetIndex;
 
@@ -40,17 +40,17 @@ public class CompareCommand extends Command {
         Task tempTask;
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
         Task taskToCompare = lastShownList.get(targetIndex.getZeroBased());
         tempTask = model.compareTask(taskToCompare);
         model.commitProject();
         if (tempTask != null) {
-            return new CommandResult(String.format(MESSAGE_COMPARE_PERSON_SUCCESS, taskToCompare, tempTask));
+            return new CommandResult(String.format(MESSAGE_COMPARE_TASK_SUCCESS, taskToCompare, tempTask));
         } else {
             String tempString = "Nothing to Compare";
-            return new CommandResult(String.format(MESSAGE_COMPARE_PERSON_SUCCESS, taskToCompare, tempString));
+            return new CommandResult(String.format(MESSAGE_COMPARE_TASK_SUCCESS, taskToCompare, tempString));
         }
 
     }

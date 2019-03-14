@@ -2,52 +2,45 @@
 	"_comment": "Project save file which contains the same Task values as in TypicalTasks#getTypicalProject()",
 	"tasks": [
 		{
-			"name": "Alice Pauline",
-			"phone": "94351253",
-			"email": "alice@example.com",
-			"address": "123, Jurong West Ave 6, #08-111",
-			"tagged": ["friends"]
+			"name": "Group meeting",
+			"description": "find teammates for group discussion on presentation",
+			"deadline": "1-1-2011",
+			"tagged": ["TYPICAL"]
 		},
 		{
-			"name": "Benson Meier",
-			"phone": "98765432",
-			"email": "johnd@example.com",
-			"address": "311, Clementi Ave 2, #02-25",
-			"tagged": ["owesMoney", "friends"]
+			"name": "Report submission",
+			"description": "submit report to John Doe",
+			"deadline": "1-1-2011",
+			"tagged": ["TYPICAL"]
 		},
 		{
-			"name": "Carl Kurz",
-			"phone": "95352563",
-			"email": "heinz@example.com",
-			"address": "wall street",
+			"name": "Feedback",
+			"description": "submit feedback",
+			"deadline": "1-1-2011",
 			"tagged": []
 		},
 		{
-			"name": "Daniel Meier",
-			"phone": "87652533",
-			"email": "cornelia@example.com",
-			"address": "10th street",
-			"tagged": ["friends"]
+			"name": "Teaching Feedback",
+			"description": "submit teaching feedback via portal",
+			"deadline": "1-1-2011",
+			"tagged": ["TYPICAL"]
 		},
 		{
-			"name": "Elle Meyer",
-			"phone": "9482224",
-			"email": "werner@example.com",
-			"address": "michegan ave",
+			"name": "Print slides",
+			"description": "print chapter 4 slides",
+			"deadline": "1-1-2011",
 			"tagged": []
 		},
 		{
-			"name": "Fiona Kunz",
-			"phone": "9482427",
-			"email": "lydia@example.com",
-			"address": "little tokyo",
+			"name": "Complete quiz",
+			"description": "attempt quiz at portal, multiple attempts possible",
+			"deadline": "1-1-2011",
 			"tagged": []
 		},
 		{
-			"name": "George Best",
-			"phone": "9482442",
-			"email": "anna@example.com",
-			"address": "4th street",
+			"name": "Go for consultation",
+			"description": "find mr john doe for consultation at office 04-15",
+			"deadline": "1-1-2011",
 			"tagged": []
 		}
 	]

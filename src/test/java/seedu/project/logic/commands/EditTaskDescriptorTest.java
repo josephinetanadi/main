@@ -2,13 +2,12 @@ package seedu.project.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.project.logic.commands.CommandTestUtil.DESC_AMY;
-import static seedu.project.logic.commands.CommandTestUtil.DESC_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.project.logic.commands.CommandTestUtil.DESC_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.DESC_CS2101;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_DEADLINE_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_DESCRIPTION_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_CP2106;
 
 import org.junit.Test;
 
@@ -20,39 +19,36 @@ public class EditTaskDescriptorTest {
     @Test
     public void equals() {
         // same values -> returns true
-        EditTaskDescriptor descriptorWithSameValues = new EditTaskDescriptor(DESC_AMY);
-        assertTrue(DESC_AMY.equals(descriptorWithSameValues));
+        EditTaskDescriptor descriptorWithSameValues = new EditTaskDescriptor(DESC_CS2101);
+        assertTrue(DESC_CS2101.equals(descriptorWithSameValues));
 
         // same object -> returns true
-        assertTrue(DESC_AMY.equals(DESC_AMY));
+        assertTrue(DESC_CS2101.equals(DESC_CS2101));
 
         // null -> returns false
-        assertFalse(DESC_AMY.equals(null));
+        assertFalse(DESC_CS2101.equals(null));
 
         // different types -> returns false
-        assertFalse(DESC_AMY.equals(5));
+        assertFalse(DESC_CS2101.equals(5));
 
         // different values -> returns false
-        assertFalse(DESC_AMY.equals(DESC_BOB));
+        assertFalse(DESC_CS2101.equals(DESC_CP2106));
 
         // different name -> returns false
-        EditTaskDescriptor editedAmy = new EditTaskDescriptorBuilder(DESC_AMY).withName(VALID_NAME_BOB).build();
-        assertFalse(DESC_AMY.equals(editedAmy));
+        EditTaskDescriptor editedCS2101 = new EditTaskDescriptorBuilder(DESC_CS2101).withName(VALID_NAME_CP2106)
+                .build();
+        assertFalse(DESC_CS2101.equals(editedCS2101));
 
-        // different phone -> returns false
-        editedAmy = new EditTaskDescriptorBuilder(DESC_AMY).withPhone(VALID_PHONE_BOB).build();
-        assertFalse(DESC_AMY.equals(editedAmy));
+        // different description -> returns false
+        editedCS2101 = new EditTaskDescriptorBuilder(DESC_CS2101).withDescription(VALID_DESCRIPTION_CP2106).build();
+        assertFalse(DESC_CS2101.equals(editedCS2101));
 
-        // different email -> returns false
-        editedAmy = new EditTaskDescriptorBuilder(DESC_AMY).withEmail(VALID_EMAIL_BOB).build();
-        assertFalse(DESC_AMY.equals(editedAmy));
-
-        // different address -> returns false
-        editedAmy = new EditTaskDescriptorBuilder(DESC_AMY).withAddress(VALID_ADDRESS_BOB).build();
-        assertFalse(DESC_AMY.equals(editedAmy));
+        // different deadline -> returns false
+        editedCS2101 = new EditTaskDescriptorBuilder(DESC_CS2101).withDeadline(VALID_DEADLINE_CP2106).build();
+        assertFalse(DESC_CS2101.equals(editedCS2101));
 
         // different tags -> returns false
-        editedAmy = new EditTaskDescriptorBuilder(DESC_AMY).withTags(VALID_TAG_HUSBAND).build();
-        assertFalse(DESC_AMY.equals(editedAmy));
+        editedCS2101 = new EditTaskDescriptorBuilder(DESC_CS2101).withTags(VALID_TAG_CP2106).build();
+        assertFalse(DESC_CS2101.equals(editedCS2101));
     }
 }

@@ -11,10 +11,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.project.commons.exceptions.IllegalValueException;
 import seedu.project.model.tag.Tag;
-import seedu.project.model.task.Address;
-import seedu.project.model.task.Email;
+import seedu.project.model.task.Deadline;
+import seedu.project.model.task.Description;
 import seedu.project.model.task.Name;
-import seedu.project.model.task.Phone;
 import seedu.project.model.task.Task;
 
 /**
@@ -25,22 +24,19 @@ class JsonAdaptedTask {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Task's %s field is missing!";
 
     private final String name;
-    private final String phone;
-    private final String email;
-    private final String address;
+    private final String description;
+    private final String deadline;
     private final List<JsonAdaptedTag> tagged = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedTask} with the given task details.
      */
     @JsonCreator
-    public JsonAdaptedTask(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-            @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
+    public JsonAdaptedTask(@JsonProperty("name") String name, @JsonProperty("description") String description,
+            @JsonProperty("deadline") String deadline, @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
         this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
+        this.description = description;
+        this.deadline = deadline;
         if (tagged != null) {
             this.tagged.addAll(tagged);
         }
@@ -51,9 +47,8 @@ class JsonAdaptedTask {
      */
     public JsonAdaptedTask(Task source) {
         name = source.getName().fullName;
-        phone = source.getPhone().value;
-        email = source.getEmail().value;
-        address = source.getAddress().value;
+        description = source.getDescription().value;
+        deadline = source.getDeadline().value;
         tagged.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -71,39 +66,34 @@ class JsonAdaptedTask {
         }
 
         if (name == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Name.class.getSimpleName()));
         }
         if (!Name.isValidName(name)) {
             throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
         }
         final Name modelName = new Name(name);
 
-        if (phone == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
+        if (description == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Description.class.getSimpleName()));
         }
-        if (!Phone.isValidPhone(phone)) {
-            throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
+        if (!Description.isValidDescription(description)) {
+            throw new IllegalValueException(Description.MESSAGE_CONSTRAINTS);
         }
-        final Phone modelPhone = new Phone(phone);
+        final Description modelDescription = new Description(description);
 
-        if (email == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
+        if (deadline == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Deadline.class.getSimpleName()));
         }
-        if (!Email.isValidEmail(email)) {
-            throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
+        if (!Deadline.isValidDeadline(deadline)) {
+            throw new IllegalValueException(Deadline.MESSAGE_CONSTRAINTS);
         }
-        final Email modelEmail = new Email(email);
-
-        if (address == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
-        }
-        if (!Address.isValidAddress(address)) {
-            throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
-        }
-        final Address modelAddress = new Address(address);
+        final Deadline modelDeadline = new Deadline(deadline);
 
         final Set<Tag> modelTags = new HashSet<>(taskTags);
-        return new Task(modelName, modelPhone, modelEmail, modelAddress, modelTags);
+        return new Task(modelName, modelDescription, modelDeadline, modelTags);
     }
 
 }

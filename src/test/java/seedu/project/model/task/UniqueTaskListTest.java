@@ -3,10 +3,10 @@ package seedu.project.model.task;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.project.testutil.TypicalTasks.ALICE;
-import static seedu.project.testutil.TypicalTasks.BOB;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_DESCRIPTION_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_CS2101;
+import static seedu.project.testutil.TypicalTasks.CP2106_MILESTONE;
+import static seedu.project.testutil.TypicalTasks.CS2101_MILESTONE;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -34,20 +34,20 @@ public class UniqueTaskListTest {
 
     @Test
     public void contains_taskNotInList_returnsFalse() {
-        assertFalse(uniqueTaskList.contains(ALICE));
+        assertFalse(uniqueTaskList.contains(CS2101_MILESTONE));
     }
 
     @Test
     public void contains_taskInList_returnsTrue() {
-        uniqueTaskList.add(ALICE);
-        assertTrue(uniqueTaskList.contains(ALICE));
+        uniqueTaskList.add(CS2101_MILESTONE);
+        assertTrue(uniqueTaskList.contains(CS2101_MILESTONE));
     }
 
     @Test
     public void contains_taskWithSameIdentityFieldsInList_returnsTrue() {
-        uniqueTaskList.add(ALICE);
-        Task editedAlice = new TaskBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
-                .build();
+        uniqueTaskList.add(CS2101_MILESTONE);
+        Task editedAlice = new TaskBuilder(CS2101_MILESTONE).withDescription(VALID_DESCRIPTION_CP2106)
+                .withTags(VALID_TAG_CS2101).build();
         assertTrue(uniqueTaskList.contains(editedAlice));
     }
 
@@ -59,44 +59,44 @@ public class UniqueTaskListTest {
 
     @Test
     public void add_duplicateTask_throwsDuplicateTaskException() {
-        uniqueTaskList.add(ALICE);
+        uniqueTaskList.add(CS2101_MILESTONE);
         thrown.expect(DuplicateTaskException.class);
-        uniqueTaskList.add(ALICE);
+        uniqueTaskList.add(CS2101_MILESTONE);
     }
 
     @Test
     public void setTask_nullTargetTask_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        uniqueTaskList.setTask(null, ALICE);
+        uniqueTaskList.setTask(null, CS2101_MILESTONE);
     }
 
     @Test
     public void setTask_nullEditedTask_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        uniqueTaskList.setTask(ALICE, null);
+        uniqueTaskList.setTask(CS2101_MILESTONE, null);
     }
 
     @Test
     public void setTask_targetTaskNotInList_throwsTaskNotFoundException() {
         thrown.expect(TaskNotFoundException.class);
-        uniqueTaskList.setTask(ALICE, ALICE);
+        uniqueTaskList.setTask(CS2101_MILESTONE, CS2101_MILESTONE);
     }
 
     @Test
     public void setTask_editedTaskIsSameTask_success() {
-        uniqueTaskList.add(ALICE);
-        uniqueTaskList.setTask(ALICE, ALICE);
+        uniqueTaskList.add(CS2101_MILESTONE);
+        uniqueTaskList.setTask(CS2101_MILESTONE, CS2101_MILESTONE);
         UniqueTaskList expectedUniqueTaskList = new UniqueTaskList();
-        expectedUniqueTaskList.add(ALICE);
+        expectedUniqueTaskList.add(CS2101_MILESTONE);
         assertEquals(expectedUniqueTaskList, uniqueTaskList);
     }
 
     @Test
     public void setTask_editedTaskHasSameIdentity_success() {
-        uniqueTaskList.add(ALICE);
-        Task editedAlice = new TaskBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
-                .build();
-        uniqueTaskList.setTask(ALICE, editedAlice);
+        uniqueTaskList.add(CS2101_MILESTONE);
+        Task editedAlice = new TaskBuilder(CS2101_MILESTONE).withDescription(VALID_DESCRIPTION_CP2106)
+                .withTags(VALID_TAG_CS2101).build();
+        uniqueTaskList.setTask(CS2101_MILESTONE, editedAlice);
         UniqueTaskList expectedUniqueTaskList = new UniqueTaskList();
         expectedUniqueTaskList.add(editedAlice);
         assertEquals(expectedUniqueTaskList, uniqueTaskList);
@@ -104,19 +104,19 @@ public class UniqueTaskListTest {
 
     @Test
     public void setTask_editedTaskHasDifferentIdentity_success() {
-        uniqueTaskList.add(ALICE);
-        uniqueTaskList.setTask(ALICE, BOB);
+        uniqueTaskList.add(CS2101_MILESTONE);
+        uniqueTaskList.setTask(CS2101_MILESTONE, CP2106_MILESTONE);
         UniqueTaskList expectedUniqueTaskList = new UniqueTaskList();
-        expectedUniqueTaskList.add(BOB);
+        expectedUniqueTaskList.add(CP2106_MILESTONE);
         assertEquals(expectedUniqueTaskList, uniqueTaskList);
     }
 
     @Test
     public void setTask_editedTaskHasNonUniqueIdentity_throwsDuplicateTaskException() {
-        uniqueTaskList.add(ALICE);
-        uniqueTaskList.add(BOB);
+        uniqueTaskList.add(CS2101_MILESTONE);
+        uniqueTaskList.add(CP2106_MILESTONE);
         thrown.expect(DuplicateTaskException.class);
-        uniqueTaskList.setTask(ALICE, BOB);
+        uniqueTaskList.setTask(CS2101_MILESTONE, CP2106_MILESTONE);
     }
 
     @Test
@@ -128,13 +128,13 @@ public class UniqueTaskListTest {
     @Test
     public void remove_taskDoesNotExist_throwsTaskNotFoundException() {
         thrown.expect(TaskNotFoundException.class);
-        uniqueTaskList.remove(ALICE);
+        uniqueTaskList.remove(CS2101_MILESTONE);
     }
 
     @Test
     public void remove_existingTask_removesTask() {
-        uniqueTaskList.add(ALICE);
-        uniqueTaskList.remove(ALICE);
+        uniqueTaskList.add(CS2101_MILESTONE);
+        uniqueTaskList.remove(CS2101_MILESTONE);
         UniqueTaskList expectedUniqueTaskList = new UniqueTaskList();
         assertEquals(expectedUniqueTaskList, uniqueTaskList);
     }
@@ -147,9 +147,9 @@ public class UniqueTaskListTest {
 
     @Test
     public void setTasks_uniqueTaskList_replacesOwnListWithProvidedUniqueTaskList() {
-        uniqueTaskList.add(ALICE);
+        uniqueTaskList.add(CS2101_MILESTONE);
         UniqueTaskList expectedUniqueTaskList = new UniqueTaskList();
-        expectedUniqueTaskList.add(BOB);
+        expectedUniqueTaskList.add(CP2106_MILESTONE);
         uniqueTaskList.setTasks(expectedUniqueTaskList);
         assertEquals(expectedUniqueTaskList, uniqueTaskList);
     }
@@ -162,17 +162,17 @@ public class UniqueTaskListTest {
 
     @Test
     public void setTasks_list_replacesOwnListWithProvidedList() {
-        uniqueTaskList.add(ALICE);
-        List<Task> taskList = Collections.singletonList(BOB);
+        uniqueTaskList.add(CS2101_MILESTONE);
+        List<Task> taskList = Collections.singletonList(CP2106_MILESTONE);
         uniqueTaskList.setTasks(taskList);
         UniqueTaskList expectedUniqueTaskList = new UniqueTaskList();
-        expectedUniqueTaskList.add(BOB);
+        expectedUniqueTaskList.add(CP2106_MILESTONE);
         assertEquals(expectedUniqueTaskList, uniqueTaskList);
     }
 
     @Test
     public void setTasks_listWithDuplicateTasks_throwsDuplicateTaskException() {
-        List<Task> listWithDuplicateTasks = Arrays.asList(ALICE, ALICE);
+        List<Task> listWithDuplicateTasks = Arrays.asList(CS2101_MILESTONE, CS2101_MILESTONE);
         thrown.expect(DuplicateTaskException.class);
         uniqueTaskList.setTasks(listWithDuplicateTasks);
     }

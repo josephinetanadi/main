@@ -1,5 +1,9 @@
 package seedu.project.testutil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import seedu.project.model.ProjectList;
 import seedu.project.model.project.Project;
 
@@ -10,25 +14,25 @@ import seedu.project.model.project.Project;
  */
 public class ProjectListBuilder {
 
-    private ProjectList projectList;
+    private List<Project> projects;
 
     public ProjectListBuilder() {
-        projectList = new ProjectList();
+        projects = new ArrayList<>();
     }
 
-    public ProjectListBuilder(ProjectList projectList) {
-        this.projectList = projectList;
+    public ProjectListBuilder(ProjectList projectListToCopy) {
+        projects = projectListToCopy.getProjectList();
     }
 
     /**
      * Adds a new {@code Task} to the {@code Project} that we are building.
      */
     public ProjectListBuilder withProject(Project project) {
-        projectList.addProject(project);
+        this.projects = new ArrayList<>(Arrays.asList(project));
         return this;
     }
 
     public ProjectList build() {
-        return projectList;
+        return new ProjectList(projects);
     }
 }
