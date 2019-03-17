@@ -46,7 +46,7 @@ public class LogicManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         projectModified = false;
 
-        CommandResult commandResult;
+        CommandResult commandResult = null;
         try {
             Command command = projectParser.parseCommand(commandText);
             commandResult = command.execute(model, history);

@@ -12,6 +12,9 @@ public class CommandHistory {
     private final ObservableList<String> userInputHistory = FXCollections.observableArrayList();
     private final ObservableList<String> unmodifiableUserInputHistory =
             FXCollections.unmodifiableObservableList(userInputHistory);
+    private final ObservableList<String> userInputHistoryTaskId = FXCollections.observableArrayList();
+    private final ObservableList<String> unmodifiableUserInputHistoryTaskId =
+            FXCollections.unmodifiableObservableList(userInputHistoryTaskId);
 
     public CommandHistory() {}
 
@@ -28,10 +31,34 @@ public class CommandHistory {
     }
 
     /**
+     * Appends {@code userInput} to the list of user input entered.
+     */
+    public void addHistoryTaskId(String userInput) {
+        requireNonNull(userInput);
+
+        int historySize = userInputHistory.size();
+        int historyTaskIdSize = userInputHistoryTaskId.size();
+
+        while (historyTaskIdSize <= historySize) {
+            userInputHistoryTaskId.add("0");
+            historyTaskIdSize = userInputHistoryTaskId.size();
+        }
+
+        userInputHistoryTaskId.add(userInput);
+    }
+
+    /**
      * Returns an unmodifiable view of {@code userInputHistory}.
      */
     public ObservableList<String> getHistory() {
         return unmodifiableUserInputHistory;
+    }
+
+    /**
+     * Returns an unmodifiable view of {@code userInputHistoryTaskId}.
+     */
+    public ObservableList<String> getHistoryTaskId() {
+        return unmodifiableUserInputHistoryTaskId;
     }
 
     @Override
