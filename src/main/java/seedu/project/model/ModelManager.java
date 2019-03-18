@@ -18,8 +18,8 @@ import seedu.project.commons.core.LogsCenter;
 import seedu.project.model.project.Project;
 import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.project.VersionedProject;
-import seedu.project.model.task.Task;
 import seedu.project.model.tag.Tag;
+import seedu.project.model.task.Task;
 import seedu.project.model.task.exceptions.TaskNotFoundException;
 
 

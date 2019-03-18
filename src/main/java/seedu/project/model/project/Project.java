@@ -10,8 +10,8 @@ import java.util.Set;
 import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 import seedu.project.commons.util.InvalidationListenerManager;
-import seedu.project.model.task.Task;
 import seedu.project.model.tag.Tag;
+import seedu.project.model.task.Task;
 import seedu.project.model.task.UniqueTaskList;
 
 
