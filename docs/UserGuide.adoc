@@ -82,7 +82,8 @@ Examples:
 === Listing all projects/tasks/subtasks : `list`
 
 Shows a list of all project, tasks and subtasks in System. +
-Format: `list`
+Format: `list` +
+Alias: `l`
 
 === Listing all tags : `listtags`
 
@@ -123,7 +124,8 @@ Edits the name and deadline of the subtask at index 1 to be `Book consultation w
 === Locating tasks by name: `find`
 
 Finds a project, task or subtask whose name contains any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find KEYWORD [MORE_KEYWORDS]` +
+Alias: `f`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -171,7 +173,8 @@ Deletes the 1st project/task/subtask in the results of the `find` command.
 === Selecting a project / task / sub-task : `select`
 
 Selects the project / task / sub-task identified by the index number used in the displayed project / task / sub-task list. +
-Format: `select INDEX`
+Format: `select INDEX` +
+Alias: `s`
 
 ****
 * Selects the project / task / sub-task and loads the relevant information at the specified `INDEX`.
@@ -226,7 +229,8 @@ Format: `view`
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format: `history` +
+Alias: `h`
 
 [NOTE]
 ====
@@ -237,7 +241,8 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 === Undoing previous command : `undo`
 
 Restores the task management system to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Format: `undo` +
+Alias: `u`
 
 [NOTE]
 ====
@@ -263,7 +268,8 @@ The `undo` command fails as there are no undoable commands executed previously.
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `redo` +
+Alias: `r`
 
 Examples:
 
@@ -286,7 +292,8 @@ The `redo` command fails as there are no `undo` commands executed previously.
 === Clearing all entries : `clear`
 
 Clears all projects, tasks and sub-tasks from the task management system. +
-Format: `clear`
+Format: `clear` +
+Alias: `cl`
 
 === Exporting outstanding projects : `export`
 
