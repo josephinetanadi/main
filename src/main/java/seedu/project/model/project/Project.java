@@ -130,7 +130,7 @@ public class Project implements ReadOnlyProject {
     }
 
     /**
-     * Removes tag from a specific person.
+     * Removes tag from a specific Task.
      */
     private void removeTagTask(Tag tag, Task task) {
         Set<Tag> newTags = new HashSet<>(task.getTags());
