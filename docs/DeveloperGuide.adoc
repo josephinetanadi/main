@@ -384,6 +384,33 @@ _{Explain here how the data encryption feature will be implemented}_
 
 // end::dataencryption[]
 
+// tag::calendarview[]
+=== [Proposed] Calendar View
+[NOTE]
+As of v1.2, this feature is still in the process of implementation.
+
+==== Proposed Implementation
+The calendar leverages on the Google calendar API to enable this feature. A sample usage, along with the behaviour of the calendar model at each step, is given below:
+
+* Step 1: The user launches the application and executes `add n/Decide on Research Paper Topic d/Security-related by/01/01/2020 t/cs3235`. +
+* Step 2: The `AddCommandParser` parses out the strings for the name, description, deadline and tag. +
+* Step 3: `ParserUtil` checks that the input strings are valid, and initialises the `Name`, `Description`, `Deadline` and `Tag`. +
+* Step 4: A new `CalendarEvent` is initialised and will be displayed in the calendar GUI.
+
+==== Design Considerations
+
+===== Aspect: Navigation of calendar feature
+
+* **Alternative 1 (current choice):** Keyboard arrows (up, down, left, right) to toggle between dates.
+** Pros: Easier to implement and fits the project direction of focusing on CLI.
+** Cons: Less user-friendly to toggle to a date far in the future.
+* **Alternative 2:** Keyboard arrows and scroll wheel.
+** Pros: More user-friendly.
+** Cons: More things to factor in during implementation, and possibly more issues as well.
+
+
+// end::calendarview[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -627,6 +654,23 @@ Do take a look at <<Design-Logic>> before attempting to modify the `Logic` compo
 ** Update the user guide to document the new aliases.
 ** See this https://github.com/se-edu/addressbook-level4/pull/785[PR] for the full solution.
 ****
+
+*Update:* +
+Shorthand aliases were added for the following commands: +
+_(Legend: command -> alias)_ +
+
+* `add` -> `a` +
+* `edit` -> `e` +
+* `delete` -> `d` +
+* `select` -> `s` +
+* `clear` -> `cl` +
+* `find` -> `f` +
+* `list` -> `l` +
+* `history` -> `h` +
+* `undo` -> `u` +
+* `redo` -> `r` +
+
+Each command alias has a corresponding test as required, and changes to the User Guide have also been documented accordingly.
 
 [discrete]
 ==== `Model` component
