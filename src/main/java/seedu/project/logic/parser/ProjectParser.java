@@ -128,7 +128,7 @@ public class ProjectParser {
         case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
 
-          default:
+        default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
