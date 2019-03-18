@@ -233,39 +233,6 @@ Classes used by multiple components are in the `seedu.projectbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-=== Compare Task feature
-
-The Compare Task feature allows the user to compare the past iteration of a task before it was edited.
-
-==== Current Implementation
-
-Building on top of the Undo/Redo feature, it is facilitated by `VersionedProject` and implements the following operations:
-
-* `VersionedProject#compareTask()` -- Compares the chosen task with its previous version if it exist.
-
-These operations are exposed in the `Model` interface as `Model#compareTask()`.
-
-Given below is an example usage scenario and how the Compare Task mechanism behaves.
-
-Step 1. The user selects the task to compare by entering the index of the task that is shown. `CompareCommandParser#CompareCommand()` will then get the index of the task
-within `projectStateList`.
-
-Step 2. The index will then be used by `CompareCommand#CommandResult()` to retrieved the Task object within `projectStateList` and passed into `VersionedProject#compareTask()`.
-
-Step 3. `VersionedProject#compareTask()` will retrieve the unique `taskId` of the chosen task.
-
-Step 4. `VersionedProject#compareTask()` will iterate through all the the tasks within each project state. The `taskId`
-will be used to determine if the task encountered during the iteration is the same as the chosen task.
-
-* Step 4a. If no same tasks are found after iterating through all the project states, or if there is no difference in all the task
-that is encountered, "Nothing to compare" will be showed to the user.
-
-Step 5. If the task encountered is the same as the chosen task, the 2 task will be compared against their name, description & deadline.
-
-* Step 5a. If there is a difference in any of the fields in the comparison, the difference will be showed to the user.
-Else Step 4. will continue to look for another version of the chosen task to compare.
-
-
 // tag::undoredo[]
 === Undo/Redo feature
 ==== Current Implementation
