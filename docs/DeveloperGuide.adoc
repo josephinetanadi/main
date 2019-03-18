@@ -391,15 +391,33 @@ Else Step 4. will continue to run to look for another version of the chosen task
 
 ==== Design Considerations
 
-===== Aspect: Tracking tasks of individual project
-
 * **Alternative 1 (current choice):** Utilise existing versionedProject to look for the specific in previous verions.
 ** Pros: Easy to implement.
 ** Cons: A large versionedProject might result in a slow system performance.
 * **Alternative 2:** All tasks will have their own "versionedTask", keeping track of its own history per task.
 ** Pros: System performance will be better as you will iterate through lesser data.
 ** Cons: Harder to implement, can be considered for future version in v2.0
-// end::Comparetaskdeature[]
+// end::Comparetaskfeature[]
+
+// tag::listtags[]
+=== List Tag feature
+==== Current Implementation
+
+[NOTE]
+This is not the final version of implementation as it is yet to be of OOP format. At this moment, this section lists down what have been done.
+
+Currently, the bulk of the list tag mechanism is faciliated at the `ListCommand`. It retrieves the result of `filteredTaskList` and cleans the result to get a list of unique tags. This result is stored in an `List<Tag>` which is then converted to a `Set<Tag>` to remove any duplicate entries.
+
+Through the list of unique tags, task names with the same tags are concatenated and eventually displayed to the `CommandResult`
+
+==== Design Considerations
+
+* **Alternative 1 (current choice):** All cleaning of data and display will be handled by one file.
+** Pros: Easy to implement.
+** Cons: Not of OOP standard. Have to parse through the result of `getFilteredTaskList` to retrieve relevant information.
+* **Alternative 2:** Cleaning of data to be done at their respective/relevant class files.
+** Pros: Will not clutter `ListTagCommand` file.
+// end::listtag[]
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption
