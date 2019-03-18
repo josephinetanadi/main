@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import seedu.project.commons.core.GuiSettings;
 import seedu.project.model.project.Project;
 import seedu.project.model.project.ReadOnlyProject;
+import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Task;
 
 /**
@@ -178,4 +179,9 @@ public interface Model {
      * Sets the selected task in the filtered task list.
      */
     void setSelectedTask(Task task);
+
+    /**
+     * Removes the given tag from all persons.
+     */
+    void deleteTag(Tag tag);
 }
