@@ -313,6 +313,48 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
+// tag::storage[]
+=== Import/Export feature
+==== Current Implementation
+
+The import/export mechanism is facilitated by `StorageManager`. It saves the list of projects and the list of tasks when lists are modified by any of the available commands e.g. `add`. This feature is achieved
+using the following operations:
+
+* `StorageManager#readProjectList()` -- Imports the list of projects from projectlist.json file.
+* `StorageManager#saveProjectList()` -- Exports the list of projects to projectlist.json file.
+* `StorageManager#readProject()` -- Imports the list of tasks in a <Project Name>.json file.
+* `StorageManager#saveProject()` -- Exports the list of tasks to a <Project Name>.json file.
+
+These operations are exposed in the `Storage` interface as `Storage#readProjectList()`, `Storage#saveProjectList()`, `Storage#readProject()` and `Storage#saveProject()` respectively.
+
+Given below is an example usage scenario and how the import/export mechanism behaves at each step.
+
+Step 1. The user launches the application for the first time. projectList will be populated by invoking `StorageManager#readProjectList`.
+
+[NOTE]
+If this is the first time that you are launching the application, `StorageManager#readProjectList()` will populate with a sample projectList.
+
+Step 2. The user executes `add n/New Project ...` to add a new project to the projectList. The `add` command indicates that the projectList is modified and a listener calls `StorageManager#saveProjectList()` to save the modified project list to the projectlist.json file.
+
+Step 3. The user executes `list` command to list all projects and executes `select 1` to select project at index 1. The `select` command will invoke `StorageManager#readProject()` to import taskList of project selected.
+
+[NOTE]
+If this is the first time that you are launching the application, `StorageManager#readProject()` will populate with a sample taskList.
+
+Step 4. The user executes `add n/New Task ...` to add a new task to the taskList. The `add` command indicates that the taskList is modified and a listener calls `StorageManager#saveProject()` to save the modified task list to the <Project Name>.json file.
+
+==== Design Considerations
+
+===== Aspect: Tracking tasks of individual project
+
+* **Alternative 1 (current choice):** Each project will have its own <Project File>.json to keep track of tasks.
+** Pros: Easy to implement.
+** Cons: May clutter data folder with too many project files.
+* **Alternative 2:** All tasks of all project merged to project.json file.
+** Pros: Will not clutter data folder.
+** Cons: Have to parse through entire file for tasks of specific project every time `StorageManager#readProject()` is executed.
+// end::storage[]
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
