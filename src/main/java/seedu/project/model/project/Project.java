@@ -132,16 +132,15 @@ public class Project implements ReadOnlyProject {
     /**
      * Removes tag from a specific person.
      */
-    private void removeTagTask(Tag tag, Task name) {
-        Set<Tag> newTags = new HashSet<>(name.getTags());
+    private void removeTagTask(Tag tag, Task task) {
+        Set<Tag> newTags = new HashSet<>(task.getTags());
 
         if (!newTags.remove(tag)) {
             return;
         }
 
-        Task update = new Task(name.getName(), name.getPhone(), name.getEmail(),
-                name.getAddress(), newTags);
-        setTask(name, update);
+        Task update = new Task(task.getName(), task.getDescription(), task.getDeadline(), newTags);
+        setTask(task, update);
         removeTask(update);
     }
 
