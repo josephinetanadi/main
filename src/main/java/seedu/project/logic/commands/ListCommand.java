@@ -41,7 +41,13 @@ public class ListCommand extends Command {
             entry.getTags().forEach(tag -> allTags.add(tag));
         });
         Set<Tag> uniqueTags = new HashSet<Tag>(allTags);
+
+
+        // checker to know what module is printing
         ArrayList<String> hello = new ArrayList<>();
+        ArrayList<String> toPrint = new ArrayList<>();
+
+
 
         filteredTasks.forEach(entry -> {
             Set<Tag> copyUniqueTag = new HashSet<>(uniqueTags);
@@ -50,14 +56,14 @@ public class ListCommand extends Command {
             if (copyUniqueTag.retainAll(entry.getTags())) {
                 if (!hello.contains(copyUniqueTag.toString())) {
                     hello.add(copyUniqueTag.toString());
-                    System.out.print("\n" + copyUniqueTag);
+                    toPrint.add(copyUniqueTag.toString());
                 }
-                System.out.print(" " + entry.getName() + ", ");
+                toPrint.add(" " + entry.getName());
             }
         });
-        System.out.println();
+        System.out.println(toPrint.toString());
 
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(toPrint.toString());
     }
 }
