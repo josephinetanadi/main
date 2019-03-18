@@ -25,8 +25,8 @@ import seedu.project.model.ReadOnlyUserPrefs;
 import seedu.project.model.project.Project;
 import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.task.Task;
-import seedu.project.testutil.TaskBuilder;
 import seedu.project.model.tag.Tag;
+import seedu.project.testutil.TaskBuilder;
 
 public class AddCommandTest {
 
