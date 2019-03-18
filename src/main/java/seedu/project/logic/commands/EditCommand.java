@@ -1,10 +1,9 @@
 package seedu.project.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.project.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.project.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.project.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static seedu.project.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.project.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.project.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.project.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.project.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
@@ -21,10 +20,9 @@ import seedu.project.logic.CommandHistory;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
 import seedu.project.model.tag.Tag;
-import seedu.project.model.task.Address;
-import seedu.project.model.task.Email;
+import seedu.project.model.task.Deadline;
+import seedu.project.model.task.Description;
 import seedu.project.model.task.Name;
-import seedu.project.model.task.Phone;
 import seedu.project.model.task.Task;
 
 /**
@@ -38,14 +36,15 @@ public class EditCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the task identified "
             + "by the index number used in the displayed task list. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) " + "[" + PREFIX_NAME + "NAME] " + "[" + PREFIX_PHONE
-            + "PHONE] " + "[" + PREFIX_EMAIL + "EMAIL] " + "[" + PREFIX_ADDRESS + "ADDRESS] " + "[" + PREFIX_TAG
-            + "TAG]...\n" + "Example: " + COMMAND_WORD + " 1 " + PREFIX_PHONE + "91234567 " + PREFIX_EMAIL
-            + "johndoe@example.com";
+            + "Parameters: INDEX (must be a positive integer) " + "[" + PREFIX_NAME + "NAME] " + "["
+            + PREFIX_DESCRIPTION + "DESCRIPTION] " + "[" + PREFIX_DEADLINE + "DEADLINE] " + "[" + PREFIX_TAG
+            + "TAG]...\n" + "Example: " + COMMAND_WORD + " 1 " + PREFIX_DESCRIPTION + "Report submission "
+            + PREFIX_DEADLINE + "1/1/2011";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Task: %1$s";
+
+    public static final String MESSAGE_EDIT_TASK_SUCCESS = "Edited Task: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This task already exists in the project.";
+    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the project.";
 
     private final Index index;
     private final EditTaskDescriptor editTaskDescriptor;
@@ -68,20 +67,20 @@ public class EditCommand extends Command {
         List<Task> lastShownList = model.getFilteredTaskList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
         Task taskToEdit = lastShownList.get(index.getZeroBased());
         Task editedTask = createEditedTask(taskToEdit, editTaskDescriptor);
 
         if (!taskToEdit.isSameTask(editedTask) && model.hasTask(editedTask)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_TASK);
         }
 
         model.setTask(taskToEdit, editedTask);
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         model.commitProject();
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedTask));
+        return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
     }
 
     /**
@@ -92,12 +91,14 @@ public class EditCommand extends Command {
         assert taskToEdit != null;
 
         Name updatedName = editTaskDescriptor.getName().orElse(taskToEdit.getName());
-        Phone updatedPhone = editTaskDescriptor.getPhone().orElse(taskToEdit.getPhone());
-        Email updatedEmail = editTaskDescriptor.getEmail().orElse(taskToEdit.getEmail());
-        Address updatedAddress = editTaskDescriptor.getAddress().orElse(taskToEdit.getAddress());
+        Description updatedDescription = editTaskDescriptor.getDescription().orElse(taskToEdit.getDescription());
+        Deadline updatedDeadline = editTaskDescriptor.getDeadline().orElse(taskToEdit.getDeadline());
         Set<Tag> updatedTags = editTaskDescriptor.getTags().orElse(taskToEdit.getTags());
+        int taskId = taskToEdit.getTaskId();
+        Task newTask = new Task(updatedName, updatedDescription, updatedDeadline, updatedTags);
+        newTask.updateTaskId(taskId);
 
-        return new Task(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return newTask;
     }
 
     @Override
@@ -123,9 +124,8 @@ public class EditCommand extends Command {
      */
     public static class EditTaskDescriptor {
         private Name name;
-        private Phone phone;
-        private Email email;
-        private Address address;
+        private Description description;
+        private Deadline deadline;
         private Set<Tag> tags;
 
         public EditTaskDescriptor() {
@@ -136,9 +136,8 @@ public class EditCommand extends Command {
          */
         public EditTaskDescriptor(EditTaskDescriptor toCopy) {
             setName(toCopy.name);
-            setPhone(toCopy.phone);
-            setEmail(toCopy.email);
-            setAddress(toCopy.address);
+            setDescription(toCopy.description);
+            setDeadline(toCopy.deadline);
             setTags(toCopy.tags);
         }
 
@@ -146,7 +145,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, description, deadline, tags);
         }
 
         public void setName(Name name) {
@@ -157,28 +156,20 @@ public class EditCommand extends Command {
             return Optional.ofNullable(name);
         }
 
-        public void setPhone(Phone phone) {
-            this.phone = phone;
+        public void setDescription(Description description) {
+            this.description = description;
         }
 
-        public Optional<Phone> getPhone() {
-            return Optional.ofNullable(phone);
+        public Optional<Description> getDescription() {
+            return Optional.ofNullable(description);
         }
 
-        public void setEmail(Email email) {
-            this.email = email;
+        public void setDeadline(Deadline deadline) {
+            this.deadline = deadline;
         }
 
-        public Optional<Email> getEmail() {
-            return Optional.ofNullable(email);
-        }
-
-        public void setAddress(Address address) {
-            this.address = address;
-        }
-
-        public Optional<Address> getAddress() {
-            return Optional.ofNullable(address);
+        public Optional<Deadline> getDeadline() {
+            return Optional.ofNullable(deadline);
         }
 
         /**
@@ -213,8 +204,8 @@ public class EditCommand extends Command {
             // state check
             EditTaskDescriptor e = (EditTaskDescriptor) other;
 
-            return getName().equals(e.getName()) && getPhone().equals(e.getPhone()) && getEmail().equals(e.getEmail())
-                    && getAddress().equals(e.getAddress()) && getTags().equals(e.getTags());
+            return getName().equals(e.getName()) && getDescription().equals(e.getDescription())
+                    && getDeadline().equals(e.getDeadline()) && getTags().equals(e.getTags());
         }
     }
 }

@@ -12,23 +12,23 @@ import seedu.project.model.Model;
 import seedu.project.model.task.Task;
 
 /**
- * Deletes a task identified using it's displayed index from the project.
+ * Compares a task identified using it's displayed index from the project.
  */
-public class DeleteCommand extends Command {
+public class CompareCommand extends Command {
 
-    public static final String COMMAND_WORD = "delete";
-    public static final String COMMAND_ALIAS = "d";
+    public static final String COMMAND_WORD = "compare";
+    public static final String COMMAND_ALIAS = "c";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the task identified by the index number used in the displayed task list.\n"
+            + ": Compares the task identified by the index number used in the displayed task list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_TASK_SUCCESS = "Deleted Task: %1$s";
+    public static final String MESSAGE_COMPARE_TASK_SUCCESS = "Compared Task: %1$s \nCompared To: %2$s\n";
 
     private final Index targetIndex;
 
-    public DeleteCommand(Index targetIndex) {
+    public CompareCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
@@ -37,20 +37,28 @@ public class DeleteCommand extends Command {
         requireNonNull(model);
         List<Task> lastShownList = model.getFilteredTaskList();
 
+        Task tempTask;
+
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
-        Task taskToDelete = lastShownList.get(targetIndex.getZeroBased());
-        model.deleteTask(taskToDelete);
+        Task taskToCompare = lastShownList.get(targetIndex.getZeroBased());
+        tempTask = model.compareTask(taskToCompare);
         model.commitProject();
-        return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, taskToDelete));
+        if (tempTask != null) {
+            return new CommandResult(String.format(MESSAGE_COMPARE_TASK_SUCCESS, taskToCompare, tempTask));
+        } else {
+            String tempString = "Nothing to Compare";
+            return new CommandResult(String.format(MESSAGE_COMPARE_TASK_SUCCESS, taskToCompare, tempString));
+        }
+
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof DeleteCommand // instanceof handles nulls
-                && targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
+                || (other instanceof CompareCommand // instanceof handles nulls
+                && targetIndex.equals(((CompareCommand) other).targetIndex)); // state check
     }
 }

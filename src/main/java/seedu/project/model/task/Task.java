@@ -15,41 +15,54 @@ import seedu.project.model.tag.Tag;
  */
 public class Task {
 
+    private static int numberOfTask = 0;
+
     // Identity fields
     private final Name name;
-    private final Phone phone;
-    private final Email email;
+    private final Description description;
+    private final Deadline deadline;
 
     // Data fields
-    private final Address address;
     private final Set<Tag> tags = new HashSet<>();
+
+    private int taskId;
 
     /**
      * Every field must be present and not null.
      */
-    public Task(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Task(Name name, Description description, Deadline deadline, Set<Tag> tags) {
+        requireAllNonNull(name, description, deadline, tags);
         this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
+        this.description = description;
+        this.deadline = deadline;
         this.tags.addAll(tags);
+
+        //numberOfTask++;
+        this.taskId = hashCode();
+    }
+
+    public int getTaskId() {
+        return taskId;
+    }
+
+    public void updateTaskId(int newTaskId) {
+        this.taskId = newTaskId;
+    }
+
+    public int getNumberOfTask() {
+        return numberOfTask;
     }
 
     public Name getName() {
         return name;
     }
 
-    public Phone getPhone() {
-        return phone;
+    public Description getDescription() {
+        return description;
     }
 
-    public Email getEmail() {
-        return email;
-    }
-
-    public Address getAddress() {
-        return address;
+    public Deadline getDeadline() {
+        return deadline;
     }
 
     /**
@@ -70,8 +83,8 @@ public class Task {
         }
 
         return otherTask != null
-                && otherTask.getName().equals(getName())
-                && (otherTask.getPhone().equals(getPhone()) || otherTask.getEmail().equals(getEmail()));
+                && otherTask.getName().equals(getName()) && (otherTask.getDescription().equals(getDescription())
+                || otherTask.getDeadline().equals(getDeadline()));
     }
 
     /**
@@ -90,28 +103,25 @@ public class Task {
 
         Task otherTask = (Task) other;
         return otherTask.getName().equals(getName())
-                && otherTask.getPhone().equals(getPhone())
-                && otherTask.getEmail().equals(getEmail())
-                && otherTask.getAddress().equals(getAddress())
+                && otherTask.getDescription().equals(getDescription())
+                && otherTask.getDeadline().equals(getDeadline())
                 && otherTask.getTags().equals(getTags());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, description, deadline, tags);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
-                .append(" Phone: ")
-                .append(getPhone())
-                .append(" Email: ")
-                .append(getEmail())
-                .append(" Address: ")
-                .append(getAddress())
+                .append(" Description: ")
+                .append(getDescription())
+                .append(" Deadline: ")
+                .append(getDeadline())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

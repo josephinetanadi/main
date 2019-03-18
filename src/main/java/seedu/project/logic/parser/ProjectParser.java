@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import seedu.project.logic.commands.AddCommand;
 import seedu.project.logic.commands.ClearCommand;
 import seedu.project.logic.commands.Command;
+import seedu.project.logic.commands.CompareCommand;
 import seedu.project.logic.commands.DeleteCommand;
 import seedu.project.logic.commands.EditCommand;
 import seedu.project.logic.commands.ExitCommand;
@@ -53,6 +54,12 @@ public class ProjectParser {
 
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
+
+        case CompareCommand.COMMAND_WORD:
+            return new CompareCommandParser().parse(arguments);
+
+        case CompareCommand.COMMAND_ALIAS:
+            return new CompareCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);

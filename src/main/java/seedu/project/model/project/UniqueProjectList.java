@@ -79,11 +79,6 @@ public class UniqueProjectList implements Iterable<Project> {
         }
     }
 
-    public void setProjects(UniqueProjectList replacement) {
-        requireNonNull(replacement);
-        internalList.setAll(replacement.internalList);
-    }
-
     /**
      * Replaces the contents of this list with {@code tasks}.
      * {@code tasks} must not contain duplicate tasks.

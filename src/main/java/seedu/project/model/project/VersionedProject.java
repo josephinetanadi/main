@@ -3,6 +3,8 @@ package seedu.project.model.project;
 import java.util.ArrayList;
 import java.util.List;
 
+import seedu.project.model.task.Task;
+
 /**
  * {@code Project} that keeps track of its own history.
  */
@@ -10,7 +12,6 @@ public class VersionedProject extends Project {
 
     private final List<ReadOnlyProject> projectStateList;
     private int currentStatePointer;
-
     public VersionedProject(ReadOnlyProject initialState) {
         super(initialState);
 
@@ -87,6 +88,51 @@ public class VersionedProject extends Project {
         // state check
         return super.equals(otherVersionedProject) && projectStateList.equals(otherVersionedProject.projectStateList)
                 && currentStatePointer == otherVersionedProject.currentStatePointer;
+    }
+
+    /**
+     * Compares the target task with the previous edited version
+     */
+    public Task compareTask(Task target1) {
+        int targetTaskId = target1.getTaskId();
+        int movingStatePointer = currentStatePointer;
+        System.out.print("CSP IS : " + currentStatePointer + "\n");
+        movingStatePointer--;
+        while (movingStatePointer >= 0) {
+            System.out.print("MSP IS : " + movingStatePointer + "\n");
+            System.out.print("Tasklist is: " + projectStateList.get(movingStatePointer).getTaskList() + "\n");
+            int taskIndex = projectStateList.get(movingStatePointer).getIndex(targetTaskId);
+            if (getDiff(target1, projectStateList.get(movingStatePointer).getTaskList()
+                    .get(taskIndex))) {
+                System.out.println("got diff");
+                return projectStateList.get(movingStatePointer).getTaskList().get(taskIndex);
+            } else {
+                movingStatePointer--;
+            }
+        }
+
+        System.out.print("nothing to compare");
+        return null;
+    }
+
+    /**
+     * Returns true if there is a difference between {@code task1, task}.
+     * Else returns false
+     * {@code task1, task2} must exist in the project
+     */
+    public boolean getDiff(Task task1, Task task2) {
+        System.out.print("XXXXXX\n");
+        System.out.print(task1 + "\n");
+        System.out.print(task2 + "\n\n");
+        if (task1.getName() != task2.getName()) {
+            return true;
+        } else if (task1.getDescription() != task2.getDescription()) {
+            return true;
+        } else if (task1.getDeadline() != task2.getDeadline()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

@@ -1,6 +1,7 @@
 package seedu.project.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.project.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import seedu.project.model.project.UniqueProjectList;
 
 /**
  * Wraps all data at the address-book level
- * Duplicates are not allowed (by .isSameTask comparison)
+ * Duplicates are not allowed (by .isSameProject comparison)
  */
 public class ProjectList implements ReadOnlyProjectList {
 
@@ -40,14 +41,20 @@ public class ProjectList implements ReadOnlyProjectList {
         resetData(toBeCopied);
     }
 
+    public ProjectList(List<Project> projects) {
+        this();
+        requireAllNonNull(projects);
+        setProjects(projects);
+    }
+
     //// list overwrite operations
 
     /**
      * Replaces the contents of the project list with {@code projects}.
      * {@code projects} must not contain duplicate projects.
      */
-    public void setProjects(List<Project> projects) {
-        this.projects.setProjects(projects);
+    public void setProjects(List<Project> target) {
+        projects.setProjects(target);
         indicateModified();
     }
 

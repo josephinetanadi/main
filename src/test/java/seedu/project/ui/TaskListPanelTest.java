@@ -3,7 +3,7 @@ package seedu.project.ui;
 import static java.time.Duration.ofMillis;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
-import static seedu.project.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.project.testutil.TypicalIndexes.INDEX_SECOND_TASK;
 import static seedu.project.testutil.TypicalTasks.getTypicalTasks;
 import static seedu.project.ui.testutil.GuiTestAssert.assertCardDisplaysTask;
 import static seedu.project.ui.testutil.GuiTestAssert.assertCardEquals;
@@ -17,10 +17,9 @@ import guitests.guihandles.TaskListPanelHandle;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.project.model.task.Address;
-import seedu.project.model.task.Email;
+import seedu.project.model.task.Deadline;
+import seedu.project.model.task.Description;
 import seedu.project.model.task.Name;
-import seedu.project.model.task.Phone;
 import seedu.project.model.task.Task;
 
 public class TaskListPanelTest extends GuiUnitTest {
@@ -48,11 +47,11 @@ public class TaskListPanelTest extends GuiUnitTest {
     @Test
     public void selection_modelSelectedTaskChanged_selectionChanges() {
         initUi(TYPICAL_TASKS);
-        Task secondTask = TYPICAL_TASKS.get(INDEX_SECOND_PERSON.getZeroBased());
+        Task secondTask = TYPICAL_TASKS.get(INDEX_SECOND_TASK.getZeroBased());
         guiRobot.interact(() -> selectedTask.set(secondTask));
         guiRobot.pauseForHuman();
 
-        TaskCardHandle expectedTask = taskListPanelHandle.getTaskCardHandle(INDEX_SECOND_PERSON.getZeroBased());
+        TaskCardHandle expectedTask = taskListPanelHandle.getTaskCardHandle(INDEX_SECOND_TASK.getZeroBased());
         TaskCardHandle selectedTask = taskListPanelHandle.getHandleToSelectedCard();
         assertCardEquals(expectedTask, selectedTask);
     }
@@ -80,10 +79,9 @@ public class TaskListPanelTest extends GuiUnitTest {
         ObservableList<Task> backingList = FXCollections.observableArrayList();
         for (int i = 0; i < taskCount; i++) {
             Name name = new Name(i + "a");
-            Phone phone = new Phone("000");
-            Email email = new Email("a@aa");
-            Address address = new Address("a");
-            Task task = new Task(name, phone, email, address, Collections.emptySet());
+            Description description = new Description("abcd");
+            Deadline deadline = new Deadline("1-1-2011");
+            Task task = new Task(name, description, deadline, Collections.emptySet());
             backingList.add(task);
         }
         return backingList;

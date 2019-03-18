@@ -44,7 +44,7 @@ public class AddCommandIntegrationTest {
     public void execute_duplicateTask_throwsCommandException() {
         Task taskInList = model.getProject().getTaskList().get(0);
         assertCommandFailure(new AddCommand(taskInList), model, commandHistory,
-                AddCommand.MESSAGE_DUPLICATE_PERSON);
+                AddCommand.MESSAGE_DUPLICATE_TASK);
     }
 
 }

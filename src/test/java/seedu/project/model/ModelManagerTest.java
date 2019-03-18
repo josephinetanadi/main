@@ -3,12 +3,12 @@ package seedu.project.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_DESCRIPTION_CP2106;
 import static seedu.project.model.Model.PREDICATE_SHOW_ALL_TASKS;
-import static seedu.project.testutil.TypicalTasks.ALICE;
-import static seedu.project.testutil.TypicalTasks.BENSON;
-import static seedu.project.testutil.TypicalTasks.BOB;
+import static seedu.project.testutil.TypicalTasks.CP2106;
+import static seedu.project.testutil.TypicalTasks.CP2106_MILESTONE;
 import static seedu.project.testutil.TypicalTasks.CS2101;
+import static seedu.project.testutil.TypicalTasks.CS2101_MILESTONE;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -96,39 +96,39 @@ public class ModelManagerTest {
 
     @Test
     public void hasTask_taskNotInProject_returnsFalse() {
-        assertFalse(modelManager.hasTask(ALICE));
+        assertFalse(modelManager.hasTask(CS2101_MILESTONE));
     }
 
     @Test
     public void hasTask_taskInProject_returnsTrue() {
-        modelManager.addTask(ALICE);
-        assertTrue(modelManager.hasTask(ALICE));
+        modelManager.addTask(CS2101_MILESTONE);
+        assertTrue(modelManager.hasTask(CS2101_MILESTONE));
     }
 
     @Test
     public void deleteTask_taskIsSelectedAndFirstTaskInFilteredTaskList_selectionCleared() {
-        modelManager.addTask(ALICE);
-        modelManager.setSelectedTask(ALICE);
-        modelManager.deleteTask(ALICE);
+        modelManager.addTask(CS2101_MILESTONE);
+        modelManager.setSelectedTask(CS2101_MILESTONE);
+        modelManager.deleteTask(CS2101_MILESTONE);
         assertEquals(null, modelManager.getSelectedTask());
     }
 
     @Test
     public void deleteTask_taskIsSelectedAndSecondTaskInFilteredTaskList_firstTaskSelected() {
-        modelManager.addTask(ALICE);
-        modelManager.addTask(BOB);
-        assertEquals(Arrays.asList(ALICE, BOB), modelManager.getFilteredTaskList());
-        modelManager.setSelectedTask(BOB);
-        modelManager.deleteTask(BOB);
-        assertEquals(ALICE, modelManager.getSelectedTask());
+        modelManager.addTask(CS2101_MILESTONE);
+        modelManager.addTask(CP2106_MILESTONE);
+        assertEquals(Arrays.asList(CS2101_MILESTONE, CP2106_MILESTONE), modelManager.getFilteredTaskList());
+        modelManager.setSelectedTask(CP2106_MILESTONE);
+        modelManager.deleteTask(CP2106_MILESTONE);
+        assertEquals(CS2101_MILESTONE, modelManager.getSelectedTask());
     }
 
     @Test
     public void setTask_taskIsSelected_selectedTaskUpdated() {
-        modelManager.addTask(ALICE);
-        modelManager.setSelectedTask(ALICE);
-        Task updatedAlice = new TaskBuilder(ALICE).withEmail(VALID_EMAIL_BOB).build();
-        modelManager.setTask(ALICE, updatedAlice);
+        modelManager.addTask(CS2101_MILESTONE);
+        modelManager.setSelectedTask(CS2101_MILESTONE);
+        Task updatedAlice = new TaskBuilder(CS2101_MILESTONE).withDescription(VALID_DESCRIPTION_CP2106).build();
+        modelManager.setTask(CS2101_MILESTONE, updatedAlice);
         assertEquals(updatedAlice, modelManager.getSelectedTask());
     }
 
@@ -141,21 +141,23 @@ public class ModelManagerTest {
     @Test
     public void setSelectedTask_taskNotInFilteredTaskList_throwsTaskNotFoundException() {
         thrown.expect(TaskNotFoundException.class);
-        modelManager.setSelectedTask(ALICE);
+        modelManager.setSelectedTask(CS2101_MILESTONE);
     }
 
     @Test
     public void setSelectedTask_taskInFilteredTaskList_setsSelectedTask() {
-        modelManager.addTask(ALICE);
-        assertEquals(Collections.singletonList(ALICE), modelManager.getFilteredTaskList());
-        modelManager.setSelectedTask(ALICE);
-        assertEquals(ALICE, modelManager.getSelectedTask());
+        modelManager.addTask(CS2101_MILESTONE);
+        assertEquals(Collections.singletonList(CS2101_MILESTONE), modelManager.getFilteredTaskList());
+        modelManager.setSelectedTask(CS2101_MILESTONE);
+        assertEquals(CS2101_MILESTONE, modelManager.getSelectedTask());
     }
 
     @Test
     public void equals() {
-        ProjectList projectList = new ProjectListBuilder().withProject(CS2101).build();
-        Project project = new ProjectBuilder().withTask(ALICE).withTask(BENSON).build();
+        ProjectList projectList = new ProjectListBuilder().withProject(CS2101).withProject(CP2106).build();
+        //Project CS2101_proj = new Project(CS2101);
+        //ProjectList projectList = new ProjectListBuilder().withProject(CS2101_proj).build();
+        Project project = new ProjectBuilder().withTask(CS2101_MILESTONE).withTask(CP2106_MILESTONE).build();
         Project differentProject = new Project();
         UserPrefs userPrefs = new UserPrefs();
 
@@ -177,7 +179,7 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(new ModelManager(projectList, differentProject, userPrefs)));
 
         // different filteredList -> returns false
-        String[] keywords = ALICE.getName().fullName.split("\\s+");
+        String[] keywords = CS2101_MILESTONE.getName().fullName.split("\\s+");
         modelManager.updateFilteredTaskList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
         assertFalse(modelManager.equals(new ModelManager(projectList, project, userPrefs)));
 

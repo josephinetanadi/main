@@ -6,10 +6,9 @@ import java.util.stream.Stream;
 
 import seedu.project.logic.commands.EditCommand.EditTaskDescriptor;
 import seedu.project.model.tag.Tag;
-import seedu.project.model.task.Address;
-import seedu.project.model.task.Email;
+import seedu.project.model.task.Deadline;
+import seedu.project.model.task.Description;
 import seedu.project.model.task.Name;
-import seedu.project.model.task.Phone;
 import seedu.project.model.task.Task;
 
 /**
@@ -33,9 +32,8 @@ public class EditTaskDescriptorBuilder {
     public EditTaskDescriptorBuilder(Task task) {
         descriptor = new EditTaskDescriptor();
         descriptor.setName(task.getName());
-        descriptor.setPhone(task.getPhone());
-        descriptor.setEmail(task.getEmail());
-        descriptor.setAddress(task.getAddress());
+        descriptor.setDescription(task.getDescription());
+        descriptor.setDeadline(task.getDeadline());
         descriptor.setTags(task.getTags());
     }
 
@@ -48,26 +46,18 @@ public class EditTaskDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Phone} of the {@code EditTaskDescriptor} that we are building.
+     * Sets the {@code Description} of the {@code EditTaskDescriptor} that we are building.
      */
-    public EditTaskDescriptorBuilder withPhone(String phone) {
-        descriptor.setPhone(new Phone(phone));
+    public EditTaskDescriptorBuilder withDescription(String description) {
+        descriptor.setDescription(new Description(description));
         return this;
     }
 
     /**
-     * Sets the {@code Email} of the {@code EditTaskDescriptor} that we are building.
+     * Sets the {@code Deadline} of the {@code EditTaskDescriptor} that we are building.
      */
-    public EditTaskDescriptorBuilder withEmail(String email) {
-        descriptor.setEmail(new Email(email));
-        return this;
-    }
-
-    /**
-     * Sets the {@code Address} of the {@code EditTaskDescriptor} that we are building.
-     */
-    public EditTaskDescriptorBuilder withAddress(String address) {
-        descriptor.setAddress(new Address(address));
+    public EditTaskDescriptorBuilder withDeadline(String deadline) {
+        descriptor.setDeadline(new Deadline(deadline));
         return this;
     }
 

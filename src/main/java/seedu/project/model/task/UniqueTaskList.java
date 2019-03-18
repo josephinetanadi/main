@@ -134,4 +134,24 @@ public class UniqueTaskList implements Iterable<Task> {
         }
         return true;
     }
+    /**
+     * Returns index of a {@code taskID} in the list.
+     * {@code taskID} must exist in the project
+     */
+    public int getIndexOfTask(int taskId) {
+        int totalTask = internalList.size();
+        int index = 0;
+
+        while (index < totalTask) {
+            if (internalList.get(index).getTaskId() == taskId) {
+                System.out.print ("index is : " + index + "\n");
+                return index;
+            } else {
+                index++;
+            }
+        }
+        index--;
+        System.out.print ("return here index is : " + index + "\n");
+        return index;
+    }
 }

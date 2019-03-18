@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static seedu.project.testutil.TypicalTasks.AMY;
-import static seedu.project.testutil.TypicalTasks.BOB;
-import static seedu.project.testutil.TypicalTasks.CARL;
+import static seedu.project.testutil.TypicalTasks.FEEDBACK;
+import static seedu.project.testutil.TypicalTasks.QUIZ;
+import static seedu.project.testutil.TypicalTasks.TEACHING_FEEDBACK;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,9 +21,9 @@ import seedu.project.testutil.ProjectBuilder;
 
 public class VersionedProjectTest {
 
-    private final ReadOnlyProject projectWithAmy = new ProjectBuilder().withTask(AMY).build();
-    private final ReadOnlyProject projectWithBob = new ProjectBuilder().withTask(BOB).build();
-    private final ReadOnlyProject projectWithCarl = new ProjectBuilder().withTask(CARL).build();
+    private final ReadOnlyProject projectWithTeachingFeedback = new ProjectBuilder().withTask(FEEDBACK).build();
+    private final ReadOnlyProject projectWithFeedback = new ProjectBuilder().withTask(TEACHING_FEEDBACK).build();
+    private final ReadOnlyProject projectWithQuiz = new ProjectBuilder().withTask(QUIZ).build();
     private final ReadOnlyProject emptyProject = new ProjectBuilder().build();
 
     @Test
@@ -37,16 +37,18 @@ public class VersionedProjectTest {
 
     @Test
     public void commit_multipleProjectPointerAtEndOfStateList_noStatesRemovedCurrentStateSaved() {
-        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithAmy, projectWithBob);
+        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithFeedback,
+                projectWithTeachingFeedback);
 
         versionedProject.commit();
-        assertProjectListStatus(versionedProject, Arrays.asList(emptyProject, projectWithAmy, projectWithBob),
-                projectWithBob, Collections.emptyList());
+        assertProjectListStatus(versionedProject, Arrays.asList(emptyProject, projectWithFeedback,
+                projectWithTeachingFeedback), projectWithTeachingFeedback, Collections.emptyList());
     }
 
     @Test
     public void commit_multipleProjectPointerNotAtEndOfStateList_statesAfterPointerRemovedCurrentStateSaved() {
-        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithAmy, projectWithBob);
+        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithFeedback,
+                projectWithTeachingFeedback);
         shiftCurrentStatePointerLeftwards(versionedProject, 2);
 
         versionedProject.commit();
@@ -56,14 +58,16 @@ public class VersionedProjectTest {
 
     @Test
     public void canUndo_multipleProjectPointerAtEndOfStateList_returnsTrue() {
-        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithAmy, projectWithBob);
+        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithFeedback,
+                projectWithTeachingFeedback);
 
         assertTrue(versionedProject.canUndo());
     }
 
     @Test
     public void canUndo_multipleProjectPointerAtStartOfStateList_returnsTrue() {
-        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithAmy, projectWithBob);
+        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithFeedback,
+                projectWithTeachingFeedback);
         shiftCurrentStatePointerLeftwards(versionedProject, 1);
 
         assertTrue(versionedProject.canUndo());
@@ -78,7 +82,8 @@ public class VersionedProjectTest {
 
     @Test
     public void canUndo_multipleProjectPointerAtStartOfStateList_returnsFalse() {
-        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithAmy, projectWithBob);
+        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithFeedback,
+                projectWithTeachingFeedback);
         shiftCurrentStatePointerLeftwards(versionedProject, 2);
 
         assertFalse(versionedProject.canUndo());
@@ -86,7 +91,8 @@ public class VersionedProjectTest {
 
     @Test
     public void canRedo_multipleProjectPointerNotAtEndOfStateList_returnsTrue() {
-        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithAmy, projectWithBob);
+        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithFeedback,
+                projectWithTeachingFeedback);
         shiftCurrentStatePointerLeftwards(versionedProject, 1);
 
         assertTrue(versionedProject.canRedo());
@@ -94,7 +100,8 @@ public class VersionedProjectTest {
 
     @Test
     public void canRedo_multipleProjectPointerAtStartOfStateList_returnsTrue() {
-        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithAmy, projectWithBob);
+        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithFeedback,
+                projectWithTeachingFeedback);
         shiftCurrentStatePointerLeftwards(versionedProject, 2);
 
         assertTrue(versionedProject.canRedo());
@@ -109,28 +116,31 @@ public class VersionedProjectTest {
 
     @Test
     public void canRedo_multipleProjectPointerAtEndOfStateList_returnsFalse() {
-        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithAmy, projectWithBob);
+        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithFeedback,
+                projectWithTeachingFeedback);
 
         assertFalse(versionedProject.canRedo());
     }
 
     @Test
     public void undo_multipleProjectPointerAtEndOfStateList_success() {
-        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithAmy, projectWithBob);
+        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithFeedback,
+                projectWithTeachingFeedback);
 
         versionedProject.undo();
-        assertProjectListStatus(versionedProject, Collections.singletonList(emptyProject), projectWithAmy,
-                Collections.singletonList(projectWithBob));
+        assertProjectListStatus(versionedProject, Collections.singletonList(emptyProject), projectWithFeedback,
+                Collections.singletonList(projectWithTeachingFeedback));
     }
 
     @Test
     public void undo_multipleProjectPointerNotAtStartOfStateList_success() {
-        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithAmy, projectWithBob);
+        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithFeedback,
+                projectWithTeachingFeedback);
         shiftCurrentStatePointerLeftwards(versionedProject, 1);
 
         versionedProject.undo();
         assertProjectListStatus(versionedProject, Collections.emptyList(), emptyProject,
-                Arrays.asList(projectWithAmy, projectWithBob));
+                Arrays.asList(projectWithFeedback, projectWithTeachingFeedback));
     }
 
     @Test
@@ -142,7 +152,8 @@ public class VersionedProjectTest {
 
     @Test
     public void undo_multipleProjectPointerAtStartOfStateList_throwsNoUndoableStateException() {
-        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithAmy, projectWithBob);
+        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithFeedback,
+                projectWithTeachingFeedback);
         shiftCurrentStatePointerLeftwards(versionedProject, 2);
 
         assertThrows(VersionedProject.NoUndoableStateException.class, versionedProject::undo);
@@ -150,22 +161,25 @@ public class VersionedProjectTest {
 
     @Test
     public void redo_multipleProjectPointerNotAtEndOfStateList_success() {
-        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithAmy, projectWithBob);
+        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithFeedback,
+                projectWithTeachingFeedback);
         shiftCurrentStatePointerLeftwards(versionedProject, 1);
 
         versionedProject.redo();
-        assertProjectListStatus(versionedProject, Arrays.asList(emptyProject, projectWithAmy), projectWithBob,
+        assertProjectListStatus(versionedProject, Arrays.asList(emptyProject, projectWithFeedback),
+                projectWithTeachingFeedback,
                 Collections.emptyList());
     }
 
     @Test
     public void redo_multipleProjectPointerAtStartOfStateList_success() {
-        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithAmy, projectWithBob);
+        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithFeedback,
+                projectWithTeachingFeedback);
         shiftCurrentStatePointerLeftwards(versionedProject, 2);
 
         versionedProject.redo();
-        assertProjectListStatus(versionedProject, Collections.singletonList(emptyProject), projectWithAmy,
-                Collections.singletonList(projectWithBob));
+        assertProjectListStatus(versionedProject, Collections.singletonList(emptyProject), projectWithFeedback,
+                Collections.singletonList(projectWithTeachingFeedback));
     }
 
     @Test
@@ -177,17 +191,18 @@ public class VersionedProjectTest {
 
     @Test
     public void redo_multipleProjectPointerAtEndOfStateList_throwsNoRedoableStateException() {
-        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithAmy, projectWithBob);
+        VersionedProject versionedProject = prepareProjectList(emptyProject, projectWithFeedback,
+                projectWithTeachingFeedback);
 
         assertThrows(VersionedProject.NoRedoableStateException.class, versionedProject::redo);
     }
 
     @Test
     public void equals() {
-        VersionedProject versionedProject = prepareProjectList(projectWithAmy, projectWithBob);
+        VersionedProject versionedProject = prepareProjectList(projectWithFeedback, projectWithTeachingFeedback);
 
         // same values -> returns true
-        VersionedProject copy = prepareProjectList(projectWithAmy, projectWithBob);
+        VersionedProject copy = prepareProjectList(projectWithFeedback, projectWithTeachingFeedback);
         assertTrue(versionedProject.equals(copy));
 
         // same object -> returns true
@@ -200,11 +215,12 @@ public class VersionedProjectTest {
         assertFalse(versionedProject.equals(1));
 
         // different state list -> returns false
-        VersionedProject differentProjectList = prepareProjectList(projectWithBob, projectWithCarl);
+        VersionedProject differentProjectList = prepareProjectList(projectWithTeachingFeedback, projectWithQuiz);
         assertFalse(versionedProject.equals(differentProjectList));
 
         // different current pointer index -> returns false
-        VersionedProject differentCurrentStatePointer = prepareProjectList(projectWithAmy, projectWithBob);
+        VersionedProject differentCurrentStatePointer = prepareProjectList(projectWithFeedback,
+                projectWithTeachingFeedback);
         shiftCurrentStatePointerLeftwards(versionedProject, 1);
         assertFalse(versionedProject.equals(differentCurrentStatePointer));
     }

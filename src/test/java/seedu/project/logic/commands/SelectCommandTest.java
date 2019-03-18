@@ -5,9 +5,9 @@ import static org.junit.Assert.assertTrue;
 import static seedu.project.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.project.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.project.logic.commands.CommandTestUtil.showTaskAtIndex;
-import static seedu.project.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.project.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.project.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+import static seedu.project.testutil.TypicalIndexes.INDEX_FIRST_TASK;
+import static seedu.project.testutil.TypicalIndexes.INDEX_SECOND_TASK;
+import static seedu.project.testutil.TypicalIndexes.INDEX_THIRD_TASK;
 import static seedu.project.testutil.TypicalTasks.getTypicalProject;
 import static seedu.project.testutil.TypicalTasks.getTypicalProjectList;
 
@@ -32,8 +32,8 @@ public class SelectCommandTest {
     public void execute_validIndexUnfilteredList_success() {
         Index lastTaskIndex = Index.fromOneBased(model.getFilteredTaskList().size());
 
-        assertExecutionSuccess(INDEX_FIRST_PERSON);
-        assertExecutionSuccess(INDEX_THIRD_PERSON);
+        assertExecutionSuccess(INDEX_FIRST_TASK);
+        assertExecutionSuccess(INDEX_THIRD_TASK);
         assertExecutionSuccess(lastTaskIndex);
     }
 
@@ -41,39 +41,39 @@ public class SelectCommandTest {
     public void execute_invalidIndexUnfilteredList_failure() {
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
 
-        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
     }
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        showTaskAtIndex(model, INDEX_FIRST_PERSON);
-        showTaskAtIndex(expectedModel, INDEX_FIRST_PERSON);
+        showTaskAtIndex(model, INDEX_FIRST_TASK);
+        showTaskAtIndex(expectedModel, INDEX_FIRST_TASK);
 
-        assertExecutionSuccess(INDEX_FIRST_PERSON);
+        assertExecutionSuccess(INDEX_FIRST_TASK);
     }
 
     @Test
     public void execute_invalidIndexFilteredList_failure() {
-        showTaskAtIndex(model, INDEX_FIRST_PERSON);
-        showTaskAtIndex(expectedModel, INDEX_FIRST_PERSON);
+        showTaskAtIndex(model, INDEX_FIRST_TASK);
+        showTaskAtIndex(expectedModel, INDEX_FIRST_TASK);
 
-        Index outOfBoundsIndex = INDEX_SECOND_PERSON;
+        Index outOfBoundsIndex = INDEX_SECOND_TASK;
         // ensures that outOfBoundIndex is still in bounds of project list
         assertTrue(outOfBoundsIndex.getZeroBased() < model.getProject().getTaskList().size());
 
-        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() {
-        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_PERSON);
-        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_PERSON);
+        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_TASK);
+        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_TASK);
 
         // same object -> returns true
         assertTrue(selectFirstCommand.equals(selectFirstCommand));
 
         // same values -> returns true
-        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST_PERSON);
+        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST_TASK);
         assertTrue(selectFirstCommand.equals(selectFirstCommandCopy));
 
         // different types -> returns false
@@ -92,7 +92,7 @@ public class SelectCommandTest {
      */
     private void assertExecutionSuccess(Index index) {
         SelectCommand selectCommand = new SelectCommand(index);
-        String expectedMessage = String.format(SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS, index.getOneBased());
+        String expectedMessage = String.format(SelectCommand.MESSAGE_SELECT_TASK_SUCCESS, index.getOneBased());
         expectedModel.setSelectedTask(model.getFilteredTaskList().get(index.getZeroBased()));
 
         assertCommandSuccess(selectCommand, model, commandHistory, expectedMessage, expectedModel);

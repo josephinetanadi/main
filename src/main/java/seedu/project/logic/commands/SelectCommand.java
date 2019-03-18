@@ -23,7 +23,7 @@ public class SelectCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Selected Task: %1$s";
+    public static final String MESSAGE_SELECT_TASK_SUCCESS = "Selected Task: %1$s";
 
     private final Index targetIndex;
 
@@ -38,11 +38,11 @@ public class SelectCommand extends Command {
         List<Task> filteredTaskList = model.getFilteredTaskList();
 
         if (targetIndex.getZeroBased() >= filteredTaskList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
         model.setSelectedTask(filteredTaskList.get(targetIndex.getZeroBased()));
-        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+        return new CommandResult(String.format(MESSAGE_SELECT_TASK_SUCCESS, targetIndex.getOneBased()));
 
     }
 

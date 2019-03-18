@@ -18,8 +18,8 @@ public class JsonSerializableProjectTest {
 
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonSerializableProjectTest");
     private static final Path TYPICAL_TASKS_FILE = TEST_DATA_FOLDER.resolve("typicalTasksProject.json");
-    private static final Path INVALID_PERSON_FILE = TEST_DATA_FOLDER.resolve("invalidTaskProject.json");
-    private static final Path DUPLICATE_PERSON_FILE = TEST_DATA_FOLDER.resolve("duplicateTaskProject.json");
+    private static final Path INVALID_TASK_FILE = TEST_DATA_FOLDER.resolve("invalidTaskProject.json");
+    private static final Path DUPLICATE_TASK_FILE = TEST_DATA_FOLDER.resolve("duplicateTaskProject.json");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -35,7 +35,7 @@ public class JsonSerializableProjectTest {
 
     @Test
     public void toModelType_invalidTaskFile_throwsIllegalValueException() throws Exception {
-        JsonSerializableProject dataFromFile = JsonUtil.readJsonFile(INVALID_PERSON_FILE, JsonSerializableProject.class)
+        JsonSerializableProject dataFromFile = JsonUtil.readJsonFile(INVALID_TASK_FILE, JsonSerializableProject.class)
                 .get();
         thrown.expect(IllegalValueException.class);
         dataFromFile.toModelType();
@@ -44,9 +44,9 @@ public class JsonSerializableProjectTest {
     @Test
     public void toModelType_duplicateTasks_throwsIllegalValueException() throws Exception {
         JsonSerializableProject dataFromFile = JsonUtil
-                .readJsonFile(DUPLICATE_PERSON_FILE, JsonSerializableProject.class).get();
+                .readJsonFile(DUPLICATE_TASK_FILE, JsonSerializableProject.class).get();
         thrown.expect(IllegalValueException.class);
-        thrown.expectMessage(JsonSerializableProject.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(JsonSerializableProject.MESSAGE_DUPLICATE_TASK);
         dataFromFile.toModelType();
     }
 

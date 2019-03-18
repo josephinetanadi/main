@@ -1,7 +1,7 @@
 package systemtests;
 
 import static seedu.project.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.project.testutil.TypicalTasks.KEYWORD_MATCHING_MEIER;
+import static seedu.project.testutil.TypicalTasks.KEYWORD_MATCHING_TEST;
 
 import org.junit.Test;
 
@@ -44,7 +44,7 @@ public class ClearCommandSystemTest extends ProjectSystemTest {
 
         /* Case: filters the task list before clearing -> entire project cleared */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original project
-        showTasksWithName(KEYWORD_MATCHING_MEIER);
+        showTasksWithName(KEYWORD_MATCHING_TEST);
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
         assertSelectedCardUnchanged();
 

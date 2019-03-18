@@ -196,7 +196,7 @@ public class ModelManager implements Model {
         filteredTasks.setPredicate(predicate);
     }
 
-    // =========== Undo/Redo
+    // =========== Undo/Redo/Compare
     // =================================================================================
 
     @Override
@@ -222,6 +222,11 @@ public class ModelManager implements Model {
     @Override
     public void commitProject() {
         versionedProject.commit();
+    }
+
+    @Override
+    public Task compareTask(Task target) {
+        return versionedProject.compareTask(target);
     }
 
     // =========== Selected task

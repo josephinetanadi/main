@@ -3,9 +3,9 @@ package seedu.project.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.project.testutil.TypicalTasks.ALICE;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_DEADLINE_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_CP2106;
+import static seedu.project.testutil.TypicalTasks.CS2101_MILESTONE;
 import static seedu.project.testutil.TypicalTasks.getTypicalProject;
 
 import java.util.Arrays;
@@ -55,8 +55,9 @@ public class ProjectTest {
     @Test
     public void resetData_withDuplicateTasks_throwsDuplicateTaskException() {
         // Two tasks with the same identity fields
-        Task editedAlice = new TaskBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
-        List<Task> newTasks = Arrays.asList(ALICE, editedAlice);
+        Task editedAlice = new TaskBuilder(CS2101_MILESTONE).withDeadline(VALID_DEADLINE_CP2106)
+                .withTags(VALID_TAG_CP2106).build();
+        List<Task> newTasks = Arrays.asList(CS2101_MILESTONE, editedAlice);
         ProjectStub newData = new ProjectStub(newTasks);
 
         thrown.expect(DuplicateTaskException.class);
@@ -71,19 +72,20 @@ public class ProjectTest {
 
     @Test
     public void hasTask_taskNotInProject_returnsFalse() {
-        assertFalse(project.hasTask(ALICE));
+        assertFalse(project.hasTask(CS2101_MILESTONE));
     }
 
     @Test
     public void hasTask_taskInProject_returnsTrue() {
-        project.addTask(ALICE);
-        assertTrue(project.hasTask(ALICE));
+        project.addTask(CS2101_MILESTONE);
+        assertTrue(project.hasTask(CS2101_MILESTONE));
     }
 
     @Test
     public void hasTask_taskWithSameIdentityFieldsInProject_returnsTrue() {
-        project.addTask(ALICE);
-        Task editedAlice = new TaskBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
+        project.addTask(CS2101_MILESTONE);
+        Task editedAlice = new TaskBuilder(CS2101_MILESTONE).withDeadline(VALID_DEADLINE_CP2106)
+                .withTags(VALID_TAG_CP2106).build();
         assertTrue(project.hasTask(editedAlice));
     }
 
@@ -98,7 +100,7 @@ public class ProjectTest {
         SimpleIntegerProperty counter = new SimpleIntegerProperty();
         InvalidationListener listener = observable -> counter.set(counter.get() + 1);
         project.addListener(listener);
-        project.addTask(ALICE);
+        project.addTask(CS2101_MILESTONE);
         assertEquals(1, counter.get());
     }
 
@@ -108,7 +110,7 @@ public class ProjectTest {
         InvalidationListener listener = observable -> counter.set(counter.get() + 1);
         project.addListener(listener);
         project.removeListener(listener);
-        project.addTask(ALICE);
+        project.addTask(CS2101_MILESTONE);
         assertEquals(0, counter.get());
     }
 
@@ -117,6 +119,7 @@ public class ProjectTest {
      */
     private static class ProjectStub implements ReadOnlyProject {
         private final ObservableList<Task> tasks = FXCollections.observableArrayList();
+        private int index;
 
         ProjectStub(Collection<Task> tasks) {
             this.tasks.setAll(tasks);
@@ -125,6 +128,11 @@ public class ProjectTest {
         @Override
         public ObservableList<Task> getTaskList() {
             return tasks;
+        }
+
+        @Override
+        public int getIndex(int taskId) {
+            return index;
         }
 
         @Override

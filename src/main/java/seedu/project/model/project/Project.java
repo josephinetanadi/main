@@ -1,6 +1,7 @@
 package seedu.project.model.project;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.project.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashSet;
 import java.util.List;
@@ -54,10 +55,11 @@ public class Project implements ReadOnlyProject {
     /**
      * Creates an Project using the Tasks in the {@code toBeCopied}
      */
-    public Project(ReadOnlyProject toBeCopied, Name name) {
+    public Project(Name name, List<Task> tasks) {
         this();
+        requireAllNonNull(name, tasks);
         this.name = name;
-        resetData(toBeCopied);
+        setTasks(tasks);
     }
 
     public Name getName() {
@@ -201,4 +203,13 @@ public class Project implements ReadOnlyProject {
     public int hashCode() {
         return Objects.hash(name, tasks);
     }
+
+    /**
+     * Returns index of a {@code taskID} in the list.
+     * {@code taskID} must exist in the project
+     */
+    public int getIndex(int taskId) {
+        return tasks.getIndexOfTask(taskId);
+    }
+
 }
