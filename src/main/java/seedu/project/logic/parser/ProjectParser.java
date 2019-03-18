@@ -124,7 +124,7 @@ public class ProjectParser {
 
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
-            
+
         case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
 
