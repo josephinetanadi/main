@@ -313,6 +313,28 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
+// tag::listtags[]
+=== List Tag feature
+==== Current Implementation
+
+[NOTE]
+This is not the final version of implementation as it is yet to be of OOP format. At this moment, this section lists down what have been done.
+
+Currently, the bulk of the list tag mechanism is faciliated at the `ListCommand`. It retrieves the result of `filteredTaskList` and cleans the result to get a list of unique tags. This result is stored in an `List<Tag>` which is then converted to a `Set<Tag>` to remove any duplicate entries.
+
+Through the list of unique tags, task names with the same tags are concatenated and eventually displayed to the `CommandResult`
+
+==== Design Considerations
+
+===== Aspect: Tracking tasks of individual project
+
+* **Alternative 1 (current choice):** All cleaning of data and display will be handled by one file.
+** Pros: Easy to implement.
+** Cons: Not of OOP standard. Have to parse through the result of `getFilteredTaskList` to retrieve relevant information.
+* **Alternative 2:** Cleaning of data to be done at their respective/relevant class files.
+** Pros: Will not clutter `ListTagCommand` file.
+// end::listtag[]
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
