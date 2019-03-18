@@ -145,7 +145,7 @@ public class Project implements ReadOnlyProject {
     }
 
     public void removeTag(Tag tag) {
-        tasks.forEach(person -> removeTagTask(tag, person));
+        tasks.forEach(task -> removeTagTask(tag, task));
     }
 
     /**
