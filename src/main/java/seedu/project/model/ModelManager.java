@@ -18,6 +18,7 @@ import seedu.project.commons.core.LogsCenter;
 import seedu.project.model.project.Project;
 import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.project.VersionedProject;
+import seedu.project.model.project.exceptions.ProjectNotFoundException;
 import seedu.project.model.task.Task;
 import seedu.project.model.task.exceptions.TaskNotFoundException;
 
@@ -31,7 +32,9 @@ public class ModelManager implements Model {
     private final VersionedProjectList versionedProjectList;
     private final VersionedProject versionedProject;
     private final UserPrefs userPrefs;
+    private final FilteredList<Project> filteredProjects;
     private final FilteredList<Task> filteredTasks;
+    private final SimpleObjectProperty<Project> selectedProject = new SimpleObjectProperty<>();
     private final SimpleObjectProperty<Task> selectedTask = new SimpleObjectProperty<>();
 
     /**
@@ -47,6 +50,8 @@ public class ModelManager implements Model {
         versionedProjectList = new VersionedProjectList(projectList);
         versionedProject = new VersionedProject(project);
         this.userPrefs = new UserPrefs(userPrefs);
+        filteredProjects = new FilteredList<>(versionedProjectList.getProjectList());
+        filteredProjects.addListener(this::ensureSelectedProjectIsValid);
         filteredTasks = new FilteredList<>(versionedProject.getTaskList());
         filteredTasks.addListener(this::ensureSelectedTaskIsValid);
     }
@@ -176,6 +181,24 @@ public class ModelManager implements Model {
         versionedProject.setTask(target, editedTask);
     }
 
+    // =========== Filtered Project List Accessors
+    // =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Project} backed by the
+     * internal list of {@code versionedProjectList}
+     */
+    @Override
+    public ObservableList<Project> getFilteredProjectList() {
+        return filteredProjects;
+    }
+
+    @Override
+    public void updateFilteredProjectList(Predicate<Project> predicate) {
+        requireNonNull(predicate);
+        filteredProjects.setPredicate(predicate);
+    }
+
     // =========== Filtered Task List Accessors
     // =============================================================
 
@@ -218,6 +241,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void commitProjectList() {
+        versionedProjectList.commit();
+    }
+
+    @Override
     public void commitProject() {
         versionedProject.commit();
     }
@@ -225,6 +253,57 @@ public class ModelManager implements Model {
     @Override
     public Task compareTask(Task target) {
         return versionedProject.compareTask(target);
+    }
+
+    // =========== Selected project
+    // ===========================================================================
+
+    @Override
+    public ReadOnlyProperty<Project> selectedProjectProperty() {
+        return selectedProject;
+    }
+
+    @Override
+    public Project getSelectedProject() {
+        return selectedProject.getValue();
+    }
+
+    @Override
+    public void setSelectedProject(Project project) {
+        if (project != null && !filteredProjects.contains(project)) {
+            throw new ProjectNotFoundException();
+        }
+        selectedProject.setValue(project);
+    }
+
+    /**
+     * Ensures {@code selectedProject} is a valid project in {@code filteredProjects}.
+     */
+    private void ensureSelectedProjectIsValid(ListChangeListener.Change<? extends Project> change) {
+        while (change.next()) {
+            if (selectedProject.getValue() == null) {
+                // null is always a valid selected task, so we do not need to check that it is
+                // valid anymore.
+                return;
+            }
+
+            boolean wasSelectedProjectReplaced = change.wasReplaced() && change.getAddedSize() == change.getRemovedSize()
+                    && change.getRemoved().contains(selectedProject.getValue());
+            if (wasSelectedProjectReplaced) {
+                // Update selectedTask to its new value.
+                int index = change.getRemoved().indexOf(selectedProject.getValue());
+                selectedProject.setValue(change.getAddedSubList().get(index));
+                continue;
+            }
+
+            boolean wasSelectedProjectRemoved = change.getRemoved().stream()
+                    .anyMatch(removedProject -> selectedProject.getValue().isSameProject(removedProject));
+            if (wasSelectedProjectRemoved) {
+                // Select the task that came before it in the list,
+                // or clear the selection if there is no such task.
+                selectedProject.setValue(change.getFrom() > 0 ? change.getList().get(change.getFrom() - 1) : null);
+            }
+        }
     }
 
     // =========== Selected task

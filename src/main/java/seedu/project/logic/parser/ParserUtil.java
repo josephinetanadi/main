@@ -12,7 +12,7 @@ import seedu.project.logic.parser.exceptions.ParseException;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Deadline;
 import seedu.project.model.task.Description;
-import seedu.project.model.task.Name;
+import seedu.project.model.Name;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.

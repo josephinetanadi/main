@@ -8,6 +8,8 @@ import seedu.project.commons.core.GuiSettings;
 import seedu.project.logic.commands.CommandResult;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.logic.parser.exceptions.ParseException;
+import seedu.project.model.ReadOnlyProjectList;
+import seedu.project.model.project.Project;
 import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.task.Task;
 
@@ -23,6 +25,16 @@ public interface Logic {
      * @throws ParseException If an error occurs during parsing.
      */
     CommandResult execute(String commandText) throws CommandException, ParseException;
+
+    /**
+     * Returns the ProjectList.
+     *
+     * @see seedu.project.model.Model#getProjectList()
+     */
+    ReadOnlyProjectList getProjectList();
+
+    /** Returns an unmodifiable view of the filtered list of project */
+    ObservableList<Project> getFilteredProjectList();
 
     /**
      * Returns the Project.
@@ -41,6 +53,11 @@ public interface Logic {
     ObservableList<String> getHistory();
 
     /**
+     * Returns the user prefs' project list file path.
+     */
+    Path getProjectListFilePath();
+
+    /**
      * Returns the user prefs' project file path.
      */
     Path getProjectFilePath();
@@ -54,6 +71,21 @@ public interface Logic {
      * Set the user prefs' GUI settings.
      */
     void setGuiSettings(GuiSettings guiSettings);
+
+    /**
+     * Selected project in the filtered project list.
+     * null if no project is selected.
+     *
+     * @see seedu.project.model.Model#selectedProjectProperty()
+     */
+    ReadOnlyProperty<Project> selectedProjectProperty();
+
+    /**
+     * Sets the selected project in the filtered project list.
+     *
+     * @see seedu.project.model.Model#setSelectedProject(Project)
+     */
+    void setSelectedProject(Project project);
 
     /**
      * Selected task in the filtered task list.

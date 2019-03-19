@@ -2,6 +2,7 @@ package seedu.project.ui;
 
 import java.util.logging.Logger;
 
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -13,6 +14,7 @@ import javafx.stage.Stage;
 import seedu.project.commons.core.GuiSettings;
 import seedu.project.commons.core.LogsCenter;
 import seedu.project.logic.Logic;
+import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.CommandResult;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.logic.parser.exceptions.ParseException;
@@ -33,6 +35,7 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private TaskListPanel taskListPanel;
+    private ProjectListPanel projectListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
 
@@ -47,6 +50,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane taskListPanelPlaceholder;
+
+    @FXML
+    private StackPane projectListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -111,8 +117,12 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel(logic.selectedTaskProperty());
+        browserPanel = new BrowserPanel(logic.selectedProjectProperty(), null);
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
+
+        projectListPanel = new ProjectListPanel(logic.getFilteredProjectList(), logic.selectedProjectProperty(),
+                logic::setSelectedProject);
+        projectListPanelPlaceholder.getChildren().add(projectListPanel.getRoot());
 
         taskListPanel = new TaskListPanel(logic.getFilteredTaskList(), logic.selectedTaskProperty(),
                 logic::setSelectedTask);
