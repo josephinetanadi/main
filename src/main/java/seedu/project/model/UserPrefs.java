@@ -15,7 +15,6 @@ public class UserPrefs implements ReadOnlyUserPrefs {
 
     private GuiSettings guiSettings = new GuiSettings();
     private Path projectListFilePath = Paths.get("data", "projectlist.json");
-    private Path projectFilePath = Paths.get("data", "project.json");
 
     /**
      * Creates a {@code UserPrefs} with default values.
@@ -38,7 +37,6 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         requireNonNull(newUserPrefs);
         setGuiSettings(newUserPrefs.getGuiSettings());
         setProjectListFilePath(newUserPrefs.getProjectListFilePath());
-        setProjectFilePath(newUserPrefs.getProjectFilePath());
     }
 
     public GuiSettings getGuiSettings() {
@@ -59,15 +57,6 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         this.projectListFilePath = projectListFilePath;
     }
 
-    public Path getProjectFilePath() {
-        return projectFilePath;
-    }
-
-    public void setProjectFilePath(Path projectFilePath) {
-        requireNonNull(projectFilePath);
-        this.projectFilePath = projectFilePath;
-    }
-
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -79,13 +68,12 @@ public class UserPrefs implements ReadOnlyUserPrefs {
 
         UserPrefs o = (UserPrefs) other;
 
-        return guiSettings.equals(o.guiSettings) && projectListFilePath.equals(o.projectListFilePath)
-                && projectFilePath.equals(o.projectFilePath);
+        return guiSettings.equals(o.guiSettings) && projectListFilePath.equals(o.projectListFilePath);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(guiSettings, projectListFilePath, projectFilePath);
+        return Objects.hash(guiSettings, projectListFilePath);
     }
 
     @Override
@@ -93,7 +81,6 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         StringBuilder sb = new StringBuilder();
         sb.append("Gui Settings : " + guiSettings);
         sb.append("\nProject list file location: " + projectListFilePath);
-        sb.append("\nProject data file location : " + projectFilePath);
         return sb.toString();
     }
 

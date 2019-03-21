@@ -4,7 +4,10 @@ import static java.util.Objects.requireNonNull;
 import static seedu.project.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Objects;
+import java.util.OptionalInt;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -19,8 +22,10 @@ import seedu.project.model.project.Project;
 import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.project.VersionedProject;
 import seedu.project.model.tag.Tag;
+import seedu.project.model.project.exceptions.ProjectNotFoundException;
 import seedu.project.model.task.Task;
 import seedu.project.model.task.exceptions.TaskNotFoundException;
+import seedu.project.ui.MainWindow;
 
 
 /**
@@ -31,10 +36,13 @@ public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final VersionedProjectList versionedProjectList;
-    private final VersionedProject versionedProject;
     private final UserPrefs userPrefs;
-    private final FilteredList<Task> filteredTasks;
+    private final FilteredList<Project> filteredProjects;
+    private final SimpleObjectProperty<Project> selectedProject = new SimpleObjectProperty<>();
     private final SimpleObjectProperty<Task> selectedTask = new SimpleObjectProperty<>();
+
+    private VersionedProject versionedProject;
+    private FilteredList<Task> filteredTasks;
 
     /**
      * Initializes a ModelManager with the given project and userPrefs.
@@ -43,12 +51,13 @@ public class ModelManager implements Model {
         super();
         requireAllNonNull(projectList, project, userPrefs);
 
-        logger.fine("Initializing with project list: " + projectList + " and project: " + project
-                + " and user prefs " + userPrefs);
+        logger.fine("Initializing with project list: " + projectList + " and user prefs " + userPrefs);
 
         versionedProjectList = new VersionedProjectList(projectList);
         versionedProject = new VersionedProject(project);
         this.userPrefs = new UserPrefs(userPrefs);
+        filteredProjects = new FilteredList<>(versionedProjectList.getProjectList());
+        filteredProjects.addListener(this::ensureSelectedProjectIsValid);
         filteredTasks = new FilteredList<>(versionedProject.getTaskList());
         filteredTasks.addListener(this::ensureSelectedTaskIsValid);
     }
@@ -93,23 +102,14 @@ public class ModelManager implements Model {
         userPrefs.setProjectListFilePath(projectListFilePath);
     }
 
-    @Override
-    public Path getProjectFilePath() {
-        return userPrefs.getProjectFilePath();
-    }
-
-    @Override
-    public void setProjectFilePath(Path projectFilePath) {
-        requireNonNull(projectFilePath);
-        userPrefs.setProjectFilePath(projectFilePath);
-    }
-
     // =========== ProjectList
     // ================================================================================
 
     @Override
     public void setProjectList(ReadOnlyProjectList projectList) {
+        versionedProjectList.clear();
         versionedProjectList.resetData(projectList);
+        versionedProjectList.populate(projectList);
     }
 
     @Override
@@ -146,7 +146,21 @@ public class ModelManager implements Model {
 
     @Override
     public void setProject(ReadOnlyProject project) {
+        if (versionedProjectList.getProjectList().get(getFilteredProjectList().indexOf(project)) instanceof Project) {
+            versionedProject = new VersionedProject(project);
+            versionedProject.resetName(project);
+            versionedProject.resetData(project);
+            filteredTasks = new FilteredList<>(versionedProject.getTaskList());
+            filteredTasks.addListener(this::ensureSelectedTaskIsValid);
+        } else {
+            versionedProject = (VersionedProject) versionedProjectList.getProjectList().get(getFilteredProjectList().indexOf(project));
+            filteredTasks = new FilteredList<>(versionedProject.getTaskList());
+            filteredTasks.addListener(this::ensureSelectedTaskIsValid);
+        }
+/*        versionedProject.clear();
+        versionedProject.resetName(project);
         versionedProject.resetData(project);
+        versionedProject.populate(project);*/
     }
 
     @Override
@@ -176,6 +190,24 @@ public class ModelManager implements Model {
         requireAllNonNull(target, editedTask);
 
         versionedProject.setTask(target, editedTask);
+    }
+
+    // =========== Filtered Project List Accessors
+    // =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Project} backed by the
+     * internal list of {@code versionedProjectList}
+     */
+    @Override
+    public ObservableList<Project> getFilteredProjectList() {
+        return filteredProjects;
+    }
+
+    @Override
+    public void updateFilteredProjectList(Predicate<Project> predicate) {
+        requireNonNull(predicate);
+        filteredProjects.setPredicate(predicate);
     }
 
     // =========== Filtered Task List Accessors
@@ -220,6 +252,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void commitProjectList() {
+        versionedProjectList.commit();
+    }
+
+    @Override
     public void commitProject() {
         versionedProject.commit();
     }
@@ -227,6 +264,57 @@ public class ModelManager implements Model {
     @Override
     public Task compareTask(Task target) {
         return versionedProject.compareTask(target);
+    }
+
+    // =========== Selected project
+    // ===========================================================================
+
+    @Override
+    public ReadOnlyProperty<Project> selectedProjectProperty() {
+        return selectedProject;
+    }
+
+    @Override
+    public Project getSelectedProject() {
+        return selectedProject.getValue();
+    }
+
+    @Override
+    public void setSelectedProject(Project project) {
+        if (project != null && !filteredProjects.contains(project)) {
+            throw new ProjectNotFoundException();
+        }
+        selectedProject.setValue(project);
+    }
+
+    /**
+     * Ensures {@code selectedProject} is a valid project in {@code filteredProjects}.
+     */
+    private void ensureSelectedProjectIsValid(ListChangeListener.Change<? extends Project> change) {
+        while (change.next()) {
+            if (selectedProject.getValue() == null) {
+                // null is always a valid selected task, so we do not need to check that it is
+                // valid anymore.
+                return;
+            }
+
+            boolean wasSelectedProjectReplaced = change.wasReplaced() && change.getAddedSize() == change.getRemovedSize()
+                    && change.getRemoved().contains(selectedProject.getValue());
+            if (wasSelectedProjectReplaced) {
+                // Update selectedTask to its new value.
+                int index = change.getRemoved().indexOf(selectedProject.getValue());
+                selectedProject.setValue(change.getAddedSubList().get(index));
+                continue;
+            }
+
+            boolean wasSelectedProjectRemoved = change.getRemoved().stream()
+                    .anyMatch(removedProject -> selectedProject.getValue().isSameProject(removedProject));
+            if (wasSelectedProjectRemoved) {
+                // Select the task that came before it in the list,
+                // or clear the selection if there is no such task.
+                selectedProject.setValue(change.getFrom() > 0 ? change.getList().get(change.getFrom() - 1) : null);
+            }
+        }
     }
 
     // =========== Selected task

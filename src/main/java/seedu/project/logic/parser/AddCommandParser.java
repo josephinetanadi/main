@@ -9,12 +9,14 @@ import static seedu.project.logic.parser.CliSyntax.PREFIX_TAG;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.AddCommand;
 import seedu.project.logic.parser.exceptions.ParseException;
+import seedu.project.model.Name;
+import seedu.project.model.project.Project;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Deadline;
 import seedu.project.model.task.Description;
-import seedu.project.model.task.Name;
 import seedu.project.model.task.Task;
 
 /**
@@ -28,21 +30,34 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DESCRIPTION, PREFIX_DEADLINE, PREFIX_TAG);
+        if(!LogicManager.getState()) {
+            ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_DESCRIPTION, PREFIX_DEADLINE)
-                || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+            if (!arePrefixesPresent(argMultimap, PREFIX_NAME) || !argMultimap.getPreamble().isEmpty()) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.PROJECT_MESSAGE_USAGE));
+            }
+
+            Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
+            Project project = new Project(name);
+
+            return new AddCommand(project);
+        } else {
+            ArgumentMultimap argMultimap =
+                    ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DESCRIPTION, PREFIX_DEADLINE, PREFIX_TAG);
+
+            if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_DESCRIPTION, PREFIX_DEADLINE)
+                    || !argMultimap.getPreamble().isEmpty()) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.TASK_MESSAGE_USAGE));
+            }
+
+            Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
+            Description description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION).get());
+            Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE).get());
+            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+            Task task = new Task(name, description, deadline, tagList);
+
+            return new AddCommand(task);
         }
-
-        Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
-        Description description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION).get());
-        Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE).get());
-        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-        Task task = new Task(name, description, deadline, tagList);
-
-        return new AddCommand(task);
     }
 
     /**

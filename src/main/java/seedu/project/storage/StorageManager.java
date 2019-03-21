@@ -19,14 +19,11 @@ public class StorageManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private ProjectListStorage projectListStorage;
-    private ProjectStorage projectStorage;
     private UserPrefsStorage userPrefsStorage;
 
-    public StorageManager(ProjectListStorage projectListStorage, ProjectStorage projectStorage,
-                          UserPrefsStorage userPrefsStorage) {
+    public StorageManager(ProjectListStorage projectListStorage, UserPrefsStorage userPrefsStorage) {
         super();
         this.projectListStorage = projectListStorage;
-        this.projectStorage = projectStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
@@ -80,41 +77,6 @@ public class StorageManager implements Storage {
     public void backupProjectList(ReadOnlyProjectList projectList) throws IOException {
         logger.fine("Backing up to temporary location");
         projectListStorage.backupProjectList(projectList);
-    }
-
-    // ================ Project methods ==============================
-
-    @Override
-    public Path getProjectFilePath() {
-        return projectStorage.getProjectFilePath();
-    }
-
-    @Override
-    public Optional<ReadOnlyProject> readProject() throws DataConversionException, IOException {
-        return readProject(projectStorage.getProjectFilePath());
-    }
-
-    @Override
-    public Optional<ReadOnlyProject> readProject(Path filePath) throws DataConversionException, IOException {
-        logger.fine("Attempting to read data from file: " + filePath);
-        return projectStorage.readProject(filePath);
-    }
-
-    @Override
-    public void saveProject(ReadOnlyProject project) throws IOException {
-        saveProject(project, projectStorage.getProjectFilePath());
-    }
-
-    @Override
-    public void saveProject(ReadOnlyProject project, Path filePath) throws IOException {
-        logger.fine("Attempting to write to data file: " + filePath);
-        projectStorage.saveProject(project, filePath);
-    }
-
-    @Override
-    public void backupProject(ReadOnlyProject project) throws IOException {
-        logger.fine("Backing up to temporary location");
-        projectStorage.backupProject(project);
     }
 
 }

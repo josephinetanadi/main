@@ -8,12 +8,15 @@ import javafx.beans.property.ReadOnlyProperty;
 import javafx.collections.ObservableList;
 import seedu.project.commons.core.GuiSettings;
 import seedu.project.commons.core.LogsCenter;
+import seedu.project.commons.exceptions.DataConversionException;
 import seedu.project.logic.commands.Command;
 import seedu.project.logic.commands.CommandResult;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.logic.parser.ProjectParser;
 import seedu.project.logic.parser.exceptions.ParseException;
 import seedu.project.model.Model;
+import seedu.project.model.ReadOnlyProjectList;
+import seedu.project.model.project.Project;
 import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.task.Task;
 import seedu.project.storage.Storage;
@@ -30,21 +33,27 @@ public class LogicManager implements Logic {
     private final CommandHistory history;
     private final ProjectParser projectParser;
     private boolean projectModified;
+    private boolean projectListModified;
+    private static boolean state; // 0 == projectlistview 1 == projectview
 
     public LogicManager(Model model, Storage storage) {
         this.model = model;
         this.storage = storage;
         history = new CommandHistory();
         projectParser = new ProjectParser();
+        state = false;
 
+        // Set projectListModified to true whenever the models' project list is modified.
+        model.getProjectList().addListener(observable -> projectListModified = true);
         // Set projectModified to true whenever the models' project is modified.
         model.getProject().addListener(observable -> projectModified = true);
     }
 
     @Override
-    public CommandResult execute(String commandText) throws CommandException, ParseException {
+    public CommandResult execute(String commandText) throws CommandException, ParseException, DataConversionException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         projectModified = false;
+        projectListModified = false;
 
         CommandResult commandResult;
         try {
@@ -54,10 +63,27 @@ public class LogicManager implements Logic {
             history.add(commandText);
         }
 
+        if (projectListModified) {
+            logger.info("Project list modified, saving to file.");
+            try {
+                if (model.getSelectedProject() != null && !commandText.equals("listproject") && !commandText.contains("delete")) {
+                    Project editedProject = new Project(model.getProject().getName(), model.getProject().getTaskList());
+                    model.setProject(model.getSelectedProject(), editedProject);
+                }
+                storage.saveProjectList(model.getProjectList());
+            } catch (IOException ioe) {
+                throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);
+            }
+        }
+
         if (projectModified) {
             logger.info("Project modified, saving to file.");
             try {
-                storage.saveProject(model.getProject());
+                if (model.getSelectedProject() != null && !commandText.equals("listproject")) {
+                    Project editedProject = new Project(model.getProject().getName(), model.getProject().getTaskList());
+                    model.setProject(model.getSelectedProject(), editedProject);
+                }
+                storage.saveProjectList(model.getProjectList());
             } catch (IOException ioe) {
                 throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);
             }
@@ -67,8 +93,24 @@ public class LogicManager implements Logic {
     }
 
     @Override
+    public ReadOnlyProjectList getProjectList() {
+        return model.getProjectList();
+    }
+
+    @Override
     public ReadOnlyProject getProject() {
         return model.getProject();
+    }
+
+    public static boolean getState() {
+        return state;
+    }
+
+    public static void setState(boolean s) { state = s; }
+
+    @Override
+    public ObservableList<Project> getFilteredProjectList() {
+        return model.getFilteredProjectList();
     }
 
     @Override
@@ -82,8 +124,8 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public Path getProjectFilePath() {
-        return model.getProjectFilePath();
+    public Path getProjectListFilePath() {
+        return model.getProjectListFilePath();
     }
 
     @Override
@@ -94,6 +136,16 @@ public class LogicManager implements Logic {
     @Override
     public void setGuiSettings(GuiSettings guiSettings) {
         model.setGuiSettings(guiSettings);
+    }
+
+    @Override
+    public ReadOnlyProperty<Project> selectedProjectProperty() {
+        return model.selectedProjectProperty();
+    }
+
+    @Override
+    public void setSelectedProject(Project project) {
+        model.setSelectedProject(project);
     }
 
     @Override

@@ -13,7 +13,9 @@ import java.util.Optional;
 import java.util.Set;
 
 import seedu.project.commons.core.index.Index;
+import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.EditCommand;
+import seedu.project.logic.commands.EditCommand.EditProjectDescriptor;
 import seedu.project.logic.commands.EditCommand.EditTaskDescriptor;
 import seedu.project.logic.parser.exceptions.ParseException;
 import seedu.project.model.tag.Tag;
@@ -29,36 +31,59 @@ public class EditCommandParser implements Parser<EditCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public EditCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DESCRIPTION, PREFIX_DEADLINE, PREFIX_TAG);
+        if(!LogicManager.getState()) {
+            requireNonNull(args);
+            ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME);
 
-        Index index;
+            Index index;
 
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
-        }
+            try {
+                index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            } catch (ParseException pe) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.PROJECT_MESSAGE_USAGE), pe);
+            }
 
-        EditTaskDescriptor editTaskDescriptor = new EditTaskDescriptor();
-        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            editTaskDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
-        }
-        if (argMultimap.getValue(PREFIX_DESCRIPTION).isPresent()) {
-            editTaskDescriptor.setDescription(ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION)
-                    .get()));
-        }
-        if (argMultimap.getValue(PREFIX_DEADLINE).isPresent()) {
-            editTaskDescriptor.setDeadline(ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE).get()));
-        }
-        parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editTaskDescriptor::setTags);
+            EditProjectDescriptor editProjectDescriptor = new EditProjectDescriptor();
+            if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
+                editProjectDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
+            }
 
-        if (!editTaskDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
-        }
+            if (!editProjectDescriptor.isAnyFieldEdited()) {
+                throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
+            }
+            return new EditCommand(index, editProjectDescriptor);
+        } else {
+            requireNonNull(args);
+            ArgumentMultimap argMultimap =
+                    ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DESCRIPTION, PREFIX_DEADLINE, PREFIX_TAG);
 
-        return new EditCommand(index, editTaskDescriptor);
+            Index index;
+
+            try {
+                index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            } catch (ParseException pe) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.TASK_MESSAGE_USAGE), pe);
+            }
+
+            EditTaskDescriptor editTaskDescriptor = new EditTaskDescriptor();
+            if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
+                editTaskDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
+            }
+            if (argMultimap.getValue(PREFIX_DESCRIPTION).isPresent()) {
+                editTaskDescriptor.setDescription(ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION)
+                        .get()));
+            }
+            if (argMultimap.getValue(PREFIX_DEADLINE).isPresent()) {
+                editTaskDescriptor.setDeadline(ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE).get()));
+            }
+            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editTaskDescriptor::setTags);
+
+            if (!editTaskDescriptor.isAnyFieldEdited()) {
+                throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
+            }
+
+            return new EditCommand(index, editTaskDescriptor);
+        }
     }
 
     /**

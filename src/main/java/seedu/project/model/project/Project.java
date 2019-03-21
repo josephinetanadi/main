@@ -3,6 +3,7 @@ package seedu.project.model.project;
 import static java.util.Objects.requireNonNull;
 import static seedu.project.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -12,6 +13,7 @@ import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 import seedu.project.commons.util.InvalidationListenerManager;
 import seedu.project.model.tag.Tag;
+import seedu.project.model.Name;
 import seedu.project.model.task.Task;
 import seedu.project.model.task.UniqueTaskList;
 
@@ -62,12 +64,13 @@ public class Project implements ReadOnlyProject {
         setTasks(tasks);
     }
 
-    public Name getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = new Name(name);
+    }
+
+    public void resetName(ReadOnlyProject newData) {
+        requireNonNull(newData);
+        setName(newData.getName().toString());
     }
 
     //// list overwrite operations
@@ -182,9 +185,11 @@ public class Project implements ReadOnlyProject {
 
     @Override
     public String toString() {
-        return tasks.asUnmodifiableObservableList().size() + " tasks";
-        // TODO: refine later
+        return getName().toString();
     }
+
+    @Override
+    public Name getName() { return name; }
 
     @Override
     public ObservableList<Task> getTaskList() {
@@ -195,6 +200,7 @@ public class Project implements ReadOnlyProject {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Project // instanceof handles nulls
+                && name.equals(((Project) other).getName())
                 && tasks.equals(((Project) other).tasks));
     }
 

@@ -5,8 +5,10 @@ import static seedu.project.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.project.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.project.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.project.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.project.model.Model.PREDICATE_SHOW_ALL_PROJECTS;
 import static seedu.project.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -17,12 +19,14 @@ import seedu.project.commons.core.Messages;
 import seedu.project.commons.core.index.Index;
 import seedu.project.commons.util.CollectionUtil;
 import seedu.project.logic.CommandHistory;
+import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
+import seedu.project.model.Name;
+import seedu.project.model.project.Project;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Deadline;
 import seedu.project.model.task.Description;
-import seedu.project.model.task.Name;
 import seedu.project.model.task.Task;
 
 /**
@@ -33,7 +37,12 @@ public class EditCommand extends Command {
     public static final String COMMAND_WORD = "edit";
     public static final String COMMAND_ALIAS = "e";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the task identified "
+    public static final String PROJECT_MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the project identified "
+            + "by the index number used in the displayed project list. "
+            + "Existing values will be overwritten by the input values.\n"
+            + "Parameters: INDEX (must be a positive integer) " + "[" + PREFIX_NAME + "NAME]...\n"
+            + "Example: " + COMMAND_WORD + " 1 " + PREFIX_NAME + "CS2113T Project";
+    public static final String TASK_MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the task identified "
             + "by the index number used in the displayed task list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) " + "[" + PREFIX_NAME + "NAME] " + "["
@@ -42,45 +51,90 @@ public class EditCommand extends Command {
             + PREFIX_DEADLINE + "1/1/2011";
 
 
+    public static final String MESSAGE_EDIT_PROJECT_SUCCESS = "Edited Project: %1$s";
+    public static final String MESSAGE_DUPLICATE_PROJECT = "This project already exists in the project list.";
     public static final String MESSAGE_EDIT_TASK_SUCCESS = "Edited Task: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the project.";
 
     private final Index index;
     private final EditTaskDescriptor editTaskDescriptor;
+    private final EditProjectDescriptor editProjectDescriptor;
 
     /**
-     * @param index              of the task in the filtered task list to edit
-     * @param editTaskDescriptor details to edit the task with
+     * @param index              of the task in the filtered project list to edit
+     * @param editObjectDescriptor details to edit the task with
      */
-    public EditCommand(Index index, EditTaskDescriptor editTaskDescriptor) {
+    public EditCommand(Index index, Object editObjectDescriptor) {
         requireNonNull(index);
-        requireNonNull(editTaskDescriptor);
+        requireNonNull(editObjectDescriptor);
 
         this.index = index;
-        this.editTaskDescriptor = new EditTaskDescriptor(editTaskDescriptor);
+        if(editObjectDescriptor instanceof EditProjectDescriptor) {
+            this.editTaskDescriptor = null;
+            this.editProjectDescriptor = new EditProjectDescriptor((EditProjectDescriptor) editObjectDescriptor);
+        } else {
+            this.editProjectDescriptor = null;
+            this.editTaskDescriptor = new EditTaskDescriptor((EditTaskDescriptor) editObjectDescriptor);
+        }
     }
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        List<Task> lastShownList = model.getFilteredTaskList();
+        if(editProjectDescriptor != null) {
+            List<Project> lastShownList = model.getFilteredProjectList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+            if (index.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PROJECT_DISPLAYED_INDEX);
+            }
+
+            Project projectToEdit = lastShownList.get(index.getZeroBased());
+            Project editedProject = createEditedProject(projectToEdit, editProjectDescriptor);
+
+            if (!projectToEdit.isSameProject(editedProject) && model.hasProject(editedProject)) {
+                throw new CommandException(MESSAGE_DUPLICATE_PROJECT);
+            }
+
+            model.setProject(projectToEdit, editedProject);
+            model.updateFilteredProjectList(PREDICATE_SHOW_ALL_PROJECTS);
+            model.commitProjectList();
+            return new CommandResult(String.format(MESSAGE_EDIT_PROJECT_SUCCESS, editedProject));
+        } else {
+            List<Task> lastShownList = model.getFilteredTaskList();
+
+            if (index.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+            }
+
+            Task taskToEdit = lastShownList.get(index.getZeroBased());
+            Task editedTask = createEditedTask(taskToEdit, editTaskDescriptor);
+
+            if (!taskToEdit.isSameTask(editedTask) && model.hasTask(editedTask)) {
+                throw new CommandException(MESSAGE_DUPLICATE_TASK);
+            }
+
+            model.setTask(taskToEdit, editedTask);
+            model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+            model.commitProject();
+            //this will not work if user clicks on a different project while on task level??? lock UI at prev panel
+            model.setProject(model.getSelectedProject(), (Project) model.getProject()); //sync project list
+            model.commitProjectList();
+            return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
         }
+    }
 
-        Task taskToEdit = lastShownList.get(index.getZeroBased());
-        Task editedTask = createEditedTask(taskToEdit, editTaskDescriptor);
+    /**
+     * Creates and returns a {@code Task} with the details of {@code taskToEdit}
+     * edited with {@code editTaskDescriptor}.
+     */
+    private static Project createEditedProject(Project projectToEdit, EditProjectDescriptor editProjectDescriptor) {
+        assert projectToEdit != null;
 
-        if (!taskToEdit.isSameTask(editedTask) && model.hasTask(editedTask)) {
-            throw new CommandException(MESSAGE_DUPLICATE_TASK);
-        }
-
-        model.setTask(taskToEdit, editedTask);
-        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
-        model.commitProject();
-        return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
+        Name updatedName = editProjectDescriptor.getName().orElse(projectToEdit.getName());
+        List<Task> updatedTasks = editProjectDescriptor.getTasks().orElse(projectToEdit.getTaskList());
+        Project newProject = new Project(updatedName, updatedTasks);
+        return newProject;
     }
 
     /**
@@ -116,6 +170,74 @@ public class EditCommand extends Command {
         // state check
         EditCommand e = (EditCommand) other;
         return index.equals(e.index) && editTaskDescriptor.equals(e.editTaskDescriptor);
+    }
+
+    /**
+     * Stores the details to edit the project with. Each non-empty field value will
+     * replace the corresponding field value of the task.
+     */
+    public static class EditProjectDescriptor {
+        private Name name;
+        private List<Task> tasks;
+
+        public EditProjectDescriptor() {
+        }
+
+        /**
+         * Copy constructor.
+         */
+        public EditProjectDescriptor(EditProjectDescriptor toCopy) {
+            setName(toCopy.name);
+        }
+
+        /**
+         * Returns true if at least one field is edited.
+         */
+        public boolean isAnyFieldEdited() {
+            return CollectionUtil.isAnyNonNull(name);
+        }
+
+        public void setName(Name name) {
+            this.name = name;
+        }
+
+        public Optional<Name> getName() {
+            return Optional.ofNullable(name);
+        }
+
+        /**
+         * Sets {@code tasks} to this object's {@code tasks}. A defensive copy of
+         * {@code tasks} is used internally.
+         */
+        public void setTasks(Set<Task> tasks) {
+            this.tasks = (tasks != null) ? new ArrayList<>(tasks) : null;
+        }
+
+        /**
+         * Returns an unmodifiable task set, which throws
+         * {@code UnsupportedOperationException} if modification is attempted. Returns
+         * {@code Optional#empty()} if {@code tasks} is null.
+         */
+        public Optional<List<Task>> getTasks() {
+            return (tasks != null) ? Optional.of(Collections.unmodifiableList(tasks)) : Optional.empty();
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            // short circuit if same object
+            if (other == this) {
+                return true;
+            }
+
+            // instanceof handles nulls
+            if (!(other instanceof EditTaskDescriptor)) {
+                return false;
+            }
+
+            // state check
+            EditProjectDescriptor e = (EditProjectDescriptor) other;
+            return getName().equals(e.getName()) && getTasks().equals(e.getTasks());
+        }
     }
 
     /**

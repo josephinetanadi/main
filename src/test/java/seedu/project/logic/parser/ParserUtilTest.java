@@ -19,7 +19,7 @@ import seedu.project.logic.parser.exceptions.ParseException;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Deadline;
 import seedu.project.model.task.Description;
-import seedu.project.model.task.Name;
+import seedu.project.model.Name;
 import seedu.project.testutil.Assert;
 
 public class ParserUtilTest {

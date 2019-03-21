@@ -18,6 +18,12 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Task> PREDICATE_SHOW_ALL_TASKS = unused -> true;
 
+    /** {@code Predicate} that always evaluate to false */
+    Predicate<Task> PREDICATE_SHOW_NO_TASKS = unused -> false;
+
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<Project> PREDICATE_SHOW_ALL_PROJECTS = unused -> true;
+
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
      */
@@ -75,7 +81,7 @@ public interface Model {
     /**
      * Replaces project data with the data in {@code project}.
      */
-    void setProject(ReadOnlyProject project);
+    void setProject(ReadOnlyProject object);
 
     /**
      * Replaces the given project {@code target} with {@code editedProject}.
@@ -84,16 +90,6 @@ public interface Model {
      * project list.
      */
     void setProject(Project target, Project editedProject);
-
-    /**
-     * Returns the user prefs' project file path.
-     */
-    Path getProjectFilePath();
-
-    /**
-     * Sets the user prefs' project file path.
-     */
-    void setProjectFilePath(Path projectFilePath);
 
 
     /** Returns the Project */
@@ -128,6 +124,17 @@ public interface Model {
      */
     void setTask(Task target, Task editedTask);
 
+    /** Returns an unmodifiable view of the filtered project list */
+    ObservableList<Project> getFilteredProjectList();
+
+    /**
+     * Updates the filter of the filtered project list to filter by the given
+     * {@code predicate}.
+     *
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredProjectList(Predicate<Project> predicate);
+
     /** Returns an unmodifiable view of the filtered task list */
     ObservableList<Task> getFilteredTaskList();
 
@@ -160,9 +167,30 @@ public interface Model {
     void redoProject();
 
     /**
+     * Saves the current project list state for undo/redo.
+     */
+    void commitProjectList();
+
+    /**
      * Saves the current project state for undo/redo.
      */
     void commitProject();
+
+    /**
+     * Selected project in the filtered project list. null if no project is selected.
+     */
+    ReadOnlyProperty<Project> selectedProjectProperty();
+
+    /**
+     * Returns the selected project in the filtered project list. null if no project is
+     * selected.
+     */
+    Project getSelectedProject();
+
+    /**
+     * Sets the selected project in the filtered project list.
+     */
+    void setSelectedProject(Project project);
 
     /**
      * Selected task in the filtered task list. null if no task is selected.

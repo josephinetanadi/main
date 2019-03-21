@@ -20,6 +20,15 @@ public class VersionedProject extends Project {
         currentStatePointer = 0;
     }
 
+    public void clear() {
+        projectStateList.clear();
+        currentStatePointer = 0;
+    }
+
+    public void populate(ReadOnlyProject initialState) {
+        projectStateList.add(new Project(initialState));
+    }
+
     /**
      * Saves a copy of the current {@code Project} state at the end of the state
      * list. Undone states are removed from the state list.

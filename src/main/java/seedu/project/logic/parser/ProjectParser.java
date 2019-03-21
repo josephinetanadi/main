@@ -16,7 +16,9 @@ import seedu.project.logic.commands.ExitCommand;
 import seedu.project.logic.commands.FindCommand;
 import seedu.project.logic.commands.HelpCommand;
 import seedu.project.logic.commands.HistoryCommand;
+import seedu.project.logic.commands.ImportCommand;
 import seedu.project.logic.commands.ListCommand;
+import seedu.project.logic.commands.ListProjectCommand;
 import seedu.project.logic.commands.RedoCommand;
 import seedu.project.logic.commands.SelectCommand;
 import seedu.project.logic.commands.UndoCommand;
@@ -97,6 +99,12 @@ public class ProjectParser {
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
 
+        case ListProjectCommand.COMMAND_WORD:
+            return new ListProjectCommand();
+
+        case ListProjectCommand.COMMAND_ALIAS:
+            return new ListProjectCommand();
+
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
 
@@ -120,6 +128,12 @@ public class ProjectParser {
 
         case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
+
+        case ImportCommand.COMMAND_WORD:
+            return new ImportCommandParser().parse(arguments);
+
+        case ImportCommand.COMMAND_ALIAS:
+            return new ImportCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
