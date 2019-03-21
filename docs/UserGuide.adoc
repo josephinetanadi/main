@@ -214,6 +214,7 @@ new task .
 
 Outcome: Reverses the `undo` action and adds the task back to the task list. Task
          Box (Panel D) will now display new task once again.
+
 ==== List previously entered commands for a chosen task: `taskhistory`
 
 Lists all previous commands that directly affected a selected task in reverse
@@ -228,6 +229,31 @@ Example scenario:
 
 Outcome: Results Box (Panel B) will display all previous commands which directly
 affects the task at index 1.
+
+==== Compares a task with its previous version: `compare`
+
+Compares a selected task one version before it was edited and show the differences
+in the task.
+
+* Format: `compare INDEX`
+* Alias: `c`
+
+Example scenario:
+
+*  `add n/sample task` ...
+
+Outcome: Task Box (Panel D) will display new task added to task list.
+
+*  `add n/sample task edited` ...
+
+Outcome: TTask Box (Panel D) will display updated task at index 1 with the new
+          name.
+
+* `compare 1`
+
+Outcome: Task Box (Panel B) will display information of current version of the task at
+         index 1 ( `sample task` ) and the previous version of it ( `sample task edited` ).
+         Allows you to view a direct comparison of what was changed.
 
 ==== Define group tags:
 
