@@ -179,7 +179,7 @@ Restores the task list to the state before the previous undoable command was
 executed.
 
 * Format: `undo`
-* Alias: `u`
+* Alias: `u` i.e. `undo` is equivalent to `u`
 
 Example:
 
@@ -197,7 +197,7 @@ new task .
 Reverses the most recent `undo` command.
 
 * Format: `redo`
-* Alias: `r`
+* Alias: `r` i.e. `redo` is equivalent to `r`
 
 Example:
 
@@ -221,7 +221,7 @@ Lists all previous commands that directly affected a selected task in reverse
 chronological order.
 
 * Format: `taskhistory INDEX`
-* Alias: `th`
+* Alias: `th` i.e. `taskhistory` is equivalent to `th`
 
 Example :
 
@@ -236,7 +236,7 @@ Compares a selected task one version before it was edited and show the differenc
 in the task.
 
 * Format: `compare INDEX`
-* Alias: `c`
+* Alias: `c` i.e. `compare` is equivalent to `c`
 
 Example :
 
