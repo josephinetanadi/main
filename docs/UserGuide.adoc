@@ -242,11 +242,11 @@ Example scenario:
 
 *  `add n/sample task` ...
 
-Outcome: Task Box (Panel D) will display new task added to task list.
+Outcome: Task Box (Panel D) will display new task added to task list at index 1.
 
-*  `add n/sample task edited` ...
+*  `edit 1 n/sample task edited` ...
 
-Outcome: TTask Box (Panel D) will display updated task at index 1 with the new
+Outcome: Task Box (Panel D) will display updated task at index 1 with the new
           name.
 
 * `compare 1`
