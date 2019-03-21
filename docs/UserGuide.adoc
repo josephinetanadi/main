@@ -18,7 +18,32 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-NoteNote (NN) is for those who *prefer to use a desktop app for managing contacts*. More importantly, NN is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, NN can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+NoteNote (NN) is for those who *prefer to use a desktop app for managing multiple projects*. More importantly, NN is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, NN can get your project management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+
+== How to use this guide
+
+====
+*Commands Format*
+
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* The `add`, `edit` and `delete` commands each have a shorthand equivalent alias, and their usage can be viewed below at their respective sections in the User Guide.
+====
+
+== Application Overview
+
+=== Application placeholder
+
+*insert picture*, what panel show what info, where to type command
+
+=== User Interface Layout
+
+introduce the "project level" and "task level"
+hyper link to project level commands & hyper link to task level commands
+
+=== Navigating the User Interface
 
 == Quick Start
 
@@ -40,18 +65,124 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to <<Features>> for details of each command.
 
+== Project Level Features
+
+=== Navigating Between Projects
+
+
+=== Project Level Commands
+
+==== Adding a project/task/subtask: `add` (sample)
+
+* Adds a new project to the System. +
+Format: `add p/NAME`
+
+* Adds a task to the project identified by the index number used in the displayed project list. +
+Format: `add INDEX n/NAME [d/DESCRIPTION] [by/DEADLINE] [t/TAG]`
+
+* Adds a subtask to a task identified by the index number used in the displayed task list. +
+Format: `add INDEX n/NAME d/DESCRIPTION [by/DEADLINE] [t/TAG]`
+
+* Alias: `a`
+
+[TIP]
+A task/subtask can have any number of tags (including 0)
+
+Examples:
+
+* `add p/History Research Paper`
+* `add n/Decide on Research Paper Topic by/01/01/2020`
+* `add 1 n/Book consultation with lecturer by/01/01/2020`
+
+RMB INCLUDE EXPECTED RESULT
+
+==== a
+==== b
+==== c
+==== d
+==== e
+==== List previously entered commands
+
+
+== Task Level Features
+
+=== Navigating Between Projects
+
+=== Task Level Commands
+
+==== Adding a project/task/subtask: `add` (sample)
+
+* Adds a new project to the System. +
+Format: `add p/NAME`
+
+* Adds a task to the project identified by the index number used in the displayed project list. +
+Format: `add INDEX n/NAME [d/DESCRIPTION] [by/DEADLINE] [t/TAG]`
+
+* Adds a subtask to a task identified by the index number used in the displayed task list. +
+Format: `add INDEX n/NAME d/DESCRIPTION [by/DEADLINE] [t/TAG]`
+
+* Alias: `a`
+
+[TIP]
+A task/subtask can have any number of tags (including 0)
+
+Examples:
+
+* `add p/History Research Paper`
+* `add n/Decide on Research Paper Topic by/01/01/2020`
+* `add 1 n/Book consultation with lecturer by/01/01/2020`
+
+RMB INCLUDE EXPECTED RESULT
+
+==== a
+==== b
+==== Deleting a task:
+==== Selecting a task:
+==== b
+==== c
+==== d
+==== e
+==== Define group tags:
+
+
+== FAQ
+
+*Q*: How do I transfer my data to another Computer? +
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+
+== Command Summary
+
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Clear* : `clear`
+* *Delete* : `delete INDEX` +
+e.g. `delete 3`
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+e.g. `find James Jake`
+* *List* : `list`
+* *Help* : `help`
+* *Select* : `select INDEX` +
+e.g.`select 2`
+* *Sort*: `sort CATEGORY [ascend|descend]` +
+e.g. `sort name descend`
+* *Insert tags*: `insert INDEX TAG [MORE_TAGS]` +
+e.g. `insert 1 priority:4`
+* *View* : `view`
+* *History* : `history`
+* *Undo* : `undo`
+* *Redo* : `redo`
+* *Clear* : `clear`
+* *Export* : `export`
+* *Exit* : `exit`
+
+== Appendix A
+
+
+
 [[Features]]
-== Features
-
-====
-*Command Format*
-
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-* The `add`, `edit` and `delete` commands each have a shorthand equivalent alias, and their usage can be viewed below at their respective sections in the User Guide.
-====
+== Features (to be removed)
 
 === Viewing help : `help`
 
@@ -316,34 +447,3 @@ There is no need to save manually.
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
-== FAQ
-
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
-
-== Command Summary
-
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *Sort*: `sort CATEGORY [ascend|descend]` +
-e.g. `sort name descend`
-* *Insert tags*: `insert INDEX TAG [MORE_TAGS]` +
-e.g. `insert 1 priority:4`
-* *View* : `view`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
-* *Clear* : `clear`
-* *Export* : `export`
-* *Exit* : `exit`
