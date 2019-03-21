@@ -181,7 +181,7 @@ executed.
 * Format: `undo`
 * Alias: `u`
 
-Example scenario:
+Example:
 
 *  `add n/sample task` ...
 
@@ -199,7 +199,7 @@ Reverses the most recent `undo` command.
 * Format: `redo`
 * Alias: `r`
 
-Example scenario:
+Example:
 
 *  `add n/sample task` ...
 
@@ -223,7 +223,7 @@ chronological order.
 * Format: `taskhistory INDEX`
 * Alias: `th`
 
-Example scenario:
+Example :
 
 *  `taskhistory 1`
 
@@ -238,7 +238,7 @@ in the task.
 * Format: `compare INDEX`
 * Alias: `c`
 
-Example scenario:
+Example :
 
 *  `add n/sample task` ...
 
@@ -252,7 +252,7 @@ Outcome: Task Box (Panel D) will display updated task at index 1 with the new
 * `compare 1`
 
 Outcome: Task Box (Panel B) will display information of current version of the task at
-         index 1 ( `sample task` ) and the previous version of it ( `sample task edited` ).
+         index 1 ( _sample task_ ) and the previous version of it ( _sample task edited_ ).
          Allows you to view a direct comparison of what was changed.
 
 ==== Define group tags:
