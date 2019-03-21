@@ -14,7 +14,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team CS2113 T09-3`      Since: `Mar 2019`      Licence: `MIT`
 
 == Introduction
 
@@ -68,39 +68,85 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 == Project Level Features
 
 === Navigating Between Projects
+When selecting a (different) project to the view tasks of the project, always follow the 2 steps below:
 
+. `listproject`: List all project in project list
+. `select INDEX`: Select a project to view all the tasks within selected project
 
 === Project Level Commands
+Commands affecting the project list / currently displayed project as a whole. +
+Affects panel C.
 
-==== Adding a project/task/subtask: `add` (sample)
+==== Adding a project: `add`
+Adds a new project to the System.
 
-* Adds a new project to the System. +
-Format: `add p/NAME`
-
-* Adds a task to the project identified by the index number used in the displayed project list. +
-Format: `add INDEX n/NAME [d/DESCRIPTION] [by/DEADLINE] [t/TAG]`
-
-* Adds a subtask to a task identified by the index number used in the displayed task list. +
-Format: `add INDEX n/NAME d/DESCRIPTION [by/DEADLINE] [t/TAG]`
-
-* Alias: `a`
+* Format: `add n/NAME`
+* Alias: `a`, i.e. `add` is equivalent to `a`
 
 [TIP]
-A task/subtask can have any number of tags (including 0)
+A project can have any number of tags (including 0)
 
 Examples:
 
-* `add p/History Research Paper`
-* `add n/Decide on Research Paper Topic by/01/01/2020`
-* `add 1 n/Book consultation with lecturer by/01/01/2020`
+* `add n/History Research Paper`
 
-RMB INCLUDE EXPECTED RESULT
+Outcome: Project Box (Panel C) will show the newly created project.
 
-==== a
-==== b
-==== c
-==== d
-==== e
+==== Editing a project: `edit`
+Edits an existing project identified by the index number used in the displayed project list.
+
+* Format: `edit INDEX n/NAME`
+* Alias: `e`, i.e. `edit` is equivalent to `e`
+
+Outcome: Project Box (Panel C) will show the updated project with the new name.
+
+==== List projects: `listprojects`
+Lists all projects within project list
+
+* Format: `listproject`
+* Alias: `lp`, i.e. `listproject` is equivalent to `lp`
+
+Outcome: Project Box (Panel C) will will display all projects within project list.
+
+==== Select a project: `select`
+Selects a project identified by the index number used in the displayed project list.
+
+* Format: `select INDEX`
+* Alias: `s`, i.e. `select` is equivalent to `s`
+
+[TIP]
+This command will only be active if the **immediate predecessor command is `listproject`** else the select functionality will be targeted at a task
+
+Examples:
+
+* `select 1`
+
+Outcome: Task Box (Panel D) will display all tasks within selected project. Active panel is now Panel D and all commands that is executed after this would be in the context of tasks.
+
+==== Import a project list: `import`
+Import additional projects and tasks to add on to current project list. Source file must be a JSON file and follow  specific format. Refer to appendix A at the end of this user guide for the format to follow.
+
+* Format: `import PATH`
+* Alias: `i`, i.e. `import` is equivalent to `i`
+
+Examples:
+
+* `import ./test.json`
+
+Outcome: Projects and tasks contained in JSON file will be imported and added on top of current project list. Command box will display number of projects added to project list.
+
+==== Analyse progress of all projects: `analyse`
+View number of completed and uncompleted tasks of each project within a specified timeframe.
+
+* Format: `analyse DATE_1 [DATE_2]`
+* Alias: `an`, i.e. `analyse` is equivalent to `an`
+
+Examples:
+
+* `analyse 1-1-2020`
+
+Outcome: Task Box (Panel D) will display all tasks within selected project. Active panel is now Panel D and all commands that is executed after this would be in the context of tasks.
+
 ==== List previously entered commands
 
 
@@ -446,4 +492,3 @@ There is no need to save manually.
 
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
-
