@@ -22,10 +22,6 @@ NoteNote (NN) is for those who *prefer to use a desktop app for managing multipl
 
 == How to use this guide
 
-Blah Blah Blah
-
-== Glossary
-
 ====
 *Commands Format*
 
@@ -36,17 +32,18 @@ Blah Blah Blah
 * The `add`, `edit` and `delete` commands each have a shorthand equivalent alias, and their usage can be viewed below at their respective sections in the User Guide.
 ====
 
-
 == Application Overview
 
-=== User Interface Layout
+=== Application placeholder
 
 *insert picture*, what panel show what info, where to type command
 
-=== Navigating the User Interface
+=== User Interface Layout
 
 introduce the "project level" and "task level"
 hyper link to project level commands & hyper link to task level commands
+
+=== Navigating the User Interface
 
 == Quick Start
 
@@ -99,7 +96,17 @@ Examples:
 
 RMB INCLUDE EXPECTED RESULT
 
+==== a
+==== b
+==== c
+==== d
+==== e
+==== List previously entered commands
+
+
 == Task Level Features
+
+=== Navigating Between Projects
 
 === Task Level Commands
 
@@ -126,6 +133,17 @@ Examples:
 * `add 1 n/Book consultation with lecturer by/01/01/2020`
 
 RMB INCLUDE EXPECTED RESULT
+
+==== a
+==== b
+==== Deleting a task:
+==== Selecting a task:
+==== b
+==== c
+==== d
+==== e
+==== Define group tags:
+
 
 == FAQ
 
@@ -159,7 +177,7 @@ e.g. `insert 1 priority:4`
 * *Export* : `export`
 * *Exit* : `exit`
 
-
+== Appendix A
 
 
 
