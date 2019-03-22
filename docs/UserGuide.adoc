@@ -190,11 +190,124 @@ RMB INCLUDE EXPECTED RESULT
 ==== a
 ==== b
 ==== Deleting a task:
-==== Selecting a task:
-==== b
-==== c
-==== d
-==== e
+==== Selecting a task: `select`
+
+Selects the task identified by the index number used in the displayed task list and
+loads the relevant information.
+
+* Format: `select INDEX`
+* Alias: `s`, i.e. `select` is equivalent to `s`
+
+****
+* The index refers to the index number shown in the displayed task list.
+* The index must be a positive integer 1, 2, 3, …
+* This command will be active as long as the immediate predecessor
+command is NOT listproject else the select functionality will be
+targeted at a Project
+****
+
+Examples:
+
+1. `find Research`
+2. `select 1`
+
+Outcome: Selects the first task in the results of the `find` command. Description Box (Panel E) will display all the details of the task selected.
+
+==== Sorting tasks: `sort`
+Sorts tasks by specified category.
+
+* Format: `sort CATEGORY [ascend|descend]`
+* Sorts the tasks that are currently displayed by name, deadline and tags
+
+Example:
+
+`sort name descend`
+
+Outcome: Task Box (Panel D) will be updated to display tasks sorted by their name
+         in descending order.
+
+==== Undo previous command : `undo`
+
+Restores the task list to the state before the previous undoable command was
+executed.
+
+* Format: `undo`
+* Alias: `u` i.e. `undo` is equivalent to `u`
+
+Example:
+
+*  `add n/sample task` ...
+
+Outcome: Task Box (Panel D) will display new task added to task list.
+
+* `undo`
+
+Outcome: Add command is undone and Task Box (Panel D) will no longer display
+new task .
+
+==== Redo previously undone command : `redo`
+
+Reverses the most recent `undo` command.
+
+* Format: `redo`
+* Alias: `r` i.e. `redo` is equivalent to `r`
+
+Example:
+
+*  `add n/sample task` ...
+
+Outcome: Task Box (Panel D) will display new task added to task list.
+
+* `undo`
+
+Outcome: Add command is undone and Task Box (Panel D) will no longer display
+new task .
+
+* `redo`
+
+Outcome: Reverses the `undo` action and adds the task back to the task list. Task
+         Box (Panel D) will now display new task once again.
+
+==== List previously entered commands for a chosen task: `taskhistory`
+
+Lists all previous commands that directly affected a selected task in reverse
+chronological order.
+
+* Format: `taskhistory INDEX`
+* Alias: `th` i.e. `taskhistory` is equivalent to `th`
+
+Example :
+
+*  `taskhistory 1`
+
+Outcome: Results Box (Panel B) will display all previous commands which directly
+affects the task at index 1.
+
+==== Compares a task with its previous version: `compare`
+
+Compares a selected task one version before it was edited and show the differences
+in the task.
+
+* Format: `compare INDEX`
+* Alias: `c` i.e. `compare` is equivalent to `c`
+
+Example :
+
+*  `add n/sample task` ...
+
+Outcome: Task Box (Panel D) will display new task added to task list at index 1.
+
+*  `edit 1 n/sample task edited` ...
+
+Outcome: Task Box (Panel D) will display updated task at index 1 with the new
+          name.
+
+* `compare 1`
+
+Outcome: Task Box (Panel B) will display information of current version of the task at
+         index 1 ( _sample task_ ) and the previous version of it ( _sample task edited_ ).
+         Allows you to view a direct comparison of what was changed.
+
 ==== Define group tags: `group`
 
 Group existing tags in the system.
