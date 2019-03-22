@@ -159,37 +159,95 @@ Outcome: Results Box (Panel B) will display all commands that were previously en
 
 == Task Level Features
 
-=== Navigating Between Projects
+=== Viewing Tasks of a Project
+
+To view tasks of a project, always follow the two steps below: +
+1. `listproject`: List all projects in project list. +
+2. `select INDEX`: Select a project to view all the tasks within selected project.
 
 === Task Level Commands
 
-==== Adding a project/task/subtask: `add` (sample)
+Commands affecting the tasks / selected task individually. +
+Affects panel D.
 
-* Adds a new project to the System. +
-Format: `add p/NAME`
+==== Adding a task: `add`
 
-* Adds a task to the project identified by the index number used in the displayed project list. +
-Format: `add INDEX n/NAME [d/DESCRIPTION] [by/DEADLINE] [t/TAG]`
+Adds a task to the project identified by the index number used in the displayed project list.
 
-* Adds a subtask to a task identified by the index number used in the displayed task list. +
-Format: `add INDEX n/NAME d/DESCRIPTION [by/DEADLINE] [t/TAG]`
-
-* Alias: `a`
+* Format: `add n/NAME [d/DESCRIPTION] [dl/DEADLINE] [t/TAG]`
+* Alias: `a`, i.e. `add` is equivalent to `a`
 
 [TIP]
-A task/subtask can have any number of tags (including 0)
+A task can have any number of tags (including 0).
+
+Example:
+
+* `add n/Decide on Research Paper Topic by/01/01/2020`
+
+Outcome: Task Box (Panel D) will show the newly created task `Decide on Research Paper Topic` with deadline `1 January 2020`.
+
+==== Editing a task: `edit`
+
+Edits an existing task identified by the index number used in the displayed task list.
+
+* Format: `edit INDEX [n/NAME] [d/DESCRIPTION] [dl/DEADLINE] [t/TAG]...`
+
+* Alias: `e`, i.e. `edit` is equivalent to `e`
+
+[TIP]
+At least 1 among the parameters of `[n/NAME] [d/DESCRIPTION] [dl/DEADLINE] [t/TAG]` must be included within the command.
+
+Example:
+
+* `edit 1 n/Decide on Research Paper Topic dl/02/02/2020`
+
+Outcome: Task Box (Panel D) will show the updated task at index 1, with the information name and deadline changed to `Decide on Research Paper Topic` and `2 February 2020` respectively.
+
+==== Locating tasks by name: `find`
+
+Finds a project, task or subtask whose name contains any of the given keywords.
+
+* Format: `find KEYWORD [MORE_KEYWORDS]`
+
+* Alias: `f`, i.e. `find` is equivalent to `f`
+
+[TIP]
+The search is case insensitive. e.g `hans` will match `Hans`. +
+The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`. +
+`find` will only search among names of tasks. +
+Only full words will be matched e.g. `Han` will not match `Hans`. +
+Tasks matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
 
 Examples:
 
-* `add p/History Research Paper`
-* `add n/Decide on Research Paper Topic by/01/01/2020`
-* `add 1 n/Book consultation with lecturer by/01/01/2020`
+* `find Research`
 
-RMB INCLUDE EXPECTED RESULT
+Outcome: Returns tasks containing the keyword `Research`. Task Box (Panel D) will be updated to display only tasks that matches the keyword.
 
-==== a
-==== b
-==== Deleting a task:
+==== Deleting a task: `delete`
+
+Deletes the specified task identified by the index number used in the displayed task list.
+
+* Format: `delete INDEX`
+
+* Alias: `d`, i.e. `delete` is equivalent to `d`
+
+[TIP]
+The index refers to the index number shown in the displayed task list. +
+The index *must be a positive integer* 1, 2, 3, …
+
+Examples:
+
+1. `list` +
+2. `delete 2`
+
+Outcome: Task Box (Panel D) will no longer display the second task in the project.
+
+1. `find Consult` +
+2. `delete 1`
+
+Outcome: Task Box (Panel D) will no longer display the first task in the results of the `find` command.
+
 ==== Selecting a task: `select`
 
 Selects the task identified by the index number used in the displayed task list and
