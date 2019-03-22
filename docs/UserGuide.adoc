@@ -17,53 +17,61 @@ endif::[]
 By: `Team CS2113T T09-3`      Since: `Mar 2019`      Licence: `MIT`
 
 == Introduction
-
-NoteNote (NN) is for those who *prefer to use a desktop app for managing multiple projects*. More importantly, NN is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, NN can get your project management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+NoteNote (NN), is a desktop project management system for Computing students to keep track of multiple projects and their corresponding tasks. More importantly, NN is optimized for those who prefer to work with a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, NN can help you to manage your tasks faster than traditional GUI apps. Have we caught your interest? Jump to  <<Quick Start>> to get started. Enjoy!
 
 == How to use this guide
 
-====
-*Commands Format*
+=== Commands Format
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+The examples in this guide are formatted using the following convention:
+Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME, NAME` is a parameter which can be used as `add n/John Doe`.
+
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Items with `…` after them can be used multiple times including zero times e.g. `[t/TAG]…` can be used as (i.e. 0 times), `t/friend`, `t/friend` `t/family` etc.
+* Parameters can be in any order e.g. if the command specifies `n/NAME` `p/PHONE_NUMBER`, `p/PHONE_NUMBER` `n/NAME` is also acceptable.
 * The `add`, `edit` and `delete` commands each have a shorthand equivalent alias, and their usage can be viewed below at their respective sections in the User Guide.
-====
+
 
 == Application Overview
 
-=== Application placeholder
+=== Application Layout
 
-*insert picture*, what panel show what info, where to type command
+image::apporg.png[width="790"]
+
+The application has two layers, the project layer and the task layer, as shown in Figure 1 above. There are some commands which work differently based on the layer they are in. This is covered in detail in Sections 6 and 7. The project layer contains all the projects the user has added while the task layer contains the tasks and subtasks assigned to a particular project.
 
 === User Interface Layout
 
-introduce the "project level" and "task level"
-hyper link to project level commands & hyper link to task level commands
+image::applayout.png[width="790"]
+
+* *Panel A: Command Box* - Where your commands will be typed
+* *Panel B: Results Box* - Displays result for the following commands: history, taskhistory, compare,  listtag; else displays either success / error message for all other commands.
+* *Panel C: Project Box* - Displays list of project
+* *Panel D: Task Box* - Displays list of tasks for a selected project
+* *Panel E: Description Box* - Displays long description for a selected task
 
 === Navigating the User Interface
 
+Panel *A*, *C*, *D* are user-interactable while panels *B*, *E* are non-interactable.
+Panel A will always be active, allowing you to input your commands at any time
+Upon first opening of the application, your active panel will start from *C*, and only upon choosing a project will your active panel change to *D*.
+
+
 == Quick Start
+
 
 .  Ensure you have Java version `9` or later installed in your Computer.
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
-+
-image::Ui.png[width="790"]
-+
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
+.  Type the command in the command box or *Panel A* (refer to Figure 2) and press Enter to execute it.
 .  Some example commands you can try:
+* *`listproject`* : lists all projects
+* **`select 1`** : selects the project at index 1
+* **`add n/Do research on Singapore history dl/1-1-2020`** : adds a task of title “Do research on Singapore History” with a deadline set at “1st January 2020” to the project previously selected.
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+* *`delete 1`* : deletes the task being shown at index 1
 
-.  Refer to <<Features>> for details of each command.
 
 == Project Level Features
 
