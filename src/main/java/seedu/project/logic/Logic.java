@@ -1,7 +1,6 @@
 package seedu.project.logic;
 
-import javax.xml.crypto.Data;
-
+import java.io.IOException;
 import java.nio.file.Path;
 
 import javafx.beans.property.ReadOnlyProperty;
@@ -27,7 +26,8 @@ public interface Logic {
      * @throws CommandException If an error occurs during command execution.
      * @throws ParseException If an error occurs during parsing.
      */
-    CommandResult execute(String commandText) throws CommandException, ParseException, DataConversionException;
+    CommandResult execute(String commandText) throws CommandException, ParseException,
+            DataConversionException, IOException;
 
     /**
      * Returns the ProjectList.

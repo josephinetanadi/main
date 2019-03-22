@@ -2,13 +2,10 @@ package seedu.project.logic.parser;
 
 import static seedu.project.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 
 import seedu.project.logic.commands.ImportCommand;
 import seedu.project.logic.parser.exceptions.ParseException;
-import seedu.project.model.task.NameContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new FindCommand object

@@ -4,10 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.project.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Objects;
-import java.util.OptionalInt;
-import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -21,11 +18,10 @@ import seedu.project.commons.core.LogsCenter;
 import seedu.project.model.project.Project;
 import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.project.VersionedProject;
-import seedu.project.model.tag.Tag;
 import seedu.project.model.project.exceptions.ProjectNotFoundException;
+import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Task;
 import seedu.project.model.task.exceptions.TaskNotFoundException;
-import seedu.project.ui.MainWindow;
 
 
 /**
@@ -153,11 +149,12 @@ public class ModelManager implements Model {
             filteredTasks = new FilteredList<>(versionedProject.getTaskList());
             filteredTasks.addListener(this::ensureSelectedTaskIsValid);
         } else {
-            versionedProject = (VersionedProject) versionedProjectList.getProjectList().get(getFilteredProjectList().indexOf(project));
+            versionedProject = (VersionedProject) versionedProjectList.getProjectList().get(getFilteredProjectList()
+                    .indexOf(project));
             filteredTasks = new FilteredList<>(versionedProject.getTaskList());
             filteredTasks.addListener(this::ensureSelectedTaskIsValid);
         }
-/*        versionedProject.clear();
+        /*versionedProject.clear();
         versionedProject.resetName(project);
         versionedProject.resetData(project);
         versionedProject.populate(project);*/
@@ -298,7 +295,8 @@ public class ModelManager implements Model {
                 return;
             }
 
-            boolean wasSelectedProjectReplaced = change.wasReplaced() && change.getAddedSize() == change.getRemovedSize()
+            boolean wasSelectedProjectReplaced = change.wasReplaced()
+                    && change.getAddedSize() == change.getRemovedSize()
                     && change.getRemoved().contains(selectedProject.getValue());
             if (wasSelectedProjectReplaced) {
                 // Update selectedTask to its new value.

@@ -8,7 +8,6 @@ import seedu.project.commons.exceptions.DataConversionException;
 import seedu.project.model.ReadOnlyProjectList;
 import seedu.project.model.ReadOnlyUserPrefs;
 import seedu.project.model.UserPrefs;
-import seedu.project.model.project.ReadOnlyProject;
 
 /**
  * API of the Storage component

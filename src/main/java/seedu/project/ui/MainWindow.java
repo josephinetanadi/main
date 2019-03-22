@@ -1,8 +1,8 @@
 package seedu.project.ui;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -185,15 +185,15 @@ public class MainWindow extends UiPart<Stage> {
      * Navigating between project and task
      */
     private void refreshPanel(String commandText) {
-        if(commandText.contains("select")) {
-            if(LogicManager.getState()) { //to update task list panel
+        if (commandText.contains("select")) {
+            if (LogicManager.getState()) { //to update task list panel
                 taskListPanelPlaceholder.setDisable(false);
                 taskListPanel = new TaskListPanel(logic.getFilteredTaskList(), logic.selectedTaskProperty(),
                         logic::setSelectedTask);
                 taskListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
                 projectListPanelPlaceholder.setDisable(true);
             }
-        } else if(commandText.equals("listproject")) {
+        } else if (commandText.equals("listproject")) {
             taskListPanelPlaceholder.setDisable(true);
             projectListPanelPlaceholder.setDisable(false);
         }
@@ -209,7 +209,8 @@ public class MainWindow extends UiPart<Stage> {
      *
      * @see seedu.project.logic.Logic#execute(String)
      */
-    private CommandResult executeCommand(String commandText) throws CommandException, ParseException, DataConversionException {
+    private CommandResult executeCommand(String commandText) throws CommandException, ParseException,
+            DataConversionException, IOException {
         try {
             CommandResult commandResult = logic.execute(commandText);
             refreshPanel(commandText);
@@ -226,7 +227,7 @@ public class MainWindow extends UiPart<Stage> {
             }
 
             return commandResult;
-        } catch (CommandException | ParseException | DataConversionException e) {
+        } catch (CommandException | ParseException | DataConversionException | IOException e) {
             logger.info("Invalid command: " + commandText);
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;

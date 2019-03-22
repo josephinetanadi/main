@@ -39,7 +39,7 @@ public class BrowserPanel extends UiPart<Region> {
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
-        if(!LogicManager.getState()) {
+        if (!LogicManager.getState()) {
             // Load project page when selected task changes.
             selectedProject.addListener((observable, oldValue, newValue) -> {
                 if (newValue == null) {

@@ -7,7 +7,6 @@ import static seedu.project.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.project.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.project.logic.CommandHistory;
-import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
 import seedu.project.model.project.Project;
@@ -21,8 +20,9 @@ public class AddCommand extends Command {
     public static final String COMMAND_WORD = "add";
     public static final String COMMAND_ALIAS = "a";
 
-    public static final String PROJECT_MESSAGE_USAGE = COMMAND_WORD + ": Adds a project to the project list. " + "Parameters: "
-            + PREFIX_NAME + "NAME " + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "CS2113T Project ";
+    public static final String PROJECT_MESSAGE_USAGE = COMMAND_WORD + ": Adds a project to the project list. "
+            + "Parameters: " + PREFIX_NAME + "NAME " + "Example: " + COMMAND_WORD + " " + PREFIX_NAME
+            + "CS2113T Project ";
     public static final String TASK_MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the project. " + "Parameters: "
             + PREFIX_NAME + "NAME " + PREFIX_DESCRIPTION + "DESCRIPTION " + PREFIX_DEADLINE + "DEADLINE "
             + "[" + PREFIX_TAG + "TAG]...\n" + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "Report submission "
@@ -48,7 +48,7 @@ public class AddCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
 
-        if(toAdd instanceof Project) {
+        if (toAdd instanceof Project) {
             if (model.hasProject((Project) toAdd)) {
                 throw new CommandException(MESSAGE_DUPLICATE_PROJECT);
             }

@@ -19,11 +19,17 @@ public class VersionedProjectList extends ProjectList {
         currentStatePointer = 0;
     }
 
+    /**
+     * Clears all history when selecting a new project
+     */
     public void clear() {
         projectListStateList.clear();
         currentStatePointer = 0;
     }
 
+    /**
+     * Populate history after clearing when selecting a new project
+     */
     public void populate(ReadOnlyProjectList initialState) {
         projectListStateList.add(new ProjectList(initialState));
     }

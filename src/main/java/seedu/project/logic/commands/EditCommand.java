@@ -19,7 +19,6 @@ import seedu.project.commons.core.Messages;
 import seedu.project.commons.core.index.Index;
 import seedu.project.commons.util.CollectionUtil;
 import seedu.project.logic.CommandHistory;
-import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
 import seedu.project.model.Name;
@@ -70,7 +69,7 @@ public class EditCommand extends Command {
         requireNonNull(editObjectDescriptor);
 
         this.index = index;
-        if(editObjectDescriptor instanceof EditProjectDescriptor) {
+        if (editObjectDescriptor instanceof EditProjectDescriptor) {
             this.editTaskDescriptor = null;
             this.editProjectDescriptor = new EditProjectDescriptor((EditProjectDescriptor) editObjectDescriptor);
         } else {
@@ -82,7 +81,7 @@ public class EditCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        if(editProjectDescriptor != null) {
+        if (editProjectDescriptor != null) {
             List<Project> lastShownList = model.getFilteredProjectList();
 
             if (index.getZeroBased() >= lastShownList.size()) {

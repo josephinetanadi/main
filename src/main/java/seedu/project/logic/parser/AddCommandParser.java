@@ -30,11 +30,12 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
-        if(!LogicManager.getState()) {
+        if (!LogicManager.getState()) {
             ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME);
 
             if (!arePrefixesPresent(argMultimap, PREFIX_NAME) || !argMultimap.getPreamble().isEmpty()) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.PROJECT_MESSAGE_USAGE));
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        AddCommand.PROJECT_MESSAGE_USAGE));
             }
 
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());

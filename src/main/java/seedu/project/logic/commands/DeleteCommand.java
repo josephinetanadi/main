@@ -38,7 +38,7 @@ public class DeleteCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        if(!LogicManager.getState()) {
+        if (!LogicManager.getState()) {
             List<Project> lastShownList = model.getFilteredProjectList();
 
             if (targetIndex.getZeroBased() >= lastShownList.size()) {

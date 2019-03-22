@@ -4,6 +4,8 @@ import static java.util.Objects.requireNonNull;
 
 import java.nio.file.Path;
 import java.util.Optional;
+
+import seedu.project.commons.core.Messages;
 import seedu.project.commons.exceptions.DataConversionException;
 import seedu.project.commons.exceptions.IllegalValueException;
 import seedu.project.commons.util.JsonUtil;
@@ -15,6 +17,9 @@ import seedu.project.model.ReadOnlyProjectList;
 import seedu.project.model.project.Project;
 import seedu.project.storage.JsonSerializableProjectList;
 
+/**
+ * Import project list to add on to current list
+ */
 public class ImportCommand extends Command {
 
     public static final String COMMAND_WORD = "import";
@@ -24,10 +29,7 @@ public class ImportCommand extends Command {
             + "Parameters: PATH " + "Example: " + COMMAND_WORD + " " + "C:\\Users\\Documents\\project.json";
 
     public static final String MESSAGE_SUCCESS_PROJECT = "New project added: %1$s";
-    public static final String MESSAGE_FAIL_PROJECT = "Return to project level before executing import " +
-            "using listproject";
     public static final String MESSAGE_DUPLICATE_PROJECT = "This project already exists in the project list";
-    public static final String MESSAGE_FAIL_CONVERSION = "JSON file not properly formatted.";
 
     private final Path toAdd;
 
@@ -42,10 +44,10 @@ public class ImportCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException, DataConversionException {
         requireNonNull(model);
-        if(!LogicManager.getState()) {
+        if (!LogicManager.getState()) {
             Optional<ReadOnlyProjectList> projectListToAdd = readProjectList();
-            for(Project project : projectListToAdd.get().getProjectList()) {
-                if(model.hasProject(project)) {
+            for (Project project : projectListToAdd.get().getProjectList()) {
+                if (model.hasProject(project)) {
                     throw new CommandException(MESSAGE_DUPLICATE_PROJECT);
                 }
                 model.addProject(project);
@@ -55,10 +57,13 @@ public class ImportCommand extends Command {
             return new CommandResult(String.format(MESSAGE_SUCCESS_PROJECT,
                     projectListToAdd.get().getProjectList().size()));
         } else {
-            return new CommandResult(String.format(MESSAGE_FAIL_PROJECT));
+            return new CommandResult(String.format(Messages.MESSAGE_RETURN_TO_PROJECT_LEVEL, COMMAND_WORD));
         }
     }
 
+    /**
+     * Read JSON project list
+     */
     public Optional<ReadOnlyProjectList> readProjectList() throws DataConversionException {
 
         Optional<JsonSerializableProjectList> jsonProjectList = JsonUtil.readJsonFile(toAdd,

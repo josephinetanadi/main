@@ -12,7 +12,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.project.commons.core.LogsCenter;
 import seedu.project.model.project.Project;
-import seedu.project.model.task.Task;
 
 /**
  * Panel containing the list of projects.

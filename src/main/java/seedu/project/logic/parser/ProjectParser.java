@@ -13,6 +13,7 @@ import seedu.project.logic.commands.CompareCommand;
 import seedu.project.logic.commands.DeleteCommand;
 import seedu.project.logic.commands.EditCommand;
 import seedu.project.logic.commands.ExitCommand;
+import seedu.project.logic.commands.ExportCommand;
 import seedu.project.logic.commands.FindCommand;
 import seedu.project.logic.commands.HelpCommand;
 import seedu.project.logic.commands.HistoryCommand;
@@ -134,6 +135,12 @@ public class ProjectParser {
 
         case ImportCommand.COMMAND_ALIAS:
             return new ImportCommandParser().parse(arguments);
+
+        case ExportCommand.COMMAND_WORD:
+            return new ExportCommandParser().parse(arguments);
+
+        case ExportCommand.COMMAND_ALIAS:
+            return new ExportCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

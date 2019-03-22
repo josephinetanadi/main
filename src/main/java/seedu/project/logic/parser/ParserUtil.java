@@ -2,7 +2,6 @@ package seedu.project.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
-import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,10 +9,10 @@ import java.util.Set;
 import seedu.project.commons.core.index.Index;
 import seedu.project.commons.util.StringUtil;
 import seedu.project.logic.parser.exceptions.ParseException;
+import seedu.project.model.Name;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Deadline;
 import seedu.project.model.task.Description;
-import seedu.project.model.Name;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.

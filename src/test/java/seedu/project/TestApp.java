@@ -31,8 +31,6 @@ public class TestApp extends MainApp {
 
     public static final Path SAVE_LOCATION_FOR_TESTING_PL =
             TestUtil.getFilePathInSandboxFolder("sampleProjectList.json");
-    public static final Path SAVE_LOCATION_FOR_TESTING_P =
-            TestUtil.getFilePathInSandboxFolder("sampleProject.json");
 
     protected static final Path DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
@@ -40,7 +38,6 @@ public class TestApp extends MainApp {
     protected Supplier<ReadOnlyProjectList> initialProjectListDataSupplier = () -> null;
     protected Supplier<ReadOnlyProject> initialProjectDataSupplier = () -> null;
     protected Path saveProjectListFileLocation = SAVE_LOCATION_FOR_TESTING_PL;
-    protected Path saveProjectFileLocation = SAVE_LOCATION_FOR_TESTING_P;
 
     public TestApp() {
     }
@@ -50,7 +47,6 @@ public class TestApp extends MainApp {
         this.initialProjectListDataSupplier = pl;
         this.initialProjectDataSupplier = p;
         this.saveProjectListFileLocation = plPath;
-        this.saveProjectFileLocation = pPath;
 
         // If some initial local data has been provided, write those to the file
         if (pl.get() != null) {
@@ -87,21 +83,7 @@ public class TestApp extends MainApp {
         double y = Screen.getPrimary().getVisualBounds().getMinY();
         userPrefs.setGuiSettings(new GuiSettings(600.0, 600.0, (int) x, (int) y));
         userPrefs.setProjectListFilePath(saveProjectListFileLocation);
-        userPrefs.setProjectFilePath(saveProjectFileLocation);
         return userPrefs;
-    }
-
-    /**
-     * Returns a defensive copy of the project data stored inside the storage file.
-     */
-    public Project readStorageProject() {
-        try {
-            return new Project(storage.readProject().get());
-        } catch (DataConversionException dce) {
-            throw new AssertionError("Data is not in the Project format.", dce);
-        } catch (IOException ioe) {
-            throw new AssertionError("Storage file cannot be found.", ioe);
-        }
     }
 
     /**
@@ -115,13 +97,6 @@ public class TestApp extends MainApp {
         } catch (IOException ioe) {
             throw new AssertionError("Storage file cannot be found.", ioe);
         }
-    }
-
-    /**
-     * Returns the file path of the storage file.
-     */
-    public Path getProjectSaveLocation() {
-        return storage.getProjectFilePath();
     }
 
     /**

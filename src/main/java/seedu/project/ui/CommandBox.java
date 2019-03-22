@@ -1,7 +1,6 @@
 package seedu.project.ui;
 
-import javax.xml.crypto.Data;
-
+import java.io.IOException;
 import java.util.List;
 
 import javafx.collections.ObservableList;
@@ -105,7 +104,7 @@ public class CommandBox extends UiPart<Region> {
             initHistory();
             historySnapshot.next();
             commandTextField.setText("");
-        } catch (CommandException | ParseException | DataConversionException e) {
+        } catch (CommandException | ParseException | DataConversionException | IOException e) {
             initHistory();
             setStyleToIndicateCommandFailure();
         }
@@ -151,7 +150,8 @@ public class CommandBox extends UiPart<Region> {
          *
          * @see seedu.project.logic.Logic#execute(String)
          */
-        CommandResult execute(String commandText) throws CommandException, ParseException, DataConversionException;
+        CommandResult execute(String commandText) throws CommandException, ParseException,
+                DataConversionException, IOException;
     }
 
 }

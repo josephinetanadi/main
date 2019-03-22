@@ -26,15 +26,15 @@ import seedu.project.storage.Storage;
  */
 public class LogicManager implements Logic {
     public static final String FILE_OPS_ERROR_MESSAGE = "Could not save data to file: ";
-    private final Logger logger = LogsCenter.getLogger(LogicManager.class);
+    private static boolean state; // 0 == projectlistview 1 == projectview
 
+    private final Logger logger = LogsCenter.getLogger(LogicManager.class);
     private final Model model;
     private final Storage storage;
     private final CommandHistory history;
     private final ProjectParser projectParser;
     private boolean projectModified;
     private boolean projectListModified;
-    private static boolean state; // 0 == projectlistview 1 == projectview
 
     public LogicManager(Model model, Storage storage) {
         this.model = model;
@@ -50,7 +50,8 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public CommandResult execute(String commandText) throws CommandException, ParseException, DataConversionException {
+    public CommandResult execute(String commandText) throws CommandException, ParseException,
+            DataConversionException, IOException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         projectModified = false;
         projectListModified = false;
@@ -66,7 +67,8 @@ public class LogicManager implements Logic {
         if (projectListModified) {
             logger.info("Project list modified, saving to file.");
             try {
-                if (model.getSelectedProject() != null && !commandText.equals("listproject") && !commandText.contains("delete")) {
+                if (model.getSelectedProject() != null && !commandText.equals("listproject")
+                        && !commandText.contains("delete")) {
                     Project editedProject = new Project(model.getProject().getName(), model.getProject().getTaskList());
                     model.setProject(model.getSelectedProject(), editedProject);
                 }
@@ -92,6 +94,14 @@ public class LogicManager implements Logic {
         return commandResult;
     }
 
+    public static boolean getState() {
+        return state;
+    }
+
+    public static void setState(boolean s) {
+        state = s;
+    }
+
     @Override
     public ReadOnlyProjectList getProjectList() {
         return model.getProjectList();
@@ -101,12 +111,6 @@ public class LogicManager implements Logic {
     public ReadOnlyProject getProject() {
         return model.getProject();
     }
-
-    public static boolean getState() {
-        return state;
-    }
-
-    public static void setState(boolean s) { state = s; }
 
     @Override
     public ObservableList<Project> getFilteredProjectList() {

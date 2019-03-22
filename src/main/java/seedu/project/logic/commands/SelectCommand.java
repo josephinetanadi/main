@@ -1,9 +1,7 @@
 package seedu.project.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.project.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
-import java.nio.file.Paths;
 import java.util.List;
 
 import seedu.project.commons.core.Messages;
@@ -40,7 +38,7 @@ public class SelectCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        if(!LogicManager.getState()) {
+        if (!LogicManager.getState()) {
             List<Project> filteredProjectList = model.getFilteredProjectList();
 
             if (targetIndex.getZeroBased() >= filteredProjectList.size()) {

@@ -47,7 +47,9 @@ public class StatusBarFooter extends UiPart<Region> {
         project.addListener(observable -> updateSyncStatus(project.getTaskList().size()));
         syncStatus.setText(SYNC_STATUS_INITIAL);
         saveLocationStatus.setText(Paths.get(".").resolve(saveLocation).toString());
-        if(LogicManager.getState()) { setTotalTasks(totalTasks); }
+        if (LogicManager.getState()) {
+            setTotalTasks(totalTasks);
+        }
     }
 
     private void setTotalTasks(int totalTasks) {

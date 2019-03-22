@@ -31,7 +31,7 @@ public class EditCommandParser implements Parser<EditCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public EditCommand parse(String args) throws ParseException {
-        if(!LogicManager.getState()) {
+        if (!LogicManager.getState()) {
             requireNonNull(args);
             ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME);
 
@@ -40,7 +40,8 @@ public class EditCommandParser implements Parser<EditCommand> {
             try {
                 index = ParserUtil.parseIndex(argMultimap.getPreamble());
             } catch (ParseException pe) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.PROJECT_MESSAGE_USAGE), pe);
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        EditCommand.PROJECT_MESSAGE_USAGE), pe);
             }
 
             EditProjectDescriptor editProjectDescriptor = new EditProjectDescriptor();
@@ -62,7 +63,8 @@ public class EditCommandParser implements Parser<EditCommand> {
             try {
                 index = ParserUtil.parseIndex(argMultimap.getPreamble());
             } catch (ParseException pe) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.TASK_MESSAGE_USAGE), pe);
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        EditCommand.TASK_MESSAGE_USAGE), pe);
             }
 
             EditTaskDescriptor editTaskDescriptor = new EditTaskDescriptor();
