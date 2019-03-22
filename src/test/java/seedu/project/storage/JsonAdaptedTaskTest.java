@@ -13,7 +13,7 @@ import org.junit.Test;
 import seedu.project.commons.exceptions.IllegalValueException;
 import seedu.project.model.task.Deadline;
 import seedu.project.model.task.Description;
-import seedu.project.model.task.Name;
+import seedu.project.model.Name;
 import seedu.project.testutil.Assert;
 
 public class JsonAdaptedTaskTest {

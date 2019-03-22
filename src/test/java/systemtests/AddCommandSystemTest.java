@@ -35,7 +35,7 @@ import seedu.project.model.Model;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Deadline;
 import seedu.project.model.task.Description;
-import seedu.project.model.task.Name;
+import seedu.project.model.Name;
 import seedu.project.model.task.Task;
 import seedu.project.testutil.TaskBuilder;
 import seedu.project.testutil.TaskUtil;

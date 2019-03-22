@@ -34,7 +34,7 @@ import seedu.project.logic.commands.EditCommand;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Deadline;
 import seedu.project.model.task.Description;
-import seedu.project.model.task.Name;
+import seedu.project.model.Name;
 import seedu.project.testutil.EditTaskDescriptorBuilder;
 
 public class EditCommandParserTest {

@@ -17,9 +17,9 @@ import seedu.project.model.project.Project;
  * An Immutable ProjectList that is serializable to JSON format.
  */
 @JsonRootName(value = "project list")
-class JsonSerializableProjectList {
+public class JsonSerializableProjectList {
 
-    public static final String MESSAGE_DUPLICATE_PERSON = "Project list contains duplicate project(s).";
+    public static final String MESSAGE_DUPLICATE_PROJECT = "Project list contains duplicate project(s).";
 
     private final List<JsonAdaptedProject> projects = new ArrayList<>();
 
@@ -51,7 +51,7 @@ class JsonSerializableProjectList {
         for (JsonAdaptedProject jsonAdaptedProject : projects) {
             Project project = jsonAdaptedProject.toModelType();
             if (projectList.hasProject(project)) {
-                throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
+                throw new IllegalValueException(MESSAGE_DUPLICATE_PROJECT);
             }
             projectList.addProject(project);
         }

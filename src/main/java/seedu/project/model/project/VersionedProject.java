@@ -21,6 +21,21 @@ public class VersionedProject extends Project {
     }
 
     /**
+     * Clears all history when selecting a new project
+     */
+    public void clear() {
+        projectStateList.clear();
+        currentStatePointer = 0;
+    }
+
+    /**
+     * Populate history after clearing when selecting a new project
+     */
+    public void populate(ReadOnlyProject initialState) {
+        projectStateList.add(new Project(initialState));
+    }
+
+    /**
      * Saves a copy of the current {@code Project} state at the end of the state
      * list. Undone states are removed from the state list.
      */

@@ -9,7 +9,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
-//import seedu.project.logic.Logic;
+import seedu.project.logic.LogicManager;
 import seedu.project.model.project.ReadOnlyProject;
 
 /**
@@ -47,7 +47,9 @@ public class StatusBarFooter extends UiPart<Region> {
         project.addListener(observable -> updateSyncStatus(project.getTaskList().size()));
         syncStatus.setText(SYNC_STATUS_INITIAL);
         saveLocationStatus.setText(Paths.get(".").resolve(saveLocation).toString());
-        setTotalTasks(totalTasks);
+        if (LogicManager.getState()) {
+            setTotalTasks(totalTasks);
+        }
     }
 
     private void setTotalTasks(int totalTasks) {
