@@ -14,7 +14,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team CS2113T T09-3`      Since: `Mar 2019`      Licence: `MIT`
 
 == Introduction
 
@@ -68,40 +68,93 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 == Project Level Features
 
 === Navigating Between Projects
+When selecting a (different) project to the view tasks of the project, always follow the 2 steps below:
 
+. `listproject`: List all project in project list
+. `select INDEX`: Select a project to view all the tasks within selected project
 
 === Project Level Commands
+Commands affecting the project list / currently displayed project as a whole. +
+Affects panel C.
 
-==== Adding a project/task/subtask: `add` (sample)
+==== Adding a project: `add`
+Adds a new project to the System.
 
-* Adds a new project to the System. +
-Format: `add p/NAME`
-
-* Adds a task to the project identified by the index number used in the displayed project list. +
-Format: `add INDEX n/NAME [d/DESCRIPTION] [by/DEADLINE] [t/TAG]`
-
-* Adds a subtask to a task identified by the index number used in the displayed task list. +
-Format: `add INDEX n/NAME d/DESCRIPTION [by/DEADLINE] [t/TAG]`
-
-* Alias: `a`
+* Format: `add n/NAME`
+* Alias: `a`, i.e. `add` is equivalent to `a`
 
 [TIP]
-A task/subtask can have any number of tags (including 0)
+A project can have any number of tags (including 0)
 
 Examples:
 
-* `add p/History Research Paper`
-* `add n/Decide on Research Paper Topic by/01/01/2020`
-* `add 1 n/Book consultation with lecturer by/01/01/2020`
+* `add n/History Research Paper`
 
-RMB INCLUDE EXPECTED RESULT
+Outcome: Project Box (Panel C) will show the newly created project.
 
-==== a
-==== b
-==== c
-==== d
-==== e
-==== List previously entered commands
+==== Editing a project: `edit`
+Edits an existing project identified by the index number used in the displayed project list.
+
+* Format: `edit INDEX n/NAME`
+* Alias: `e`, i.e. `edit` is equivalent to `e`
+
+Outcome: Project Box (Panel C) will show the updated project with the new name.
+
+==== List projects: `listprojects`
+Lists all projects within project list
+
+* Format: `listproject`
+* Alias: `lp`, i.e. `listproject` is equivalent to `lp`
+
+Outcome: Project Box (Panel C) will will display all projects within project list.
+
+==== Select a project: `select`
+Selects a project identified by the index number used in the displayed project list.
+
+* Format: `select INDEX`
+* Alias: `s`, i.e. `select` is equivalent to `s`
+
+[TIP]
+This command will only be active if the **immediate predecessor command is `listproject`** else the select functionality will be targeted at a task
+
+Examples:
+
+* `select 1`
+
+Outcome: Task Box (Panel D) will display all tasks within selected project. Active panel is now Panel D and all commands that is executed after this would be in the context of tasks.
+
+==== Import a project list: `import`
+Import additional projects and tasks to add on to current project list. Source file must be a JSON file and follow  specific format. Refer to appendix A at the end of this user guide for the format to follow.
+
+* Format: `import PATH`
+* Alias: `i`, i.e. `import` is equivalent to `i`
+
+Examples:
+
+* `import ./test.json`
+
+Outcome: Projects and tasks contained in JSON file will be imported and added on top of current project list. Command box will display number of projects added to project list.
+
+==== Analyse progress of all projects: `analyse`
+View number of completed and uncompleted tasks of each project within a specified timeframe.
+
+* Format: `analyse DATE_1 [DATE_2]`
+* Alias: `an`, i.e. `analyse` is equivalent to `an`
+
+Examples:
+
+* `analyse 1-1-2020`
+
+Outcome: Task Box (Panel D) will display all tasks within selected project. Active panel is now Panel D and all commands that is executed after this would be in the context of tasks.
+
+==== List previously entered commands: `history`
+
+Lists all the commands that were previously entered in reverse chronological order.
+
+* Format: `history`
+* Alias: `h`, , i.e. `history` is equivalent to `h`
+
+Outcome: Results Box (Panel B) will display all commands that were previously entered.
 
 
 == Task Level Features
@@ -137,47 +190,219 @@ RMB INCLUDE EXPECTED RESULT
 ==== a
 ==== b
 ==== Deleting a task:
-==== Selecting a task:
-==== b
-==== c
-==== d
-==== e
-==== Define group tags:
+==== Selecting a task: `select`
+
+Selects the task identified by the index number used in the displayed task list and
+loads the relevant information.
+
+* Format: `select INDEX`
+* Alias: `s`, i.e. `select` is equivalent to `s`
+
+****
+* The index refers to the index number shown in the displayed task list.
+* The index must be a positive integer 1, 2, 3, …
+* This command will be active as long as the immediate predecessor
+command is NOT listproject else the select functionality will be
+targeted at a Project
+****
+
+Examples:
+
+1. `find Research`
+2. `select 1`
+
+Outcome: Selects the first task in the results of the `find` command. Description Box (Panel E) will display all the details of the task selected.
+
+==== Sorting tasks: `sort`
+Sorts tasks by specified category.
+
+* Format: `sort CATEGORY [ascend|descend]`
+* Sorts the tasks that are currently displayed by name, deadline and tags
+
+Example:
+
+`sort name descend`
+
+Outcome: Task Box (Panel D) will be updated to display tasks sorted by their name
+         in descending order.
+
+==== Undo previous command : `undo`
+
+Restores the task list to the state before the previous undoable command was
+executed.
+
+* Format: `undo`
+* Alias: `u` i.e. `undo` is equivalent to `u`
+
+Example:
+
+*  `add n/sample task` ...
+
+Outcome: Task Box (Panel D) will display new task added to task list.
+
+* `undo`
+
+Outcome: Add command is undone and Task Box (Panel D) will no longer display
+new task .
+
+==== Redo previously undone command : `redo`
+
+Reverses the most recent `undo` command.
+
+* Format: `redo`
+* Alias: `r` i.e. `redo` is equivalent to `r`
+
+Example:
+
+*  `add n/sample task` ...
+
+Outcome: Task Box (Panel D) will display new task added to task list.
+
+* `undo`
+
+Outcome: Add command is undone and Task Box (Panel D) will no longer display
+new task .
+
+* `redo`
+
+Outcome: Reverses the `undo` action and adds the task back to the task list. Task
+         Box (Panel D) will now display new task once again.
+
+==== List previously entered commands for a chosen task: `taskhistory`
+
+Lists all previous commands that directly affected a selected task in reverse
+chronological order.
+
+* Format: `taskhistory INDEX`
+* Alias: `th` i.e. `taskhistory` is equivalent to `th`
+
+Example :
+
+*  `taskhistory 1`
+
+Outcome: Results Box (Panel B) will display all previous commands which directly
+affects the task at index 1.
+
+==== Compares a task with its previous version: `compare`
+
+Compares a selected task one version before it was edited and show the differences
+in the task.
+
+* Format: `compare INDEX`
+* Alias: `c` i.e. `compare` is equivalent to `c`
+
+Example :
+
+*  `add n/sample task` ...
+
+Outcome: Task Box (Panel D) will display new task added to task list at index 1.
+
+*  `edit 1 n/sample task edited` ...
+
+Outcome: Task Box (Panel D) will display updated task at index 1 with the new
+          name.
+
+* `compare 1`
+
+Outcome: Task Box (Panel B) will display information of current version of the task at
+         index 1 ( _sample task_ ) and the previous version of it ( _sample task edited_ ).
+         Allows you to view a direct comparison of what was changed.
+
+==== Define group tags: `group`
+
+Group existing tags in the system.
+
+* Format: `group gt/GROUPTAGNAME [t/TAG]`
+* Alias: `g`, i.e. `group` is equivalent to `g`
+
+Examples:
+
+* `group gt/Task Completed t/To Review t/To Merge`
+
+[TIP]
+At least 2 `[t/TAG]` parameters must be specified.
+
+Outcome: Results Box (Panel B) will show the newly created group tag `Task completed` with its relevant tags `To Review` and `To Merge` respectively.
 
 
 == FAQ
 
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*Q*: How do I transfer my data to another computer? +
+*A*: Data can be transferred between computers by simply porting over the *_projectlist.json_* file located at the *_data_* folder. Alternatively, you could:
+
+. `export` project list from the original computer
+. Install NoteNote in the other computer
+. `import` project list by specifying path to exported project list
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Help* : `help`
+* *Add* `add n/PROJECTNAME` +
+`add n/TASKNAME ds/DESCRIPTION dl/DEADLINE [t/TAG]...` +
+e.g. `add n/Sample Task 1 ds/This is a sample task dl/1-1-2011 t/SAMPLE`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Edit* : `edit INDEX [n/NAME]` +
+`edit INDEX [n/NAME] [ds/DESCRIPTION] [dl/DEADLINE] [t/TAG]...` +
+e.g. `edit 2 n/Sample Task 1 ds/This is an edited task`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
+e.g. `find Report Project`
 * *List* : `list`
-* *Help* : `help`
+* *List project* : `listproject`
+* *List tags` : `listtags`
+* *Define group tags* : `group gt/GROUPTAGNAME [t/TAG]` +
+e.g. `group gt/task completed t/to review t/to merge`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *Sort*: `sort CATEGORY [ascend|descend]` +
 e.g. `sort name descend`
-* *Insert tags*: `insert INDEX TAG [MORE_TAGS]` +
-e.g. `insert 1 priority:4`
+* *Import* : `import PATH`
+* *Export* : `export FILTER`
+* *Analyse* : `analyse DATE_1 [DATE_2]`
 * *View* : `view`
 * *History* : `history`
+* *Task history* : `taskhistory INDEX`
+* *Compare* : `compare INDEX`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *Clear* : `clear`
-* *Export* : `export`
 * *Exit* : `exit`
 
 == Appendix A
+
+=== Sample JSON file for `import`
+```
+{
+  "projects" : [ {
+    "name" : "Sample project 1",
+    "tasks" : [ {
+      "name" : "Sample task 1",
+      "description" : "This is a sample task",
+      "deadline" : "1-1-2011",
+      "tagged" : [ "SAMPLE" ]
+    }, {
+      "name" : "Sample task 2",
+      "description" : "This is a sample task",
+      "deadline" : "1-1-2011",
+      "tagged" : [ "SAMPLE" ]
+    } ]
+  }, {
+    "name" : "Sample project 2",
+    "tasks" : [ {
+      "name" : "Sample task 1",
+      "description" : "This is a sample task",
+      "deadline" : "1-1-2011",
+      "tagged" : [ "SAMPLE" ]
+    }, {
+      "name" : "Sample task 2",
+      "description" : "This is a sample task",
+      "deadline" : "1-1-2011",
+      "tagged" : [ "SAMPLE" ]
+    } ]
+  } ]
+}
+```
 
 
 
@@ -446,4 +671,3 @@ There is no need to save manually.
 
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
-
