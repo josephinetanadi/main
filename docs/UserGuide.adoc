@@ -101,7 +101,14 @@ RMB INCLUDE EXPECTED RESULT
 ==== c
 ==== d
 ==== e
-==== List previously entered commands
+==== List previously entered commands: `history`
+
+Lists all the commands that were previously entered in reverse chronological order.
+
+* Format: `history`
+* Alias: `h`
+
+Outcome: Results Box (Panel B) will display all commands that were previously entered.
 
 
 == Task Level Features
@@ -142,42 +149,101 @@ RMB INCLUDE EXPECTED RESULT
 ==== c
 ==== d
 ==== e
-==== Define group tags:
+==== Define group tags: `group`
+
+Group existing tags in the system.
+
+* Format: `group gt/GROUPTAGNAME [t/TAG]`
+* Alias: `g`
+
+Examples:
+
+* `group gt/Task Completed t/To Review t/To Merge`
+
+[TIP]
+At least 2 `[t/TAG]` parameters must be specified.
+
+Outcome: Results Box (Panel B) will show the newly created group tag `Task completed` with its relevant tags `To Review` and `To Merge` respectively.
 
 
 == FAQ
 
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*Q*: How do I transfer my data to another computer? +
+*A*: Data can be transferred between computers by simply porting over the *_projectlist.json_* file located at the *_data_* folder. Alternatively, you could:
+
+. `export` project list from the original computer
+. Install NoteNote in the other computer
+. `import` project list by specifying path to exported project list
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Help* : `help`
+* *Add* `add n/PROJECTNAME` +
+`add n/TASKNAME ds/DESCRIPTION dl/DEADLINE [t/TAG]...` +
+e.g. `add n/Sample Task 1 ds/This is a sample task dl/1-1-2011 t/SAMPLE`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Edit* : `edit INDEX [n/NAME]` +
+`edit INDEX [n/NAME] [ds/DESCRIPTION] [dl/DEADLINE] [t/TAG]...` +
+e.g. `edit 2 n/Sample Task 1 ds/This is an edited task`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
+e.g. `find Report Project`
 * *List* : `list`
-* *Help* : `help`
+* *List project* : `listproject`
+* *List tags` : `listtags`
+* *Define group tags* : `group gt/GROUPTAGNAME [t/TAG]` +
+e.g. `group gt/task completed t/to review t/to merge`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *Sort*: `sort CATEGORY [ascend|descend]` +
 e.g. `sort name descend`
-* *Insert tags*: `insert INDEX TAG [MORE_TAGS]` +
-e.g. `insert 1 priority:4`
+* *Import* : `import PATH`
+* *Export* : `export FILTER`
+* *Analyse* : `analyse DATE_1 [DATE_2]`
 * *View* : `view`
 * *History* : `history`
+* *Task history* : `taskhistory INDEX`
+* *Compare* : `compare INDEX`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *Clear* : `clear`
-* *Export* : `export`
 * *Exit* : `exit`
 
 == Appendix A
+
+=== Sample JSON file for `import`
+```
+{
+  "projects" : [ {
+    "name" : "Sample project 1",
+    "tasks" : [ {
+      "name" : "Sample task 1",
+      "description" : "This is a sample task",
+      "deadline" : "1-1-2011",
+      "tagged" : [ "SAMPLE" ]
+    }, {
+      "name" : "Sample task 2",
+      "description" : "This is a sample task",
+      "deadline" : "1-1-2011",
+      "tagged" : [ "SAMPLE" ]
+    } ]
+  }, {
+    "name" : "Sample project 2",
+    "tasks" : [ {
+      "name" : "Sample task 1",
+      "description" : "This is a sample task",
+      "deadline" : "1-1-2011",
+      "tagged" : [ "SAMPLE" ]
+    }, {
+      "name" : "Sample task 2",
+      "description" : "This is a sample task",
+      "deadline" : "1-1-2011",
+      "tagged" : [ "SAMPLE" ]
+    } ]
+  } ]
+}
+```
 
 
 
