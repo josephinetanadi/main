@@ -27,24 +27,28 @@ public class ExportCommandParser implements Parser<ExportCommand> {
     public ExportCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_INDEX, PREFIX_OUTPUT);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_INDEX, PREFIX_OUTPUT) || !argMultimap.getPreamble().isEmpty()) {
+        if (arePrefixesPresent(argMultimap, PREFIX_INDEX, PREFIX_OUTPUT)) {
+            Path dst = Paths.get(argMultimap.getValue(PREFIX_OUTPUT).get());
+            String trimmedArgs = argMultimap.getValue(PREFIX_INDEX).get().trim();
+            if (trimmedArgs.isEmpty()) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
+            }
+
+            String[] arg = trimmedArgs.split(",");
+            Set<Index> projectIdx = new HashSet<>();
+            for (String idx : arg) {
+                projectIdx.add(ParserUtil.parseIndex(idx));
+            }
+
+            return new ExportCommand(projectIdx, dst);
+        } else if (arePrefixesPresent(argMultimap, PREFIX_OUTPUT)) {
+            Path dst = Paths.get(argMultimap.getValue(PREFIX_OUTPUT).get());
+            return new ExportCommand(dst);
+        } else {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
         }
 
-        Path dst = Paths.get(argMultimap.getValue(PREFIX_OUTPUT).get());
-        String trimmedArgs = argMultimap.getValue(PREFIX_INDEX).get().trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
-        }
-
-        String[] arg = trimmedArgs.split(",");
-        Set<Index> projectIdx = new HashSet<>();
-        for (String idx : arg) {
-            projectIdx.add(ParserUtil.parseIndex(idx));
-        }
-
-        return new ExportCommand(projectIdx, dst);
     }
 
     /**

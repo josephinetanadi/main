@@ -20,11 +20,13 @@ public class ListProjectCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
-        LogicManager.setState(false);
-        //sync versionedProject with versionedProjectList
-        model.setProject(model.getSelectedProject(), (Project) model.getProject());
-        model.setSelectedProject(model.getFilteredProjectList().get(0));
-        model.setSelectedTask(null);
+        if (LogicManager.getState()) {
+            LogicManager.setState(false);
+            //sync versionedProject with versionedProjectList
+            model.setProject(model.getSelectedProject(), (Project) model.getProject());
+            model.setSelectedProject(model.getFilteredProjectList().get(0));
+            model.setSelectedTask(null);
+        }
         return new CommandResult(MESSAGE_SUCCESS_PROJECT);
     }
 }
