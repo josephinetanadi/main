@@ -1,7 +1,10 @@
 package seedu.project.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.project.commons.core.Messages.MESSAGE_GO_TO_TASK_LEVEL;
 import static seedu.project.logic.commands.ImportCommand.MESSAGE_DUPLICATE_PROJECT;
+import static seedu.project.logic.parser.CliSyntax.PREFIX_INDEX;
+import static seedu.project.logic.parser.CliSyntax.PREFIX_OUTPUT;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -13,6 +16,7 @@ import seedu.project.commons.core.index.Index;
 import seedu.project.commons.util.FileUtil;
 import seedu.project.commons.util.JsonUtil;
 import seedu.project.logic.CommandHistory;
+import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
 import seedu.project.model.ProjectList;
@@ -28,7 +32,8 @@ public class ExportCommand extends Command {
     public static final String COMMAND_ALIAS = "ex";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Export projects specified by index to JSON file. "
-            + "Parameters: INDEX " + "Example: " + COMMAND_WORD + " " + "1,3,4";
+            + "Parameters: INDEX " + "Example: " + COMMAND_WORD + " " + PREFIX_INDEX + "1,3,4 "
+            + PREFIX_OUTPUT + "./data/output.json";
 
     public static final String MESSAGE_SUCCESS_PROJECT = "Project exported: %1$s";
 
@@ -37,34 +42,56 @@ public class ExportCommand extends Command {
     private final Path toWrite;
 
     /**
-     * Creates an ImportCommand to add the specified {@code ProjectList}
+     * Creates an ExportCommand to export projects indexes in {@code projectIdx}
+     * to JSON file at location {@code toWrite}
      */
     public ExportCommand(Set<Index> projectIdx, Path toWrite) {
         requireNonNull(projectIdx);
+        requireNonNull(toWrite);
         this.projectIdx = projectIdx;
+        this.toWrite = toWrite;
+    }
+
+    /**
+     * Creates an ExportCommand to export currently selected project
+     * to JSON file at location {@code toWrite}
+     */
+    public ExportCommand(Path toWrite) {
+        requireNonNull(toWrite);
+        this.projectIdx = null;
         this.toWrite = toWrite;
     }
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException, IOException {
         requireNonNull(model);
-        List<Project> lastShownList = model.getFilteredProjectList();
-
-        for (Index index : projectIdx) {
-            if (index.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PROJECT_DISPLAYED_INDEX);
+        if (projectIdx == null) {
+            if (LogicManager.getState()) {
+                projectsToExport.addProject(model.getSelectedProject());
+                saveProjectList();
+                return new CommandResult(String.format(MESSAGE_SUCCESS_PROJECT, 1));
+            } else {
+                return new CommandResult(String.format(MESSAGE_GO_TO_TASK_LEVEL, COMMAND_WORD));
             }
+        } else {
+            List<Project> lastShownList = model.getFilteredProjectList();
 
-            Project project = lastShownList.get(index.getZeroBased());
+            for (Index index : projectIdx) {
+                if (index.getZeroBased() >= lastShownList.size()) {
+                    throw new CommandException(Messages.MESSAGE_INVALID_PROJECT_DISPLAYED_INDEX);
+                }
 
-            if (projectsToExport.hasProject(project)) {
-                throw new CommandException(MESSAGE_DUPLICATE_PROJECT);
+                Project project = lastShownList.get(index.getZeroBased());
+
+                if (projectsToExport.hasProject(project)) {
+                    throw new CommandException(MESSAGE_DUPLICATE_PROJECT);
+                }
+
+                projectsToExport.addProject(project);
             }
-
-            projectsToExport.addProject(project);
+            saveProjectList();
+            return new CommandResult(String.format(MESSAGE_SUCCESS_PROJECT, projectIdx.size()));
         }
-        saveProjectList();
-        return new CommandResult(String.format(MESSAGE_SUCCESS_PROJECT, projectIdx.size()));
     }
 
     /**

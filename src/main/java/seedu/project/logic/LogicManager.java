@@ -11,6 +11,8 @@ import seedu.project.commons.core.LogsCenter;
 import seedu.project.commons.exceptions.DataConversionException;
 import seedu.project.logic.commands.Command;
 import seedu.project.logic.commands.CommandResult;
+import seedu.project.logic.commands.DeleteCommand;
+import seedu.project.logic.commands.ListProjectCommand;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.logic.parser.ProjectParser;
 import seedu.project.logic.parser.exceptions.ParseException;
@@ -67,8 +69,11 @@ public class LogicManager implements Logic {
         if (projectListModified) {
             logger.info("Project list modified, saving to file.");
             try {
-                if (model.getSelectedProject() != null && !commandText.equals("listproject")
-                        && !commandText.contains("delete")) {
+                if (model.getSelectedProject() != null
+                        && !(commandText.equals(ListProjectCommand.COMMAND_WORD)
+                        || commandText.equals(ListProjectCommand.COMMAND_ALIAS))
+                        && !(commandText.contains(DeleteCommand.COMMAND_WORD)
+                        || commandText.contains(DeleteCommand.COMMAND_ALIAS))) {
                     Project editedProject = new Project(model.getProject().getName(), model.getProject().getTaskList());
                     model.setProject(model.getSelectedProject(), editedProject);
                 }
@@ -81,7 +86,8 @@ public class LogicManager implements Logic {
         if (projectModified) {
             logger.info("Project modified, saving to file.");
             try {
-                if (model.getSelectedProject() != null && !commandText.equals("listproject")) {
+                if (model.getSelectedProject() != null && !(commandText.equals(ListProjectCommand.COMMAND_WORD)
+                        || commandText.equals(ListProjectCommand.COMMAND_ALIAS))) {
                     Project editedProject = new Project(model.getProject().getName(), model.getProject().getTaskList());
                     model.setProject(model.getSelectedProject(), editedProject);
                 }

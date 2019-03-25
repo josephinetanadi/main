@@ -17,6 +17,8 @@ import seedu.project.commons.exceptions.DataConversionException;
 import seedu.project.logic.Logic;
 import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.CommandResult;
+import seedu.project.logic.commands.ListProjectCommand;
+import seedu.project.logic.commands.SelectCommand;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.logic.parser.exceptions.ParseException;
 
@@ -185,15 +187,17 @@ public class MainWindow extends UiPart<Stage> {
      * Navigating between project and task
      */
     private void refreshPanel(String commandText) {
-        if (commandText.contains("select")) {
+        if (commandText.contains(SelectCommand.COMMAND_WORD) || commandText.equals(SelectCommand.COMMAND_ALIAS)) {
             if (LogicManager.getState()) { //to update task list panel
                 taskListPanelPlaceholder.setDisable(false);
+                taskListPanelPlaceholder.getChildren().clear();
                 taskListPanel = new TaskListPanel(logic.getFilteredTaskList(), logic.selectedTaskProperty(),
                         logic::setSelectedTask);
                 taskListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
                 projectListPanelPlaceholder.setDisable(true);
             }
-        } else if (commandText.equals("listproject")) {
+        } else if (commandText.equals(ListProjectCommand.COMMAND_WORD)
+                || commandText.equals(ListProjectCommand.COMMAND_ALIAS)) {
             taskListPanelPlaceholder.setDisable(true);
             projectListPanelPlaceholder.setDisable(false);
         }
