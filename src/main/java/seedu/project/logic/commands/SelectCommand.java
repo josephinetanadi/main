@@ -61,9 +61,6 @@ public class SelectCommand extends Command {
 
             model.setSelectedTask(filteredTaskList.get(targetIndex.getZeroBased()));
 
-            int taskId = filteredTaskList.get(targetIndex.getZeroBased()).getTaskId();
-            history.addHistoryTaskId(Integer.toString(taskId));
-
             return new CommandResult(String.format(MESSAGE_SELECT_TASK_SUCCESS, targetIndex.getOneBased()));
         }
     }
