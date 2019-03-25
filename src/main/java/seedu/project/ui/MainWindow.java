@@ -1,5 +1,6 @@
 package seedu.project.ui;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
@@ -12,8 +13,12 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import seedu.project.commons.core.GuiSettings;
 import seedu.project.commons.core.LogsCenter;
+import seedu.project.commons.exceptions.DataConversionException;
 import seedu.project.logic.Logic;
+import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.CommandResult;
+import seedu.project.logic.commands.ListProjectCommand;
+import seedu.project.logic.commands.SelectCommand;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.logic.parser.exceptions.ParseException;
 
@@ -33,6 +38,7 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private TaskListPanel taskListPanel;
+    private ProjectListPanel projectListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
 
@@ -47,6 +53,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane taskListPanelPlaceholder;
+
+    @FXML
+    private StackPane projectListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -111,17 +120,22 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel(logic.selectedTaskProperty());
+        browserPanel = new BrowserPanel(logic.selectedProjectProperty(), null);
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
+
+        projectListPanel = new ProjectListPanel(logic.getFilteredProjectList(), logic.selectedProjectProperty(),
+                logic::setSelectedProject);
+        projectListPanelPlaceholder.getChildren().add(projectListPanel.getRoot());
 
         taskListPanel = new TaskListPanel(logic.getFilteredTaskList(), logic.selectedTaskProperty(),
                 logic::setSelectedTask);
         taskListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
+        taskListPanelPlaceholder.setDisable(true);
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getProjectFilePath(), logic.getProject(),
+        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getProjectListFilePath(), logic.getProject(),
                 logic.getFilteredTaskList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
@@ -169,6 +183,27 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.hide();
     }
 
+    /**
+     * Navigating between project and task
+     */
+    private void refreshPanel(String commandText) {
+        if (commandText.contains(SelectCommand.COMMAND_WORD) || commandText.equals(SelectCommand.COMMAND_ALIAS)) {
+            if (LogicManager.getState()) { //to update task list panel
+                taskListPanelPlaceholder.setDisable(false);
+                taskListPanelPlaceholder.getChildren().clear();
+                taskListPanel = new TaskListPanel(logic.getFilteredTaskList(), logic.selectedTaskProperty(),
+                        logic::setSelectedTask);
+                taskListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
+                projectListPanelPlaceholder.setDisable(true);
+            }
+        } else if (commandText.equals(ListProjectCommand.COMMAND_WORD)
+                || commandText.equals(ListProjectCommand.COMMAND_ALIAS)) {
+            taskListPanelPlaceholder.setDisable(true);
+            projectListPanelPlaceholder.setDisable(false);
+        }
+
+    }
+
     public TaskListPanel getTaskListPanel() {
         return taskListPanel;
     }
@@ -178,9 +213,12 @@ public class MainWindow extends UiPart<Stage> {
      *
      * @see seedu.project.logic.Logic#execute(String)
      */
-    private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
+    private CommandResult executeCommand(String commandText) throws CommandException, ParseException,
+            DataConversionException, IOException {
         try {
             CommandResult commandResult = logic.execute(commandText);
+            refreshPanel(commandText);
+
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 
@@ -193,7 +231,7 @@ public class MainWindow extends UiPart<Stage> {
             }
 
             return commandResult;
-        } catch (CommandException | ParseException e) {
+        } catch (CommandException | ParseException | DataConversionException | IOException e) {
             logger.info("Invalid command: " + commandText);
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;

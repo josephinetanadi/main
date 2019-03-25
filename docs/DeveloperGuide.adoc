@@ -313,12 +313,145 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
+// tag::storage[]
+=== Import/Export feature
+==== Current Implementation
+
+The import/export mechanism is facilitated by `StorageManager`. It saves the list of projects and the list of tasks when lists are modified by any of the available commands e.g. `add`. This feature is achieved
+using the following operations:
+
+* `StorageManager#readProjectList()` -- Imports the list of projects from projectlist.json file.
+* `StorageManager#saveProjectList()` -- Exports the list of projects to projectlist.json file.
+* `StorageManager#readProject()` -- Imports the list of tasks in a <Project Name>.json file.
+* `StorageManager#saveProject()` -- Exports the list of tasks to a <Project Name>.json file.
+
+These operations are exposed in the `Storage` interface as `Storage#readProjectList()`, `Storage#saveProjectList()`, `Storage#readProject()` and `Storage#saveProject()` respectively.
+
+Given below is an example usage scenario and how the import/export mechanism behaves at each step.
+
+Step 1. The user launches the application for the first time. projectList will be populated by invoking `StorageManager#readProjectList`.
+
+[NOTE]
+If this is the first time that you are launching the application, `StorageManager#readProjectList()` will populate with a sample projectList.
+
+Step 2. The user executes `add n/New Project ...` to add a new project to the projectList. The `add` command indicates that the projectList is modified and a listener calls `StorageManager#saveProjectList()` to save the modified project list to the projectlist.json file.
+
+Step 3. The user executes `list` command to list all projects and executes `select 1` to select project at index 1. The `select` command will invoke `StorageManager#readProject()` to import taskList of project selected.
+
+[NOTE]
+If this is the first time that you are launching the application, `StorageManager#readProject()` will populate with a sample taskList.
+
+Step 4. The user executes `add n/New Task ...` to add a new task to the taskList. The `add` command indicates that the taskList is modified and a listener calls `StorageManager#saveProject()` to save the modified task list to the <Project Name>.json file.
+
+==== Design Considerations
+
+===== Aspect: Tracking tasks of individual project
+
+* **Alternative 1 (current choice):** Each project will have its own <Project File>.json to keep track of tasks.
+** Pros: Easy to implement.
+** Cons: May clutter data folder with too many project files.
+* **Alternative 2:** All tasks of all project merged to project.json file.
+** Pros: Will not clutter data folder.
+** Cons: Have to parse through entire file for tasks of specific project every time `StorageManager#readProject()` is executed.
+// end::storage[]
+
+// tag::Comparetaskfeature[]
+=== Compare Task feature
+
+The Compare Task feature allows the user to compare the past iteration of a task before it was edited.
+
+==== Current Implementation
+
+Building on top of the Undo/Redo feature, it is facilitated by `VersionedProject` and implements the following operations:
+
+* `VersionedProject#compareTask()` -- Compares the chosen task with its previous version if it exist.
+
+These operations are exposed in the `Model` interface as `Model#compareTask()`.
+
+Given below is an example usage scenario and how the Compare Task mechanism behaves.
+
+Step 1. The user selects the task to compare by entering the index of the task that is shown. `CompareCommandParser#CompareCommand()` will then get the index of the task
+within `projectStateList` and passed into `CompareCommand#CommandResult()`.
+
+Step 2. The index will then be used by `CompareCommand#CommandResult()` to retrieved the Task object within `projectStateList` and passed into `VersionedProject#compareTask()`.
+
+Step 3. `VersionedProject#compareTask()` will retrieve the unique `taskId` of the chosen task.
+
+Step 4. `VersionedProject#compareTask()` will iterate through all the the tasks within each project state. The `taskId`
+will be used to determine if the task encountered during the iteration is the same as the chosen task.
+
+[NOTE]
+If no same tasks are found after iterating through all the project states, or if there is no difference in all the task
+that is encountered, "Nothing to compare" will be showed to the user.
+
+Step 5. If the task encountered is the same as the chosen task, the 2 task will be compared against their name, description & deadline.
+
+Step 6. If there is a difference in any of the fields in the comparison, the difference will be showed to the user.
+Else Step 4. will continue to run to look for another version of the chosen task to compare.
+
+==== Design Considerations
+
+* **Alternative 1 (current choice):** Utilise existing versionedProject to look for the specific in previous verions.
+** Pros: Easy to implement.
+** Cons: A large versionedProject might result in a slow system performance.
+* **Alternative 2:** All tasks will have their own "versionedTask", keeping track of its own history per task.
+** Pros: System performance will be better as you will iterate through lesser data.
+** Cons: Harder to implement, can be considered for future version in v2.0
+// end::Comparetaskfeature[]
+
+// tag::listtags[]
+=== List Tag feature
+==== Current Implementation
+
+[NOTE]
+This is not the final version of implementation as it is yet to be of OOP format. At this moment, this section lists down what have been done.
+
+Currently, the bulk of the list tag mechanism is faciliated at the `ListCommand`. It retrieves the result of `filteredTaskList` and cleans the result to get a list of unique tags. This result is stored in an `List<Tag>` which is then converted to a `Set<Tag>` to remove any duplicate entries.
+
+Through the list of unique tags, task names with the same tags are concatenated and eventually displayed to the `CommandResult`
+
+==== Design Considerations
+
+* **Alternative 1 (current choice):** All cleaning of data and display will be handled by one file.
+** Pros: Easy to implement.
+** Cons: Not of OOP standard. Have to parse through the result of `getFilteredTaskList` to retrieve relevant information.
+* **Alternative 2:** Cleaning of data to be done at their respective/relevant class files.
+** Pros: Will not clutter `ListTagCommand` file.
+// end::listtag[]
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
 _{Explain here how the data encryption feature will be implemented}_
 
 // end::dataencryption[]
+
+// tag::calendarview[]
+=== [Proposed] Calendar View
+[NOTE]
+As of v1.2, this feature is still in the process of implementation.
+
+==== Proposed Implementation
+The calendar leverages on the Google calendar API to enable this feature. A sample usage, along with the behaviour of the calendar model at each step, is given below:
+
+* Step 1: The user launches the application and executes `add n/Decide on Research Paper Topic d/Security-related by/01/01/2020 t/cs3235`. +
+* Step 2: The `AddCommandParser` parses out the strings for the name, description, deadline and tag. +
+* Step 3: `ParserUtil` checks that the input strings are valid, and initialises the `Name`, `Description`, `Deadline` and `Tag`. +
+* Step 4: A new `CalendarEvent` is initialised and will be displayed in the calendar GUI.
+
+==== Design Considerations
+
+===== Aspect: Navigation of calendar feature
+
+* **Alternative 1 (current choice):** Keyboard arrows (up, down, left, right) to toggle between dates.
+** Pros: Easier to implement and fits the project direction of focusing on CLI.
+** Cons: Less user-friendly to toggle to a date far in the future.
+* **Alternative 2:** Keyboard arrows and scroll wheel.
+** Pros: More user-friendly.
+** Cons: More things to factor in during implementation, and possibly more issues as well.
+
+
+// end::calendarview[]
 
 === Logging
 
@@ -563,6 +696,23 @@ Do take a look at <<Design-Logic>> before attempting to modify the `Logic` compo
 ** Update the user guide to document the new aliases.
 ** See this https://github.com/se-edu/addressbook-level4/pull/785[PR] for the full solution.
 ****
+
+*Update:* +
+Shorthand aliases were added for the following commands: +
+_(Legend: command -> alias)_ +
+
+* `add` -> `a` +
+* `edit` -> `e` +
+* `delete` -> `d` +
+* `select` -> `s` +
+* `clear` -> `cl` +
+* `find` -> `f` +
+* `list` -> `l` +
+* `history` -> `h` +
+* `undo` -> `u` +
+* `redo` -> `r` +
+
+Each command alias has a corresponding test as required, and changes to the User Guide have also been documented accordingly.
 
 [discrete]
 ==== `Model` component

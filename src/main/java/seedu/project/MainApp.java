@@ -25,10 +25,8 @@ import seedu.project.model.project.Project;
 import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.util.SampleDataUtil;
 import seedu.project.storage.JsonProjectListStorage;
-import seedu.project.storage.JsonProjectStorage;
 import seedu.project.storage.JsonUserPrefsStorage;
 import seedu.project.storage.ProjectListStorage;
-import seedu.project.storage.ProjectStorage;
 import seedu.project.storage.Storage;
 import seedu.project.storage.StorageManager;
 import seedu.project.storage.UserPrefsStorage;
@@ -61,8 +59,7 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
         ProjectListStorage projectListStorage = new JsonProjectListStorage(userPrefs.getProjectListFilePath());
-        ProjectStorage projectStorage = new JsonProjectStorage(userPrefs.getProjectFilePath());
-        storage = new StorageManager(projectListStorage, projectStorage, userPrefsStorage);
+        storage = new StorageManager(projectListStorage, userPrefsStorage);
 
         initLogging(config);
 
@@ -82,22 +79,8 @@ public class MainApp extends Application {
      */
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
         Optional<ReadOnlyProjectList> projectListOptional;
-        Optional<ReadOnlyProject> projectOptional;
         ReadOnlyProjectList initialProjectList;
         ReadOnlyProject initialProject;
-        try {
-            projectOptional = storage.readProject();
-            if (!projectOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a sample Project");
-            }
-            initialProject = projectOptional.orElseGet(SampleDataUtil::getSampleProject);
-        } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty Project");
-            initialProject = new Project();
-        } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty Project");
-            initialProject = new Project();
-        }
 
         try {
             projectListOptional = storage.readProjectList();
@@ -105,12 +88,15 @@ public class MainApp extends Application {
                 logger.info("Data file not found. Will be starting with a sample ProjectList");
             }
             initialProjectList = projectListOptional.orElseGet(SampleDataUtil::getSampleProjectList);
+            initialProject = new Project();
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty ProjectList");
             initialProjectList = new ProjectList();
+            initialProject = new Project();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty ProjectList");
             initialProjectList = new ProjectList();
+            initialProject = new Project();
         }
         return new ModelManager(initialProjectList, initialProject, userPrefs);
     }

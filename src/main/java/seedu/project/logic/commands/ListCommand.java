@@ -1,6 +1,7 @@
 package seedu.project.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.project.model.Model.PREDICATE_SHOW_ALL_PROJECTS;
 import static seedu.project.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import javafx.collections.ObservableList;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Task;
 import seedu.project.logic.CommandHistory;
+import seedu.project.logic.LogicManager;
 import seedu.project.model.Model;
 
 /**
@@ -21,49 +23,20 @@ import seedu.project.model.Model;
 public class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
+    public static final String COMMAND_ALIAS = "l";
 
-    public static final String MESSAGE_SUCCESS = "Listed all tasks";
+    public static final String MESSAGE_SUCCESS_PROJECT = "Listed all projects";
+    public static final String MESSAGE_SUCCESS_TASK = "Listed all tasks";
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
-
-        // TODO: Seperate list tag into its own command
-        // TODO: To display in UI
-        // TODO: Make code into OOP style
-        ObservableList<Task> filteredTasks = model.getFilteredTaskList();
-
-        System.out.println(filteredTasks);
-
-        // get a list of unqiue tags
-        List<Tag> allTags = new ArrayList<>();
-        filteredTasks.forEach(entry -> {
-            entry.getTags().forEach(tag -> allTags.add(tag));
-        });
-        Set<Tag> uniqueTags = new HashSet<Tag>(allTags);
-
-
-        // checker to know what module is printing
-        ArrayList<String> hello = new ArrayList<>();
-        ArrayList<String> toPrint = new ArrayList<>();
-
-
-
-        filteredTasks.forEach(entry -> {
-            Set<Tag> copyUniqueTag = new HashSet<>(uniqueTags);
-
-            // !Collections.disjoint(uniqueTags, entry.getTags())
-            if (copyUniqueTag.retainAll(entry.getTags())) {
-                if (!hello.contains(copyUniqueTag.toString())) {
-                    hello.add(copyUniqueTag.toString());
-                    toPrint.add(copyUniqueTag.toString());
-                }
-                toPrint.add(" " + entry.getName());
-            }
-        });
-        System.out.println(toPrint.toString());
-
-        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
-        return new CommandResult(toPrint.toString());
+        if (!LogicManager.getState()) {
+            model.updateFilteredProjectList(PREDICATE_SHOW_ALL_PROJECTS);
+            return new CommandResult(MESSAGE_SUCCESS_PROJECT);
+        } else {
+            model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+            return new CommandResult(MESSAGE_SUCCESS_TASK);
+        }
     }
 }

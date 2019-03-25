@@ -3,14 +3,19 @@ package seedu.project.model.project;
 import static java.util.Objects.requireNonNull;
 import static seedu.project.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 import seedu.project.commons.util.InvalidationListenerManager;
+import seedu.project.model.Name;
+import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Task;
 import seedu.project.model.task.UniqueTaskList;
+
 
 /**
  * Wraps all data at the address-book level
@@ -58,12 +63,16 @@ public class Project implements ReadOnlyProject {
         setTasks(tasks);
     }
 
-    public Name getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = new Name(name);
+    }
+
+    /**
+     * Replaces the contents of the name with {@code newData}.
+     */
+    public void resetName(ReadOnlyProject newData) {
+        requireNonNull(newData);
+        setName(newData.getName().toString());
     }
 
     //// list overwrite operations
@@ -126,6 +135,25 @@ public class Project implements ReadOnlyProject {
     }
 
     /**
+     * Removes tag from a specific Task.
+     */
+    private void removeTagTask(Tag tag, Task task) {
+        Set<Tag> newTags = new HashSet<>(task.getTags());
+
+        if (!newTags.remove(tag)) {
+            return;
+        }
+
+        Task update = new Task(task.getName(), task.getDescription(), task.getDeadline(), newTags);
+        setTask(task, update);
+        removeTask(update);
+    }
+
+    public void removeTag(Tag tag) {
+        tasks.forEach(task -> removeTagTask(tag, task));
+    }
+
+    /**
      * Returns true if both tasks of the same name have at least one other identity field that is the same.
      * This defines a weaker notion of equality between two tasks.
      */
@@ -159,8 +187,12 @@ public class Project implements ReadOnlyProject {
 
     @Override
     public String toString() {
-        return tasks.asUnmodifiableObservableList().size() + " tasks";
-        // TODO: refine later
+        return getName().toString();
+    }
+
+    @Override
+    public Name getName() {
+        return name;
     }
 
     @Override
@@ -172,6 +204,7 @@ public class Project implements ReadOnlyProject {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Project // instanceof handles nulls
+                && name.equals(((Project) other).getName())
                 && tasks.equals(((Project) other).tasks));
     }
 

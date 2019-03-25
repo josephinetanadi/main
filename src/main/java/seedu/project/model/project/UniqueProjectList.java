@@ -8,8 +8,8 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.project.model.task.exceptions.DuplicateTaskException;
-import seedu.project.model.task.exceptions.TaskNotFoundException;
+import seedu.project.model.project.exceptions.DuplicateProjectException;
+import seedu.project.model.project.exceptions.ProjectNotFoundException;
 
 /**
  * A list of projects that enforces uniqueness between its elements and does not allow nulls.
@@ -43,7 +43,7 @@ public class UniqueProjectList implements Iterable<Project> {
     public void add(Project toAdd) {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
-            throw new DuplicateTaskException();
+            throw new DuplicateProjectException();
         }
         internalList.add(toAdd);
     }
@@ -53,19 +53,19 @@ public class UniqueProjectList implements Iterable<Project> {
      * {@code target} must exist in the list.
      * The project identity of {@code editedTask} must not be the same as another existing task in the list.
      */
-    public void setProject(Project target, Project editedTask) {
-        requireAllNonNull(target, editedTask);
+    public void setProject(Project target, Project editedProject) {
+        requireAllNonNull(target, editedProject);
 
         int index = internalList.indexOf(target);
         if (index == -1) {
-            throw new TaskNotFoundException();
+            throw new ProjectNotFoundException();
         }
 
-        if (!target.isSameProject(editedTask) && contains(editedTask)) {
-            throw new DuplicateTaskException();
+        if (!target.isSameProject(editedProject) && contains(editedProject)) {
+            throw new DuplicateProjectException();
         }
 
-        internalList.set(index, editedTask);
+        internalList.set(index, editedProject);
     }
 
     /**
@@ -75,7 +75,7 @@ public class UniqueProjectList implements Iterable<Project> {
     public void remove(Project toRemove) {
         requireNonNull(toRemove);
         if (!internalList.remove(toRemove)) {
-            throw new TaskNotFoundException();
+            throw new ProjectNotFoundException();
         }
     }
 
@@ -86,7 +86,7 @@ public class UniqueProjectList implements Iterable<Project> {
     public void setProjects(List<Project> projects) {
         requireAllNonNull(projects);
         if (!projectsAreUnique(projects)) {
-            throw new DuplicateTaskException();
+            throw new DuplicateProjectException();
         }
 
         internalList.setAll(projects);
