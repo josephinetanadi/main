@@ -527,7 +527,7 @@ Alias: `l`
 
 === Listing all tags : `listtags`
 
-Shows a list of all available tags prefix. +
+Shows a list of all available tags prefix and its related tasks. +
 Format: `listtags`
 
 === Editing a project/task/subtask : `edit`
