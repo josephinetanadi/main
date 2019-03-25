@@ -2,6 +2,7 @@ package seedu.project.model.project;
 
 import javafx.beans.Observable;
 import javafx.collections.ObservableList;
+import seedu.project.model.Name;
 import seedu.project.model.task.Task;
 
 /**
@@ -14,6 +15,8 @@ public interface ReadOnlyProject extends Observable {
      * This list will not contain any duplicate tasks.
      */
     ObservableList<Task> getTaskList();
+
+    Name getName();
 
     /**
      * Returns index of a {@code taskID} in the list.

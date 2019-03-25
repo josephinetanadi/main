@@ -1,5 +1,6 @@
 package seedu.project.ui;
 
+import java.io.IOException;
 import java.util.List;
 
 import javafx.collections.ObservableList;
@@ -7,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
+import seedu.project.commons.exceptions.DataConversionException;
 import seedu.project.logic.commands.CommandResult;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.logic.parser.exceptions.ParseException;
@@ -102,7 +104,7 @@ public class CommandBox extends UiPart<Region> {
             initHistory();
             historySnapshot.next();
             commandTextField.setText("");
-        } catch (CommandException | ParseException e) {
+        } catch (CommandException | ParseException | DataConversionException | IOException e) {
             initHistory();
             setStyleToIndicateCommandFailure();
         }
@@ -148,7 +150,8 @@ public class CommandBox extends UiPart<Region> {
          *
          * @see seedu.project.logic.Logic#execute(String)
          */
-        CommandResult execute(String commandText) throws CommandException, ParseException;
+        CommandResult execute(String commandText) throws CommandException, ParseException,
+                DataConversionException, IOException;
     }
 
 }

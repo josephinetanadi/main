@@ -78,6 +78,7 @@ public class JsonProjectListStorage implements ProjectListStorage {
 
         FileUtil.createIfMissing(filePath);
         JsonUtil.saveJsonFile(new JsonSerializableProjectList(projectList), filePath);
+        //save to userpref projectlist?
     }
 
     public void backupProjectList(ReadOnlyProjectList projectList) throws IOException {

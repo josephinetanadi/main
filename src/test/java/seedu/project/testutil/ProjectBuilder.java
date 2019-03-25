@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import seedu.project.model.project.Name;
+import seedu.project.model.Name;
 import seedu.project.model.project.Project;
 import seedu.project.model.task.Task;
 

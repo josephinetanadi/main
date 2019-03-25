@@ -1,6 +1,7 @@
 package seedu.project.model;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.beans.property.ReadOnlyProperty;
@@ -8,6 +9,7 @@ import javafx.collections.ObservableList;
 import seedu.project.commons.core.GuiSettings;
 import seedu.project.model.project.Project;
 import seedu.project.model.project.ReadOnlyProject;
+import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Task;
 
 /**
@@ -16,6 +18,12 @@ import seedu.project.model.task.Task;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Task> PREDICATE_SHOW_ALL_TASKS = unused -> true;
+
+    /** {@code Predicate} that always evaluate to false */
+    Predicate<Task> PREDICATE_SHOW_NO_TASKS = unused -> false;
+
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<Project> PREDICATE_SHOW_ALL_PROJECTS = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -74,7 +82,7 @@ public interface Model {
     /**
      * Replaces project data with the data in {@code project}.
      */
-    void setProject(ReadOnlyProject project);
+    void setProject(ReadOnlyProject object);
 
     /**
      * Replaces the given project {@code target} with {@code editedProject}.
@@ -83,16 +91,6 @@ public interface Model {
      * project list.
      */
     void setProject(Project target, Project editedProject);
-
-    /**
-     * Returns the user prefs' project file path.
-     */
-    Path getProjectFilePath();
-
-    /**
-     * Sets the user prefs' project file path.
-     */
-    void setProjectFilePath(Path projectFilePath);
 
 
     /** Returns the Project */
@@ -111,8 +109,10 @@ public interface Model {
 
     /**
      * Compares the given task with the last edited version. The task must exist in the project.
+     * Returns a list of string containing 2 string, which contains the differences in Name / Description / Deadline
+     * Returns null if there is no difference.
      */
-    Task compareTask(Task target);
+    List<String> compareTask(Task target);
 
     /**
      * Adds the given task. {@code task} must not already exist in the project.
@@ -126,6 +126,17 @@ public interface Model {
      * project.
      */
     void setTask(Task target, Task editedTask);
+
+    /** Returns an unmodifiable view of the filtered project list */
+    ObservableList<Project> getFilteredProjectList();
+
+    /**
+     * Updates the filter of the filtered project list to filter by the given
+     * {@code predicate}.
+     *
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredProjectList(Predicate<Project> predicate);
 
     /** Returns an unmodifiable view of the filtered task list */
     ObservableList<Task> getFilteredTaskList();
@@ -159,9 +170,30 @@ public interface Model {
     void redoProject();
 
     /**
+     * Saves the current project list state for undo/redo.
+     */
+    void commitProjectList();
+
+    /**
      * Saves the current project state for undo/redo.
      */
     void commitProject();
+
+    /**
+     * Selected project in the filtered project list. null if no project is selected.
+     */
+    ReadOnlyProperty<Project> selectedProjectProperty();
+
+    /**
+     * Returns the selected project in the filtered project list. null if no project is
+     * selected.
+     */
+    Project getSelectedProject();
+
+    /**
+     * Sets the selected project in the filtered project list.
+     */
+    void setSelectedProject(Project project);
 
     /**
      * Selected task in the filtered task list. null if no task is selected.
@@ -178,4 +210,9 @@ public interface Model {
      * Sets the selected task in the filtered task list.
      */
     void setSelectedTask(Task task);
+
+    /**
+     * Removes the given tag from all persons.
+     */
+    void deleteTag(Tag tag);
 }

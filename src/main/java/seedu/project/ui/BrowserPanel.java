@@ -13,6 +13,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.project.MainApp;
 import seedu.project.commons.core.LogsCenter;
+import seedu.project.logic.LogicManager;
+import seedu.project.model.project.Project;
 import seedu.project.model.task.Task;
 
 /**
@@ -31,26 +33,41 @@ public class BrowserPanel extends UiPart<Region> {
     @FXML
     private WebView browser;
 
-    public BrowserPanel(ObservableValue<Task> selectedTask) {
+    public BrowserPanel(ObservableValue<Project> selectedProject, ObservableValue<Task> selectedTask) {
         super(FXML);
 
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
-        // Load task page when selected task changes.
-        selectedTask.addListener((observable, oldValue, newValue) -> {
-            if (newValue == null) {
-                loadDefaultPage();
-                return;
-            }
-            loadTaskPage(newValue);
-        });
+        if (!LogicManager.getState()) {
+            // Load project page when selected task changes.
+            selectedProject.addListener((observable, oldValue, newValue) -> {
+                if (newValue == null) {
+                    loadDefaultPage();
+                    return;
+                }
+                loadProjectPage(newValue);
+            });
+        } else {
+            // Load task page when selected task changes.
+            selectedTask.addListener((observable, oldValue, newValue) -> {
+                if (newValue == null) {
+                    loadDefaultPage();
+                    return;
+                }
+                loadTaskPage(newValue);
+            });
+        }
 
         loadDefaultPage();
     }
 
     private void loadTaskPage(Task task) {
         loadPage(SEARCH_PAGE_URL + task.getName().fullName);
+    }
+
+    private void loadProjectPage(Project project) {
+        loadPage(SEARCH_PAGE_URL + project.getName().fullName);
     }
 
     public void loadPage(String url) {

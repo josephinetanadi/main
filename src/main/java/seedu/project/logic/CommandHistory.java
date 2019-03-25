@@ -4,11 +4,17 @@ import static java.util.Objects.requireNonNull;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.project.commons.core.LogsCenter;
+
+import java.util.logging.Logger;
 
 /**
  * Stores the history of commands executed.
  */
 public class CommandHistory {
+
+    private final Logger logger = LogsCenter.getLogger(LogicManager.class);
+
     private final ObservableList<String> userInputHistory = FXCollections.observableArrayList();
     private final ObservableList<String> unmodifiableUserInputHistory =
             FXCollections.unmodifiableObservableList(userInputHistory);
@@ -39,12 +45,24 @@ public class CommandHistory {
         int historySize = userInputHistory.size();
         int historyTaskIdSize = userInputHistoryTaskId.size();
 
-        while (historyTaskIdSize <= historySize) {
+        while (historyTaskIdSize < historySize) {
             userInputHistoryTaskId.add("0");
             historyTaskIdSize = userInputHistoryTaskId.size();
         }
 
         userInputHistoryTaskId.add(userInput);
+    }
+
+    /**
+     * Clears userInputHistory & userInputHistoryTaskId
+     * Used during switching of projects
+     */
+    public void clearHistory() {
+        logger.info("INFO: History cleared");
+        userInputHistoryTaskId.clear();
+        userInputHistory.clear();
+        unmodifiableUserInputHistory.clear();
+        unmodifiableUserInputHistoryTaskId.clear();
     }
 
     /**

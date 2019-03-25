@@ -1,6 +1,7 @@
 package seedu.project.model.project;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import seedu.project.model.task.Task;
@@ -18,6 +19,21 @@ public class VersionedProject extends Project {
         projectStateList = new ArrayList<>();
         projectStateList.add(new Project(initialState));
         currentStatePointer = 0;
+    }
+
+    /**
+     * Clears all history when selecting a new project
+     */
+    public void clear() {
+        projectStateList.clear();
+        currentStatePointer = 0;
+    }
+
+    /**
+     * Populate history after clearing when selecting a new project
+     */
+    public void populate(ReadOnlyProject initialState) {
+        projectStateList.add(new Project(initialState));
     }
 
     /**
@@ -93,25 +109,21 @@ public class VersionedProject extends Project {
     /**
      * Compares the target task with the previous edited version
      */
-    public Task compareTask(Task target1) {
+    public List<String> compareTask(Task target1) {
         int targetTaskId = target1.getTaskId();
         int movingStatePointer = currentStatePointer;
-        System.out.print("CSP IS : " + currentStatePointer + "\n");
         movingStatePointer--;
         while (movingStatePointer >= 0) {
-            System.out.print("MSP IS : " + movingStatePointer + "\n");
-            System.out.print("Tasklist is: " + projectStateList.get(movingStatePointer).getTaskList() + "\n");
             int taskIndex = projectStateList.get(movingStatePointer).getIndex(targetTaskId);
-            if (getDiff(target1, projectStateList.get(movingStatePointer).getTaskList()
+            if (isThereDiff(target1, projectStateList.get(movingStatePointer).getTaskList()
                     .get(taskIndex))) {
-                System.out.println("got diff");
-                return projectStateList.get(movingStatePointer).getTaskList().get(taskIndex);
+
+                return getDiffString(target1,projectStateList.get(movingStatePointer).getTaskList()
+                        .get(taskIndex));
             } else {
                 movingStatePointer--;
             }
         }
-
-        System.out.print("nothing to compare");
         return null;
     }
 
@@ -120,8 +132,7 @@ public class VersionedProject extends Project {
      * Else returns false
      * {@code task1, task2} must exist in the project
      */
-    public boolean getDiff(Task task1, Task task2) {
-        System.out.print("XXXXXX\n");
+    public boolean isThereDiff(Task task1, Task task2) {
         System.out.print(task1 + "\n");
         System.out.print(task2 + "\n\n");
         if (task1.getName() != task2.getName()) {
@@ -133,6 +144,45 @@ public class VersionedProject extends Project {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Makes and return a List of String of differences between the two task.
+     * {@code str1, str2} must have diff.
+     */
+    public List<String> getDiffString(Task task1, Task target) {
+
+        String taskReturnString = null;
+        String targetReturnString = null;
+        List<String> returnString = new ArrayList<>();
+        // Arrays.asList(" ", " ");
+
+        if (task1.getName() != target.getName()) {
+            taskReturnString = ("Name: " + task1.getName());
+            targetReturnString = ("Name: " + target.getName());
+        }
+        if (task1.getDescription() != target.getDescription()) {
+            if(taskReturnString == null) {
+                taskReturnString = ("Description: " + task1.getDescription());
+                targetReturnString = ("Description: " + target.getDescription());
+
+            }
+            taskReturnString = (taskReturnString + " | Description: " + task1.getDescription());
+            targetReturnString = (targetReturnString + " | Description: " + target.getDescription());
+        }
+        if (task1.getDeadline() != target.getDeadline()) {
+            if(taskReturnString == null) {
+                taskReturnString = ("Deadline: " + task1.getDeadline());
+                targetReturnString = ("Deadline: " + target.getDeadline());
+
+            }
+            taskReturnString = (taskReturnString + " | Deadline: " + task1.getDeadline());
+            targetReturnString = (targetReturnString + " | Deadline: " + target.getDeadline());
+        }
+
+        returnString.add(taskReturnString);
+        returnString.add(targetReturnString);
+        return returnString;
     }
 
     /**

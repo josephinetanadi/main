@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.project.commons.core.Messages;
 import seedu.project.logic.CommandHistory;
+import seedu.project.logic.LogicManager;
 import seedu.project.model.Model;
 import seedu.project.model.task.NameContainsKeywordsPredicate;
 
@@ -14,10 +15,12 @@ import seedu.project.model.task.NameContainsKeywordsPredicate;
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
+    public static final String COMMAND_ALIAS = "f";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all tasks whose names contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n" + "Example: " + COMMAND_WORD + " alice bob charlie";
+
 
     private final NameContainsKeywordsPredicate predicate;
 
@@ -28,9 +31,13 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
-        model.updateFilteredTaskList(predicate);
-        return new CommandResult(
-                String.format(Messages.MESSAGE_TASKS_LISTED_OVERVIEW, model.getFilteredTaskList().size()));
+        if (LogicManager.getState()) {
+            model.updateFilteredTaskList(predicate);
+            return new CommandResult(
+                    String.format(Messages.MESSAGE_TASKS_LISTED_OVERVIEW, model.getFilteredTaskList().size()));
+        } else {
+            return new CommandResult(String.format(Messages.MESSAGE_GO_TO_TASK_LEVEL, COMMAND_WORD));
+        }
     }
 
     @Override

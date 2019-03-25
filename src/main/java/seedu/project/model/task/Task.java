@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.project.model.Name;
 import seedu.project.model.tag.Tag;
 
 /**

@@ -13,10 +13,13 @@ import seedu.project.logic.commands.CompareCommand;
 import seedu.project.logic.commands.DeleteCommand;
 import seedu.project.logic.commands.EditCommand;
 import seedu.project.logic.commands.ExitCommand;
+import seedu.project.logic.commands.ExportCommand;
 import seedu.project.logic.commands.FindCommand;
 import seedu.project.logic.commands.HelpCommand;
 import seedu.project.logic.commands.HistoryCommand;
+import seedu.project.logic.commands.ImportCommand;
 import seedu.project.logic.commands.ListCommand;
+import seedu.project.logic.commands.ListProjectCommand;
 import seedu.project.logic.commands.RedoCommand;
 import seedu.project.logic.commands.SelectCommand;
 import seedu.project.logic.commands.TaskHistoryCommand;
@@ -77,6 +80,9 @@ public class ProjectParser {
         case SelectCommand.COMMAND_WORD:
             return new SelectCommandParser().parse(arguments);
 
+        case SelectCommand.COMMAND_ALIAS:
+            return new SelectCommandParser().parse(arguments);
+
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
 
@@ -86,13 +92,31 @@ public class ProjectParser {
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
+        case ClearCommand.COMMAND_ALIAS:
+            return new ClearCommand();
+
         case FindCommand.COMMAND_WORD:
+            return new FindCommandParser().parse(arguments);
+
+        case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
 
+        case ListCommand.COMMAND_ALIAS:
+            return new ListCommand();
+
+        case ListProjectCommand.COMMAND_WORD:
+            return new ListProjectCommand();
+
+        case ListProjectCommand.COMMAND_ALIAS:
+            return new ListProjectCommand();
+
         case HistoryCommand.COMMAND_WORD:
+            return new HistoryCommand();
+
+        case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();
 
         case ExitCommand.COMMAND_WORD:
@@ -104,9 +128,26 @@ public class ProjectParser {
         case UndoCommand.COMMAND_WORD:
             return new UndoCommand();
 
+        case UndoCommand.COMMAND_ALIAS:
+            return new UndoCommand();
+
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
 
+        case RedoCommand.COMMAND_ALIAS:
+            return new RedoCommand();
+
+        case ImportCommand.COMMAND_WORD:
+            return new ImportCommandParser().parse(arguments);
+
+        case ImportCommand.COMMAND_ALIAS:
+            return new ImportCommandParser().parse(arguments);
+
+        case ExportCommand.COMMAND_WORD:
+            return new ExportCommandParser().parse(arguments);
+
+        case ExportCommand.COMMAND_ALIAS:
+            return new ExportCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

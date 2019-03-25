@@ -9,6 +9,7 @@ import static seedu.project.logic.parser.CliSyntax.PREFIX_TAG;
 import seedu.project.logic.CommandHistory;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
+import seedu.project.model.project.Project;
 import seedu.project.model.task.Task;
 
 /**
@@ -19,46 +20,62 @@ public class AddCommand extends Command {
     public static final String COMMAND_WORD = "add";
     public static final String COMMAND_ALIAS = "a";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the project. " + "Parameters: "
+    public static final String PROJECT_MESSAGE_USAGE = COMMAND_WORD + ": Adds a project to the project list. "
+            + "Parameters: " + PREFIX_NAME + "NAME " + "Example: " + COMMAND_WORD + " " + PREFIX_NAME
+            + "CS2113T Project ";
+    public static final String TASK_MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the project. " + "Parameters: "
             + PREFIX_NAME + "NAME " + PREFIX_DESCRIPTION + "DESCRIPTION " + PREFIX_DEADLINE + "DEADLINE "
             + "[" + PREFIX_TAG + "TAG]...\n" + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "Report submission "
             + PREFIX_DESCRIPTION + " " + PREFIX_DEADLINE + "1-1-2011 "
             + PREFIX_TAG + "cs2101 " + PREFIX_TAG + "submission";
 
-    public static final String MESSAGE_SUCCESS = "New task added: %1$s";
+    public static final String MESSAGE_SUCCESS_PROJECT = "New project added: %1$s";
+    public static final String MESSAGE_SUCCESS_TASK = "New task added: %1$s";
+    public static final String MESSAGE_DUPLICATE_PROJECT = "This project already exists in the project list";
     public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the project";
 
-    private final Task toAdd;
+    private final Object toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code Task}
+     * Creates an AddCommand to add the specified {@code Project}
      */
-    public AddCommand(Task task) {
-        requireNonNull(task);
-        toAdd = task;
+    public AddCommand(Object object) {
+        requireNonNull(object);
+        toAdd = object;
     }
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
 
-        if (model.hasTask(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_TASK);
+        if (toAdd instanceof Project) {
+            if (model.hasProject((Project) toAdd)) {
+                throw new CommandException(MESSAGE_DUPLICATE_PROJECT);
+            }
+
+            model.addProject((Project) toAdd);
+            model.commitProjectList();
+            return new CommandResult(String.format(MESSAGE_SUCCESS_PROJECT, toAdd));
+        } else {
+            if (model.hasTask((Task) toAdd)) {
+                throw new CommandException(MESSAGE_DUPLICATE_TASK);
+            }
+
+
+            model.addTask((Task) toAdd);
+
+            int taskId = ((Task)toAdd).getTaskId();
+            history.addHistoryTaskId(Integer.toString(taskId));
+
+            model.commitProject();
+            return new CommandResult(String.format(MESSAGE_SUCCESS_TASK, toAdd));
         }
-
-        model.addTask(toAdd);
-
-        int taskId = toAdd.getTaskId();
-        history.addHistoryTaskId(Integer.toString(taskId));
-
-        model.commitProject();
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddCommand // instanceof handles nulls
-                        && toAdd.equals(((AddCommand) other).toAdd));
+                        && (toAdd.equals(((AddCommand) other).toAdd)));
     }
 }

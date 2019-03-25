@@ -25,7 +25,7 @@ public class TaskHistoryCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SUCCESS = "Entered commands for task %1$s (from most recent to earliest):\n%2$s";
-    public static final String MESSAGE_NO_HISTORY = "You have not yet entered any commands.";
+    public static final String MESSAGE_NO_HISTORY = "You have not yet entered any commands for this task.";
 
     //public static final String MESSAGE_COMPARE_TASK_SUCCESS = "Compared Task: %1$s \nCompared To: %2$s\n";
 
@@ -43,7 +43,6 @@ public class TaskHistoryCommand extends Command {
         ArrayList<String> previousCommands = new ArrayList<>(history.getHistory());
         ArrayList<String> previousCommandsTaskId = new ArrayList<>(history.getHistoryTaskId());
         List<Task> lastShownList = model.getFilteredTaskList();
-
 
         //        if (targetIndex.getZeroBased() >= lastShownList.size()) {
         //        throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
@@ -63,6 +62,10 @@ public class TaskHistoryCommand extends Command {
             if (previousCommandsTaskId.get(i).equals(taskId)) {
                 commandList.add(previousCommands.get(i));
             }
+        }
+
+        if (commandList.size() == 0) {
+            return new CommandResult(String.format(MESSAGE_NO_HISTORY));
         }
 
         Collections.reverse(commandList);
