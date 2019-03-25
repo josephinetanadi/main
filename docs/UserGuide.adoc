@@ -256,6 +256,24 @@ Outcome: Task Box (Panel D) will no longer display the second task in the projec
 
 Outcome: Task Box (Panel D) will no longer display the first task in the results of the `find` command.
 
+==== Completing a task: `completed`
+
+Marks the specified task identified by the index number used in the displayed task list as completed and removes it from view.
+
+* Format: `completed INDEX`
+
+* Alias: `cpt`, i.e. `completed` is equivalent to `cpt`
+
+[NOTE]
+Completed tasks will be used as statistics for the `analyse` feature, unlike deleted tasks.
+
+Examples:
+
+1. `select 2` +
+2. `completed 1`
+
+Outcome: Task Box (Panel D) will no longer display the first task in the second project.
+
 ==== Selecting a task: `select`
 
 Selects the task identified by the index number used in the displayed task list and
