@@ -103,7 +103,7 @@ public abstract class ProjectSystemTest {
      * Returns the directory of the project file.
      */
     protected Path getProjectSaveLocation() {
-        return TestApp.SAVE_LOCATION_FOR_TESTING_P;
+        return TestApp.SAVE_LOCATION_FOR_TESTING_PL;
     }
 
     public MainWindowHandle getMainWindowHandle() {
@@ -190,7 +190,7 @@ public abstract class ProjectSystemTest {
             Model expectedModel) {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
-        assertEquals(new Project(expectedModel.getProject()), testApp.readStorageProject());
+        assertEquals(new Project(expectedModel.getProject()), testApp.readStorageProjectList());
         assertListMatching(getTaskListPanel(), expectedModel.getFilteredTaskList());
     }
 
@@ -289,7 +289,7 @@ public abstract class ProjectSystemTest {
         assertEquals("", getResultDisplay().getText());
         assertListMatching(getTaskListPanel(), getModel().getFilteredTaskList());
         assertEquals(BrowserPanel.DEFAULT_PAGE, getBrowserPanel().getLoadedUrl());
-        assertEquals(Paths.get(".").resolve(testApp.getProjectSaveLocation()).toString(),
+        assertEquals(Paths.get(".").resolve(testApp.getProjectListSaveLocation()).toString(),
                 getStatusBarFooter().getSaveLocation());
         assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
     }

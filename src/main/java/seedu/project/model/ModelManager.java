@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.project.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -259,7 +260,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public Task compareTask(Task target) {
+    public List<String> compareTask(Task target) {
         return versionedProject.compareTask(target);
     }
 
