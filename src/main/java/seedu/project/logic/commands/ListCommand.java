@@ -4,15 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.project.model.Model.PREDICATE_SHOW_ALL_PROJECTS;
 import static seedu.project.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javafx.collections.ObservableList;
-import seedu.project.model.tag.Tag;
-import seedu.project.model.task.Task;
 import seedu.project.logic.CommandHistory;
 import seedu.project.logic.LogicManager;
 import seedu.project.model.Model;

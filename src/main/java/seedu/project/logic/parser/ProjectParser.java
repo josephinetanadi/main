@@ -20,6 +20,7 @@ import seedu.project.logic.commands.HistoryCommand;
 import seedu.project.logic.commands.ImportCommand;
 import seedu.project.logic.commands.ListCommand;
 import seedu.project.logic.commands.ListProjectCommand;
+import seedu.project.logic.commands.ListTagCommand;
 import seedu.project.logic.commands.RedoCommand;
 import seedu.project.logic.commands.SelectCommand;
 import seedu.project.logic.commands.UndoCommand;
@@ -99,6 +100,9 @@ public class ProjectParser {
 
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
+
+        case ListTagCommand.COMMAND_WORD:
+            return new ListTagCommand();
 
         case ListProjectCommand.COMMAND_WORD:
             return new ListProjectCommand();
