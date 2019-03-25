@@ -24,8 +24,8 @@ public class CompareCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_COMPARE_TASK_SUCCESS = "Displaying differences:\n" +
-            "Compared Task: %1$s \nCompared To: %2$s\n";
+    public static final String MESSAGE_COMPARE_TASK_SUCCESS = "Displaying differences:\n"
+            + "Compared Task: %1$s \nCompared To: %2$s\n";
     public static final String MESSAGE_COMPARE_TASK_FAILURE = "There is no previous version of this task";
 
 

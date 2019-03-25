@@ -64,7 +64,7 @@ public class AddCommand extends Command {
 
             model.addTask((Task) toAdd);
 
-            int taskId = ((Task)toAdd).getTaskId();
+            int taskId = ((Task) toAdd).getTaskId();
             history.addHistoryTaskId(Integer.toString(taskId));
 
             model.commitProject();

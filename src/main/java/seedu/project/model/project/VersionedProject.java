@@ -1,7 +1,6 @@
 package seedu.project.model.project;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import seedu.project.model.task.Task;
@@ -118,7 +117,7 @@ public class VersionedProject extends Project {
             if (isThereDiff(target1, projectStateList.get(movingStatePointer).getTaskList()
                     .get(taskIndex))) {
 
-                return getDiffString(target1,projectStateList.get(movingStatePointer).getTaskList()
+                return getDiffString(target1, projectStateList.get(movingStatePointer).getTaskList()
                         .get(taskIndex));
             } else {
                 movingStatePointer--;
@@ -162,7 +161,7 @@ public class VersionedProject extends Project {
             targetReturnString = ("Name: " + target.getName());
         }
         if (task1.getDescription() != target.getDescription()) {
-            if(taskReturnString == null) {
+            if (taskReturnString == null) {
                 taskReturnString = ("Description: " + task1.getDescription());
                 targetReturnString = ("Description: " + target.getDescription());
 
@@ -171,7 +170,7 @@ public class VersionedProject extends Project {
             targetReturnString = (targetReturnString + " | Description: " + target.getDescription());
         }
         if (task1.getDeadline() != target.getDeadline()) {
-            if(taskReturnString == null) {
+            if (taskReturnString == null) {
                 taskReturnString = ("Deadline: " + task1.getDeadline());
                 targetReturnString = ("Deadline: " + target.getDeadline());
 

@@ -2,11 +2,12 @@ package seedu.project.logic;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.logging.Logger;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.project.commons.core.LogsCenter;
 
-import java.util.logging.Logger;
 
 /**
  * Stores the history of commands executed.
