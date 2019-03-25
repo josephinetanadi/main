@@ -61,7 +61,12 @@ public class AddCommand extends Command {
                 throw new CommandException(MESSAGE_DUPLICATE_TASK);
             }
 
+
             model.addTask((Task) toAdd);
+
+            int taskId = ((Task) toAdd).getTaskId();
+            history.addHistoryTaskId(Integer.toString(taskId));
+
             model.commitProject();
             return new CommandResult(String.format(MESSAGE_SUCCESS_TASK, toAdd));
         }
