@@ -18,6 +18,8 @@ import seedu.project.model.Model;
  */
 public class ListTagCommand extends Command{
     public static final String COMMAND_WORD = "listtag";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows a list of all available tags prefix and its related tasks. "
+            + "Example: " + COMMAND_WORD;
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
