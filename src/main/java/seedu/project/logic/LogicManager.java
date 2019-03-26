@@ -58,7 +58,7 @@ public class LogicManager implements Logic {
         projectModified = false;
         projectListModified = false;
 
-        CommandResult commandResult;
+        CommandResult commandResult = null;
         try {
             Command command = projectParser.parseCommand(commandText);
             commandResult = command.execute(model, history);
