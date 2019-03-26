@@ -18,9 +18,6 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Task> PREDICATE_SHOW_ALL_TASKS = unused -> true;
 
-    /** {@code Predicate} that always evaluate to false */
-    Predicate<Task> PREDICATE_SHOW_NO_TASKS = unused -> false;
-
     /** {@code Predicate} that always evaluate to true */
     Predicate<Project> PREDICATE_SHOW_ALL_PROJECTS = unused -> true;
 

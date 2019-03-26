@@ -51,7 +51,7 @@ public class UniqueProjectList implements Iterable<Project> {
     /**
      * Replaces the project {@code target} in the list with {@code editedProject}.
      * {@code target} must exist in the list.
-     * The project identity of {@code editedTask} must not be the same as another existing task in the list.
+     * The project identity of {@code editedProject} must not be the same as another existing project in the list.
      */
     public void setProject(Project target, Project editedProject) {
         requireAllNonNull(target, editedProject);
@@ -80,8 +80,8 @@ public class UniqueProjectList implements Iterable<Project> {
     }
 
     /**
-     * Replaces the contents of this list with {@code tasks}.
-     * {@code tasks} must not contain duplicate tasks.
+     * Replaces the contents of this list with {@code projects}.
+     * {@code projects} must not contain duplicate projects.
      */
     public void setProjects(List<Project> projects) {
         requireAllNonNull(projects);
@@ -117,7 +117,7 @@ public class UniqueProjectList implements Iterable<Project> {
     }
 
     /**
-     * Returns true if {@code tasks} contains only unique tasks.
+     * Returns true if {@code projects} contains only unique projects.
      */
     private boolean projectsAreUnique(List<Project> projects) {
         for (int i = 0; i < projects.size() - 1; i++) {

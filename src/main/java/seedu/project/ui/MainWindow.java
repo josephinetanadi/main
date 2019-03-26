@@ -187,7 +187,7 @@ public class MainWindow extends UiPart<Stage> {
      * Navigating between project and task
      */
     private void refreshPanel(String commandText) {
-        if (commandText.contains(SelectCommand.COMMAND_WORD) || commandText.equals(SelectCommand.COMMAND_ALIAS)) {
+        if (commandText.contains(SelectCommand.COMMAND_WORD) || commandText.contains(SelectCommand.COMMAND_ALIAS)) {
             if (LogicManager.getState()) { //to update task list panel
                 taskListPanelPlaceholder.setDisable(false);
                 taskListPanelPlaceholder.getChildren().clear();
@@ -202,10 +202,6 @@ public class MainWindow extends UiPart<Stage> {
             projectListPanelPlaceholder.setDisable(false);
         }
 
-    }
-
-    public TaskListPanel getTaskListPanel() {
-        return taskListPanel;
     }
 
     /**
