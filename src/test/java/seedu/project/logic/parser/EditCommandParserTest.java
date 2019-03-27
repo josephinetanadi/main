@@ -29,6 +29,7 @@ import static seedu.project.testutil.TypicalIndexes.INDEX_THIRD_TASK;
 import org.junit.Test;
 
 import seedu.project.commons.core.index.Index;
+import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.EditCommand.EditTaskDescriptor;
 import seedu.project.logic.commands.EditCommand;
 import seedu.project.model.tag.Tag;
@@ -42,7 +43,7 @@ public class EditCommandParserTest {
     private static final String TAG_EMPTY = " " + PREFIX_TAG;
 
     private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.TASK_MESSAGE_USAGE);
 
     private EditCommandParser parser = new EditCommandParser();
 
@@ -192,6 +193,8 @@ public class EditCommandParserTest {
 
         EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withTags().build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
+
+        LogicManager.setState(true);
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }

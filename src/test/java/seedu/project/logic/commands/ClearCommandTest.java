@@ -6,9 +6,11 @@ import static seedu.project.testutil.TypicalTasks.getTypicalProjectList;
 
 import org.junit.Test;
 
+import seedu.project.commons.core.Messages;
 import seedu.project.logic.CommandHistory;
 import seedu.project.model.Model;
 import seedu.project.model.ModelManager;
+import seedu.project.model.ProjectList;
 import seedu.project.model.UserPrefs;
 import seedu.project.model.project.Project;
 
@@ -20,19 +22,21 @@ public class ClearCommandTest {
     public void execute_emptyProject_success() {
         Model model = new ModelManager();
         Model expectedModel = new ModelManager();
-        expectedModel.commitProject();
+        //expectedModel.commitProjectList();
 
-        assertCommandSuccess(new ClearCommand(), model, commandHistory, ClearCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new ClearCommand(), model, commandHistory, Messages.MESSAGE_GO_TO_TASK_LEVEL, expectedModel);
     }
 
     @Test
     public void execute_nonEmptyProject_success() {
         Model model = new ModelManager(getTypicalProjectList(), getTypicalProject(), new UserPrefs());
         Model expectedModel = new ModelManager(getTypicalProjectList(), getTypicalProject(), new UserPrefs());
-        expectedModel.setProject(new Project());
+        model.setProjectList(new ProjectList());
+        model.commitProject();
+        expectedModel.setProjectList(new ProjectList());
         expectedModel.commitProject();
 
-        assertCommandSuccess(new ClearCommand(), model, commandHistory, ClearCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new ClearCommand(), model, commandHistory, Messages.MESSAGE_GO_TO_TASK_LEVEL, expectedModel);
     }
 
 }

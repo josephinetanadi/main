@@ -1,5 +1,6 @@
 package systemtests;
 
+import static seedu.project.commons.core.Messages.MESSAGE_GO_TO_TASK_LEVEL;
 import static seedu.project.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.project.testutil.TypicalTasks.KEYWORD_MATCHING_TEST;
 
@@ -21,7 +22,7 @@ public class ClearCommandSystemTest extends ProjectSystemTest {
         /* Case: clear non-empty project, command with leading spaces and trailing alphanumeric characters and
          * spaces -> cleared
          */
-        assertCommandSuccess("   " + ClearCommand.COMMAND_WORD + " ab12   ");
+        assertCommandFailure("   " + ClearCommand.COMMAND_WORD + " ab12   ", MESSAGE_GO_TO_TASK_LEVEL );
         assertSelectedCardUnchanged();
 
         /* Case: undo clearing project -> original project restored */
@@ -65,7 +66,7 @@ public class ClearCommandSystemTest extends ProjectSystemTest {
      * @see ProjectSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command) {
-        assertCommandSuccess(command, ClearCommand.MESSAGE_SUCCESS, new ModelManager());
+        assertCommandSuccess(command, "helllooooooooo", new ModelManager());
     }
 
     /**

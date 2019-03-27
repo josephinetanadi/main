@@ -7,11 +7,13 @@ import static seedu.project.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.project.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.project.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import seedu.project.commons.core.index.Index;
+import seedu.project.commons.exceptions.DataConversionException;
 import seedu.project.logic.CommandHistory;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
@@ -75,10 +77,14 @@ public class CommandTestUtil {
         try {
             CommandResult result = command.execute(actualModel, actualCommandHistory);
             assertEquals(expectedCommandResult, result);
-            assertEquals(expectedModel, actualModel);
+                assertEquals(expectedModel, actualModel);
             assertEquals(expectedCommandHistory, actualCommandHistory);
         } catch (CommandException ce) {
             throw new AssertionError("Execution of command should not fail.", ce);
+        } catch (DataConversionException e) {
+            throw new AssertionError("Data Conversation Exception.", e);
+        } catch (IOException e) {
+            throw new AssertionError("Input / Output Exception.", e);
         }
     }
 
@@ -112,7 +118,7 @@ public class CommandTestUtil {
         try {
             command.execute(actualModel, actualCommandHistory);
             throw new AssertionError("The expected CommandException was not thrown.");
-        } catch (CommandException e) {
+        } catch (CommandException | DataConversionException | IOException e) {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedProject, actualModel.getProject());
             assertEquals(expectedFilteredList, actualModel.getFilteredTaskList());

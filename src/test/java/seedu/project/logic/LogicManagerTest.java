@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
+import seedu.project.commons.exceptions.DataConversionException;
 import seedu.project.logic.commands.AddCommand;
 import seedu.project.logic.commands.CommandResult;
 import seedu.project.logic.commands.HistoryCommand;
@@ -52,7 +53,7 @@ public class LogicManagerTest {
         JsonProjectListStorage projectListStorage = new JsonProjectListStorage(temporaryFolder.newFile().toPath());
         JsonProjectStorage projectStorage = new JsonProjectStorage(temporaryFolder.newFile().toPath());
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.newFile().toPath());
-        StorageManager storage = new StorageManager(projectListStorage, projectStorage, userPrefsStorage);
+        StorageManager storage = new StorageManager(projectListStorage, userPrefsStorage);
         logic = new LogicManager(model, storage);
     }
 
@@ -66,6 +67,9 @@ public class LogicManagerTest {
     @Test
     public void execute_commandExecutionError_throwsCommandException() {
         String deleteCommand = "delete 9";
+
+        LogicManager.setState(true);
+
         assertCommandException(deleteCommand, MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         assertHistoryCorrect(deleteCommand);
     }
@@ -73,24 +77,31 @@ public class LogicManagerTest {
     @Test
     public void execute_validCommand_success() {
         String listCommand = ListCommand.COMMAND_WORD;
-        assertCommandSuccess(listCommand, ListCommand.MESSAGE_SUCCESS, model);
+
+        LogicManager.setState(true);
+
+        assertCommandSuccess(listCommand, ListCommand.MESSAGE_SUCCESS_TASK, model);
         assertHistoryCorrect(listCommand);
     }
 
     @Test
     public void execute_storageThrowsIoException_throwsCommandException() throws Exception {
+
         // Setup LogicManager with JsonProjectIoExceptionThrowingStub
         JsonProjectListStorage projectListStorage;
         projectListStorage = new JsonProjectListIoExceptionThrowingStub(temporaryFolder.newFile().toPath());
         JsonProjectStorage projectStorage = new JsonProjectIoExceptionThrowingStub(temporaryFolder.newFile().toPath());
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.newFile().toPath());
-        StorageManager storage = new StorageManager(projectListStorage, projectStorage, userPrefsStorage);
+        StorageManager storage = new StorageManager(projectListStorage, userPrefsStorage);
         logic = new LogicManager(model, storage);
 
         // Execute add command
         String addCommand = AddCommand.COMMAND_WORD + NAME_DESC_CS2101 + DESC_DESC_CS2101 + DEADLINE_DESC_CS2101;
         Task expectedTask = new TaskBuilder(CS2101_MILESTONE).withTags().build();
         ModelManager expectedModel = new ModelManager();
+
+        LogicManager.setState(true);
+
         expectedModel.addTask(expectedTask);
         expectedModel.commitProject();
         String expectedMessage = LogicManager.FILE_OPS_ERROR_MESSAGE + DUMMY_IO_EXCEPTION;
@@ -161,7 +172,7 @@ public class LogicManagerTest {
             CommandResult result = logic.execute(inputCommand);
             assertEquals(expectedException, null);
             assertEquals(expectedMessage, result.getFeedbackToUser());
-        } catch (CommandException | ParseException e) {
+        } catch (CommandException | ParseException | DataConversionException | IOException e) {
             assertEquals(expectedException, e.getClass());
             assertEquals(expectedMessage, e.getMessage());
         }
@@ -178,7 +189,7 @@ public class LogicManagerTest {
             CommandResult result = logic.execute(HistoryCommand.COMMAND_WORD);
             String expectedMessage = String.format(HistoryCommand.MESSAGE_SUCCESS, String.join("\n", expectedCommands));
             assertEquals(expectedMessage, result.getFeedbackToUser());
-        } catch (ParseException | CommandException e) {
+        } catch (ParseException | CommandException | DataConversionException | IOException e) {
             throw new AssertionError("Parsing and execution of HistoryCommand.COMMAND_WORD should succeed.", e);
         }
     }

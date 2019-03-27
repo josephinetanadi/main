@@ -16,6 +16,7 @@ import org.junit.Test;
 import seedu.project.commons.core.Messages;
 import seedu.project.commons.core.index.Index;
 import seedu.project.logic.CommandHistory;
+import seedu.project.logic.LogicManager;
 import seedu.project.model.Model;
 import seedu.project.model.ModelManager;
 import seedu.project.model.UserPrefs;
@@ -41,13 +42,15 @@ public class SelectCommandTest {
     public void execute_invalidIndexUnfilteredList_failure() {
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
 
-        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX
+        );
     }
 
     @Test
     public void execute_validIndexFilteredList_success() {
         showTaskAtIndex(model, INDEX_FIRST_TASK);
         showTaskAtIndex(expectedModel, INDEX_FIRST_TASK);
+
 
         assertExecutionSuccess(INDEX_FIRST_TASK);
     }
@@ -58,6 +61,9 @@ public class SelectCommandTest {
         showTaskAtIndex(expectedModel, INDEX_FIRST_TASK);
 
         Index outOfBoundsIndex = INDEX_SECOND_TASK;
+
+        LogicManager.setState(true);
+
         // ensures that outOfBoundIndex is still in bounds of project list
         assertTrue(outOfBoundsIndex.getZeroBased() < model.getProject().getTaskList().size());
 

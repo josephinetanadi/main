@@ -80,20 +80,20 @@ public class JsonProjectStorageTest {
         // Save in new file and read back
         jsonProjectStorage.saveProject(original, filePath);
         ReadOnlyProject readBack = jsonProjectStorage.readProject(filePath).get();
-        assertEquals(original, new Project(readBack));
+        assertEquals(original.getTaskList(), new Project(readBack).getTaskList());
 
         // Modify data, overwrite exiting file, and read back
         original.addTask(LECTURE);
         original.removeTask(FEEDBACK);
         jsonProjectStorage.saveProject(original, filePath);
         readBack = jsonProjectStorage.readProject(filePath).get();
-        assertEquals(original, new Project(readBack));
+        assertEquals(original.getTaskList(), new Project(readBack).getTaskList());
 
         // Save and read without specifying file path
         original.addTask(TUTORIAL);
         jsonProjectStorage.saveProject(original); // file path not specified
         readBack = jsonProjectStorage.readProject().get(); // file path not specified
-        assertEquals(original, new Project(readBack));
+        assertEquals(original.getTaskList(), new Project(readBack).getTaskList());
 
     }
 

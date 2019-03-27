@@ -13,6 +13,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.project.logic.LogicManager;
 import seedu.project.testutil.TaskBuilder;
 
 public class TaskTest {
@@ -60,7 +61,15 @@ public class TaskTest {
 
     @Test
     public void equals() {
+        LogicManager.setState(true);
+        System.out.println("hello");
+
         // same values -> returns true
+        System.out.println(CS2101_MILESTONE.getName().toString());
+        System.out.println(CS2101_MILESTONE.getDeadline().toString());
+        System.out.println(CS2101_MILESTONE.getTags().toString());
+        System.out.println(CS2101_MILESTONE.getDescription().toString());
+
         Task cs2101MilestoneCopy = new TaskBuilder(CS2101_MILESTONE).build();
         assertTrue(CS2101_MILESTONE.equals(cs2101MilestoneCopy));
 

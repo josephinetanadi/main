@@ -21,6 +21,8 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.project.logic.Logic;
+import seedu.project.logic.LogicManager;
 import seedu.project.model.project.Project;
 import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.task.Task;
@@ -47,9 +49,10 @@ public class ProjectTest {
 
     @Test
     public void resetData_withValidReadOnlyProject_replacesData() {
+
         Project newData = getTypicalProject();
         project.resetData(newData);
-        assertEquals(newData, project);
+        assertEquals(newData.getTaskList(), project.getTaskList());
     }
 
     @Test
@@ -120,6 +123,7 @@ public class ProjectTest {
     private static class ProjectStub implements ReadOnlyProject {
         private final ObservableList<Task> tasks = FXCollections.observableArrayList();
         private int index;
+        private Name name;
 
         ProjectStub(Collection<Task> tasks) {
             this.tasks.setAll(tasks);
@@ -144,6 +148,12 @@ public class ProjectTest {
         public void removeListener(InvalidationListener listener) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public Name getName(){
+            return name;
+        }
+
     }
 
 }

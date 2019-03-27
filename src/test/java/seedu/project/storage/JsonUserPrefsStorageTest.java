@@ -83,7 +83,7 @@ public class JsonUserPrefsStorageTest {
     private UserPrefs getTypicalUserPrefs() {
         UserPrefs userPrefs = new UserPrefs();
         userPrefs.setGuiSettings(new GuiSettings(1000, 500, 300, 100));
-        userPrefs.setProjectFilePath(Paths.get("project.json"));
+        userPrefs.setProjectListFilePath(Paths.get("data\\projectlist.json"));
         return userPrefs;
     }
 

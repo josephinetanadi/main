@@ -17,6 +17,7 @@ import java.util.Collections;
 import org.junit.Test;
 
 import seedu.project.logic.CommandHistory;
+import seedu.project.logic.LogicManager;
 import seedu.project.model.Model;
 import seedu.project.model.ModelManager;
 import seedu.project.model.UserPrefs;
@@ -73,6 +74,9 @@ public class FindCommandTest {
         String expectedMessage = String.format(MESSAGE_TASKS_LISTED_OVERVIEW, 3);
         NameContainsKeywordsPredicate predicate = preparePredicate("Teaching Feedback Quiz");
         FindCommand command = new FindCommand(predicate);
+
+        LogicManager.setState(true);
+
         expectedModel.updateFilteredTaskList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
         assertEquals(Arrays.asList(FEEDBACK, TEACHING_FEEDBACK, QUIZ), model.getFilteredTaskList());

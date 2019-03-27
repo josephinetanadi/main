@@ -15,7 +15,7 @@ public class UserPrefsTest {
     @Test
     public void setProjectFilePath_nullPath_throwsNullPointerException() {
         UserPrefs userPrefs = new UserPrefs();
-        Assert.assertThrows(NullPointerException.class, () -> userPrefs.setProjectFilePath(null));
+        Assert.assertThrows(NullPointerException.class, () -> userPrefs.setProjectListFilePath(null));
     }
 
 }

@@ -30,7 +30,7 @@ public class JsonSerializableProjectTest {
                 .get();
         Project projectFromFile = dataFromFile.toModelType();
         Project typicalTasksProject = TypicalTasks.getTypicalProject();
-        assertEquals(projectFromFile, typicalTasksProject);
+        assertEquals(projectFromFile.getTaskList(), typicalTasksProject.getTaskList());
     }
 
     @Test

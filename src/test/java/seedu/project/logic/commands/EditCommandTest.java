@@ -10,6 +10,7 @@ import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_CP2106;
 import static seedu.project.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.project.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.project.logic.commands.CommandTestUtil.showTaskAtIndex;
+import static seedu.project.logic.commands.SelectCommand.MESSAGE_SELECT_PROJECT_SUCCESS;
 import static seedu.project.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.project.testutil.TypicalIndexes.INDEX_SECOND_TASK;
 import static seedu.project.testutil.TypicalTasks.getTypicalProject;
@@ -20,6 +21,7 @@ import org.junit.Test;
 import seedu.project.commons.core.Messages;
 import seedu.project.commons.core.index.Index;
 import seedu.project.logic.CommandHistory;
+import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.EditCommand.EditTaskDescriptor;
 import seedu.project.model.Model;
 import seedu.project.model.ModelManager;
@@ -29,6 +31,7 @@ import seedu.project.model.project.Project;
 import seedu.project.model.task.Task;
 import seedu.project.testutil.EditTaskDescriptorBuilder;
 import seedu.project.testutil.TaskBuilder;
+import systemtests.ProjectSystemTest;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for EditCommand.
@@ -40,6 +43,7 @@ public class EditCommandTest {
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
+
         Task editedTask = new TaskBuilder().build();
         EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder(editedTask).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_TASK, descriptor);
@@ -48,6 +52,10 @@ public class EditCommandTest {
 
         Model expectedModel = new ModelManager(
                 new ProjectList(model.getProjectList()), new Project(model.getProject()), new UserPrefs());
+
+        //assertCommandSuccess("select 1", model, commandHistory, expectedMessage, expectedModel);
+        LogicManager.setState(true);
+
         expectedModel.setTask(model.getFilteredTaskList().get(0), editedTask);
         expectedModel.commitProject();
 
@@ -56,6 +64,8 @@ public class EditCommandTest {
 
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() {
+        LogicManager.setState(true);
+
         Index indexLastTask = Index.fromOneBased(model.getFilteredTaskList().size());
         Task lastTask = model.getFilteredTaskList().get(indexLastTask.getZeroBased());
 
@@ -78,6 +88,8 @@ public class EditCommandTest {
 
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
+        LogicManager.setState(true);
+
         EditCommand editCommand = new EditCommand(INDEX_FIRST_TASK, new EditTaskDescriptor());
         Task editedTask = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
 
@@ -92,6 +104,8 @@ public class EditCommandTest {
 
     @Test
     public void execute_filteredList_success() {
+        LogicManager.setState(true);
+
         showTaskAtIndex(model, INDEX_FIRST_TASK);
 
         Task taskInFilteredList = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
@@ -158,6 +172,8 @@ public class EditCommandTest {
 
     @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
+        LogicManager.setState(true);
+
         Task editedTask = new TaskBuilder().build();
         Task taskToEdit = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
         EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder(editedTask).build();
@@ -181,6 +197,8 @@ public class EditCommandTest {
 
     @Test
     public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
+        LogicManager.setState(true);
+
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
         EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withName(VALID_NAME_CP2106).build();
         EditCommand editCommand = new EditCommand(outOfBoundIndex, descriptor);
@@ -202,6 +220,10 @@ public class EditCommandTest {
      */
     @Test
     public void executeUndoRedo_validIndexFilteredList_sameTaskEdited() throws Exception {
+        LogicManager.setState(true);
+
+        LogicManager.setState(true);
+
         Task editedTask = new TaskBuilder().build();
         EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder(editedTask).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_TASK, descriptor);
