@@ -16,6 +16,7 @@ import seedu.project.commons.core.LogsCenter;
 import seedu.project.commons.exceptions.DataConversionException;
 import seedu.project.logic.Logic;
 import seedu.project.logic.LogicManager;
+import seedu.project.logic.commands.ClearCommand;
 import seedu.project.logic.commands.CommandResult;
 import seedu.project.logic.commands.ListProjectCommand;
 import seedu.project.logic.commands.SelectCommand;
@@ -135,8 +136,8 @@ public class MainWindow extends UiPart<Stage> {
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getProjectListFilePath(), logic.getProject(),
-                logic.getFilteredTaskList().size());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getProjectListFilePath(), logic.getProjectList(),
+                logic.getFilteredProjectList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(this::executeCommand, logic.getHistory());
@@ -187,7 +188,7 @@ public class MainWindow extends UiPart<Stage> {
      * Navigating between project and task
      */
     private void refreshPanel(String commandText) {
-        if (commandText.contains(SelectCommand.COMMAND_WORD) || commandText.equals(SelectCommand.COMMAND_ALIAS)) {
+        if (commandText.contains(SelectCommand.COMMAND_WORD) || commandText.contains(SelectCommand.COMMAND_ALIAS)) {
             if (LogicManager.getState()) { //to update task list panel
                 taskListPanelPlaceholder.setDisable(false);
                 taskListPanelPlaceholder.getChildren().clear();
@@ -201,6 +202,9 @@ public class MainWindow extends UiPart<Stage> {
             taskListPanelPlaceholder.setDisable(true);
             projectListPanelPlaceholder.setDisable(false);
         }
+        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getProjectListFilePath(), logic.getProjectList(),
+                logic.getFilteredProjectList().size());
+        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
     }
 

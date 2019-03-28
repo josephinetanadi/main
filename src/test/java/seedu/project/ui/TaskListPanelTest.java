@@ -97,6 +97,6 @@ public class TaskListPanelTest extends GuiUnitTest {
         uiPartRule.setUiPart(taskListPanel);
 
         taskListPanelHandle = new TaskListPanelHandle(
-                getChildNode(taskListPanel.getRoot(), TaskListPanelHandle.PERSON_LIST_VIEW_ID));
+                getChildNode(taskListPanel.getRoot(), TaskListPanelHandle.TASK_LIST_VIEW_ID));
     }
 }

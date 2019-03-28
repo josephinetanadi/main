@@ -3,6 +3,7 @@
 :toc:
 :toc-title:
 :toc-placement: preamble
+:toclevels: 4
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
@@ -17,7 +18,17 @@ endif::[]
 By: `Team CS2113T T09-3`      Since: `Mar 2019`      Licence: `MIT`
 
 == Introduction
-NoteNote (NN), is a desktop project management system for Computing students to keep track of multiple projects and their corresponding tasks. More importantly, NN is optimized for those who prefer to work with a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, NN can help you to manage your tasks faster than traditional GUI apps. Have we caught your interest? Jump to  <<Quick Start>> to get started. Enjoy!
+Welcome to NoteNote (NN)!
+
+Are you looking for an application that could help you to organize projects, keep track of tasks of each project, analyse your productivity and share your To-Do list with your friends?
+
+Well, you're at the right place! NoteNote is a task management application, designed by Computing students for Computing students, like yourself, to keep track of all your projects and tasks.
+
+More importantly, NN is optimized for those who prefer to work with a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI).
+
+If you can type fast, NN can help you to manage your tasks faster than traditional GUI apps.
+
+Have we caught your interest? Jump to  <<Quick Start>> to get started. Enjoy!
 
 == How to use this guide
 
@@ -26,9 +37,9 @@ NoteNote (NN), is a desktop project management system for Computing students to 
 The examples in this guide are formatted using the following convention:
 Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME, NAME` is a parameter which can be used as `add n/John Doe`.
 
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…` after them can be used multiple times including zero times e.g. `[t/TAG]…` can be used as (i.e. 0 times), `t/friend`, `t/friend` `t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME` `p/PHONE_NUMBER`, `p/PHONE_NUMBER` `n/NAME` is also acceptable.
+* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/Sample Task 1 t/SAMPLE` or as `n/Sample Task 1`.
+* Items with `…` after them can be used multiple times including zero times e.g. `[t/TAG]…` can be used as (i.e. 0 times), `t/CS2101`, `t/SEM1` `t/SCHOOL` etc.
+* Parameters can be in any order e.g. if the command specifies `n/NAME` `ds/DESCRIPTION`, `ds/DESCRIPTION` `n/NAME` is also acceptable.
 * The `add`, `edit` and `delete` commands each have a shorthand equivalent alias, and their usage can be viewed below at their respective sections in the User Guide.
 
 
@@ -50,10 +61,10 @@ image::applayout.png[width="790"]
 * *Panel D: Task Box* - Displays list of tasks for a selected project
 * *Panel E: Description Box* - Displays long description for a selected task
 
-=== Navigating the User Interface
-
 Panel *A*, *C*, *D* are user-interactable while panels *B*, *E* are non-interactable.
-Panel A will always be active, allowing you to input your commands at any time
+
+Panel A will always be active, allowing you to input your commands at any time.
+
 Upon first opening of the application, your active panel will start from *C*, and only upon choosing a project will your active panel change to *D*.
 
 
@@ -61,7 +72,7 @@ Upon first opening of the application, your active panel will start from *C*, an
 
 
 .  Ensure you have Java version `9` or later installed in your Computer.
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `notenote.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 .  Type the command in the command box or *Panel A* (refer to Figure 2) and press Enter to execute it.
@@ -83,7 +94,7 @@ When selecting a (different) project to the view tasks of the project, always fo
 
 === Project Level Commands
 Commands affecting the project list / currently displayed project as a whole. +
-Affects panel C.
+Affects Panel C.
 
 ==== Adding a project: `add`
 Adds a new project to the System.
@@ -106,6 +117,10 @@ Edits an existing project identified by the index number used in the displayed p
 * Format: `edit INDEX n/NAME`
 * Alias: `e`, i.e. `edit` is equivalent to `e`
 
+Examples:
+
+* `edit 1 n/Sample Task 1`
+
 Outcome: Project Box (Panel C) will show the updated project with the new name.
 
 ==== List projects: `listprojects`
@@ -123,7 +138,7 @@ Selects a project identified by the index number used in the displayed project l
 * Alias: `s`, i.e. `select` is equivalent to `s`
 
 [TIP]
-This command will only be active if the **immediate predecessor command is `listproject`** else the select functionality will be targeted at a task
+If the **immediate predecessor command** is `listproject`, `select` will select a project and display tasks, else `select` will select a task and display task information
 
 Examples:
 
@@ -139,7 +154,10 @@ Import additional projects and tasks to add on to current project list. Source f
 
 Examples:
 
-* `import ./test.json`
+* `import /home/user/test.json`
+
+[TIP]
+The full path to the JSON file has to be specified unless the file is contained within the application folder. In that case, `import ./test.json` is sufficient.
 
 Outcome: Projects and tasks contained in JSON file will be imported and added on top of current project list. Command box will display number of projects added to project list.
 
@@ -190,7 +208,7 @@ A task can have any number of tags (including 0).
 
 Example:
 
-* `add n/Decide on Research Paper Topic by/01/01/2020`
+* `add n/Decide on Research Paper Topic dl/1-1-2020`
 
 Outcome: Task Box (Panel D) will show the newly created task `Decide on Research Paper Topic` with deadline `1 January 2020`.
 
@@ -207,7 +225,7 @@ At least 1 among the parameters of `[n/NAME] [d/DESCRIPTION] [dl/DEADLINE] [t/TA
 
 Example:
 
-* `edit 1 n/Decide on Research Paper Topic dl/02/02/2020`
+* `edit 1 n/Decide on Research Paper Topic dl/2-2-2020`
 
 Outcome: Task Box (Panel D) will show the updated task at index 1, with the information name and deadline changed to `Decide on Research Paper Topic` and `2 February 2020` respectively.
 
@@ -220,11 +238,11 @@ Finds a project, task or subtask whose name contains any of the given keywords.
 * Alias: `f`, i.e. `find` is equivalent to `f`
 
 [TIP]
-The search is case insensitive. e.g `hans` will match `Hans`. +
-The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`. +
+The search is case insensitive. e.g `report` will match `Report`. +
+The order of the keywords does not matter. e.g. `final report` will match `report final`. +
 `find` will only search among names of tasks. +
-Only full words will be matched e.g. `Han` will not match `Hans`. +
-Tasks matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
+Only full words will be matched e.g. `Rep` will not match `Report`. +
+Tasks matching at least one keyword will be returned (i.e. `OR` search). e.g. `Report Final` will return `Draft Report`, `Final Submission`.
 
 Examples:
 
@@ -305,7 +323,7 @@ Sorts tasks by specified category.
 
 Example:
 
-`sort name descend`
+`sort deadline descend`
 
 Outcome: Task Box (Panel D) will be updated to display tasks sorted by their name
          in descending order.
@@ -420,38 +438,72 @@ Outcome: Results Box (Panel B) will show the newly created group tag `Task compl
 
 == Command Summary
 
-* *Help* : `help`
-* *Add* `add n/PROJECTNAME` +
-`add n/TASKNAME ds/DESCRIPTION dl/DEADLINE [t/TAG]...` +
+|===
+|*Help*|`help`
+
+|*Add*|`add n/PROJECTNAME n/TASKNAME ds/DESCRIPTION dl/DEADLINE [t/TAG]...`
+
 e.g. `add n/Sample Task 1 ds/This is a sample task dl/1-1-2011 t/SAMPLE`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
+
+|*Completed*|`completed INDEX`
+
+|*Clear*|`clear`
+
+|*Delete*|`delete INDEX`
+
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME]` +
-`edit INDEX [n/NAME] [ds/DESCRIPTION] [dl/DEADLINE] [t/TAG]...` +
+
+|*Edit*|`edit INDEX [n/NAME]`
+
+`edit INDEX [n/NAME] [ds/DESCRIPTION] [dl/DEADLINE] [t/TAG]...`
+
 e.g. `edit 2 n/Sample Task 1 ds/This is an edited task`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+
+|*Find*|`find KEYWORD [MORE_KEYWORDS]`
+
 e.g. `find Report Project`
-* *List* : `list`
-* *List project* : `listproject`
-* *List tags` : `listtags`
-* *Define group tags* : `group gt/GROUPTAGNAME [t/TAG]` +
+
+|*List*|`list`
+
+|*List project*|`listproject`
+
+|*List tags*|`listtags`
+
+|*Define group tags*|`group gt/GROUPTAGNAME [t/TAG]`
+
 e.g. `group gt/task completed t/to review t/to merge`
-* *Select* : `select INDEX` +
+
+|*Select*|`select INDEX`
+
 e.g.`select 2`
-* *Sort*: `sort CATEGORY [ascend|descend]` +
-e.g. `sort name descend`
-* *Import* : `import PATH`
-* *Export* : `export FILTER`
-* *Analyse* : `analyse DATE_1 [DATE_2]`
-* *View* : `view`
-* *History* : `history`
-* *Task history* : `taskhistory INDEX`
-* *Compare* : `compare INDEX`
-* *Undo* : `undo`
-* *Redo* : `redo`
-* *Clear* : `clear`
-* *Exit* : `exit`
+
+|*Sort*|sort CATEGORY [ascend\|descend]`
+
+e.g. `sort deadline descend`
+
+|*Import*|`import PATH`
+
+|*Export*|`export FILTER`
+
+|*Analyse*|`analyse DATE_1 [DATE_2]`
+
+|*View*|`view`
+
+|*History*|`history`
+
+|*Task history*|`taskhistory INDEX`
+
+|*Compare*|`compare INDEX`
+
+|*Undo*|`undo`
+
+|*Redo*|`redo`
+
+|*Clear*|`clear`
+
+|*Exit*|`exit`
+
+|===
 
 == Appendix A
 
@@ -487,271 +539,3 @@ e.g. `sort name descend`
   } ]
 }
 ```
-
-
-
-[[Features]]
-== Features (to be removed)
-
-=== Viewing help : `help`
-
-Format: `help`
-
-=== Adding a project/task/subtask: `add`
-
-* Adds a new project to the System. +
-Format: `add p/NAME`
-
-* Adds a task to the project identified by the index number used in the displayed project list. +
-Format: `add INDEX n/NAME [d/DESCRIPTION] [by/DEADLINE] [t/TAG]`
-
-* Adds a subtask to a task identified by the index number used in the displayed task list. +
-Format: `add INDEX n/NAME d/DESCRIPTION [by/DEADLINE] [t/TAG]`
-
-* Alias: `a`
-
-[TIP]
-A task/subtask can have any number of tags (including 0)
-
-Examples:
-
-* `add p/History Research Paper`
-* `add n/Decide on Research Paper Topic by/01/01/2020`
-* `add 1 n/Book consultation with lecturer by/01/01/2020`
-
-=== Listing all projects/tasks/subtasks : `list`
-
-Shows a list of all project, tasks and subtasks in System. +
-Format: `list` +
-Alias: `l`
-
-=== Listing all tags : `listtags`
-
-Shows a list of all available tags prefix and its related tasks. +
-Format: `listtags`
-
-=== Editing a project/task/subtask : `edit`
-
-* Edits an existing project in the System. +
-Format: `edit p/NAME`
-
-* Edits an existing task identified by the index number used in the displayed task list. +
-Format: `edit INDEX n/NAME [d/DESCRIPTION] [by/DEADLINE] [t/TAG]`
-
-* Edits an existing subtask identified by the index number used in the displayed subtask list. +
-Format: `edit INDEX n/NAME [d/DESCRIPTION] [by/DEADLINE] [t/TAG]`
-
-* Alias: `e`
-
-****
-* Edits the task/subtask at the specified `INDEX`. The index refers to the index number shown in the displayed task list. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the task/subtask will be removed i.e adding of tags is not cumulative.
-* You can remove all the task/subtask's tags by typing `t/` without specifying any tags after it.
-****
-
-Examples:
-
-* `edit p/History Research Paper 2` +
-Edits the project name to be `History Research Paper 2`
-* `edit 1 n/Decide on Research Paper Topic by/02/02/2020` +
-Edits the name and deadline of the task at index 1 to be `Decide on Research Paper Topic` and `02/02/2020` respectively.
-* `edit 1 n/Book consultation with lecturer by/02/02/2020` +
-Edits the name and deadline of the subtask at index 1 to be `Book consultation with lecturer` and `02/02/2020` respectively.
-
-
-=== Locating tasks by name: `find`
-
-Finds a project, task or subtask whose name contains any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]` +
-Alias: `f`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Tasks matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
-* `find Research` +
-Returns `research` and `Book Research`
-* `find book consult` +
-Returns any project/task/subtask having words `book` or `consult` in them
-
-=== Deleting a project/task/subtask : `delete`
-
-* Deletes the specified project from the System. +
-Format: `delete INDEX`
-
-* Deletes the specified task identified by the index number used in the displayed task list. +
-Format: `delete INDEX`
-
-* Deletes the specified subtask identified by the index number used in the displayed subtask list. +
-Format: `delete INDEX`
-
-* Alias: `d`
-
-****
-* Deletes the project/task/subtask at the specified `INDEX`.
-* The index refers to the index number shown in the displayed task list.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`delete 2` +
-Deletes the 2nd task/subtask in the project.
-* `find Consult` +
-`delete 1` +
-Deletes the 1st project/task/subtask in the results of the `find` command.
-
-=== Selecting a project / task / sub-task : `select`
-
-Selects the project / task / sub-task identified by the index number used in the displayed project / task / sub-task list. +
-Format: `select INDEX` +
-Alias: `s`
-
-****
-* Selects the project / task / sub-task and loads the relevant information at the specified `INDEX`.
-* The index refers to the index number shown in the displayed list.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list` +
-`select 2` +
-Selects the 2nd project in the displayed project list.
-* `find Research` +
-`select 1` +
-`list` +
-`select 1` +
-Selects the 1st project in the results of the `find` command. +
-Selects the 1st task in the displayed task list of 1st project.
-
-=== Sorting project / task / sub-task : `sort`
-
-Sorts project / task / sub-task by specified category. +
-Format: `sort CATEGORY [ascend|descend]`
-
-****
-* Sorts the project / task / sub-task that is currently displayed
-* Sort by name, deadline and tags
-****
-
-Examples:
-
-* `sort name descend` +
-Sorts displayed project / task / sub-task name in descending order.
-
-=== Inserting tags : `insert`
-
-Inserts tags to project / task / sub-task identified by index number in the displayed project / task / sub-task list. +
-Format: `insert INDEX TAG [MORE_TAGS]`
-
-Examples:
-
-* `list` +
-`select 1` +
-`insert 1 priority:4` +
-Inserts priority of 4 to 1st task of 1st project.
-
-=== Viewing tasks in project phase : `view`
-
-Displays tasks and sub-tasks within a project phase view. +
-Format: `view`
-
-=== Listing entered commands : `history`
-
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history` +
-Alias: `h`
-
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
-
-// tag::undoredo[]
-=== Undoing previous command : `undo`
-
-Restores the task management system to the state before the previous _undoable_ command was executed. +
-Format: `undo` +
-Alias: `u`
-
-[NOTE]
-====
-Undoable commands: those commands that modify the project's content (`add`, `delete`, `edit` and `clear`).
-====
-
-Examples:
-
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
-
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-
-=== Redoing the previously undone command : `redo`
-
-Reverses the most recent `undo` command. +
-Format: `redo` +
-Alias: `r`
-
-Examples:
-
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
-
-=== Clearing all entries : `clear`
-
-Clears all projects, tasks and sub-tasks from the task management system. +
-Format: `clear` +
-Alias: `cl`
-
-=== Exporting outstanding projects : `export`
-
-Exports all outstanding projects and its tasks and sub-tasks to PDF format for offline viewing. +
-Format: `export`
-
-=== Exiting the program : `exit`
-
-Exits the program. +
-Format: `exit`
-
-=== Saving the data
-
-Task management system data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
-
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
-
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]

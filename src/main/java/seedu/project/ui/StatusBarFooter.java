@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import seedu.project.logic.LogicManager;
+import seedu.project.model.ReadOnlyProjectList;
 import seedu.project.model.project.ReadOnlyProject;
 
 /**
@@ -19,7 +20,7 @@ public class StatusBarFooter extends UiPart<Region> {
 
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
     public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
-    public static final String TOTAL_TASKS_STATUS = "%d task(s) total";
+    public static final String TOTAL_PROJECTS_STATUS = "%d project(s) total";
 
     /**
      * Used to generate time stamps.
@@ -38,22 +39,20 @@ public class StatusBarFooter extends UiPart<Region> {
     @FXML
     private Label saveLocationStatus;
     @FXML
-    private Label totalTasksStatus;
+    private Label totalProjectsStatus;
 
     // private Logic logic;
 
-    public StatusBarFooter(Path saveLocation, ReadOnlyProject project, int totalTasks) {
+    public StatusBarFooter(Path saveLocation, ReadOnlyProjectList projectList, int totalProjects) {
         super(FXML);
-        project.addListener(observable -> updateSyncStatus(project.getTaskList().size()));
+        projectList.addListener(observable -> updateSyncStatus(projectList.getProjectList().size()));
         syncStatus.setText(SYNC_STATUS_INITIAL);
         saveLocationStatus.setText(Paths.get(".").resolve(saveLocation).toString());
-        if (LogicManager.getState()) {
-            setTotalTasks(totalTasks);
-        }
+        setTotalProjects(totalProjects);
     }
 
-    private void setTotalTasks(int totalTasks) {
-        Platform.runLater(() -> totalTasksStatus.setText(String.format(TOTAL_TASKS_STATUS, totalTasks)));
+    private void setTotalProjects(int totalProjects) {
+        Platform.runLater(() -> totalProjectsStatus.setText(String.format(TOTAL_PROJECTS_STATUS, totalProjects)));
     }
 
     /**
@@ -73,11 +72,11 @@ public class StatusBarFooter extends UiPart<Region> {
     /**
      * Updates "last updated" status to the current time.
      */
-    private void updateSyncStatus(int tasksListSize) {
+    private void updateSyncStatus(int projectListSize) {
         long now = clock.millis();
         String lastUpdated = new Date(now).toString();
         syncStatus.setText(String.format(SYNC_STATUS_UPDATED, lastUpdated));
-        setTotalTasks(tasksListSize);
+        setTotalProjects(projectListSize);
     }
 
 }
