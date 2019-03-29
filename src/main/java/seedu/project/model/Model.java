@@ -139,6 +139,8 @@ public interface Model {
      */
     void setTask(Task target, Task editedTask);
 
+    void clearTasks();
+
     /** Returns an unmodifiable view of the filtered project list */
     ObservableList<Project> getFilteredProjectList();
 

@@ -135,7 +135,7 @@ public class ModelManager implements Model {
     @Override
     public void addProject(Project project) {
         versionedProjectList.addProject(project);
-        //updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        updateFilteredProjectList(PREDICATE_SHOW_ALL_PROJECTS);
     }
 
     @Override
@@ -159,14 +159,12 @@ public class ModelManager implements Model {
             versionedProject = new VersionedProject(project);
             versionedProject.resetName(project);
             versionedProject.resetData(project);
-            filteredTasks = new FilteredList<>(versionedProject.getTaskList());
-            filteredTasks.addListener(this::ensureSelectedTaskIsValid);
         } else {
             versionedProject = (VersionedProject) versionedProjectList.getProjectList().get(getFilteredProjectList()
                     .indexOf(project));
-            filteredTasks = new FilteredList<>(versionedProject.getTaskList());
-            filteredTasks.addListener(this::ensureSelectedTaskIsValid);
         }
+        filteredTasks = new FilteredList<>(versionedProject.getTaskList());
+        filteredTasks.addListener(this::ensureSelectedTaskIsValid);
         /*versionedProject.clear();
         versionedProject.resetName(project);
         versionedProject.resetData(project);
@@ -200,6 +198,11 @@ public class ModelManager implements Model {
         requireAllNonNull(target, editedTask);
 
         versionedProject.setTask(target, editedTask);
+    }
+
+    @Override
+    public void clearTasks() {
+        versionedProject.clearTasks();
     }
 
     // =========== Filtered Project List Accessors

@@ -6,38 +6,38 @@ import java.util.Set;
 
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
-import seedu.project.model.task.Task;
+import seedu.project.model.project.Project;
 
 /**
- * Provides a handle for {@code TaskListPanel} containing the list of {@code TaskCard}.
+ * Provides a handle for {@code ProjectListPanel} containing the list of {@code ProjectCard}.
  */
-public class TaskListPanelHandle extends NodeHandle<ListView<Task>> {
-    public static final String TASK_LIST_VIEW_ID = "#taskListView";
+public class ProjectListPanelHandle extends NodeHandle<ListView<Project>> {
+    public static final String PROJECT_LIST_VIEW_ID = "#projectListView";
 
-    private static final String CARD_PANE_ID = "#taskCardPane";
+    private static final String CARD_PANE_ID = "#projectCardPane";
 
-    private Optional<Task> lastRememberedSelectedTaskCard;
+    private Optional<Project> lastRememberedSelectedProjectCard;
 
-    public TaskListPanelHandle(ListView<Task> taskListPanelNode) {
-        super(taskListPanelNode);
+    public ProjectListPanelHandle(ListView<Project> ProjectListPanelNode) {
+        super(ProjectListPanelNode);
     }
 
     /**
-     * Returns a handle to the selected {@code TaskCardHandle}.
+     * Returns a handle to the selected {@code ProjectCardHandle}.
      * A maximum of 1 item can be selected at any time.
      * @throws AssertionError if no card is selected, or more than 1 card is selected.
      * @throws IllegalStateException if the selected card is currently not in the scene graph.
      */
-    public TaskCardHandle getHandleToSelectedCard() {
-        List<Task> selectedTaskList = getRootNode().getSelectionModel().getSelectedItems();
+    public ProjectCardHandle getHandleToSelectedCard() {
+        List<Project> selectedProjectList = getRootNode().getSelectionModel().getSelectedItems();
 
-        if (selectedTaskList.size() != 1) {
-            throw new AssertionError("Task list size expected 1.");
+        if (selectedProjectList.size() != 1) {
+            throw new AssertionError("Project list size expected 1.");
         }
 
         return getAllCardNodes().stream()
-                .map(TaskCardHandle::new)
-                .filter(handle -> handle.equals(selectedTaskList.get(0)))
+                .map(ProjectCardHandle::new)
+                .filter(handle -> handle.equals(selectedProjectList.get(0)))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
     }
@@ -53,7 +53,7 @@ public class TaskListPanelHandle extends NodeHandle<ListView<Task>> {
      * Returns true if a card is currently selected.
      */
     public boolean isAnyCardSelected() {
-        List<Task> selectedCardsList = getRootNode().getSelectionModel().getSelectedItems();
+        List<Project> selectedCardsList = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedCardsList.size() > 1) {
             throw new AssertionError("Card list size expected 0 or 1.");
@@ -63,15 +63,15 @@ public class TaskListPanelHandle extends NodeHandle<ListView<Task>> {
     }
 
     /**
-     * Navigates the listview to display {@code task}.
+     * Navigates the listview to display {@code Project}.
      */
-    public void navigateToCard(Task task) {
-        if (!getRootNode().getItems().contains(task)) {
-            throw new IllegalArgumentException("Task does not exist.");
+    public void navigateToCard(Project Project) {
+        if (!getRootNode().getItems().contains(Project)) {
+            throw new IllegalArgumentException("Project does not exist.");
         }
 
         guiRobot.interact(() -> {
-            getRootNode().scrollTo(task);
+            getRootNode().scrollTo(Project);
         });
         guiRobot.pauseForHuman();
     }
@@ -91,25 +91,25 @@ public class TaskListPanelHandle extends NodeHandle<ListView<Task>> {
     }
 
     /**
-     * Selects the {@code TaskCard} at {@code index} in the list.
+     * Selects the {@code ProjectCard} at {@code index} in the list.
      */
     public void select(int index) {
         getRootNode().getSelectionModel().select(index);
     }
 
     /**
-     * Returns the task card handle of a task associated with the {@code index} in the list.
+     * Returns the Project card handle of a Project associated with the {@code index} in the list.
      * @throws IllegalStateException if the selected card is currently not in the scene graph.
      */
-    public TaskCardHandle getTaskCardHandle(int index) {
+    public ProjectCardHandle getProjectCardHandle(int index) {
         return getAllCardNodes().stream()
-                .map(TaskCardHandle::new)
-                .filter(handle -> handle.equals(getTask(index)))
+                .map(ProjectCardHandle::new)
+                .filter(handle -> handle.equals(getProject(index)))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
     }
 
-    private Task getTask(int index) {
+    private Project getProject(int index) {
         return getRootNode().getItems().get(index);
     }
 
@@ -123,30 +123,30 @@ public class TaskListPanelHandle extends NodeHandle<ListView<Task>> {
     }
 
     /**
-     * Remembers the selected {@code TaskCard} in the list.
+     * Remembers the selected {@code ProjectCard} in the list.
      */
-    public void rememberSelectedTaskCard() {
-        List<Task> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+    public void rememberSelectedProjectCard() {
+        List<Project> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
-            lastRememberedSelectedTaskCard = Optional.empty();
+            lastRememberedSelectedProjectCard = Optional.empty();
         } else {
-            lastRememberedSelectedTaskCard = Optional.of(selectedItems.get(0));
+            lastRememberedSelectedProjectCard = Optional.of(selectedItems.get(0));
         }
     }
 
     /**
-     * Returns true if the selected {@code TaskCard} is different from the value remembered by the most recent
-     * {@code rememberSelectedTaskCard()} call.
+     * Returns true if the selected {@code ProjectCard} is different from the value remembered by the most recent
+     * {@code rememberSelectedProjectCard()} call.
      */
-    public boolean isSelectedTaskCardChanged() {
-        List<Task> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+    public boolean isSelectedProjectCardChanged() {
+        List<Project> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
-            return lastRememberedSelectedTaskCard.isPresent();
+            return lastRememberedSelectedProjectCard.isPresent();
         } else {
-            return !lastRememberedSelectedTaskCard.isPresent()
-                    || !lastRememberedSelectedTaskCard.get().equals(selectedItems.get(0));
+            return !lastRememberedSelectedProjectCard.isPresent()
+                    || !lastRememberedSelectedProjectCard.get().equals(selectedItems.get(0));
         }
     }
 

@@ -1,7 +1,7 @@
 package seedu.project.ui;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.project.testutil.TypicalTasks.CS2101_MILESTONE;
+import static seedu.project.testutil.TypicalTasks.CS2101;
 import static seedu.project.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.project.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 
@@ -19,7 +19,7 @@ import org.junit.Test;
 
 import guitests.guihandles.StatusBarFooterHandle;
 import seedu.project.logic.Logic;
-import seedu.project.model.project.Project;
+import seedu.project.model.ProjectList;
 
 public class StatusBarFooterTest extends GuiUnitTest {
 
@@ -32,7 +32,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
     private static final Clock injectedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
 
     private StatusBarFooterHandle statusBarFooterHandle;
-    private final Project project = new Project();
+    private final ProjectList projectList = new ProjectList();
     private Logic logic;
 
     @BeforeClass
@@ -49,7 +49,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        StatusBarFooter statusBarFooter = new StatusBarFooter(STUB_SAVE_LOCATION, project, INITIAL_TOTAL_TASKS);
+        StatusBarFooter statusBarFooter = new StatusBarFooter(STUB_SAVE_LOCATION, projectList, INITIAL_TOTAL_TASKS);
         uiPartRule.setUiPart(statusBarFooter);
 
         statusBarFooterHandle = new StatusBarFooterHandle(statusBarFooter.getRoot());
@@ -61,7 +61,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
         assertStatusBarContent(RELATIVE_PATH.resolve(STUB_SAVE_LOCATION).toString(), SYNC_STATUS_INITIAL);
 
         // after project is updated
-        guiRobot.interact(() -> project.addTask(CS2101_MILESTONE));
+        guiRobot.interact(() -> projectList.addProject(CS2101));
         assertStatusBarContent(RELATIVE_PATH.resolve(STUB_SAVE_LOCATION).toString(),
                 String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
     }
