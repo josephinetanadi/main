@@ -77,9 +77,7 @@ public class LogicManagerTest {
     @Test
     public void execute_validCommand_success() {
         String listCommand = ListCommand.COMMAND_WORD;
-
         LogicManager.setState(true);
-
         assertCommandSuccess(listCommand, ListCommand.MESSAGE_SUCCESS_TASK, model);
         assertHistoryCorrect(listCommand);
     }
@@ -189,7 +187,8 @@ public class LogicManagerTest {
             CommandResult result = logic.execute(HistoryCommand.COMMAND_WORD);
             String expectedMessage = String.format(HistoryCommand.MESSAGE_SUCCESS, String.join("\n", expectedCommands));
             assertEquals(expectedMessage, result.getFeedbackToUser());
-        } catch (ParseException | CommandException | DataConversionException | IOException e) {
+
+        } catch (ParseException | CommandException | IOException | DataConversionException e) {
             throw new AssertionError("Parsing and execution of HistoryCommand.COMMAND_WORD should succeed.", e);
         }
     }

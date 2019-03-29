@@ -3,6 +3,7 @@ package seedu.project.model.project;
 import static java.util.Objects.requireNonNull;
 import static seedu.project.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -86,12 +87,22 @@ public class Project implements ReadOnlyProject {
         this.tasks.setTasks(tasks);
         indicateModified();
     }
+    /**
+     * clears task
+     */
+    public void clearTasks() {
+        Project clearedProject = new Project();
+        clearedProject.setName(getName().toString());
+        clearedProject.setTasks(new ArrayList<>());
+        resetData(clearedProject);
+    }
 
     /**
      * Resets the existing data of this {@code Project} with {@code newData}.
      */
     public void resetData(ReadOnlyProject newData) {
         requireNonNull(newData);
+
         setTasks(newData.getTaskList());
     }
 
@@ -109,8 +120,8 @@ public class Project implements ReadOnlyProject {
      * Adds a task to the project.
      * The task must not already exist in the project.
      */
-    public void addTask(Task p) {
-        tasks.add(p);
+    public void addTask(Task t) {
+        tasks.add(t);
         indicateModified();
     }
 

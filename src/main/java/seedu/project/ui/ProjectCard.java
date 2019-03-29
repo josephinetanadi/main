@@ -25,7 +25,7 @@ public class ProjectCard extends UiPart<Region> {
     public final Project project;
 
     @FXML
-    private HBox cardPane;
+    private HBox projectCardPane;
     @FXML
     private Label name;
     @FXML

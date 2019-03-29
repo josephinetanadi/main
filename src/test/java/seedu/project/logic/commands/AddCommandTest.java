@@ -186,11 +186,6 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addTask(Task task) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
         public ReadOnlyProject getProject() {
             throw new AssertionError("This method should not be called.");
         }
@@ -211,12 +206,17 @@ public class AddCommandTest {
         }
 
         @Override
-        public void setTask(Task target, Task editedTask) {
+        public void clearTasks() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void deleteTag(Tag tag) {
+        public void addTask(Task task) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setTask(Task target, Task editedTask) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -272,6 +272,11 @@ public class AddCommandTest {
 
         @Override
         public void setSelectedTask(Task task) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteTag(Tag tag) {
             throw new AssertionError("This method should not be called.");
         }
     }

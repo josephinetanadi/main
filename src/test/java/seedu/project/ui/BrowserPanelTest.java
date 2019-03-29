@@ -15,8 +15,8 @@ import seedu.project.model.project.Project;
 import seedu.project.model.task.Task;
 
 public class BrowserPanelTest extends GuiUnitTest {
-    private SimpleObjectProperty<Task> selectedTask = new SimpleObjectProperty<>();
     private SimpleObjectProperty<Project> selectedProject = new SimpleObjectProperty<>();
+    private SimpleObjectProperty<Task> selectedTask = new SimpleObjectProperty<>();
     private BrowserPanel browserPanel;
     private BrowserPanelHandle browserPanelHandle;
 

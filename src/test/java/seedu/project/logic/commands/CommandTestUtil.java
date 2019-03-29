@@ -36,6 +36,9 @@ public class CommandTestUtil {
     public static final String VALID_TAG_CS2101 = "CS2101";
     public static final String VALID_TAG_CP2106 = "CP2106";
 
+    public static final String VALID_PROJECT_NAME_CS2101 = "CS2101 Project";
+    public static final String VALID_PROJECT_NAME_CP2106 = "CP2106 Project";
+
     public static final String NAME_DESC_CS2101 = " " + PREFIX_NAME + VALID_NAME_CS2101;
     public static final String NAME_DESC_CP2106 = " " + PREFIX_NAME + VALID_NAME_CP2106;
     public static final String DESC_DESC_CS2101 = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_CS2101;
@@ -44,6 +47,9 @@ public class CommandTestUtil {
     public static final String DEADLINE_DESC_CP2106 = " " + PREFIX_DEADLINE + VALID_DEADLINE_CP2106;
     public static final String TAG_DESC_CS2101 = " " + PREFIX_TAG + VALID_TAG_CS2101;
     public static final String TAG_DESC_CP2106 = " " + PREFIX_TAG + VALID_TAG_CP2106;
+
+    public static final String NAME_DESC_CS2101_PROJECT = " " + PREFIX_NAME + VALID_PROJECT_NAME_CS2101;
+    public static final String NAME_DESC_CP2106_PROJECT = " " + PREFIX_NAME + VALID_PROJECT_NAME_CP2106;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "Milestone&"; // '&' not allowed in names
     public static final String INVALID_DESC_DESC = " " + PREFIX_DESCRIPTION + ""; // '(blank)' not allowed in desc

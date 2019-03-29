@@ -120,8 +120,8 @@ public class ProjectTest {
      */
     private static class ProjectStub implements ReadOnlyProject {
         private final ObservableList<Task> tasks = FXCollections.observableArrayList();
-        private int index;
         private Name name;
+        private int index;
 
         ProjectStub(Collection<Task> tasks) {
             this.tasks.setAll(tasks);

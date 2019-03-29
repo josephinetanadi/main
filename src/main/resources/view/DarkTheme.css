@@ -111,7 +111,12 @@
     -fx-background-color: #424d5f;
 }
 
-.list-cell:filled:selected #cardPane {
+.list-cell:filled:selected #projectCardPane {
+    -fx-border-color: #3e7b91;
+    -fx-border-width: 1;
+}
+
+.list-cell:filled:selected #taskCardPane {
     -fx-border-color: #3e7b91;
     -fx-border-width: 1;
 }
@@ -307,7 +312,12 @@
     -fx-padding: 8 1 8 1;
 }
 
-#cardPane {
+#projectCardPane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+#taskCardPane {
     -fx-background-color: transparent;
     -fx-border-width: 0;
 }

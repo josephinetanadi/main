@@ -47,13 +47,15 @@ public class ClearCommandTest {
         expectedModel.setProject(model.getFilteredProjectList().get(0));
         expectedModel.setSelectedProject(model.getFilteredProjectList().get(0));
 
+        LogicManager.setState(true);
+
         Project clearedProject = new Project();
         clearedProject.setName(expectedModel.getProject().getName().toString());
         clearedProject.setTasks(new ArrayList<>());
-        expectedModel.setProject(model.getSelectedProject(), clearedProject);
+        //expectedModel.setProject(model.getSelectedProject(), clearedProject);
+        expectedModel.clearTasks();
         expectedModel.commitProject();
-
-        LogicManager.setState(true);
+        expectedModel.commitProjectList();
 
         assertCommandSuccess(new ClearCommand(), model, commandHistory, ClearCommand.MESSAGE_SUCCESS, expectedModel);
     }

@@ -6,6 +6,8 @@ import static seedu.project.logic.commands.CommandTestUtil.VALID_DESCRIPTION_CP2
 import static seedu.project.logic.commands.CommandTestUtil.VALID_DESCRIPTION_CS2101;
 import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_CP2106;
 import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_CS2101;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_PROJECT_NAME_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_PROJECT_NAME_CS2101;
 import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_CP2106;
 import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_CS2101;
 
@@ -54,6 +56,11 @@ public class TypicalTasks {
             .withDescription("attend tutorial at utown classroom")
             .withDeadline("1-1-2011").withTags("TUTORIAL").build();
 
+    public static final Project SAMPLE1 = new ProjectBuilder().withTask(GROUP_MEETING, PRINT,
+            TEACHING_FEEDBACK, CONSULTATION, LECTURE, TUTORIAL).withName("Sample Project 1").build();
+    public static final Project SAMPLE2 = new ProjectBuilder().withTask(REPORT_SUBMISSION)
+            .withName("Sample Project 2").build();
+
     // Manually added - Task's details found in {@code CommandTestUtil}
     public static final Task CS2101_MILESTONE = new TaskBuilder().withName(VALID_NAME_CS2101)
             .withDescription(VALID_DESCRIPTION_CS2101).withDeadline(VALID_DEADLINE_CS2101)
@@ -62,8 +69,10 @@ public class TypicalTasks {
             .withDescription(VALID_DESCRIPTION_CP2106).withDeadline(VALID_DEADLINE_CP2106)
             .withTags(VALID_TAG_CP2106).build();
 
-    public static final Project CS2101 = new ProjectBuilder().withTask(CS2101_MILESTONE, QUIZ).build();
-    public static final Project CP2106 = new ProjectBuilder().withTask(CP2106_MILESTONE).build();
+    public static final Project CS2101 = new ProjectBuilder().withTask(GROUP_MEETING)
+            .withName(VALID_PROJECT_NAME_CS2101).build();
+    public static final Project CP2106 = new ProjectBuilder().withTask(CP2106_MILESTONE)
+            .withName(VALID_PROJECT_NAME_CP2106).build();
 
     public static final String KEYWORD_MATCHING_TEST = "Feedback"; // A keyword that matches Feedback
 
@@ -74,10 +83,9 @@ public class TypicalTasks {
      */
     public static ProjectList getTypicalProjectList() {
         ProjectList pl = new ProjectList();
-        pl.addProject(CS2101);
-        //for (Project project : getTypicalProjects()) {
-        //pl.addProject(project);
-        //}
+        for (Project project : getTypicalProjects()) {
+            pl.addProject(project);
+        }
         return pl;
     }
 
@@ -94,7 +102,7 @@ public class TypicalTasks {
     }
 
     public static List<Project> getTypicalProjects() {
-        return new ArrayList<>(Arrays.asList(CS2101, CP2106));
+        return new ArrayList<>(Arrays.asList(SAMPLE1, SAMPLE2));
     }
 
     public static List<Task> getTypicalTasks() {

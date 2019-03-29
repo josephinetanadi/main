@@ -27,7 +27,6 @@ public class StorageManagerTest {
     @Before
     public void setUp() {
         JsonProjectListStorage projectListStorage = new JsonProjectListStorage(getTempFilePath("pl"));
-        JsonProjectStorage projectStorage = new JsonProjectStorage(getTempFilePath("p"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
         storageManager = new StorageManager(projectListStorage, userPrefsStorage);
     }
@@ -52,21 +51,21 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void projectReadSave() throws Exception {
+    public void projectListReadSave() throws Exception {
         /*
          * Note: This is an integration test that verifies the StorageManager is
          * properly wired to the {@link JsonProjectStorage} class. More extensive
          * testing of UserPref saving/reading is done in {@link JsonProjectStorageTest}
          * class.
          */
-        ReadOnlyProjectList original = getTypicalProjectList();
+        ProjectList original = getTypicalProjectList();
         storageManager.saveProjectList(original);
         ReadOnlyProjectList retrieved = storageManager.readProjectList().get();
         assertEquals(original, new ProjectList(retrieved));
     }
 
     @Test
-    public void getProjectFilePath() {
+    public void getProjectListFilePath() {
         assertNotNull(storageManager.getProjectListFilePath());
     }
 
