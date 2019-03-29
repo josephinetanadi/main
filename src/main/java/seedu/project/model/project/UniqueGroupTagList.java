@@ -13,11 +13,14 @@ import seedu.project.model.project.exceptions.GroupTagNotFoundException;
 import seedu.project.model.tag.GroupTag;
 
 /**
- * A list of GroupTags that enforces uniqueness between its elements and does not allow nulls.
- * A GroupTag is considered unique by comparing using {@code GroupTag#isSameGroupTag(GroupTag)}. As such, adding and
- * updating of tasks uses GroupTag#isSameGroupTag(GroupTag) for equality so as to ensure that the task being added or
- * updated is unique in terms of identity in the UniqueGroupTagList. However, the removal of a GroupTag uses
- * GroupTag#equals(Object) so as to ensure that the task with exactly the same fields will be removed.
+ * A list of GroupTags that enforces uniqueness between its elements and does
+ * not allow nulls. A GroupTag is considered unique by comparing using
+ * {@code GroupTag#isSameGroupTag(GroupTag)}. As such, adding and updating of
+ * tasks uses GroupTag#isSameGroupTag(GroupTag) for equality so as to ensure
+ * that the task being added or updated is unique in terms of identity in the
+ * UniqueGroupTagList. However, the removal of a GroupTag uses
+ * GroupTag#equals(Object) so as to ensure that the task with exactly the same
+ * fields will be removed.
  *
  * Supports a minimal set of list operations.
  *
@@ -26,8 +29,8 @@ import seedu.project.model.tag.GroupTag;
 public class UniqueGroupTagList implements Iterable<GroupTag> {
 
     private final ObservableList<GroupTag> internalList = FXCollections.observableArrayList();
-    private final ObservableList<GroupTag> internalUnmodifiableList =
-            FXCollections.unmodifiableObservableList(internalList);
+    private final ObservableList<GroupTag> internalUnmodifiableList = FXCollections
+            .unmodifiableObservableList(internalList);
 
     /**
      * Returns true if the list contains an equivalent task as the given argument.
@@ -38,8 +41,7 @@ public class UniqueGroupTagList implements Iterable<GroupTag> {
     }
 
     /**
-     * Adds a GroupTag to the list.
-     * The GroupTag must not already exist in the list.
+     * Adds a GroupTag to the list. The GroupTag must not already exist in the list.
      */
     public void add(GroupTag toAdd) {
         requireNonNull(toAdd);
@@ -51,8 +53,8 @@ public class UniqueGroupTagList implements Iterable<GroupTag> {
 
     /**
      * Replaces the GroupTag {@code target} in the list with {@code editedGroupTag}.
-     * {@code target} must exist in the list.
-     * The GroupTag identity of {@code editedTask} must not be the same as another existing task in the list.
+     * {@code target} must exist in the list. The GroupTag identity of
+     * {@code editedTask} must not be the same as another existing task in the list.
      */
     public void setGroupTag(GroupTag target, GroupTag editedGroupTag) {
         requireAllNonNull(target, editedGroupTag);
@@ -70,8 +72,8 @@ public class UniqueGroupTagList implements Iterable<GroupTag> {
     }
 
     /**
-     * Removes the equivalent GroupTag from the list.
-     * The GroupTag must exist in the list.
+     * Removes the equivalent GroupTag from the list. The GroupTag must exist in the
+     * list.
      */
     public void remove(GroupTag toRemove) {
         requireNonNull(toRemove);
@@ -81,16 +83,16 @@ public class UniqueGroupTagList implements Iterable<GroupTag> {
     }
 
     /**
-     * Replaces the contents of this list with {@code tasks}.
-     * {@code tasks} must not contain duplicate tasks.
+     * Replaces the contents of this list with {@code tasks}. {@code tasks} must not
+     * contain duplicate tasks.
      */
-    public void setGroupTags(List<GroupTag> GroupTags) {
-        requireAllNonNull(GroupTags);
-        if (!GroupTagsAreUnique(GroupTags)) {
+    public void setGroupTags(List<GroupTag> groupTags) {
+        requireAllNonNull(groupTags);
+        if (!groupTagsAreUnique(groupTags)) {
             throw new DuplicateGroupTagException();
         }
 
-        internalList.setAll(GroupTags);
+        internalList.setAll(groupTags);
     }
 
     /**
@@ -109,7 +111,7 @@ public class UniqueGroupTagList implements Iterable<GroupTag> {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof UniqueGroupTagList // instanceof handles nulls
-                && internalList.equals(((UniqueGroupTagList) other).internalList));
+                        && internalList.equals(((UniqueGroupTagList) other).internalList));
     }
 
     @Override
@@ -120,10 +122,10 @@ public class UniqueGroupTagList implements Iterable<GroupTag> {
     /**
      * Returns true if {@code tasks} contains only unique tasks.
      */
-    private boolean GroupTagsAreUnique(List<GroupTag> GroupTags) {
-        for (int i = 0; i < GroupTags.size() - 1; i++) {
-            for (int j = i + 1; j < GroupTags.size(); j++) {
-                if (GroupTags.get(i).isSameGroupTag(GroupTags.get(j))) {
+    private boolean groupTagsAreUnique(List<GroupTag> groupTags) {
+        for (int i = 0; i < groupTags.size() - 1; i++) {
+            for (int j = i + 1; j < groupTags.size(); j++) {
+                if (groupTags.get(i).isSameGroupTag(groupTags.get(j))) {
                     return false;
                 }
             }

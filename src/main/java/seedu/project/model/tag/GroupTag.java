@@ -6,12 +6,16 @@ import java.util.Set;
 
 import seedu.project.model.Name;
 
+/**
+ * Represents a GroupTag in the project. Guarantees: immutable; name is valid as
+ * declared in {@link #isValidTagName(String)}
+ */
 public class GroupTag {
     public static final String MESSAGE_CONSTRAINTS = "GroupTag can take any names, and it should not be blank";
 
     /*
-     * The first character of the address must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
+     * The first character of the address must not be a whitespace, otherwise " " (a
+     * blank string) becomes a valid input.
      */
     public static final String VALIDATION_REGEX = "[^\\s].*";
 
@@ -38,16 +42,16 @@ public class GroupTag {
     }
 
     /**
-     * Returns true if both tasks of the same name have at least one other identity field that is the same.
-     * This defines a weaker notion of equality between two tasks.
+     * Returns true if both tasks of the same name have at least one other identity
+     * field that is the same. This defines a weaker notion of equality between two
+     * tasks.
      */
     public boolean isSameGroupTag(GroupTag otherGroupTag) {
         if (otherGroupTag == this) {
             return true;
         }
 
-        return otherGroupTag != null
-                && otherGroupTag.getName().equals(getName())
+        return otherGroupTag != null && otherGroupTag.getName().equals(getName())
                 && otherGroupTag.getTags().equals(getTags());
     }
 
@@ -60,7 +64,7 @@ public class GroupTag {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof GroupTag // instanceof handles nulls
-                && name.equals(((GroupTag) other).name)); // state check
+                        && name.equals(((GroupTag) other).name)); // state check
     }
 
     @Override

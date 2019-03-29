@@ -7,11 +7,13 @@ import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
 import seedu.project.model.tag.GroupTag;
 
-public class DefineTagCommand extends Command{
+/**
+ * Allow users to define a group tag.
+ */
+public class DefineTagCommand extends Command {
     public static final String COMMAND_WORD = "definetag";
     public static final String SUCCESS_MESSAGE = "group created";
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Allows users to define tag parent and its child";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Allows users to define tag parent and its child";
 
     public static final String MESSAGE_DUPLICATE_GROUPTAG = "This group tag already exists in the group tag list";
 
