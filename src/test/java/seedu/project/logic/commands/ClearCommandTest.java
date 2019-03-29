@@ -19,6 +19,10 @@ import seedu.project.model.project.Project;
 public class ClearCommandTest {
 
     private CommandHistory commandHistory = new CommandHistory();
+
+    /**
+     * for the sake of it
+     */
     //to be done
     //@Test
     public void execute_emptyProject_success() {
