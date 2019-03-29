@@ -23,8 +23,7 @@ public class CompletedCommandParser implements Parser<CompletedCommand> {
         ArgumentMultimap argMultimap;
         try {
             argMultimap = ArgumentTokenizer.tokenize(args);
-        }
-        catch (InputMismatchException ime) {
+        } catch (InputMismatchException ime) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     CompletedCommand.MESSAGE_USAGE), ime);
         }
@@ -32,8 +31,7 @@ public class CompletedCommandParser implements Parser<CompletedCommand> {
         Index index;
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        }
-        catch (ParseException pe) {
+        } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     CompletedCommand.MESSAGE_USAGE), pe);
         }

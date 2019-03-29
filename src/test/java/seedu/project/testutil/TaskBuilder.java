@@ -3,10 +3,10 @@ package seedu.project.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.project.model.Name;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Deadline;
 import seedu.project.model.task.Description;
-import seedu.project.model.Name;
 import seedu.project.model.task.Task;
 import seedu.project.model.util.SampleDataUtil;
 
@@ -15,8 +15,8 @@ import seedu.project.model.util.SampleDataUtil;
  */
 public class TaskBuilder {
 
-    public static final String DEFAULT_NAME = "Milestone";
-    public static final String DEFAULT_DESCRIPTION = "config labels, milestone, project board";
+    public static final String DEFAULT_NAME = "Milestone edit";
+    public static final String DEFAULT_DESCRIPTION = "config labels, milestone, project board edit";
     public static final String DEFAULT_DEADLINE = "1-1-2011";
 
     private Name name;

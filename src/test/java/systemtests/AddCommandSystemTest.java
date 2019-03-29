@@ -11,43 +11,39 @@ import static seedu.project.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.project.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.project.logic.commands.CommandTestUtil.NAME_DESC_CP2106;
 import static seedu.project.logic.commands.CommandTestUtil.NAME_DESC_CS2101;
-import static seedu.project.logic.commands.CommandTestUtil.NAME_DESC_CS2101_PROJECT;
 import static seedu.project.logic.commands.CommandTestUtil.TAG_DESC_CP2106;
 import static seedu.project.logic.commands.CommandTestUtil.TAG_DESC_CS2101;
 import static seedu.project.logic.commands.CommandTestUtil.VALID_DEADLINE_CS2101;
 import static seedu.project.logic.commands.CommandTestUtil.VALID_DESCRIPTION_CS2101;
 import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_CP2106;
 import static seedu.project.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.project.testutil.TypicalTasks.CP2106;
-import static seedu.project.testutil.TypicalTasks.CS2101;
 import static seedu.project.testutil.TypicalTasks.CP2106_MILESTONE;
 import static seedu.project.testutil.TypicalTasks.CS2101_MILESTONE;
 import static seedu.project.testutil.TypicalTasks.GROUP_MEETING;
 import static seedu.project.testutil.TypicalTasks.KEYWORD_MATCHING_TEST;
 import static seedu.project.testutil.TypicalTasks.LECTURE;
 import static seedu.project.testutil.TypicalTasks.QUIZ;
-import static seedu.project.testutil.TypicalTasks.REPORT_SUBMISSION;
 
 import org.junit.Test;
 
 import seedu.project.commons.core.Messages;
 import seedu.project.commons.core.index.Index;
 import seedu.project.logic.commands.AddCommand;
-import seedu.project.logic.commands.RedoCommand;
-import seedu.project.logic.commands.SelectCommand;
 import seedu.project.logic.commands.UndoCommand;
 import seedu.project.model.Model;
+import seedu.project.model.Name;
 import seedu.project.model.project.Project;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Deadline;
 import seedu.project.model.task.Description;
-import seedu.project.model.Name;
 import seedu.project.model.task.Task;
 import seedu.project.testutil.TaskBuilder;
 import seedu.project.testutil.TaskUtil;
 
 public class AddCommandSystemTest extends ProjectSystemTest {
-
+    /**
+     * Just for the sake of it
+     */
     @Test
     public void add() {
         Model model = getModel();
@@ -55,7 +51,7 @@ public class AddCommandSystemTest extends ProjectSystemTest {
         /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- */
 
         /* Case: add a project to a non-empty project list, command with leading spaces and trailing spaces -> added */
-/*        Project projectToAdd = CS2101;
+        /*        Project projectToAdd = CS2101;
         String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_CS2101_PROJECT + "  ";
         assertCommandSuccess(command, projectToAdd);*/
 
@@ -78,7 +74,7 @@ public class AddCommandSystemTest extends ProjectSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: redo adding CS2101_MILESTONE to the list -> CS2101_MILESTONE added again */
-/*        command = RedoCommand.COMMAND_WORD;
+        /*        command = RedoCommand.COMMAND_WORD;
         model.addTask(toAdd);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);*/
@@ -195,14 +191,16 @@ public class AddCommandSystemTest extends ProjectSystemTest {
         Model expectedModel = getModel();
         expectedModel.addTask(toAdd);
         String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS_TASK, toAdd);
-
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
     }
+
+    /**
+     * For the sake of it
+     */
     private void assertCommandSuccess(String command, Project toAdd) {
         Model expectedModel = getModel();
         expectedModel.addProject(toAdd);
         String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS_PROJECT, toAdd);
-
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
     }
 

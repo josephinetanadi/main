@@ -1,15 +1,11 @@
 package seedu.project.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.project.model.Model.PREDICATE_SHOW_ALL_TASKS;
-
-import java.util.ArrayList;
 
 import seedu.project.commons.core.Messages;
 import seedu.project.logic.CommandHistory;
 import seedu.project.logic.LogicManager;
 import seedu.project.model.Model;
-import seedu.project.model.project.Project;
 
 /**
  * Clears the project.

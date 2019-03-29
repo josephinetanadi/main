@@ -16,7 +16,6 @@ import seedu.project.commons.core.LogsCenter;
 import seedu.project.commons.exceptions.DataConversionException;
 import seedu.project.logic.Logic;
 import seedu.project.logic.LogicManager;
-import seedu.project.logic.commands.ClearCommand;
 import seedu.project.logic.commands.CommandResult;
 import seedu.project.logic.commands.ListProjectCommand;
 import seedu.project.logic.commands.SelectCommand;

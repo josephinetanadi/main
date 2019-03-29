@@ -29,12 +29,13 @@ import static seedu.project.testutil.TypicalIndexes.INDEX_THIRD_TASK;
 import org.junit.Test;
 
 import seedu.project.commons.core.index.Index;
+import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.EditCommand.EditTaskDescriptor;
 import seedu.project.logic.commands.EditCommand;
+import seedu.project.model.Name;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Deadline;
 import seedu.project.model.task.Description;
-import seedu.project.model.Name;
 import seedu.project.testutil.EditTaskDescriptorBuilder;
 
 public class EditCommandParserTest {
@@ -192,6 +193,8 @@ public class EditCommandParserTest {
 
         EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withTags().build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
+
+        LogicManager.setState(true);
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }

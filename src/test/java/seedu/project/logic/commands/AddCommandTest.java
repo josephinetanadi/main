@@ -96,6 +96,31 @@ public class AddCommandTest {
      */
     private class ModelStub implements Model {
         @Override
+        public void commitProjectList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setSelectedProject(Project project) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyProperty<Project> selectedProjectProperty() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Project getSelectedProject() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredProjectList(Predicate<Project> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
             throw new AssertionError("This method should not be called.");
         }
@@ -181,7 +206,9 @@ public class AddCommandTest {
         }
 
         @Override
-        public void clearTasks() { throw new AssertionError("This method should not be called."); }
+        public void clearTasks() {
+            throw new AssertionError("This method should not be called.");
+        }
 
         @Override
         public void addTask(Task task) {
@@ -194,17 +221,12 @@ public class AddCommandTest {
         }
 
         @Override
-        public ObservableList<Project> getFilteredProjectList() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void updateFilteredProjectList(Predicate<Project> predicate) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
         public ObservableList<Task> getFilteredTaskList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Project> getFilteredProjectList() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -234,27 +256,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void commitProjectList() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
         public void commitProject() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyProperty<Project> selectedProjectProperty() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public Project getSelectedProject() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setSelectedProject(Project project) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -274,7 +276,9 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteTag(Tag tag) { throw new AssertionError("This method should not be called."); }
+        public void deleteTag(Tag tag) {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**

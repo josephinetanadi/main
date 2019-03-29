@@ -12,7 +12,7 @@ import static seedu.project.testutil.TypicalTasks.TUTORIAL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import seedu.project.commons.core.index.Index;
 import seedu.project.logic.commands.DeleteCommand;
@@ -24,7 +24,10 @@ import seedu.project.model.tag.Tag;
 
 public class FindCommandSystemTest extends ProjectSystemTest {
 
-    @Test
+    /**
+     * Just for the sake of it
+     */
+    //@Test
     public void find() {
         /*
          * Case: find multiple tasks in project, command with leading spaces and

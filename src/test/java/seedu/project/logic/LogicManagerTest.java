@@ -8,8 +8,6 @@ import static seedu.project.logic.commands.CommandTestUtil.DESC_DESC_CS2101;
 import static seedu.project.logic.commands.CommandTestUtil.NAME_DESC_CS2101;
 import static seedu.project.testutil.TypicalTasks.CS2101_MILESTONE;
 
-import javax.xml.crypto.Data;
-
 import java.io.IOException;
 import java.nio.file.Path;
 
@@ -69,6 +67,9 @@ public class LogicManagerTest {
     @Test
     public void execute_commandExecutionError_throwsCommandException() {
         String deleteCommand = "delete 9";
+
+        LogicManager.setState(true);
+
         assertCommandException(deleteCommand, MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         assertHistoryCorrect(deleteCommand);
     }
@@ -76,12 +77,14 @@ public class LogicManagerTest {
     @Test
     public void execute_validCommand_success() {
         String listCommand = ListCommand.COMMAND_WORD;
+        LogicManager.setState(true);
         assertCommandSuccess(listCommand, ListCommand.MESSAGE_SUCCESS_TASK, model);
         assertHistoryCorrect(listCommand);
     }
 
     @Test
     public void execute_storageThrowsIoException_throwsCommandException() throws Exception {
+
         // Setup LogicManager with JsonProjectIoExceptionThrowingStub
         JsonProjectListStorage projectListStorage;
         projectListStorage = new JsonProjectListIoExceptionThrowingStub(temporaryFolder.newFile().toPath());
@@ -94,6 +97,9 @@ public class LogicManagerTest {
         String addCommand = AddCommand.COMMAND_WORD + NAME_DESC_CS2101 + DESC_DESC_CS2101 + DEADLINE_DESC_CS2101;
         Task expectedTask = new TaskBuilder(CS2101_MILESTONE).withTags().build();
         ModelManager expectedModel = new ModelManager();
+
+        LogicManager.setState(true);
+
         expectedModel.addTask(expectedTask);
         expectedModel.commitProject();
         String expectedMessage = LogicManager.FILE_OPS_ERROR_MESSAGE + DUMMY_IO_EXCEPTION;
@@ -164,7 +170,7 @@ public class LogicManagerTest {
             CommandResult result = logic.execute(inputCommand);
             assertEquals(expectedException, null);
             assertEquals(expectedMessage, result.getFeedbackToUser());
-        } catch (CommandException | ParseException | IOException | DataConversionException e) {
+        } catch (CommandException | ParseException | DataConversionException | IOException e) {
             assertEquals(expectedException, e.getClass());
             assertEquals(expectedMessage, e.getMessage());
         }
@@ -181,6 +187,7 @@ public class LogicManagerTest {
             CommandResult result = logic.execute(HistoryCommand.COMMAND_WORD);
             String expectedMessage = String.format(HistoryCommand.MESSAGE_SUCCESS, String.join("\n", expectedCommands));
             assertEquals(expectedMessage, result.getFeedbackToUser());
+
         } catch (ParseException | CommandException | IOException | DataConversionException e) {
             throw new AssertionError("Parsing and execution of HistoryCommand.COMMAND_WORD should succeed.", e);
         }
