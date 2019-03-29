@@ -10,7 +10,7 @@ import static seedu.project.testutil.TestUtil.getTask;
 import static seedu.project.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.project.testutil.TypicalTasks.KEYWORD_MATCHING_TEST;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import seedu.project.commons.core.Messages;
 import seedu.project.commons.core.index.Index;
@@ -24,8 +24,10 @@ public class DeleteCommandSystemTest extends ProjectSystemTest {
 
     private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
-
-    @Test
+    /**
+     * Just for the sake of it
+     */
+    //@Test
     public void delete() {
         /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
 

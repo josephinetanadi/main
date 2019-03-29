@@ -10,10 +10,9 @@ import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_CP2106;
 import static seedu.project.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.project.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.project.logic.commands.CommandTestUtil.showTaskAtIndex;
-import static seedu.project.logic.commands.SelectCommand.MESSAGE_SELECT_PROJECT_SUCCESS;
+import static seedu.project.model.Model.PREDICATE_SHOW_ALL_TASKS;
 import static seedu.project.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.project.testutil.TypicalIndexes.INDEX_SECOND_TASK;
-import static seedu.project.testutil.TypicalTasks.getTypicalProject;
 import static seedu.project.testutil.TypicalTasks.getTypicalProjectList;
 
 import org.junit.Test;
@@ -31,18 +30,20 @@ import seedu.project.model.project.Project;
 import seedu.project.model.task.Task;
 import seedu.project.testutil.EditTaskDescriptorBuilder;
 import seedu.project.testutil.TaskBuilder;
-import systemtests.ProjectSystemTest;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for EditCommand.
  */
 public class EditCommandTest {
 
-    private Model model = new ModelManager(getTypicalProjectList(), getTypicalProject(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalProjectList(), new Project(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
+    //expected model -> filtered project -> projectstatelist not updating
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
+        model.setProject(model.getFilteredProjectList().get(0));
+        model.setSelectedProject(model.getFilteredProjectList().get(0));
 
         Task editedTask = new TaskBuilder().build();
         EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder(editedTask).build();
@@ -51,20 +52,27 @@ public class EditCommandTest {
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, editedTask);
 
         Model expectedModel = new ModelManager(
-                new ProjectList(model.getProjectList()), new Project(model.getProject()), new UserPrefs());
+                new ProjectList(model.getProjectList()), new Project(), new UserPrefs());
 
-        //assertCommandSuccess("select 1", model, commandHistory, expectedMessage, expectedModel);
+        expectedModel.setProject(model.getFilteredProjectList().get(0));
+        expectedModel.setSelectedProject(model.getFilteredProjectList().get(0));
+
         LogicManager.setState(true);
 
-        expectedModel.setTask(model.getFilteredTaskList().get(0), editedTask);
+        expectedModel.setTask(expectedModel.getFilteredTaskList().get(0), editedTask);
+        expectedModel.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         expectedModel.commitProject();
+
+        expectedModel.setProject(expectedModel.getSelectedProject(),
+                (Project) expectedModel.getProject()); //sync project list
+        expectedModel.commitProjectList();
 
         assertCommandSuccess(editCommand, model, commandHistory, expectedMessage, expectedModel);
     }
-
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() {
-        LogicManager.setState(true);
+        model.setProject(model.getFilteredProjectList().get(0));
+        model.setSelectedProject(model.getFilteredProjectList().get(0));
 
         Index indexLastTask = Index.fromOneBased(model.getFilteredTaskList().size());
         Task lastTask = model.getFilteredTaskList().get(indexLastTask.getZeroBased());
@@ -80,15 +88,27 @@ public class EditCommandTest {
 
         Model expectedModel = new ModelManager(
                 new ProjectList(model.getProjectList()), new Project(model.getProject()), new UserPrefs());
+
+        expectedModel.setProject(model.getFilteredProjectList().get(0));
+        expectedModel.setSelectedProject(model.getFilteredProjectList().get(0));
+
+        LogicManager.setState(true);
+
         expectedModel.setTask(lastTask, editedTask);
+        expectedModel.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         expectedModel.commitProject();
+
+        expectedModel.setProject(expectedModel.getSelectedProject(),
+                (Project) expectedModel.getProject()); //sync project list
+        expectedModel.commitProjectList();
 
         assertCommandSuccess(editCommand, model, commandHistory, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
-        LogicManager.setState(true);
+        model.setProject(model.getFilteredProjectList().get(0));
+        model.setSelectedProject(model.getFilteredProjectList().get(0));
 
         EditCommand editCommand = new EditCommand(INDEX_FIRST_TASK, new EditTaskDescriptor());
         Task editedTask = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
@@ -97,14 +117,25 @@ public class EditCommandTest {
 
         Model expectedModel = new ModelManager(
                 new ProjectList(model.getProjectList()), new Project(model.getProject()), new UserPrefs());
+
+        expectedModel.setProject(model.getFilteredProjectList().get(0));
+        expectedModel.setSelectedProject(model.getFilteredProjectList().get(0));
+
+        expectedModel.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         expectedModel.commitProject();
+
+        expectedModel.setProject(expectedModel.getSelectedProject(),
+                (Project) expectedModel.getProject()); //sync project list
+        expectedModel.commitProjectList();
 
         assertCommandSuccess(editCommand, model, commandHistory, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_filteredList_success() {
-        LogicManager.setState(true);
+
+        model.setProject(model.getFilteredProjectList().get(0));
+        model.setSelectedProject(model.getFilteredProjectList().get(0));
 
         showTaskAtIndex(model, INDEX_FIRST_TASK);
 
@@ -117,14 +148,28 @@ public class EditCommandTest {
 
         Model expectedModel = new ModelManager(
                 new ProjectList(model.getProjectList()), new Project(model.getProject()), new UserPrefs());
+
+        expectedModel.setProject(model.getFilteredProjectList().get(0));
+        expectedModel.setSelectedProject(model.getFilteredProjectList().get(0));
+
+        LogicManager.setState(true);
+
         expectedModel.setTask(model.getFilteredTaskList().get(0), editedTask);
+        expectedModel.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         expectedModel.commitProject();
+
+        expectedModel.setProject(expectedModel.getSelectedProject(),
+                (Project) expectedModel.getProject()); //sync project list
+        expectedModel.commitProjectList();
 
         assertCommandSuccess(editCommand, model, commandHistory, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_duplicateTaskUnfilteredList_failure() {
+        model.setProject(model.getFilteredProjectList().get(0));
+        model.setSelectedProject(model.getFilteredProjectList().get(0));
+
         Task firstTask = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
         EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder(firstTask).build();
         EditCommand editCommand = new EditCommand(INDEX_SECOND_TASK, descriptor);
@@ -134,6 +179,9 @@ public class EditCommandTest {
 
     @Test
     public void execute_duplicateTaskFilteredList_failure() {
+        model.setProject(model.getFilteredProjectList().get(0));
+        model.setSelectedProject(model.getFilteredProjectList().get(0));
+
         showTaskAtIndex(model, INDEX_FIRST_TASK);
 
         // edit task in filtered list into a duplicate in project
@@ -159,6 +207,9 @@ public class EditCommandTest {
      */
     @Test
     public void execute_invalidTaskIndexFilteredList_failure() {
+        model.setProject(model.getFilteredProjectList().get(0));
+        model.setSelectedProject(model.getFilteredProjectList().get(0));
+
         showTaskAtIndex(model, INDEX_FIRST_TASK);
         Index outOfBoundIndex = INDEX_SECOND_TASK;
         // ensures that outOfBoundIndex is still in bounds of project list
@@ -172,6 +223,10 @@ public class EditCommandTest {
 
     @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
+
+        model.setProject(model.getFilteredProjectList().get(0));
+        model.setSelectedProject(model.getFilteredProjectList().get(0));
+
         LogicManager.setState(true);
 
         Task editedTask = new TaskBuilder().build();
@@ -180,8 +235,18 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(INDEX_FIRST_TASK, descriptor);
         Model expectedModel = new ModelManager(
                 new ProjectList(model.getProjectList()), new Project(model.getProject()), new UserPrefs());
+
+        expectedModel.setProject(expectedModel.getFilteredProjectList().get(0));
+        expectedModel.setSelectedProject(expectedModel.getFilteredProjectList().get(0));
+
         expectedModel.setTask(taskToEdit, editedTask);
+
+        expectedModel.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         expectedModel.commitProject();
+
+        expectedModel.setProject(expectedModel.getSelectedProject(),
+                (Project) expectedModel.getProject()); //sync project list
+        expectedModel.commitProjectList();
 
         // edit -> first task edited
         editCommand.execute(model, commandHistory);
@@ -197,6 +262,10 @@ public class EditCommandTest {
 
     @Test
     public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
+
+        model.setProject(model.getFilteredProjectList().get(0));
+        model.setSelectedProject(model.getFilteredProjectList().get(0));
+
         LogicManager.setState(true);
 
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
@@ -220,7 +289,9 @@ public class EditCommandTest {
      */
     @Test
     public void executeUndoRedo_validIndexFilteredList_sameTaskEdited() throws Exception {
-        LogicManager.setState(true);
+
+        model.setProject(model.getFilteredProjectList().get(0));
+        model.setSelectedProject(model.getFilteredProjectList().get(0));
 
         LogicManager.setState(true);
 
@@ -232,8 +303,18 @@ public class EditCommandTest {
 
         showTaskAtIndex(model, INDEX_SECOND_TASK);
         Task taskToEdit = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
+
+
+        expectedModel.setProject(expectedModel.getFilteredProjectList().get(0));
+        expectedModel.setSelectedProject(expectedModel.getFilteredProjectList().get(0));
+
         expectedModel.setTask(taskToEdit, editedTask);
+        expectedModel.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         expectedModel.commitProject();
+
+        expectedModel.setProject(expectedModel.getSelectedProject(),
+                (Project) expectedModel.getProject()); //sync project list
+        expectedModel.commitProjectList();
 
         // edit -> edits second task in unfiltered task list / first task in filtered task list
         editCommand.execute(model, commandHistory);

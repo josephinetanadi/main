@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import seedu.project.logic.CommandHistory;
+import seedu.project.logic.LogicManager;
 import seedu.project.model.Model;
 import seedu.project.model.ModelManager;
 import seedu.project.model.UserPrefs;
@@ -31,13 +32,27 @@ public class ListCommandTest {
 
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
+        model.setProject(model.getFilteredProjectList().get(0));
+        model.setSelectedProject(model.getFilteredProjectList().get(0));
+        expectedModel.setProject(model.getFilteredProjectList().get(0));
+        expectedModel.setSelectedProject(model.getFilteredProjectList().get(0));
+
+        LogicManager.setState(true);
+
         assertCommandSuccess(new ListCommand(), model, commandHistory, ListCommand.MESSAGE_SUCCESS_TASK, expectedModel);
     }
     //filteredlist problem
-    //@Test
+    @Test
     public void execute_listIsFiltered_showsEverything() {
+        model.setProject(model.getFilteredProjectList().get(0));
+        model.setSelectedProject(model.getFilteredProjectList().get(0));
+        expectedModel.setProject(model.getFilteredProjectList().get(0));
+        expectedModel.setSelectedProject(model.getFilteredProjectList().get(0));
+
+        LogicManager.setState(true);
+
         showTaskAtIndex(model,
                 INDEX_FIRST_TASK);
-        assertCommandSuccess(new ListCommand(), model, commandHistory, ListCommand.MESSAGE_SUCCESS_PROJECT, expectedModel);
+        assertCommandSuccess(new ListCommand(), model, commandHistory, ListCommand.MESSAGE_SUCCESS_TASK, expectedModel);
     }
 }

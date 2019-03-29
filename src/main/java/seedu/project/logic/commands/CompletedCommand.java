@@ -14,7 +14,7 @@ import seedu.project.model.task.Task;
 /**
  * Marks an existing task as completed and removes it from UI display
  */
-public class CompletedCommand extends Command{
+public class CompletedCommand extends Command {
     public static final String COMMAND_WORD = "completed";
     public static final String COMMAND_ALIAS = "cpt";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Completes a task and deletes it from view. "

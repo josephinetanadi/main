@@ -14,7 +14,6 @@ import seedu.project.model.ModelManager;
 import seedu.project.model.ProjectList;
 import seedu.project.model.ReadOnlyProjectList;
 import seedu.project.model.UserPrefs;
-import seedu.project.model.project.Project;
 import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.storage.JsonProjectListStorage;
 import seedu.project.storage.JsonProjectStorage;

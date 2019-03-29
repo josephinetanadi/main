@@ -77,7 +77,7 @@ public class CommandTestUtil {
         try {
             CommandResult result = command.execute(actualModel, actualCommandHistory);
             assertEquals(expectedCommandResult, result);
-                assertEquals(expectedModel, actualModel);
+            assertEquals(expectedModel, actualModel);
             assertEquals(expectedCommandHistory, actualCommandHistory);
         } catch (CommandException ce) {
             throw new AssertionError("Execution of command should not fail.", ce);
@@ -109,7 +109,9 @@ public class CommandTestUtil {
             String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
+
         Project expectedProject = new Project(actualModel.getProject());
+
         List<Task> expectedFilteredList = new ArrayList<>(actualModel.getFilteredTaskList());
         Task expectedSelectedTask = actualModel.getSelectedTask();
 

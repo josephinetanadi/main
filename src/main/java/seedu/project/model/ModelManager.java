@@ -274,9 +274,6 @@ public class ModelManager implements Model {
 
     @Override
     public Project getSelectedProject() {
-        System.out.println("hello");
-        System.out.println(selectedProject.getValue());
-
         return selectedProject.getValue();
     }
 

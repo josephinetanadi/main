@@ -2,7 +2,6 @@ package seedu.project.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static seedu.project.testutil.TypicalTasks.getTypicalProject;
 import static seedu.project.testutil.TypicalTasks.getTypicalProjectList;
 
 import java.nio.file.Path;
@@ -14,10 +13,8 @@ import org.junit.rules.TemporaryFolder;
 
 import seedu.project.commons.core.GuiSettings;
 import seedu.project.model.ProjectList;
-import seedu.project.model.UserPrefs;
-import seedu.project.model.project.Project;
-import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.ReadOnlyProjectList;
+import seedu.project.model.UserPrefs;
 
 
 public class StorageManagerTest {

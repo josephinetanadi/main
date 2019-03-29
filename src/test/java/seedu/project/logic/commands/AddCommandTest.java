@@ -96,22 +96,22 @@ public class AddCommandTest {
      */
     private class ModelStub implements Model {
         @Override
-        public void commitProjectList(){
+        public void commitProjectList() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void setSelectedProject(Project project){
+        public void setSelectedProject(Project project) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public ReadOnlyProperty<Project> selectedProjectProperty(){
+        public ReadOnlyProperty<Project> selectedProjectProperty() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public Project getSelectedProject(){
+        public Project getSelectedProject() {
             throw new AssertionError("This method should not be called.");
         }
 

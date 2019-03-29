@@ -32,10 +32,10 @@ import seedu.project.commons.core.index.Index;
 import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.EditCommand.EditTaskDescriptor;
 import seedu.project.logic.commands.EditCommand;
+import seedu.project.model.Name;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Deadline;
 import seedu.project.model.task.Description;
-import seedu.project.model.Name;
 import seedu.project.testutil.EditTaskDescriptorBuilder;
 
 public class EditCommandParserTest {

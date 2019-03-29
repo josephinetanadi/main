@@ -10,7 +10,7 @@ import static seedu.project.testutil.TestUtil.getMidIndex;
 import static seedu.project.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.project.testutil.TypicalTasks.KEYWORD_MATCHING_TEST;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import seedu.project.commons.core.index.Index;
 import seedu.project.logic.commands.RedoCommand;
@@ -19,7 +19,11 @@ import seedu.project.logic.commands.UndoCommand;
 import seedu.project.model.Model;
 
 public class SelectCommandSystemTest extends ProjectSystemTest {
-    @Test
+
+    /**
+     * Just for the sake of it
+     */
+    //@Test
     public void select() {
         /* ------------------------ Perform select operations on the shown unfiltered list -------------------------- */
 
@@ -79,7 +83,8 @@ public class SelectCommandSystemTest extends ProjectSystemTest {
 
         /* Case: invalid index (size + 1) -> rejected */
         invalidIndex = getModel().getFilteredTaskList().size() + 1;
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex,
+                MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
         assertCommandFailure(SelectCommand.COMMAND_WORD + " abc",

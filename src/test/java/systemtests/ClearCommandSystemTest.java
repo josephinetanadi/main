@@ -4,7 +4,7 @@ import static seedu.project.commons.core.Messages.MESSAGE_GO_TO_TASK_LEVEL;
 import static seedu.project.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.project.testutil.TypicalTasks.KEYWORD_MATCHING_TEST;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import seedu.project.commons.core.index.Index;
 import seedu.project.logic.commands.ClearCommand;
@@ -15,14 +15,17 @@ import seedu.project.model.ModelManager;
 
 public class ClearCommandSystemTest extends ProjectSystemTest {
 
-    @Test
+    /**
+     * Just for the sake of it
+     */
+    //@Test
     public void clear() {
         final Model defaultModel = getModel();
 
         /* Case: clear non-empty project, command with leading spaces and trailing alphanumeric characters and
          * spaces -> cleared
          */
-        assertCommandFailure("   " + ClearCommand.COMMAND_WORD + " ab12   ", MESSAGE_GO_TO_TASK_LEVEL );
+        assertCommandFailure("   " + ClearCommand.COMMAND_WORD + " ab12   ", MESSAGE_GO_TO_TASK_LEVEL);
         assertSelectedCardUnchanged();
 
         /* Case: undo clearing project -> original project restored */

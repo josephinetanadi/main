@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import seedu.project.logic.CommandHistory;
+import seedu.project.logic.LogicManager;
 import seedu.project.model.Model;
 import seedu.project.model.ModelManager;
 import seedu.project.model.UserPrefs;
@@ -22,6 +23,14 @@ public class UndoCommandTest {
 
     @Before
     public void setUp() {
+        model.setProject(model.getFilteredProjectList().get(0));
+        model.setSelectedProject(model.getFilteredProjectList().get(0));
+        expectedModel.setProject(model.getFilteredProjectList().get(0));
+        expectedModel.setSelectedProject(model.getFilteredProjectList().get(0));
+
+        LogicManager.setState(true);
+
+
         // set up of models' undo/redo history
         deleteFirstTask(model);
         deleteFirstTask(model);

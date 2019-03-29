@@ -51,6 +51,7 @@ public class Project implements ReadOnlyProject {
     public Project(ReadOnlyProject toBeCopied) {
         this();
         resetData(toBeCopied);
+        name = toBeCopied.getName();
     }
 
     /**

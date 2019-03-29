@@ -21,8 +21,6 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.project.logic.Logic;
-import seedu.project.logic.LogicManager;
 import seedu.project.model.project.Project;
 import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.task.Task;
@@ -150,7 +148,7 @@ public class ProjectTest {
         }
 
         @Override
-        public Name getName(){
+        public Name getName() {
             return name;
         }
 
