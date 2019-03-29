@@ -51,14 +51,14 @@ public class ModelManagerTest {
     @Test
     public void setUserPrefs_validUserPrefs_copiesUserPrefs() {
         UserPrefs userPrefs = new UserPrefs();
-        userPrefs.setProjectFilePath(Paths.get("address/book/file/path"));
+        userPrefs.setProjectListFilePath(Paths.get("address/book/file/path"));
         userPrefs.setGuiSettings(new GuiSettings(1, 2, 3, 4));
         modelManager.setUserPrefs(userPrefs);
         assertEquals(userPrefs, modelManager.getUserPrefs());
 
         // Modifying userPrefs should not modify modelManager's userPrefs
         UserPrefs oldUserPrefs = new UserPrefs(userPrefs);
-        userPrefs.setProjectFilePath(Paths.get("new/address/book/file/path"));
+        userPrefs.setProjectListFilePath(Paths.get("new/address/book/file/path"));
         assertEquals(oldUserPrefs, modelManager.getUserPrefs());
     }
 
@@ -78,14 +78,14 @@ public class ModelManagerTest {
     @Test
     public void setProjectFilePath_nullPath_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        modelManager.setProjectFilePath(null);
+        modelManager.setProjectListFilePath(null);
     }
 
     @Test
     public void setProjectFilePath_validPath_setsProjectFilePath() {
         Path path = Paths.get("address/book/file/path");
-        modelManager.setProjectFilePath(path);
-        assertEquals(path, modelManager.getProjectFilePath());
+        modelManager.setProjectListFilePath(path);
+        assertEquals(path, modelManager.getProjectListFilePath());
     }
 
     @Test
@@ -188,7 +188,7 @@ public class ModelManagerTest {
 
         // different userPrefs -> returns false
         UserPrefs differentUserPrefs = new UserPrefs();
-        differentUserPrefs.setProjectFilePath(Paths.get("differentFilePath"));
+        differentUserPrefs.setProjectListFilePath(Paths.get("differentFilePath"));
         assertFalse(modelManager.equals(new ModelManager(projectList, project, differentUserPrefs)));
     }
 }

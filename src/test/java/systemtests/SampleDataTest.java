@@ -25,29 +25,10 @@ public class SampleDataTest extends ProjectSystemTest {
     }
 
     /**
-     * Returns null to force test app to load data of the file in
-     * {@code getProjectSaveLocation()}.
-     */
-    @Override
-    protected Project getInitialProject() {
-        return null;
-    }
-
-    /**
      * Returns a non-existent file location to force test app to load sample data.
      */
     @Override
     protected Path getProjectListSaveLocation() {
-        Path filePath = TestUtil.getFilePathInSandboxFolder("SomeFileThatDoesNotExist1234567890.xml");
-        deleteFileIfExists(filePath);
-        return filePath;
-    }
-
-    /**
-     * Returns a non-existent file location to force test app to load sample data.
-     */
-    @Override
-    protected Path getProjectSaveLocation() {
         Path filePath = TestUtil.getFilePathInSandboxFolder("SomeFileThatDoesNotExist1234567890.xml");
         deleteFileIfExists(filePath);
         return filePath;
