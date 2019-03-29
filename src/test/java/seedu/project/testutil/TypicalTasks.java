@@ -56,8 +56,8 @@ public class TypicalTasks {
             .withDescription("attend tutorial at utown classroom")
             .withDeadline("1-1-2011").withTags("TUTORIAL").build();
 
-    public static final Project SAMPLE1 = new ProjectBuilder().withTask(GROUP_MEETING, PRINT, TEACHING_FEEDBACK, CONSULTATION, LECTURE, TUTORIAL)
-            .withName("Sample Project 1").build();
+    public static final Project SAMPLE1 = new ProjectBuilder().withTask(GROUP_MEETING, PRINT,
+            TEACHING_FEEDBACK, CONSULTATION, LECTURE, TUTORIAL).withName("Sample Project 1").build();
     public static final Project SAMPLE2 = new ProjectBuilder().withTask(REPORT_SUBMISSION)
             .withName("Sample Project 2").build();
 
@@ -83,7 +83,9 @@ public class TypicalTasks {
      */
     public static ProjectList getTypicalProjectList() {
         ProjectList pl = new ProjectList();
-        for (Project project : getTypicalProjects()) { pl.addProject(project); }
+        for (Project project : getTypicalProjects()) {
+            pl.addProject(project);
+        }
         return pl;
     }
 
@@ -93,7 +95,9 @@ public class TypicalTasks {
     public static Project getTypicalProject() {
         Project p = new Project();
         p.setName("TYPICAL");
-        for (Task task : getTypicalTasks()) { p.addTask(task); }
+        for (Task task : getTypicalTasks()) {
+            p.addTask(task);
+        }
         return p;
     }
 

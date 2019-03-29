@@ -8,7 +8,6 @@ import static seedu.project.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.project.logic.commands.CommandTestUtil.showTaskAtIndex;
 import static seedu.project.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.project.testutil.TypicalIndexes.INDEX_SECOND_TASK;
-import static seedu.project.testutil.TypicalTasks.getTypicalProject;
 import static seedu.project.testutil.TypicalTasks.getTypicalProjectList;
 
 import org.junit.Test;
@@ -16,9 +15,11 @@ import org.junit.Test;
 import seedu.project.commons.core.Messages;
 import seedu.project.commons.core.index.Index;
 import seedu.project.logic.CommandHistory;
+import seedu.project.logic.LogicManager;
 import seedu.project.model.Model;
 import seedu.project.model.ModelManager;
 import seedu.project.model.UserPrefs;
+import seedu.project.model.project.Project;
 import seedu.project.model.task.Task;
 
 /**
@@ -27,18 +28,32 @@ import seedu.project.model.task.Task;
  */
 public class DeleteCommandTest {
 
-    private Model model = new ModelManager(getTypicalProjectList(), getTypicalProject(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalProjectList(), new Project(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        Task taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
+        //Project projectToDelete = model.getFilteredProjectList().get(INDEX_FIRST_TASK.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_TASK);
 
+        //String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, projectToDelete);
+
+        Model expectedModel = new ModelManager(model.getProjectList(), model.getProject(), new UserPrefs());
+
+        model.setProject(model.getFilteredProjectList().get(0));
+        model.setSelectedProject(model.getFilteredProjectList().get(0));
+
+        expectedModel.setProject(model.getFilteredProjectList().get(0));
+        expectedModel.setSelectedProject(model.getFilteredProjectList().get(0));
+
+        Task taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, taskToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getProjectList(), model.getProject(), new UserPrefs());
+        LogicManager.setState(true);
+
+        //expectedModel.deleteProject(projectToDelete);
         expectedModel.deleteTask(taskToDelete);
+        //expectedModel.commitProjectList();
         expectedModel.commitProject();
 
         assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
@@ -49,11 +64,16 @@ public class DeleteCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
         DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);
 
+        LogicManager.setState(true);
+
         assertCommandFailure(deleteCommand, model, commandHistory, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
     }
 
     @Test
-    public void execute_validIndexFilteredList_success() {
+    public void execute_validIndexFilteredProjectList_success() {
+        model.setProject(model.getFilteredProjectList().get(0));
+        model.setSelectedProject(model.getFilteredProjectList().get(0));
+
         showTaskAtIndex(model, INDEX_FIRST_TASK);
 
         Task taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
@@ -61,7 +81,15 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, taskToDelete);
 
-        Model expectedModel = new ModelManager(model.getProjectList(), model.getProject(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getProjectList(), new Project(), new UserPrefs());
+
+        expectedModel.setProject(model.getFilteredProjectList().get(0));
+        expectedModel.setSelectedProject(model.getFilteredProjectList().get(0));
+
+        //Project projectToDelete = model.getFilteredProjectList().get(INDEX_FIRST_TASK.getZeroBased());
+        //expectedModel.deleteProject(projectToDelete);
+        //String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PROJECT_SUCCESS, projectToDelete);
+        LogicManager.setState(true);
         expectedModel.deleteTask(taskToDelete);
         expectedModel.commitProject();
         showNoTask(expectedModel);
@@ -71,11 +99,15 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
+        model.setProject(model.getFilteredProjectList().get(0));
+        model.setSelectedProject(model.getFilteredProjectList().get(0));
+
         showTaskAtIndex(model, INDEX_FIRST_TASK);
 
         Index outOfBoundIndex = INDEX_SECOND_TASK;
         // ensures that outOfBoundIndex is still in bounds of project list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getProject().getTaskList().size());
+        LogicManager.setState(true);
 
         DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);
 
@@ -84,9 +116,19 @@ public class DeleteCommandTest {
 
     @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
+
+        model.setProject(model.getFilteredProjectList().get(0));
+        model.setSelectedProject(model.getFilteredProjectList().get(0));
+
+        Model expectedModel = new ModelManager(model.getProjectList(), new Project(), new UserPrefs());
+
+        expectedModel.setProject(model.getFilteredProjectList().get(0));
+        expectedModel.setSelectedProject(model.getFilteredProjectList().get(0));
+
         Task taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_TASK);
-        Model expectedModel = new ModelManager(model.getProjectList(), model.getProject(), new UserPrefs());
+        LogicManager.setState(true);
+
         expectedModel.deleteTask(taskToDelete);
         expectedModel.commitProject();
 
@@ -104,8 +146,13 @@ public class DeleteCommandTest {
 
     @Test
     public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
+        model.setProject(model.getFilteredProjectList().get(0));
+        model.setSelectedProject(model.getFilteredProjectList().get(0));
+
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
         DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);
+
+        LogicManager.setState(true);
 
         // execution failed -> project state not added into model
         assertCommandFailure(deleteCommand, model, commandHistory, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
@@ -124,8 +171,17 @@ public class DeleteCommandTest {
      */
     @Test
     public void executeUndoRedo_validIndexFilteredList_sameTaskDeleted() throws Exception {
+
+        model.setProject(model.getFilteredProjectList().get(0));
+        model.setSelectedProject(model.getFilteredProjectList().get(0));
+
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_TASK);
         Model expectedModel = new ModelManager(model.getProjectList(), model.getProject(), new UserPrefs());
+
+        expectedModel.setProject(model.getFilteredProjectList().get(0));
+        expectedModel.setSelectedProject(model.getFilteredProjectList().get(0));
+
+        LogicManager.setState(true);
 
         showTaskAtIndex(model, INDEX_SECOND_TASK);
         Task taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
@@ -147,6 +203,9 @@ public class DeleteCommandTest {
 
     @Test
     public void equals() {
+
+        //LogicManager.setState(true);
+
         DeleteCommand deleteFirstCommand = new DeleteCommand(INDEX_FIRST_TASK);
         DeleteCommand deleteSecondCommand = new DeleteCommand(INDEX_SECOND_TASK);
 
@@ -173,6 +232,16 @@ public class DeleteCommandTest {
     private void showNoTask(Model model) {
         model.updateFilteredTaskList(p -> false);
 
+        //LogicManager.setState(true);
+
         assertTrue(model.getFilteredTaskList().isEmpty());
+    }
+    /**
+     * Updates {@code model}'s project filtered list to show no one.
+     */
+    private void showNoProject(Model model) {
+        model.updateFilteredProjectList(p -> false);
+
+        assertTrue(model.getFilteredProjectList().isEmpty());
     }
 }

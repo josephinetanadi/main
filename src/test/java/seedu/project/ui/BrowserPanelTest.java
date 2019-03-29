@@ -22,7 +22,7 @@ public class BrowserPanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        guiRobot.interact(() -> browserPanel = new BrowserPanel(selectedProject,selectedTask));
+        guiRobot.interact(() -> browserPanel = new BrowserPanel(selectedProject, selectedTask));
         uiPartRule.setUiPart(browserPanel);
 
         browserPanelHandle = new BrowserPanelHandle(browserPanel.getRoot());

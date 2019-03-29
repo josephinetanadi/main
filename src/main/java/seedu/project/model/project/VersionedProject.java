@@ -14,7 +14,6 @@ public class VersionedProject extends Project {
     private int currentStatePointer;
     public VersionedProject(ReadOnlyProject initialState) {
         super(initialState);
-
         projectStateList = new ArrayList<>();
         projectStateList.add(new Project(initialState));
         currentStatePointer = 0;

@@ -47,9 +47,10 @@ public class ProjectTest {
 
     @Test
     public void resetData_withValidReadOnlyProject_replacesData() {
+
         Project newData = getTypicalProject();
         project.resetData(newData);
-        assertEquals(newData, project);
+        assertEquals(newData.getTaskList(), project.getTaskList());
     }
 
     @Test
@@ -132,11 +133,6 @@ public class ProjectTest {
         }
 
         @Override
-        public Name getName() {
-            return name;
-        }
-
-        @Override
         public int getIndex(int taskId) {
             return index;
         }
@@ -150,6 +146,12 @@ public class ProjectTest {
         public void removeListener(InvalidationListener listener) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public Name getName() {
+            return name;
+        }
+
     }
 
 }

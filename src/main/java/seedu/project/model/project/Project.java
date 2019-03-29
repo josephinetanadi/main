@@ -52,6 +52,7 @@ public class Project implements ReadOnlyProject {
     public Project(ReadOnlyProject toBeCopied) {
         this();
         resetData(toBeCopied);
+        name = toBeCopied.getName();
     }
 
     /**
@@ -86,7 +87,9 @@ public class Project implements ReadOnlyProject {
         this.tasks.setTasks(tasks);
         indicateModified();
     }
-
+    /**
+     * clears task
+     */
     public void clearTasks() {
         Project clearedProject = new Project();
         clearedProject.setName(getName().toString());

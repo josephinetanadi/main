@@ -1,6 +1,5 @@
 package systemtests;
 
-import static org.junit.Assert.assertTrue;
 import static seedu.project.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
 import static seedu.project.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.project.logic.commands.DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS;
@@ -8,7 +7,6 @@ import static seedu.project.testutil.TestUtil.getLastIndex;
 import static seedu.project.testutil.TestUtil.getMidIndex;
 import static seedu.project.testutil.TestUtil.getTask;
 import static seedu.project.testutil.TypicalIndexes.INDEX_FIRST_TASK;
-import static seedu.project.testutil.TypicalTasks.KEYWORD_MATCHING_TEST;
 
 import org.junit.Test;
 
@@ -24,7 +22,9 @@ public class DeleteCommandSystemTest extends ProjectSystemTest {
 
     private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
-
+    /**
+     * Just for the sake of it
+     */
     @Test
     public void delete() {
         /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
@@ -62,7 +62,7 @@ public class DeleteCommandSystemTest extends ProjectSystemTest {
         /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
 
         /* Case: filtered task list, delete index within bounds of project and task list -> deleted */
-/*        showTasksWithName(KEYWORD_MATCHING_TEST);
+        /*        showTasksWithName(KEYWORD_MATCHING_TEST);
         Index index = INDEX_FIRST_TASK;
         assertTrue(index.getZeroBased() < expectedModel.getFilteredTaskList().size());
         assertCommandSuccess(index);*/
@@ -70,7 +70,7 @@ public class DeleteCommandSystemTest extends ProjectSystemTest {
         /* Case: filtered task list, delete index within bounds of project but out of bounds of task list
          * -> rejected
          */
-/*        showTasksWithName(KEYWORD_MATCHING_TEST);
+        /*        showTasksWithName(KEYWORD_MATCHING_TEST);
         int invalidIndex = getModel().getProject().getTaskList().size();
         command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
         assertCommandFailure(command, MESSAGE_INVALID_TASK_DISPLAYED_INDEX);*/
@@ -165,7 +165,7 @@ public class DeleteCommandSystemTest extends ProjectSystemTest {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
 
-/*        if (expectedSelectedCardIndex != null) {
+        /*        if (expectedSelectedCardIndex != null) {
             assertSelectedCardChanged(expectedSelectedCardIndex);
         } else {
             assertSelectedCardUnchanged();

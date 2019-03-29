@@ -8,7 +8,6 @@ import static seedu.project.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.project.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.project.ui.testutil.GuiTestAssert.assertListMatching;
 
-import guitests.guihandles.ProjectListPanelHandle;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -26,9 +25,11 @@ import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
+import guitests.guihandles.ProjectListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
 import guitests.guihandles.TaskListPanelHandle;
+
 import seedu.project.TestApp;
 import seedu.project.commons.core.index.Index;
 import seedu.project.logic.commands.ClearCommand;
@@ -37,7 +38,6 @@ import seedu.project.logic.commands.ListCommand;
 import seedu.project.logic.commands.SelectCommand;
 import seedu.project.model.Model;
 import seedu.project.model.ProjectList;
-import seedu.project.model.project.Project;
 import seedu.project.testutil.TypicalTasks;
 import seedu.project.ui.BrowserPanel;
 import seedu.project.ui.CommandBox;
@@ -100,7 +100,9 @@ public abstract class ProjectSystemTest {
         return mainWindowHandle.getCommandBox();
     }
 
-    public ProjectListPanelHandle getProjectListPanel() { return mainWindowHandle.getProjectListPanel(); }
+    public ProjectListPanelHandle getProjectListPanel() {
+        return mainWindowHandle.getProjectListPanel();
+    }
 
     public TaskListPanelHandle getTaskListPanel() {
         return mainWindowHandle.getTaskListPanel();

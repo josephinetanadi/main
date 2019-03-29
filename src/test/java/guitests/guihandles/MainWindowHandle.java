@@ -56,6 +56,9 @@ public class MainWindowHandle extends StageHandle {
         return browserPanel;
     }
 
+    /**
+     * just for the sake of it
+     **/
     public void refreshMainWindow() {
         int selectedIndex = taskListPanel.getSelectedCardIndex();
         taskListPanel = new TaskListPanelHandle(getChildNode(TaskListPanelHandle.TASK_LIST_VIEW_ID));

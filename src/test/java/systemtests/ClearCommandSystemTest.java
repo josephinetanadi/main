@@ -8,13 +8,14 @@ import org.junit.Test;
 import seedu.project.commons.core.index.Index;
 import seedu.project.logic.commands.ClearCommand;
 import seedu.project.logic.commands.RedoCommand;
-import seedu.project.logic.commands.SelectCommand;
 import seedu.project.logic.commands.UndoCommand;
 import seedu.project.model.Model;
-import seedu.project.model.ModelManager;
 
 public class ClearCommandSystemTest extends ProjectSystemTest {
 
+    /**
+     * Just for the sake of it
+     */
     @Test
     public void clear() {
         Model expectedModel = getModel();
@@ -25,6 +26,7 @@ public class ClearCommandSystemTest extends ProjectSystemTest {
         /* Case: clear non-empty project, command with leading spaces and trailing alphanumeric characters and
          * spaces -> cleared
          */
+
         expectedModel.getSelectedProject().clearTasks();
         assertCommandSuccess("   " + ClearCommand.COMMAND_WORD + " ab12   ", expectedModel);
         //assertSelectedCardUnchanged();
@@ -72,6 +74,7 @@ public class ClearCommandSystemTest extends ProjectSystemTest {
      * Also verifies that the command box has the default style class and the status bar's sync status changes.
      * @see ProjectSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
+
     private void assertCommandSuccess(String command, Model expectedModel) {
         assertCommandSuccess(command, ClearCommand.MESSAGE_SUCCESS, expectedModel);
     }

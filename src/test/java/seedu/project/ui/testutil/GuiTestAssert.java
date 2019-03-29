@@ -2,16 +2,18 @@ package seedu.project.ui.testutil;
 
 import static org.junit.Assert.assertEquals;
 
-import guitests.guihandles.ProjectCardHandle;
-import guitests.guihandles.ProjectListPanelHandle;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.ProjectCardHandle;
+import guitests.guihandles.ProjectListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.TaskCardHandle;
 import guitests.guihandles.TaskListPanelHandle;
+
 import seedu.project.model.project.Project;
 import seedu.project.model.task.Task;
+
 
 /**
  * A set of assertion methods useful for writing GUI tests.
