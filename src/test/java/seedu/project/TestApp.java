@@ -14,10 +14,7 @@ import seedu.project.model.ModelManager;
 import seedu.project.model.ProjectList;
 import seedu.project.model.ReadOnlyProjectList;
 import seedu.project.model.UserPrefs;
-import seedu.project.model.project.Project;
-import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.storage.JsonProjectListStorage;
-import seedu.project.storage.JsonProjectStorage;
 import seedu.project.storage.UserPrefsStorage;
 import seedu.project.testutil.TestUtil;
 import systemtests.ModelHelper;
@@ -29,40 +26,28 @@ import systemtests.ModelHelper;
 public class TestApp extends MainApp {
 
 
-    public static final Path SAVE_LOCATION_FOR_TESTING_PL =
+    public static final Path SAVE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("sampleProjectList.json");
 
     protected static final Path DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
 
     protected Supplier<ReadOnlyProjectList> initialProjectListDataSupplier = () -> null;
-    protected Supplier<ReadOnlyProject> initialProjectDataSupplier = () -> null;
-    protected Path saveProjectListFileLocation = SAVE_LOCATION_FOR_TESTING_PL;
+    protected Path saveProjectListFileLocation = SAVE_LOCATION_FOR_TESTING;
 
     public TestApp() {
     }
 
-    public TestApp(Supplier<ReadOnlyProjectList> pl, Supplier<ReadOnlyProject> p, Path plPath, Path pPath) {
+    public TestApp(Supplier<ReadOnlyProjectList> pl, Path path) {
         super();
         this.initialProjectListDataSupplier = pl;
-        this.initialProjectDataSupplier = p;
-        this.saveProjectListFileLocation = plPath;
+        this.saveProjectListFileLocation = path;
 
         // If some initial local data has been provided, write those to the file
         if (pl.get() != null) {
-            JsonProjectListStorage jsonProjectListStorage = new JsonProjectListStorage(plPath);
+            JsonProjectListStorage jsonProjectListStorage = new JsonProjectListStorage(path);
             try {
                 jsonProjectListStorage.saveProjectList(pl.get());
-            } catch (IOException ioe) {
-                throw new AssertionError(ioe);
-            }
-        }
-
-        // If some initial local data has been provided, write those to the file
-        if (p.get() != null) {
-            JsonProjectStorage jsonProjectStorage = new JsonProjectStorage(pPath);
-            try {
-                jsonProjectStorage.saveProject(p.get());
             } catch (IOException ioe) {
                 throw new AssertionError(ioe);
             }
@@ -111,7 +96,8 @@ public class TestApp extends MainApp {
      */
     public Model getModel() {
         Model copy = new ModelManager((model.getProjectList()), (model.getProject()), new UserPrefs());
-        ModelHelper.setFilteredList(copy, model.getFilteredTaskList());
+        ModelHelper.setFilteredProjectList(copy, model.getFilteredProjectList());
+        ModelHelper.setFilteredTaskList(copy, model.getFilteredTaskList());
         return copy;
     }
 

@@ -672,7 +672,7 @@ When a pull request has changes to asciidoc files, you can use https://www.netli
 
 Here are the steps to create a new release.
 
-.  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
+.  Update the version number in link:{repoURL}/src/main/java/seedu/project/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
 .  Tag the repo with the version number. e.g. `v0.1`
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
@@ -770,7 +770,7 @@ Use case ends.
 3.  User request to view all task within a chosen project
 4.  ProjectManager shows all tasks within the chosen project
 5.  User request to create task within selected project
-*5a. User submits the following information: Task ID| Task Name | Deadline | Description | Tags (Priority Level, collaborators, etc...)
+* 5a. User submits the following information: Task ID| Task Name | Deadline | Description | Tags (Priority Level, collaborators, etc...)
 6.  ProjectManager creates task
 +
 Use case ends.
@@ -794,7 +794,7 @@ Use case resumes at step 5
 3.  User request to view all task within a chosen project
 4.  ProjectManager shows all tasks within the chosen project
 5.  User request to edit tags of chosen tag
-*5a. User submits the following information: Task ID| Current Tag Name | New Tag Name
+* 5a. User submits the following information: Task ID| Current Tag Name | New Tag Name
 6.  ProjectManager updates tag
 +
 Use case ends.
@@ -807,6 +807,7 @@ Use case ends.
 [none]
 ** 5a1a ProjectManager displays error message
 +
+
 Use case resumes at step 5
 
 [discrete]

@@ -25,11 +25,12 @@ import static seedu.project.testutil.TypicalTasks.CS2101_MILESTONE;
 
 import org.junit.Test;
 
+import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.AddCommand;
+import seedu.project.model.Name;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Deadline;
 import seedu.project.model.task.Description;
-import seedu.project.model.Name;
 import seedu.project.model.task.Task;
 import seedu.project.testutil.TaskBuilder;
 
@@ -67,13 +68,16 @@ public class AddCommandParserTest {
     public void parse_optionalFieldsMissing_success() {
         // zero tags
         Task expectedTask = new TaskBuilder(CS2101_MILESTONE).withTags().build();
+
+        LogicManager.setState(true);
+
         assertParseSuccess(parser, NAME_DESC_CS2101 + DESC_DESC_CS2101 + DEADLINE_DESC_CS2101,
                 new AddCommand(expectedTask));
     }
 
     @Test
     public void parse_compulsoryFieldMissing_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.TASK_MESSAGE_USAGE);
 
         // missing name prefix
         assertParseFailure(parser, VALID_NAME_CP2106 + DESC_DESC_CP2106 + DEADLINE_DESC_CP2106,
@@ -116,6 +120,6 @@ public class AddCommandParserTest {
 
         // non-empty preamble
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + NAME_DESC_CP2106 + DESC_DESC_CP2106 + DEADLINE_DESC_CP2106
-                + TAG_DESC_CP2106, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+                + TAG_DESC_CP2106, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.TASK_MESSAGE_USAGE));
     }
 }

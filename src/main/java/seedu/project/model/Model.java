@@ -1,6 +1,7 @@
 package seedu.project.model;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.beans.property.ReadOnlyProperty;
@@ -108,8 +109,10 @@ public interface Model {
 
     /**
      * Compares the given task with the last edited version. The task must exist in the project.
+     * Returns a list of string containing 2 string, which contains the differences in Name / Description / Deadline
+     * Returns null if there is no difference.
      */
-    Task compareTask(Task target);
+    List<String> compareTask(Task target);
 
     /**
      * Adds the given task. {@code task} must not already exist in the project.
@@ -123,6 +126,8 @@ public interface Model {
      * project.
      */
     void setTask(Task target, Task editedTask);
+
+    void clearTasks();
 
     /** Returns an unmodifiable view of the filtered project list */
     ObservableList<Project> getFilteredProjectList();

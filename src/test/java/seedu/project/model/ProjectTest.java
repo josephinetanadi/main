@@ -47,9 +47,10 @@ public class ProjectTest {
 
     @Test
     public void resetData_withValidReadOnlyProject_replacesData() {
+
         Project newData = getTypicalProject();
         project.resetData(newData);
-        assertEquals(newData, project);
+        assertEquals(newData.getTaskList(), project.getTaskList());
     }
 
     @Test
@@ -119,6 +120,7 @@ public class ProjectTest {
      */
     private static class ProjectStub implements ReadOnlyProject {
         private final ObservableList<Task> tasks = FXCollections.observableArrayList();
+        private Name name;
         private int index;
 
         ProjectStub(Collection<Task> tasks) {
@@ -144,6 +146,12 @@ public class ProjectTest {
         public void removeListener(InvalidationListener listener) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public Name getName() {
+            return name;
+        }
+
     }
 
 }

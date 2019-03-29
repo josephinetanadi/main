@@ -25,9 +25,11 @@ import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
+import guitests.guihandles.ProjectListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
 import guitests.guihandles.TaskListPanelHandle;
+
 import seedu.project.TestApp;
 import seedu.project.commons.core.index.Index;
 import seedu.project.logic.commands.ClearCommand;
@@ -36,7 +38,6 @@ import seedu.project.logic.commands.ListCommand;
 import seedu.project.logic.commands.SelectCommand;
 import seedu.project.model.Model;
 import seedu.project.model.ProjectList;
-import seedu.project.model.project.Project;
 import seedu.project.testutil.TypicalTasks;
 import seedu.project.ui.BrowserPanel;
 import seedu.project.ui.CommandBox;
@@ -65,8 +66,7 @@ public abstract class ProjectSystemTest {
     @Before
     public void setUp() {
         setupHelper = new SystemTestSetupHelper();
-        testApp = setupHelper.setupApplication(this::getInitialProjectList, this::getInitialProject,
-                getProjectListSaveLocation(), getProjectSaveLocation());
+        testApp = setupHelper.setupApplication(this::getInitialProjectList, getProjectListSaveLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
         waitUntilBrowserLoaded(getBrowserPanel());
@@ -86,24 +86,10 @@ public abstract class ProjectSystemTest {
     }
 
     /**
-     * Returns the data to be loaded into the file in {@link #getProjectSaveLocation()}.
-     */
-    protected Project getInitialProject() {
-        return TypicalTasks.getTypicalProject();
-    }
-
-    /**
      * Returns the directory of the project list file.
      */
     protected Path getProjectListSaveLocation() {
-        return TestApp.SAVE_LOCATION_FOR_TESTING_PL;
-    }
-
-    /**
-     * Returns the directory of the project file.
-     */
-    protected Path getProjectSaveLocation() {
-        return TestApp.SAVE_LOCATION_FOR_TESTING_P;
+        return TestApp.SAVE_LOCATION_FOR_TESTING;
     }
 
     public MainWindowHandle getMainWindowHandle() {
@@ -112,6 +98,10 @@ public abstract class ProjectSystemTest {
 
     public CommandBoxHandle getCommandBox() {
         return mainWindowHandle.getCommandBox();
+    }
+
+    public ProjectListPanelHandle getProjectListPanel() {
+        return mainWindowHandle.getProjectListPanel();
     }
 
     public TaskListPanelHandle getTaskListPanel() {
@@ -146,6 +136,8 @@ public abstract class ProjectSystemTest {
 
         mainWindowHandle.getCommandBox().run(command);
 
+        mainWindowHandle.refreshMainWindow();
+
         waitUntilBrowserLoaded(getBrowserPanel());
     }
 
@@ -163,6 +155,14 @@ public abstract class ProjectSystemTest {
     protected void showTasksWithName(String keyword) {
         executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
         assertTrue(getModel().getFilteredTaskList().size() < getModel().getProject().getTaskList().size());
+    }
+
+    /**
+     * Selects the task at {@code index} of the displayed list.
+     */
+    protected void selectProject(Index index) {
+        executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
+        assertEquals(index.getZeroBased(), getProjectListPanel().getSelectedCardIndex());
     }
 
     /**
@@ -187,10 +187,10 @@ public abstract class ProjectSystemTest {
      * and the task list panel displays the tasks in the model correctly.
      */
     protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
-            Model expectedModel) {
+                                                            Model expectedModel) {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
-        assertEquals(new Project(expectedModel.getProject()), testApp.readStorageProject());
+        assertEquals(new ProjectList(expectedModel.getProjectList()), testApp.readStorageProjectList());
         assertListMatching(getTaskListPanel(), expectedModel.getFilteredTaskList());
     }
 
@@ -287,9 +287,10 @@ public abstract class ProjectSystemTest {
     private void assertApplicationStartingStateIsCorrect() {
         assertEquals("", getCommandBox().getInput());
         assertEquals("", getResultDisplay().getText());
+        assertListMatching(getProjectListPanel(), getModel().getFilteredProjectList());
         assertListMatching(getTaskListPanel(), getModel().getFilteredTaskList());
         assertEquals(BrowserPanel.DEFAULT_PAGE, getBrowserPanel().getLoadedUrl());
-        assertEquals(Paths.get(".").resolve(testApp.getProjectSaveLocation()).toString(),
+        assertEquals(Paths.get(".").resolve(testApp.getProjectListSaveLocation()).toString(),
                 getStatusBarFooter().getSaveLocation());
         assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
     }

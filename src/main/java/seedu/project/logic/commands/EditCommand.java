@@ -102,6 +102,8 @@ public class EditCommand extends Command {
         } else {
             List<Task> lastShownList = model.getFilteredTaskList();
 
+            int taskId;
+
             if (index.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
             }
@@ -115,6 +117,10 @@ public class EditCommand extends Command {
 
             model.setTask(taskToEdit, editedTask);
             model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+
+            taskId = taskToEdit.getTaskId();
+            history.addHistoryTaskId(Integer.toString(taskId));
+
             model.commitProject();
             //this will not work if user clicks on a different project while on task level??? lock UI at prev panel
             model.setProject(model.getSelectedProject(), (Project) model.getProject()); //sync project list
@@ -124,7 +130,7 @@ public class EditCommand extends Command {
     }
 
     /**
-     * Creates and returns a {@code Task} with the details of {@code taskToEdit}
+     * Creates and returns a {@code Project} with the details of {@code taskToEdit}
      * edited with {@code editTaskDescriptor}.
      */
     private static Project createEditedProject(Project projectToEdit, EditProjectDescriptor editProjectDescriptor) {

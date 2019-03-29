@@ -7,22 +7,29 @@ import javafx.stage.Stage;
  */
 public class MainWindowHandle extends StageHandle {
 
-    private final TaskListPanelHandle taskListPanel;
+    private final ProjectListPanelHandle projectListPanel;
     private final ResultDisplayHandle resultDisplay;
     private final CommandBoxHandle commandBox;
     private final StatusBarFooterHandle statusBarFooter;
     private final MainMenuHandle mainMenu;
     private final BrowserPanelHandle browserPanel;
 
+    private TaskListPanelHandle taskListPanel;
+
     public MainWindowHandle(Stage stage) {
         super(stage);
 
-        taskListPanel = new TaskListPanelHandle(getChildNode(TaskListPanelHandle.PERSON_LIST_VIEW_ID));
+        projectListPanel = new ProjectListPanelHandle(getChildNode(ProjectListPanelHandle.PROJECT_LIST_VIEW_ID));
+        taskListPanel = new TaskListPanelHandle(getChildNode(TaskListPanelHandle.TASK_LIST_VIEW_ID));
         resultDisplay = new ResultDisplayHandle(getChildNode(ResultDisplayHandle.RESULT_DISPLAY_ID));
         commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
         mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
         browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
+    }
+
+    public ProjectListPanelHandle getProjectListPanel() {
+        return projectListPanel;
     }
 
     public TaskListPanelHandle getTaskListPanel() {
@@ -47,5 +54,14 @@ public class MainWindowHandle extends StageHandle {
 
     public BrowserPanelHandle getBrowserPanel() {
         return browserPanel;
+    }
+
+    /**
+     * just for the sake of it
+     **/
+    public void refreshMainWindow() {
+        int selectedIndex = taskListPanel.getSelectedCardIndex();
+        taskListPanel = new TaskListPanelHandle(getChildNode(TaskListPanelHandle.TASK_LIST_VIEW_ID));
+        taskListPanel.select(selectedIndex);
     }
 }

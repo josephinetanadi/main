@@ -24,7 +24,7 @@ public class Task {
     private final Deadline deadline;
 
     // Data fields
-    private final Set<Tag> tags = new HashSet<>();
+    private Set<Tag> tags = new HashSet<>();
 
     private int taskId;
 
@@ -72,6 +72,10 @@ public class Task {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    public void addTag(Tag tag) {
+        this.tags.add(tag);
     }
 
     /**

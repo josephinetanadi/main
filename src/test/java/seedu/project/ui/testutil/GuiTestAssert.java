@@ -5,10 +5,15 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.ProjectCardHandle;
+import guitests.guihandles.ProjectListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.TaskCardHandle;
 import guitests.guihandles.TaskListPanelHandle;
+
+import seedu.project.model.project.Project;
 import seedu.project.model.task.Task;
+
 
 /**
  * A set of assertion methods useful for writing GUI tests.
@@ -26,6 +31,13 @@ public class GuiTestAssert {
     }
 
     /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedProject}.
+     */
+    public static void assertCardDisplaysProject(Project expectedProject, ProjectCardHandle actualCard) {
+        assertEquals(expectedProject.getName().fullName, actualCard.getName());
+    }
+
+    /**
      * Asserts that {@code actualCard} displays the details of {@code expectedTask}.
      */
     public static void assertCardDisplaysTask(Task expectedTask, TaskCardHandle actualCard) {
@@ -37,6 +49,17 @@ public class GuiTestAssert {
     }
 
     /**
+     * Asserts that the list in {@code projectListPanelHandle} displays the details of {@code projects} correctly and
+     * in the correct order.
+     */
+    public static void assertListMatching(ProjectListPanelHandle projectListPanelHandle, Project... projects) {
+        for (int i = 0; i < projects.length; i++) {
+            projectListPanelHandle.navigateToCard(i);
+            assertCardDisplaysProject(projects[i], projectListPanelHandle.getProjectCardHandle(i));
+        }
+    }
+
+    /**
      * Asserts that the list in {@code taskListPanelHandle} displays the details of {@code tasks} correctly and
      * in the correct order.
      */
@@ -45,6 +68,14 @@ public class GuiTestAssert {
             taskListPanelHandle.navigateToCard(i);
             assertCardDisplaysTask(tasks[i], taskListPanelHandle.getTaskCardHandle(i));
         }
+    }
+
+    /**
+     * Asserts that the list in {@code project} displays the details of {@code projects} correctly and
+     * in the correct order.
+     */
+    public static void assertListMatching(ProjectListPanelHandle projectListPanelHandle, List<Project> projects) {
+        assertListMatching(projectListPanelHandle, projects.toArray(new Project[0]));
     }
 
     /**

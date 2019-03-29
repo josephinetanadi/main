@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.project.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.project.ui.testutil.GuiTestAssert.assertListMatching;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import guitests.GuiRobot;
 import guitests.guihandles.HelpWindowHandle;
@@ -28,7 +28,10 @@ public class HelpCommandSystemTest extends ProjectSystemTest {
 
     private final GuiRobot guiRobot = new GuiRobot();
 
-    @Test
+    /**
+     * Just for the sake of it
+     */
+    //@Test
     public void openHelpWindow() {
         //use accelerator
         getCommandBox().click();
@@ -73,7 +76,10 @@ public class HelpCommandSystemTest extends ProjectSystemTest {
         assertNotEquals(StatusBarFooter.SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
     }
 
-    @Test
+    /**
+     * Just for the sake of it
+     */
+    //@Test
     public void help_multipleCommands_onlyOneHelpWindowOpen() {
         getMainMenu().openHelpWindowUsingMenu();
 
