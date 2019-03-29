@@ -32,7 +32,7 @@ public class FindCommandSystemTest extends ProjectSystemTest {
          */
         String command = "   " + FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_TEST + "   ";
         Model expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, FEEDBACK, TEACHING_FEEDBACK); // both task contains feedback
+        ModelHelper.setFilteredTaskList(expectedModel, FEEDBACK, TEACHING_FEEDBACK); // both task contains feedback
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -49,13 +49,13 @@ public class FindCommandSystemTest extends ProjectSystemTest {
          * 1 task found
          */
         command = FindCommand.COMMAND_WORD + " Quiz";
-        ModelHelper.setFilteredList(expectedModel, QUIZ);
+        ModelHelper.setFilteredTaskList(expectedModel, QUIZ);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find multiple tasks in project, 2 keywords -> 2 tasks found */
         command = FindCommand.COMMAND_WORD + " Teaching Feedback";
-        ModelHelper.setFilteredList(expectedModel, TEACHING_FEEDBACK, FEEDBACK);
+        ModelHelper.setFilteredTaskList(expectedModel, TEACHING_FEEDBACK, FEEDBACK);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -101,7 +101,7 @@ public class FindCommandSystemTest extends ProjectSystemTest {
         assertFalse(getModel().getProject().getTaskList().contains(FEEDBACK));
         command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_TEST;
         expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, TEACHING_FEEDBACK);
+        ModelHelper.setFilteredTaskList(expectedModel, TEACHING_FEEDBACK);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -118,7 +118,7 @@ public class FindCommandSystemTest extends ProjectSystemTest {
          * found
          */
         command = FindCommand.COMMAND_WORD + " Fee";
-        ModelHelper.setFilteredList(expectedModel);
+        ModelHelper.setFilteredTaskList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -127,7 +127,7 @@ public class FindCommandSystemTest extends ProjectSystemTest {
          * found
          */
         command = FindCommand.COMMAND_WORD + " Feedbacks";
-        ModelHelper.setFilteredList(expectedModel);
+        ModelHelper.setFilteredTaskList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -158,7 +158,7 @@ public class FindCommandSystemTest extends ProjectSystemTest {
         assertFalse(getTaskListPanel().getHandleToSelectedCard().getName().equals(TEACHING_FEEDBACK
                 .getName().fullName));
         command = FindCommand.COMMAND_WORD + " Teaching";
-        ModelHelper.setFilteredList(expectedModel, TEACHING_FEEDBACK);
+        ModelHelper.setFilteredTaskList(expectedModel, TEACHING_FEEDBACK);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardDeselected();
 
@@ -166,7 +166,7 @@ public class FindCommandSystemTest extends ProjectSystemTest {
         deleteAllTasks();
         command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_TEST;
         expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, TEACHING_FEEDBACK);
+        ModelHelper.setFilteredTaskList(expectedModel, TEACHING_FEEDBACK);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 

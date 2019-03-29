@@ -1,6 +1,7 @@
 package seedu.project.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.project.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
 import java.util.ArrayList;
 
@@ -24,11 +25,13 @@ public class ClearCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
         if (LogicManager.getState()) {
-            Project clearedProject = new Project();
+            /*Project clearedProject = new Project();
             clearedProject.setName(model.getProject().getName().toString());
             clearedProject.setTasks(new ArrayList<>());
-            model.setProject(model.getSelectedProject(), clearedProject);
+            model.setProject(model.getSelectedProject(), clearedProject);*/
+            model.clearTasks();
             model.commitProject();
+            model.commitProjectList();
             return new CommandResult(MESSAGE_SUCCESS);
         } else {
             return new CommandResult(String.format(Messages.MESSAGE_GO_TO_TASK_LEVEL, COMMAND_WORD));

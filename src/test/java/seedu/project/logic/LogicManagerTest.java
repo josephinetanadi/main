@@ -8,6 +8,8 @@ import static seedu.project.logic.commands.CommandTestUtil.DESC_DESC_CS2101;
 import static seedu.project.logic.commands.CommandTestUtil.NAME_DESC_CS2101;
 import static seedu.project.testutil.TypicalTasks.CS2101_MILESTONE;
 
+import javax.xml.crypto.Data;
+
 import java.io.IOException;
 import java.nio.file.Path;
 
@@ -17,6 +19,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
+import seedu.project.commons.exceptions.DataConversionException;
 import seedu.project.logic.commands.AddCommand;
 import seedu.project.logic.commands.CommandResult;
 import seedu.project.logic.commands.HistoryCommand;
@@ -52,7 +55,7 @@ public class LogicManagerTest {
         JsonProjectListStorage projectListStorage = new JsonProjectListStorage(temporaryFolder.newFile().toPath());
         JsonProjectStorage projectStorage = new JsonProjectStorage(temporaryFolder.newFile().toPath());
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.newFile().toPath());
-        StorageManager storage = new StorageManager(projectListStorage, projectStorage, userPrefsStorage);
+        StorageManager storage = new StorageManager(projectListStorage, userPrefsStorage);
         logic = new LogicManager(model, storage);
     }
 
@@ -73,7 +76,7 @@ public class LogicManagerTest {
     @Test
     public void execute_validCommand_success() {
         String listCommand = ListCommand.COMMAND_WORD;
-        assertCommandSuccess(listCommand, ListCommand.MESSAGE_SUCCESS, model);
+        assertCommandSuccess(listCommand, ListCommand.MESSAGE_SUCCESS_TASK, model);
         assertHistoryCorrect(listCommand);
     }
 
@@ -84,7 +87,7 @@ public class LogicManagerTest {
         projectListStorage = new JsonProjectListIoExceptionThrowingStub(temporaryFolder.newFile().toPath());
         JsonProjectStorage projectStorage = new JsonProjectIoExceptionThrowingStub(temporaryFolder.newFile().toPath());
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.newFile().toPath());
-        StorageManager storage = new StorageManager(projectListStorage, projectStorage, userPrefsStorage);
+        StorageManager storage = new StorageManager(projectListStorage, userPrefsStorage);
         logic = new LogicManager(model, storage);
 
         // Execute add command
@@ -161,7 +164,7 @@ public class LogicManagerTest {
             CommandResult result = logic.execute(inputCommand);
             assertEquals(expectedException, null);
             assertEquals(expectedMessage, result.getFeedbackToUser());
-        } catch (CommandException | ParseException e) {
+        } catch (CommandException | ParseException | IOException | DataConversionException e) {
             assertEquals(expectedException, e.getClass());
             assertEquals(expectedMessage, e.getMessage());
         }
@@ -178,7 +181,7 @@ public class LogicManagerTest {
             CommandResult result = logic.execute(HistoryCommand.COMMAND_WORD);
             String expectedMessage = String.format(HistoryCommand.MESSAGE_SUCCESS, String.join("\n", expectedCommands));
             assertEquals(expectedMessage, result.getFeedbackToUser());
-        } catch (ParseException | CommandException e) {
+        } catch (ParseException | CommandException | IOException | DataConversionException e) {
             throw new AssertionError("Parsing and execution of HistoryCommand.COMMAND_WORD should succeed.", e);
         }
     }
