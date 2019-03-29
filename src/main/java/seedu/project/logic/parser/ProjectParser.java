@@ -67,17 +67,17 @@ public class ProjectParser {
         case CompareCommand.COMMAND_ALIAS:
             return new CompareCommandParser().parse(arguments);
 
-        case CompletedCommand.COMMAND_WORD:
-            return new CompletedCommandParser().parse(arguments);
-
-        case CompletedCommand.COMMAND_ALIAS:
-            return new CompletedCommandParser().parse(arguments);
-
         case TaskHistoryCommand.COMMAND_WORD:
             return new TaskHistoryCommandParser().parse(arguments);
 
         case TaskHistoryCommand.COMMAND_ALIAS:
             return new TaskHistoryCommandParser().parse(arguments);
+
+        case CompletedCommand.COMMAND_WORD:
+            return new CompletedCommandParser().parse(arguments);
+
+        case CompletedCommand.COMMAND_ALIAS:
+            return new CompletedCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);

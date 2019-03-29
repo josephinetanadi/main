@@ -130,7 +130,7 @@ public class EditCommand extends Command {
     }
 
     /**
-     * Creates and returns a {@code Task} with the details of {@code taskToEdit}
+     * Creates and returns a {@code Project} with the details of {@code taskToEdit}
      * edited with {@code editTaskDescriptor}.
      */
     private static Project createEditedProject(Project projectToEdit, EditProjectDescriptor editProjectDescriptor) {
