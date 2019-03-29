@@ -20,6 +20,7 @@ import seedu.project.model.project.Project;
 import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.project.VersionedProject;
 import seedu.project.model.project.exceptions.ProjectNotFoundException;
+import seedu.project.model.tag.GroupTag;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Task;
 import seedu.project.model.task.exceptions.TaskNotFoundException;
@@ -121,6 +122,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean hasGroupTag(GroupTag groupTag) {
+        requireNonNull(groupTag);
+        return versionedProjectList.hasGroupTag(groupTag);
+    }
+
+    @Override
     public void deleteProject(Project target) {
         versionedProjectList.removeProject(target);
     }
@@ -129,6 +136,11 @@ public class ModelManager implements Model {
     public void addProject(Project project) {
         versionedProjectList.addProject(project);
         //updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+    }
+
+    @Override
+    public void addGroupTag(GroupTag groupTag) {
+        versionedProjectList.addGroupTag(groupTag);
     }
 
     @Override
