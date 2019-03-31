@@ -3,7 +3,6 @@ package seedu.project.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.project.logic.parser.CliSyntax.PREFIX_GROUPTAG;
 import static seedu.project.model.Model.PREDICATE_SHOW_ALL_TASKS;
-import static seedu.project.model.project.Project.*;
 
 import java.util.List;
 
@@ -12,8 +11,6 @@ import seedu.project.commons.core.index.Index;
 import seedu.project.logic.CommandHistory;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
-import seedu.project.model.project.Project;
-import seedu.project.model.project.UniqueGroupTagList;
 import seedu.project.model.tag.GroupTag;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Task;
@@ -21,7 +18,7 @@ import seedu.project.model.task.Task;
 /**
  * Marks an existing task as completed and removes it from UI display
  */
-public class AddTagCommand extends Command{
+public class AddTagCommand extends Command {
     public static final String COMMAND_WORD = "addtag";
     public static final String COMMAND_ALIAS = "at";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a tag to the task. "
@@ -51,8 +48,8 @@ public class AddTagCommand extends Command{
 
         Task taskToComplete = lastShownList.get(index.getZeroBased());
         for (GroupTag groupTag : model.getProjectList().getGroupTagList()) {
-            if(groupTag.getName().toString().equals(this.groupTag)) {
-                for(Tag t : groupTag.getTags()) {
+            if (groupTag.getName().toString().equals(this.groupTag)) {
+                for (Tag t : groupTag.getTags()) {
                     taskToComplete.addTag(t);
                 }
             }

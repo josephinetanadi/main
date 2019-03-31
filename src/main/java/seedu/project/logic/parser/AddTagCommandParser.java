@@ -10,8 +10,17 @@ import seedu.project.commons.core.index.Index;
 import seedu.project.logic.commands.AddTagCommand;
 import seedu.project.logic.parser.exceptions.ParseException;
 
+/**
+ * Parses input arguments and creates a new AddTagCommand object
+ */
 public class AddTagCommandParser implements Parser<AddTagCommand> {
 
+    /**
+     * Parses the given {@code String} of arguments in the context of the
+     * AddTagCommand and returns an AddTagCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
     public AddTagCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_GROUPTAG);
