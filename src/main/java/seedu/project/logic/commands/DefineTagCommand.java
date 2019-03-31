@@ -11,8 +11,9 @@ import seedu.project.model.tag.GroupTag;
  * Allow users to define a group tag.
  */
 public class DefineTagCommand extends Command {
+    public static final String COMMAND_ALIAS= "dt";
     public static final String COMMAND_WORD = "definetag";
-    public static final String SUCCESS_MESSAGE = "group created";
+    public static final String SUCCESS_MESSAGE = "Group tag created: %1$s";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Allows users to define tag parent and its child";
 
     public static final String MESSAGE_DUPLICATE_GROUPTAG = "This group tag already exists in the group tag list";
@@ -33,6 +34,6 @@ public class DefineTagCommand extends Command {
 
         model.addGroupTag(toAdd);
         model.commitProjectList();
-        return new CommandResult(SUCCESS_MESSAGE);
+        return new CommandResult(String.format(SUCCESS_MESSAGE, toAdd.getName().toString()));
     }
 }

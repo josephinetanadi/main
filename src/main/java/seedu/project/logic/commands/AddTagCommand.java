@@ -19,8 +19,8 @@ import seedu.project.model.task.Task;
  * Marks an existing task as completed and removes it from UI display
  */
 public class AddTagCommand extends Command {
-    public static final String COMMAND_WORD = "addtag";
     public static final String COMMAND_ALIAS = "at";
+    public static final String COMMAND_WORD = "addtag";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a tag to the task. "
             + "Parameters: INDEX (must be a positive integer) " + PREFIX_GROUPTAG + "GROUPTAG"
             + "Example: " + COMMAND_WORD + " 1 " + PREFIX_GROUPTAG + "sample";
