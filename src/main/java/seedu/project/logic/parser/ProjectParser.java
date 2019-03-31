@@ -11,6 +11,7 @@ import seedu.project.logic.commands.ClearCommand;
 import seedu.project.logic.commands.Command;
 import seedu.project.logic.commands.CompareCommand;
 import seedu.project.logic.commands.CompletedCommand;
+import seedu.project.logic.commands.DefineTagCommand;
 import seedu.project.logic.commands.DeleteCommand;
 import seedu.project.logic.commands.EditCommand;
 import seedu.project.logic.commands.ExitCommand;
@@ -67,17 +68,20 @@ public class ProjectParser {
         case CompareCommand.COMMAND_ALIAS:
             return new CompareCommandParser().parse(arguments);
 
-        case TaskHistoryCommand.COMMAND_WORD:
-            return new TaskHistoryCommandParser().parse(arguments);
-
-        case TaskHistoryCommand.COMMAND_ALIAS:
-            return new TaskHistoryCommandParser().parse(arguments);
-
         case CompletedCommand.COMMAND_WORD:
             return new CompletedCommandParser().parse(arguments);
 
         case CompletedCommand.COMMAND_ALIAS:
             return new CompletedCommandParser().parse(arguments);
+
+        case DefineTagCommand.COMMAND_WORD:
+            return new DefineTagCommandParser().parse(arguments);
+
+        case TaskHistoryCommand.COMMAND_WORD:
+            return new TaskHistoryCommandParser().parse(arguments);
+
+        case TaskHistoryCommand.COMMAND_ALIAS:
+            return new TaskHistoryCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
