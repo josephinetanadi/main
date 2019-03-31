@@ -88,7 +88,7 @@ public class ProjectParser {
             return new AddTagCommandParser().parse(arguments);
 
         case TaskHistoryCommand.COMMAND_WORD:
-        return new TaskHistoryCommandParser().parse(arguments);
+            return new TaskHistoryCommandParser().parse(arguments);
 
         case TaskHistoryCommand.COMMAND_ALIAS:
             return new TaskHistoryCommandParser().parse(arguments);
