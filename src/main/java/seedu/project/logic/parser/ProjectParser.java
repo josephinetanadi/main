@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.project.logic.commands.AddCommand;
+import seedu.project.logic.commands.AddTagCommand;
 import seedu.project.logic.commands.ClearCommand;
 import seedu.project.logic.commands.Command;
 import seedu.project.logic.commands.CompareCommand;
@@ -76,6 +77,9 @@ public class ProjectParser {
 
         case DefineTagCommand.COMMAND_WORD:
             return new DefineTagCommandParser().parse(arguments);
+
+        case AddTagCommand.COMMAND_WORD:
+            return new AddTagCommandParser().parse(arguments);
 
         case TaskHistoryCommand.COMMAND_WORD:
             return new TaskHistoryCommandParser().parse(arguments);
