@@ -14,8 +14,8 @@ import seedu.project.model.project.UniqueProjectList;
 import seedu.project.model.tag.GroupTag;
 
 /**
- * Wraps all data at the address-book level
- * Duplicates are not allowed (by .isSameProject comparison)
+ * Wraps all data at the address-book level Duplicates are not allowed (by
+ * .isSameProject comparison)
  */
 public class ProjectList implements ReadOnlyProjectList {
 
@@ -24,18 +24,20 @@ public class ProjectList implements ReadOnlyProjectList {
     private final InvalidationListenerManager invalidationListenerManager = new InvalidationListenerManager();
 
     /*
-     * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
-     * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
+     * The 'unusual' code block below is an non-static initialization block,
+     * sometimes used to avoid duplication between constructors. See
+     * https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
      *
-     * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
-     *   among constructors.
+     * Note that non-static init blocks are not recommended to use. There are other
+     * ways to avoid duplication among constructors.
      */
     {
         projects = new UniqueProjectList();
         tags = new UniqueGroupTagList();
     }
 
-    public ProjectList() {}
+    public ProjectList() {
+    }
 
     /**
      * Creates a ProjectList using the Projects in the {@code toBeCopied}
@@ -74,7 +76,8 @@ public class ProjectList implements ReadOnlyProjectList {
     //// task-level operations
 
     /**
-     * Returns true if a project with the same identity as {@code project} exists in the project list.
+     * Returns true if a project with the same identity as {@code project} exists in
+     * the project list.
      */
     public boolean hasProject(Project project) {
         requireNonNull(project);
@@ -82,7 +85,8 @@ public class ProjectList implements ReadOnlyProjectList {
     }
 
     /**
-     * Returns true if a project with the same identity as {@code project} exists in the project list.
+     * Returns true if a project with the same identity as {@code project} exists in
+     * the project list.
      */
     public boolean hasGroupTag(GroupTag groupTag) {
         requireNonNull(groupTag);
@@ -90,8 +94,8 @@ public class ProjectList implements ReadOnlyProjectList {
     }
 
     /**
-     * Adds a project to the project list.
-     * The project must not already exist in the project list.
+     * Adds a project to the project list. The project must not already exist in the
+     * project list.
      */
     public void addProject(Project p) {
         projects.add(p);
@@ -99,8 +103,8 @@ public class ProjectList implements ReadOnlyProjectList {
     }
 
     /**
-     * Adds a project to the project list.
-     * The project must not already exist in the project list.
+     * Adds a project to the project list. The project must not already exist in the
+     * project list.
      */
     public void addGroupTag(GroupTag g) {
         tags.add(g);
@@ -108,9 +112,9 @@ public class ProjectList implements ReadOnlyProjectList {
     }
 
     /**
-     * Replaces the given project {@code target} in the list with {@code editedProject}.
-     * {@code target} must exist in the project list.
-     * The project identity of {@code editedProject} must not be the same as another
+     * Replaces the given project {@code target} in the list with
+     * {@code editedProject}. {@code target} must exist in the project list. The
+     * project identity of {@code editedProject} must not be the same as another
      * existing project in the project list.
      */
     public void setProject(Project target, Project editedProject) {
@@ -121,8 +125,8 @@ public class ProjectList implements ReadOnlyProjectList {
     }
 
     /**
-     * Removes {@code key} from this {@code ProjectList}.
-     * {@code key} must exist in the project list.
+     * Removes {@code key} from this {@code ProjectList}. {@code key} must exist in
+     * the project list.
      */
     public void removeProject(Project key) {
         projects.remove(key);
@@ -160,10 +164,15 @@ public class ProjectList implements ReadOnlyProjectList {
     }
 
     @Override
+    public ObservableList<GroupTag> getGroupTagList() {
+        return tags.asUnmodifiableObservableList();
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ProjectList // instanceof handles nulls
-                && projects.equals(((ProjectList) other).projects));
+                        && projects.equals(((ProjectList) other).projects));
     }
 
     @Override
