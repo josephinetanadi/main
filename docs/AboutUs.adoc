@@ -16,6 +16,7 @@ image::arhjaye.png[width="150", align="left"]
 Role: Team Lead, Deliverables & Deadline, Documentation
 Responsibilities: Logic and Model
 
+
 '''
 
 === Gautam Rajulu
