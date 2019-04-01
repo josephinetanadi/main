@@ -6,28 +6,7 @@ import static seedu.project.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.project.logic.commands.AddCommand;
-import seedu.project.logic.commands.AddTagCommand;
-import seedu.project.logic.commands.ClearCommand;
-import seedu.project.logic.commands.Command;
-import seedu.project.logic.commands.CompareCommand;
-import seedu.project.logic.commands.CompletedCommand;
-import seedu.project.logic.commands.DefineTagCommand;
-import seedu.project.logic.commands.DeleteCommand;
-import seedu.project.logic.commands.EditCommand;
-import seedu.project.logic.commands.ExitCommand;
-import seedu.project.logic.commands.ExportCommand;
-import seedu.project.logic.commands.FindCommand;
-import seedu.project.logic.commands.HelpCommand;
-import seedu.project.logic.commands.HistoryCommand;
-import seedu.project.logic.commands.ImportCommand;
-import seedu.project.logic.commands.ListCommand;
-import seedu.project.logic.commands.ListProjectCommand;
-import seedu.project.logic.commands.ListTagCommand;
-import seedu.project.logic.commands.RedoCommand;
-import seedu.project.logic.commands.SelectCommand;
-import seedu.project.logic.commands.TaskHistoryCommand;
-import seedu.project.logic.commands.UndoCommand;
+import seedu.project.logic.commands.*;
 import seedu.project.logic.parser.exceptions.ParseException;
 
 /**
@@ -173,6 +152,9 @@ public class ProjectParser {
 
         case ExportCommand.COMMAND_ALIAS:
             return new ExportCommandParser().parse(arguments);
+
+        case ListByDeadlineCommand.COMMAND_WORD:
+            return new ListByDeadlineCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
