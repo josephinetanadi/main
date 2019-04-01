@@ -10,6 +10,7 @@ import seedu.project.commons.core.index.Index;
 import seedu.project.logic.CommandHistory;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
+import seedu.project.model.project.Project;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Task;
 
@@ -37,14 +38,32 @@ public class CompletedCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
         List<Task> lastShownList = model.getFilteredTaskList();
+        int taskId;
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
-        Task taskToComplete = lastShownList.get(index.getZeroBased());
+        Task taskToComplete = new Task(lastShownList.get(index.getZeroBased()).getName(),
+                lastShownList.get(index.getZeroBased()).getDescription(),
+                lastShownList.get(index.getZeroBased()).getDeadline(),
+                lastShownList.get(index.getZeroBased()).getTags());
+
+        Task targetTask = lastShownList.get(index.getZeroBased());
+
+        taskId = targetTask.getTaskId();
+        taskToComplete.updateTaskId(taskId);
+        history.addHistoryTaskId(Integer.toString(taskId));
+
         taskToComplete.addTag(new Tag("completed"));
+
+        model.setTask(targetTask, taskToComplete);
+
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+
+        model.commitProject();
+        model.setProject(model.getSelectedProject(), (Project) model.getProject()); // sync project list
+        model.commitProjectList();
 
         return new CommandResult(String.format(MESSAGE_COMPLETED_SUCCESS, taskToComplete));
     }
