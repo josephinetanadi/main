@@ -5,12 +5,10 @@ import static java.util.Objects.requireNonNull;
 import java.nio.file.Path;
 import java.util.Optional;
 
-import seedu.project.commons.core.Messages;
 import seedu.project.commons.exceptions.DataConversionException;
 import seedu.project.commons.exceptions.IllegalValueException;
 import seedu.project.commons.util.JsonUtil;
 import seedu.project.logic.CommandHistory;
-import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
 import seedu.project.model.ReadOnlyProjectList;
