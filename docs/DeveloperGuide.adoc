@@ -304,42 +304,52 @@ image::UndoRedoActivityDiagram.png[width="650"]
 === Import/Export feature
 ==== Current Implementation
 
-The import/export mechanism is facilitated by `StorageManager`. It saves the list of projects and the list of tasks when lists are modified by any of the available commands e.g. `add`. This feature is achieved
-using the following operations:
+The `import` feature reads projects from a JSON file provided as input and adds these projects on top of the current list of projects.
+The mechanism is facilitated by `JsonUtil` and is achieved using the following functions:
 
-* `StorageManager#readProjectList()` -- Imports the list of projects from projectlist.json file.
-* `StorageManager#saveProjectList()` -- Exports the list of projects to projectlist.json file.
-* `StorageManager#readProject()` -- Imports the list of tasks in a <Project Name>.json file.
-* `StorageManager#saveProject()` -- Exports the list of tasks to a <Project Name>.json file.
+* `JsonUtil#readJsonFile()` -- Read projects from JSON file
+* `VersionedProjectList#addProject()` -- Adds projects from JSON file to project list.
 
-These operations are exposed in the `Storage` interface as `Storage#readProjectList()`, `Storage#saveProjectList()`, `Storage#readProject()` and `Storage#saveProject()` respectively.
+The `export` feature exports the current selected project (after `select` 1) or projects specified by their index to a JSON file.
+The mechanism is facilitated by `FileUtil` and `JsonUtil` and is achieved using the following functions:
+
+* `FileUtil#createIfMissing()` -- Creates JSON file to write to if it does not exist
+* `JsonUtil#saveJsonFile()` -- Writes projects to JSON file
 
 Given below is an example usage scenario and how the import/export mechanism behaves at each step.
 
-Step 1. The user launches the application for the first time. projectList will be populated by invoking `StorageManager#readProjectList`.
+Step 1. The user launches the application, `projectList` will be populated by invoking `StorageManager#readProjectList`.
 
 [NOTE]
-If this is the first time that you are launching the application, `StorageManager#readProjectList()` will populate with a sample projectList.
+If user launches the application for the first time, `projectList` will be populated with sample project list as *_./data/projectlist.json_* does not exist.
 
-Step 2. The user executes `add n/New Project ...` to add a new project to the projectList. The `add` command indicates that the projectList is modified and a listener calls `StorageManager#saveProjectList()` to save the modified project list to the projectlist.json file.
+Step 2. The user executes `import ./data/import.json` to add projects from JSON file to `versionedProjectList`.
 
-Step 3. The user executes `list` command to list all projects and executes `select 1` to select project at index 1. The `select` command will invoke `StorageManager#readProject()` to import taskList of project selected.
+.. Path to JSON file is passed to `JsonUtil#readJsonFile()` which would read projects to a temporary project list.
+
+.. Application will then loop through all projects and add them to `versionedProjectList` using `VersionedProjectList#addProject()`.
+
+.. `updateFilteredProjectList` is then executed to refresh `ProjectListPanel` with all projects, including recently imported projects.
+
+Step 3. The user executes `export i/1,2,3 o/./data/export.json` to export projects with index 1, 2 and 3.
+
+.. Application will `get` the projects from `filteredProjectList` and add them to a new ProjectList `projectsToExport`.
+
+.. `projectsToExport` is then passed to `JsonUtil#saveJsonFile()` which would write to output file specified by user.
 
 [NOTE]
-If this is the first time that you are launching the application, `StorageManager#readProject()` will populate with a sample taskList.
-
-Step 4. The user executes `add n/New Task ...` to add a new task to the taskList. The `add` command indicates that the taskList is modified and a listener calls `StorageManager#saveProject()` to save the modified task list to the <Project Name>.json file.
+The entire project list could be found in *_./data/projectlist.json_*
 
 ==== Design Considerations
 
-===== Aspect: Tracking tasks of individual project
+===== Aspect: Tracking projects within project list and tasks within each project
 
-* **Alternative 1 (current choice):** Each project will have its own <Project File>.json to keep track of tasks.
+* **Alternative 1:** Each project will have its own *_<Project File>.json_* to keep track of tasks.
 ** Pros: Easy to implement.
-** Cons: May clutter data folder with too many project files.
-* **Alternative 2:** All tasks of all project merged to project.json file.
+** Cons: May clutter data folder with too many project files. Application will have to read a new project file whenever user switches project.
+* **Alternative 2 (current choice):** All projects within project list and all tasks of all projects contained in *_project.json_* file.
 ** Pros: Will not clutter data folder.
-** Cons: Have to parse through entire file for tasks of specific project every time `StorageManager#readProject()` is executed.
+** Cons: Entire project list has to be written to file every time project list is modified.
 // end::storage[]
 
 // tag::Comparetaskfeature[]
