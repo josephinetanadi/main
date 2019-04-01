@@ -237,7 +237,7 @@ public class VersionedProjectTest {
             List<ReadOnlyProject> expectedStatesBeforePointer, ReadOnlyProject expectedCurrentState,
             List<ReadOnlyProject> expectedStatesAfterPointer) {
         // check state currently pointing at is correct
-        assertEquals(new Project(versionedProject), expectedCurrentState);
+        assertEquals(new Project(versionedProject).getTaskList(), expectedCurrentState.getTaskList());
 
         // shift pointer to start of state list
         while (versionedProject.canUndo()) {
@@ -246,14 +246,14 @@ public class VersionedProjectTest {
 
         // check states before pointer are correct
         for (ReadOnlyProject expectedProject : expectedStatesBeforePointer) {
-            assertEquals(expectedProject, new Project(versionedProject));
+            assertEquals(expectedProject.getTaskList(), new Project(versionedProject).getTaskList());
             versionedProject.redo();
         }
 
         // check states after pointer are correct
         for (ReadOnlyProject expectedProject : expectedStatesAfterPointer) {
             versionedProject.redo();
-            assertEquals(expectedProject, new Project(versionedProject));
+            assertEquals(expectedProject.getTaskList(), new Project(versionedProject).getTaskList());
         }
 
         // check that there are no more states after pointer

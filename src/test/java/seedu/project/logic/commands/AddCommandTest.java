@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -24,6 +25,7 @@ import seedu.project.model.ReadOnlyProjectList;
 import seedu.project.model.ReadOnlyUserPrefs;
 import seedu.project.model.project.Project;
 import seedu.project.model.project.ReadOnlyProject;
+import seedu.project.model.tag.GroupTag;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Task;
 import seedu.project.testutil.TaskBuilder;
@@ -50,7 +52,7 @@ public class AddCommandTest {
 
         CommandResult commandResult = new AddCommand(validTask).execute(modelStub, commandHistory);
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validTask), commandResult.getFeedbackToUser());
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS_TASK, validTask), commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validTask), modelStub.tasksAdded);
         assertEquals(EMPTY_COMMAND_HISTORY, commandHistory);
     }
@@ -94,6 +96,31 @@ public class AddCommandTest {
      * A default model stub that have all of the methods failing.
      */
     private class ModelStub implements Model {
+        @Override
+        public void commitProjectList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setSelectedProject(Project project) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyProperty<Project> selectedProjectProperty() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Project getSelectedProject() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredProjectList(Predicate<Project> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
         @Override
         public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
             throw new AssertionError("This method should not be called.");
@@ -140,6 +167,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public boolean hasGroupTag(GroupTag groupTag) {
+            return false;
+        }
+
+        @Override
         public void deleteProject(Project project) {
             throw new AssertionError("This method should not be called.");
         }
@@ -150,27 +182,17 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addGroupTag(GroupTag groupTag) {
+
+        }
+
+        @Override
         public void setProject(ReadOnlyProject newData) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public void setProject(Project target, Project editedProject) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public Path getProjectFilePath() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setProjectFilePath(Path projectFilePath) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void addTask(Task task) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -190,7 +212,17 @@ public class AddCommandTest {
         }
 
         @Override
-        public Task compareTask(Task target) {
+        public List<String> compareTask(Task target) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void clearTasks() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addTask(Task task) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -200,12 +232,12 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteTag(Tag tag) {
+        public ObservableList<Task> getFilteredTaskList() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public ObservableList<Task> getFilteredTaskList() {
+        public ObservableList<Project> getFilteredProjectList() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -251,6 +283,11 @@ public class AddCommandTest {
 
         @Override
         public void setSelectedTask(Task task) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteTag(Tag tag) {
             throw new AssertionError("This method should not be called.");
         }
     }

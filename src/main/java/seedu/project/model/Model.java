@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import seedu.project.commons.core.GuiSettings;
 import seedu.project.model.project.Project;
 import seedu.project.model.project.ReadOnlyProject;
+import seedu.project.model.tag.GroupTag;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Task;
 
@@ -70,6 +71,12 @@ public interface Model {
     boolean hasProject(Project project);
 
     /**
+     * Returns true if a GroupTag with the same identity as {@code GroupTag} exists in the
+     * project.
+     */
+    boolean hasGroupTag(GroupTag groupTag);
+
+    /**
      * Deletes the given task. The task must exist in the project.
      */
     void deleteProject(Project project);
@@ -78,6 +85,11 @@ public interface Model {
      * Adds the given project. {@code project} must not already exist in the project list.
      */
     void addProject(Project project);
+
+    /**
+     * Adds the given project. {@code project} must not already exist in the project list.
+     */
+    void addGroupTag(GroupTag groupTag);
 
     /**
      * Replaces project data with the data in {@code project}.
@@ -126,6 +138,8 @@ public interface Model {
      * project.
      */
     void setTask(Task target, Task editedTask);
+
+    void clearTasks();
 
     /** Returns an unmodifiable view of the filtered project list */
     ObservableList<Project> getFilteredProjectList();

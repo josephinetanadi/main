@@ -2,13 +2,13 @@ package seedu.project.model.task;
 
 import static seedu.project.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import java.util.Date;
-import java.text.*;
+import java.util.Set;
 
 import seedu.project.model.Name;
 import seedu.project.model.tag.Tag;
@@ -27,7 +27,7 @@ public class Task implements Comparable<Task> {
     private final Deadline deadline;
 
     // Data fields
-    private final Set<Tag> tags = new HashSet<>();
+    private Set<Tag> tags = new HashSet<>();
 
     private int taskId;
 
@@ -45,20 +45,25 @@ public class Task implements Comparable<Task> {
         this.taskId = hashCode();
     }
 
-    private Date stringToDate(String s){
+    /**
+     * Converts strings to the date type
+     */
+    private Date stringToDate(String s) {
 
         Date result = null;
-        try{
+        try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
-            result  = dateFormat.parse(s);
+            result = dateFormat.parse(s);
         }
-        catch(ParseException e){
+        catch (ParseException e) {
             e.printStackTrace();
-
         }
-        return result ;
+        return result;
     }
 
+    /**
+     * Comparator function for tasks
+     */
     public int compareTo(Task anotherTask) {
         String thisDeadline = (this.getDeadline()).toString();
         String compareDeadline = (anotherTask.getDeadline()).toString();
@@ -66,10 +71,10 @@ public class Task implements Comparable<Task> {
         Date thisTaskDate = stringToDate(thisDeadline);
         Date compareTaskDate = stringToDate(compareDeadline);
 
-        if(thisTaskDate.after(compareTaskDate)) {
+        if (thisTaskDate.after(compareTaskDate)) {
             return 1;
         }
-        else if(compareTaskDate.after(thisTaskDate)) {
+        else if (compareTaskDate.after(thisTaskDate)) {
             return -1;
         }
         else {
@@ -107,6 +112,10 @@ public class Task implements Comparable<Task> {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    public void addTag(Tag tag) {
+        this.tags.add(tag);
     }
 
     /**

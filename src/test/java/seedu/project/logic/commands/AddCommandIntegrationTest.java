@@ -37,7 +37,7 @@ public class AddCommandIntegrationTest {
         expectedModel.commitProject();
 
         assertCommandSuccess(new AddCommand(validTask), model, commandHistory,
-                String.format(AddCommand.MESSAGE_SUCCESS, validTask), expectedModel);
+                String.format(AddCommand.MESSAGE_SUCCESS_TASK, validTask), expectedModel);
     }
 
     @Test

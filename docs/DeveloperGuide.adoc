@@ -202,22 +202,9 @@ image::ModelClassDiagram.png[width="800"]
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
+* stores the Project List Data and Project Data.
 * exposes an unmodifiable `ObservableList<Task>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
-
-[NOTE]
-As a more OOP model, we can store a `Tag` list in `Address Book`, which `Task` can reference. This would allow `Address Book` to only require one `Tag` object per unique `Tag`, instead of each `Task` needing their own `Tag` object. An example of how such a model may look like is given below. +
- +
-image:ModelClassBetterOopDiagram.png[width="800"]
-
-[[Design-Storage]]
-=== Storage component
-
-.Structure of the Storage Component
-image::StorageClassDiagram.png[width="800"]
-
-*API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
 The `Storage` component,
 
@@ -370,12 +357,16 @@ These operations are exposed in the `Model` interface as `Model#compareTask()`.
 
 Given below is an example usage scenario and how the Compare Task mechanism behaves.
 
+image::compare1.png[width="900"]
+
 Step 1. The user selects the task to compare by entering the index of the task that is shown. `CompareCommandParser#CompareCommand()` will then get the index of the task
 within `projectStateList` and passed into `CompareCommand#CommandResult()`.
 
 Step 2. The index will then be used by `CompareCommand#CommandResult()` to retrieved the Task object within `projectStateList` and passed into `VersionedProject#compareTask()`.
 
 Step 3. `VersionedProject#compareTask()` will retrieve the unique `taskId` of the chosen task.
+
+image::compare2.png[width="900"]
 
 Step 4. `VersionedProject#compareTask()` will iterate through all the the tasks within each project state. The `taskId`
 will be used to determine if the task encountered during the iteration is the same as the chosen task.
@@ -385,6 +376,8 @@ If no same tasks are found after iterating through all the project states, or if
 that is encountered, "Nothing to compare" will be showed to the user.
 
 Step 5. If the task encountered is the same as the chosen task, the 2 task will be compared against their name, description & deadline.
+
+image::compare 3.png[width="800"]
 
 Step 6. If there is a difference in any of the fields in the comparison, the difference will be showed to the user.
 Else Step 4. will continue to run to look for another version of the chosen task to compare.
@@ -419,12 +412,43 @@ Through the list of unique tags, task names with the same tags are concatenated 
 ** Pros: Will not clutter `ListTagCommand` file.
 // end::listtag[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
+// tag::ViewTaskHistory[]
+=== View Task Edit History Feature
 
-_{Explain here how the data encryption feature will be implemented}_
+View task edit history allows the user to view a list of all the edit history of a chosen task.
 
-// end::dataencryption[]
+==== Current Implementation
+
+Stores a parallel list `userInputHistoryTaskId` along `userInputHistory`, containing the taskId of `edit` commands.
+
+The list will store `0` for all other commands.
+
+It is facilitated by `CommandHistory` and implements the following operations:
+
+* `CommandHistory#addHistoryTaskId()` -- Adds taskId to the index that is the same as the `edit` command. Pads `0` for all other commands.
+
+Given below is an example usage scenario and how the Compare Task mechanism behaves.
+
+image::ViewTaskHistorySeq1.png[width="900"]
+
+Behaviour when all other commands (not `edit`) is called. `CommandHistory#addHistoryTaskId()` will not be called thus `userInputHistoryTaskId` will not be updated.
+However `userInputHistory` will still be updated as usual.
+
+image::ViewTaskHistorySeq2.png[width="900"]
+
+Behaviour when a `edit` command  is called. `CommandHistory#addHistoryTaskId()` will be called thus `userInputHistoryTaskId` will be updated with the taskId of the task where the
+`edit` command is called on. Observe that positions of previous non-`edit` command will be filled with `0`. `userInputHistory` will still be updated as usual.
+
+
+==== Design Considerations
+
+* **Alternative 1 (current choice):** Implement a separate list `userInputHistoryTaskId` alongside `userInputHistory` to contain taskId of task where `edit` is called on.
+** Pros: Easy to implement.
+** Cons: A large `userInputHistoryTaskId` might result in a slower system performance during search and contains wasted space as well.
+* **Alternative 2:** All tasks will have their own `userInputHistoryTaskId`, keeping track of its own edit history.
+** Pros: System performance will be better as you will iterate through lesser data, will have less wastage of space.
+** Cons: Harder to implement, can be considered for future version in v2.0
+// end::ViewTaskHistory[]
 
 // tag::calendarview[]
 === [Proposed] Calendar View
@@ -680,11 +704,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
 
-|`***` | user | add project | manage multiple projects
-|`***` | user | insert task| record tasks that need to be done
-|`***` | user | delele task | get rid of tasks that are completed or no longer need to be done
-|`***` | user| update task | change details of a particular task when changes are necessary
-|`***` | user| read task | look through and be reminded of the details of a specific task
+|`* * *` | user | add project | manage multiple projects
+|`* * *` | user | insert task| record tasks that need to be done
+|`* * *` | user | delele task | get rid of tasks that are completed or no longer need to be done
+|`* * *` | user| update task | change details of a particular task when changes are necessary
+|`* * *` | user| read task | look through and be reminded of the details of a specific task
 |`*` | user| break down tasks into subtasks | easily view and complete them step-by-step
 |`*` | user| insert subtask | record smaller tasks or more specific action items to be done
 |`*` | user| delete subtask | get rid of subtasks that are completed or no longer needs to be done
@@ -694,26 +718,28 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` | user| delete recurring subtask | get rid of tasks that I no longer want to have repeated reminders of
 |`*` | user| update recurring subtask | change details of a particular recurring task when changes are necessary and have such changes be reflected across all its future recurring subtasks
 |`*` | user| read recurring subtask | look through and be reminded of the details of a specific recurring subtask
-|`**` | user| have a calendar view of tasks | find upcoming tasks via a calendar overview
-|`**` | user| have a table view | have an overall view to store and view any kind of structured data
-|`***` | user| insert tags to tasks | categorize tasks based on projects/priority/etc
-|`***` | user| delete tags | remove tags that is unnecessary
-|`***` | user| update tags | change how I want a particular task to be categorised
-|`***` | user| have coloured tags | easily view the categories of tasks at one glance
-|`***` | user| prioritize tasks | complete them in order of importance, especially if they have roughly the same deadlines
+|`* *` | user| have a calendar view of tasks | find upcoming tasks via a calendar overview
+|`* *` | user| have a table view | have an overall view to store and view any kind of structured data
+|`* * *` | user| insert tags to tasks | categorize tasks based on projects/priority/etc
+|`* * *` | user| delete tags | remove tags that is unnecessary
+|`* * *` | user| update tags | change how I want a particular task to be categorised
+|`* * *` | user| have coloured tags | easily view the categories of tasks at one glance
+|`* * *` | user| prioritize tasks | complete them in order of importance, especially if they have roughly the same deadlines
 |`*` | user| share / sync task | make sure that my collaborators are aware of what needs to be done
-|`***` | user| set task deadlines | be reminded when the task is due soon
-|`**` | user| show task by creation date | be reminded not to neglect low priority tasks
-|`**` | user| have a progress overview | keep track of my productivity based on how much of a project has been completed
-|`***` | user| have a ‘help’ manual | learn how to use various commands to operate this product
-|`***` | advance user| have command shortcuts | type a command faster
-|`***` | user| have export and import function | share task format easily with another user using the same format structure
+|`* * *` | user| set task deadlines | be reminded when the task is due soon
+|`* *` | user| show task by creation date | be reminded not to neglect low priority tasks
+|`* *` | user| have a progress overview | keep track of my productivity based on how much of a project has been completed
+|`* * *` | user| have a ‘help’ manual | learn how to use various commands to operate this product
+|`* * *` | advance user| have command shortcuts | type a command faster
+|`* * *` | user| have export and import function | share task format easily with another user using the same format structure
 |`*` | user| attach files to task | easily find the corresponding files to work on
-|`***` | user| find task by keywords | easily navigate to the specific task
-|`***` | user| view tasks by alphabetical order | easily find a specific task
-|`***` | user| view task by priority | know what will be due first
-|`***` | user| undo/redo a command | remove/redo a command that I entered/removed by mistake
-|`**` | user| view a analysis of my current progress | have a overview of how much I have completed / not completed
+|`* * *` | user| find task by keywords | easily navigate to the specific task
+|`* * *` | user| view tasks by alphabetical order | easily find a specific task
+|`* * *` | user| view task by priority | know what will be due first
+|`* * *` | user| undo/redo a command | remove/redo a command that I entered/removed by mistake
+|`* *` | user| view a analysis of my current progress | have a overview of how much I have completed / not completed
+|`* * *` | user| view the previous version of my task | see what changes I have made previously
+|`* * *` | user| view the edit history of my task | see all the changes I have made to the task
 
 |=======================================================================
 
@@ -751,9 +777,11 @@ Use case ends.
 
 *Extensions*
 
-5a1. Missing information
-
-* 5a1a. ProjectManager displays error message
+[none]
+* 5a1 Missing information
++
+[none]
+** 5a1a ProjectManager displays error message
 +
 Use case resumes at step 5
 
@@ -773,10 +801,11 @@ Use case ends.
 
 *Extensions*
 
-5a1. Task ID not found / Current Tag Name not found
-
-* 5a1a. ProjectManager displays error message
-
+[none]
+* 5a1 Task ID not found / Current Tag Name not found
++
+[none]
+** 5a1a ProjectManager displays error message
 +
 
 Use case resumes at step 5

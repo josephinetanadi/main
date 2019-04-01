@@ -2,7 +2,7 @@ package seedu.project.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static seedu.project.testutil.TypicalTasks.getTypicalProject;
+import static seedu.project.testutil.TypicalTasks.getTypicalProjectList;
 
 import java.nio.file.Path;
 
@@ -12,9 +12,10 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.project.commons.core.GuiSettings;
+import seedu.project.model.ProjectList;
+import seedu.project.model.ReadOnlyProjectList;
 import seedu.project.model.UserPrefs;
-import seedu.project.model.project.Project;
-import seedu.project.model.project.ReadOnlyProject;
+
 
 public class StorageManagerTest {
 
@@ -26,9 +27,8 @@ public class StorageManagerTest {
     @Before
     public void setUp() {
         JsonProjectListStorage projectListStorage = new JsonProjectListStorage(getTempFilePath("pl"));
-        JsonProjectStorage projectStorage = new JsonProjectStorage(getTempFilePath("p"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(projectListStorage, projectStorage, userPrefsStorage);
+        storageManager = new StorageManager(projectListStorage, userPrefsStorage);
     }
 
     private Path getTempFilePath(String fileName) {
@@ -51,22 +51,22 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void projectReadSave() throws Exception {
+    public void projectListReadSave() throws Exception {
         /*
          * Note: This is an integration test that verifies the StorageManager is
          * properly wired to the {@link JsonProjectStorage} class. More extensive
          * testing of UserPref saving/reading is done in {@link JsonProjectStorageTest}
          * class.
          */
-        Project original = getTypicalProject();
-        storageManager.saveProject(original);
-        ReadOnlyProject retrieved = storageManager.readProject().get();
-        assertEquals(original, new Project(retrieved));
+        ProjectList original = getTypicalProjectList();
+        storageManager.saveProjectList(original);
+        ReadOnlyProjectList retrieved = storageManager.readProjectList().get();
+        assertEquals(original, new ProjectList(retrieved));
     }
 
     @Test
-    public void getProjectFilePath() {
-        assertNotNull(storageManager.getProjectFilePath());
+    public void getProjectListFilePath() {
+        assertNotNull(storageManager.getProjectListFilePath());
     }
 
 }

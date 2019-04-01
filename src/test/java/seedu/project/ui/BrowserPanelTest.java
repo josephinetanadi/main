@@ -11,16 +11,18 @@ import org.junit.Test;
 
 import guitests.guihandles.BrowserPanelHandle;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.project.model.project.Project;
 import seedu.project.model.task.Task;
 
 public class BrowserPanelTest extends GuiUnitTest {
+    private SimpleObjectProperty<Project> selectedProject = new SimpleObjectProperty<>();
     private SimpleObjectProperty<Task> selectedTask = new SimpleObjectProperty<>();
     private BrowserPanel browserPanel;
     private BrowserPanelHandle browserPanelHandle;
 
     @Before
     public void setUp() {
-        guiRobot.interact(() -> browserPanel = new BrowserPanel(selectedTask));
+        guiRobot.interact(() -> browserPanel = new BrowserPanel(selectedProject, selectedTask));
         uiPartRule.setUiPart(browserPanel);
 
         browserPanelHandle = new BrowserPanelHandle(browserPanel.getRoot());

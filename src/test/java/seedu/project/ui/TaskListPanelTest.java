@@ -17,9 +17,9 @@ import guitests.guihandles.TaskListPanelHandle;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.project.model.Name;
 import seedu.project.model.task.Deadline;
 import seedu.project.model.task.Description;
-import seedu.project.model.Name;
 import seedu.project.model.task.Task;
 
 public class TaskListPanelTest extends GuiUnitTest {
@@ -97,6 +97,6 @@ public class TaskListPanelTest extends GuiUnitTest {
         uiPartRule.setUiPart(taskListPanel);
 
         taskListPanelHandle = new TaskListPanelHandle(
-                getChildNode(taskListPanel.getRoot(), TaskListPanelHandle.PERSON_LIST_VIEW_ID));
+                getChildNode(taskListPanel.getRoot(), TaskListPanelHandle.TASK_LIST_VIEW_ID));
     }
 }

@@ -1,6 +1,7 @@
 package seedu.project.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.project.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
 import java.util.List;
 
@@ -9,12 +10,13 @@ import seedu.project.commons.core.index.Index;
 import seedu.project.logic.CommandHistory;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
+import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Task;
 
 /**
  * Marks an existing task as completed and removes it from UI display
  */
-public class CompletedCommand extends Command{
+public class CompletedCommand extends Command {
     public static final String COMMAND_WORD = "completed";
     public static final String COMMAND_ALIAS = "cpt";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Completes a task and deletes it from view. "
@@ -41,8 +43,9 @@ public class CompletedCommand extends Command{
         }
 
         Task taskToComplete = lastShownList.get(index.getZeroBased());
-        model.deleteTask(taskToComplete);
-        //model.commitTaskCollection();
+        taskToComplete.addTag(new Tag("completed"));
+        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+
         return new CommandResult(String.format(MESSAGE_COMPLETED_SUCCESS, taskToComplete));
     }
 

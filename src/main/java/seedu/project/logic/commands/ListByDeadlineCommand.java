@@ -2,7 +2,7 @@ package seedu.project.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.*;
+import java.util.Collections;
 
 import javafx.collections.ObservableList;
 import seedu.project.logic.CommandHistory;

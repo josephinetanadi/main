@@ -9,7 +9,9 @@ import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 import seedu.project.commons.util.InvalidationListenerManager;
 import seedu.project.model.project.Project;
+import seedu.project.model.project.UniqueGroupTagList;
 import seedu.project.model.project.UniqueProjectList;
+import seedu.project.model.tag.GroupTag;
 
 /**
  * Wraps all data at the address-book level
@@ -17,6 +19,7 @@ import seedu.project.model.project.UniqueProjectList;
  */
 public class ProjectList implements ReadOnlyProjectList {
 
+    private final UniqueGroupTagList tags;
     private final UniqueProjectList projects;
     private final InvalidationListenerManager invalidationListenerManager = new InvalidationListenerManager();
 
@@ -29,6 +32,7 @@ public class ProjectList implements ReadOnlyProjectList {
      */
     {
         projects = new UniqueProjectList();
+        tags = new UniqueGroupTagList();
     }
 
     public ProjectList() {}
@@ -78,11 +82,28 @@ public class ProjectList implements ReadOnlyProjectList {
     }
 
     /**
+     * Returns true if a project with the same identity as {@code project} exists in the project list.
+     */
+    public boolean hasGroupTag(GroupTag groupTag) {
+        requireNonNull(groupTag);
+        return tags.contains(groupTag);
+    }
+
+    /**
      * Adds a project to the project list.
      * The project must not already exist in the project list.
      */
     public void addProject(Project p) {
         projects.add(p);
+        indicateModified();
+    }
+
+    /**
+     * Adds a project to the project list.
+     * The project must not already exist in the project list.
+     */
+    public void addGroupTag(GroupTag g) {
+        tags.add(g);
         indicateModified();
     }
 

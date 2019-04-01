@@ -14,6 +14,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.AddCommand;
 import seedu.project.logic.commands.ClearCommand;
 import seedu.project.logic.commands.DeleteCommand;
@@ -43,6 +44,9 @@ public class ProjectParserTest {
     @Test
     public void parseCommand_add() throws Exception {
         Task task = new TaskBuilder().build();
+
+        LogicManager.setState(true);
+
         AddCommand command = (AddCommand) parser.parseCommand(TaskUtil.getAddCommand(task));
         assertEquals(new AddCommand(task), command);
     }

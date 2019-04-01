@@ -7,11 +7,13 @@ import static seedu.project.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.project.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.project.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import seedu.project.commons.core.index.Index;
+import seedu.project.commons.exceptions.DataConversionException;
 import seedu.project.logic.CommandHistory;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
@@ -34,6 +36,9 @@ public class CommandTestUtil {
     public static final String VALID_TAG_CS2101 = "CS2101";
     public static final String VALID_TAG_CP2106 = "CP2106";
 
+    public static final String VALID_PROJECT_NAME_CS2101 = "CS2101 Project";
+    public static final String VALID_PROJECT_NAME_CP2106 = "CP2106 Project";
+
     public static final String NAME_DESC_CS2101 = " " + PREFIX_NAME + VALID_NAME_CS2101;
     public static final String NAME_DESC_CP2106 = " " + PREFIX_NAME + VALID_NAME_CP2106;
     public static final String DESC_DESC_CS2101 = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_CS2101;
@@ -42,6 +47,9 @@ public class CommandTestUtil {
     public static final String DEADLINE_DESC_CP2106 = " " + PREFIX_DEADLINE + VALID_DEADLINE_CP2106;
     public static final String TAG_DESC_CS2101 = " " + PREFIX_TAG + VALID_TAG_CS2101;
     public static final String TAG_DESC_CP2106 = " " + PREFIX_TAG + VALID_TAG_CP2106;
+
+    public static final String NAME_DESC_CS2101_PROJECT = " " + PREFIX_NAME + VALID_PROJECT_NAME_CS2101;
+    public static final String NAME_DESC_CP2106_PROJECT = " " + PREFIX_NAME + VALID_PROJECT_NAME_CP2106;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "Milestone&"; // '&' not allowed in names
     public static final String INVALID_DESC_DESC = " " + PREFIX_DESCRIPTION + ""; // '(blank)' not allowed in desc
@@ -79,6 +87,10 @@ public class CommandTestUtil {
             assertEquals(expectedCommandHistory, actualCommandHistory);
         } catch (CommandException ce) {
             throw new AssertionError("Execution of command should not fail.", ce);
+        } catch (DataConversionException e) {
+            throw new AssertionError("Data Conversation Exception.", e);
+        } catch (IOException e) {
+            throw new AssertionError("Input / Output Exception.", e);
         }
     }
 
@@ -103,7 +115,9 @@ public class CommandTestUtil {
             String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
+
         Project expectedProject = new Project(actualModel.getProject());
+
         List<Task> expectedFilteredList = new ArrayList<>(actualModel.getFilteredTaskList());
         Task expectedSelectedTask = actualModel.getSelectedTask();
 
@@ -112,7 +126,7 @@ public class CommandTestUtil {
         try {
             command.execute(actualModel, actualCommandHistory);
             throw new AssertionError("The expected CommandException was not thrown.");
-        } catch (CommandException e) {
+        } catch (CommandException | DataConversionException | IOException e) {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedProject, actualModel.getProject());
             assertEquals(expectedFilteredList, actualModel.getFilteredTaskList());
