@@ -21,6 +21,7 @@ import seedu.project.logic.commands.FindCommand;
 import seedu.project.logic.commands.HelpCommand;
 import seedu.project.logic.commands.HistoryCommand;
 import seedu.project.logic.commands.ImportCommand;
+import seedu.project.logic.commands.ListByDeadlineCommand;
 import seedu.project.logic.commands.ListCommand;
 import seedu.project.logic.commands.ListProjectCommand;
 import seedu.project.logic.commands.ListTagCommand;
@@ -173,6 +174,9 @@ public class ProjectParser {
 
         case ExportCommand.COMMAND_ALIAS:
             return new ExportCommandParser().parse(arguments);
+
+        case ListByDeadlineCommand.COMMAND_WORD:
+            return new ListByDeadlineCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
