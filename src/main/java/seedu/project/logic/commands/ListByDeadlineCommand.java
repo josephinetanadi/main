@@ -34,7 +34,7 @@ public class ListByDeadlineCommand extends Command {
 
         ArrayList<Task> toSortList = new ArrayList<>();
 
-        for (int i =0; i < size; i ++) {
+        for (int i = 0; i < size; i++) {
             toSortList.add(filteredTasks.get(i));
         }
 
@@ -42,8 +42,8 @@ public class ListByDeadlineCommand extends Command {
         Collections.sort(toSortList);
 
         for (Task tempFilteredTask : toSortList) {
-            toPrint = toPrint + tempFilteredTask.getName() + "\n" + tempFilteredTask.getDescription() +
-                    "\n" + tempFilteredTask.getDeadline() + "\n\n";
+            toPrint = toPrint + tempFilteredTask.getName() + "\n" + tempFilteredTask.getDescription()
+                    + "\n" + tempFilteredTask.getDeadline() + "\n\n";
         }
 
         return new CommandResult(String.format(MESSAGE_SUCCESS_TASK, toPrint));
