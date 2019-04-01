@@ -146,6 +146,45 @@ Examples:
 
 Outcome: Task Box (Panel D) will display all tasks within selected project. Active panel is now Panel D and all commands that is executed after this would be in the context of tasks.
 
+==== List all tags: `listtag`
+List all unique tags and associated tasks within a project
+
+* Format: `listtag`
+* Alias: `lt`, i.e. `listtag` is equivalent to `lt`
+
+Outcome: Result Box (Panel B) will will display all unique tags and associated tasks within a project.
+
+==== Defining a group tag: definetag
+
+Define a group tag when you want to add multiple identical tags to multiple tasks easily.
+
+After defining a group tag, use the addtag command to add a group tag to a task of your choice.
+
+* Format: definetag gt/GROUPTAG t/TAG [t/MORETAGS]
+* Alias: dt, i.e. definetag is equivalent to dt
+
+Example:
+
+* definetag gt/SAMPLE t/TAG1 t/TAG2
+
+Outcome: A group tag called SAMPLE will be created which would contain tags TAG1 and TAG2.
+
+==== Adding a group tag: addtag
+
+Add a previously defined group tag to a task.
+
+* Format: addtag INDEX gt/GROUPTAG
+* Alias: at, i.e. addtag is equivalent to at
+
+Example:
+
+* addtag 1 gt/SAMPLE
+
+Outcome: Task Box (Panel D) will show the updated task with newly added tags.
+
+[TIP]
+Tags defined under the group tag will be visible under the task instead of the group tag itself.
+
 ==== Import a project list: `import`
 Use this function when importing a project list shared by a friend to import additional projects and tasks on top of your current project list.
 
