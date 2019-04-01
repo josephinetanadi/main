@@ -44,21 +44,16 @@ public class ImportCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException, DataConversionException {
         requireNonNull(model);
-        if (!LogicManager.getState()) {
-            Optional<ReadOnlyProjectList> projectListToAdd = readProjectList();
-            for (Project project : projectListToAdd.get().getProjectList()) {
-                if (model.hasProject(project)) {
-                    throw new CommandException(MESSAGE_DUPLICATE_PROJECT);
-                }
-                model.addProject(project);
+        Optional<ReadOnlyProjectList> projectListToAdd = readProjectList();
+        for (Project project : projectListToAdd.get().getProjectList()) {
+            if (model.hasProject(project)) {
+                throw new CommandException(MESSAGE_DUPLICATE_PROJECT);
             }
-            model.commitProjectList();
-
-            return new CommandResult(String.format(MESSAGE_SUCCESS_PROJECT,
-                    projectListToAdd.get().getProjectList().size()));
-        } else {
-            return new CommandResult(String.format(Messages.MESSAGE_RETURN_TO_PROJECT_LEVEL, COMMAND_WORD));
+            model.addProject(project);
         }
+        model.commitProjectList();
+        return new CommandResult(String.format(MESSAGE_SUCCESS_PROJECT,
+                projectListToAdd.get().getProjectList().size()));
     }
 
     /**
