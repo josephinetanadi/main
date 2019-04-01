@@ -182,8 +182,7 @@ public class VersionedProject extends Project {
 
         }
 
-
-   returnString.add(taskReturnString);
+        returnString.add(taskReturnString);
         returnString.add(targetReturnString);
         return returnString;
     }
