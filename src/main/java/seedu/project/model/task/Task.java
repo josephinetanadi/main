@@ -5,9 +5,9 @@ import static seedu.project.commons.util.CollectionUtil.requireAllNonNull;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
-import java.util.Date;
 import java.util.Set;
 
 import seedu.project.model.Name;
@@ -54,8 +54,7 @@ public class Task implements Comparable<Task> {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
             result = dateFormat.parse(s);
-        }
-        catch (ParseException e) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return result;
@@ -73,11 +72,9 @@ public class Task implements Comparable<Task> {
 
         if (thisTaskDate.after(compareTaskDate)) {
             return 1;
-        }
-        else if (compareTaskDate.after(thisTaskDate)) {
+        } else if (compareTaskDate.after(thisTaskDate)) {
             return -1;
-        }
-        else {
+        } else {
             return 0;
         }
     }
