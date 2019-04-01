@@ -14,7 +14,7 @@ image::arhjaye.png[width="150", align="left"]
 {empty}[http://github.com/arhjaye[github]] [<<arhjaye#, portfolio>>]
 
 Role: Team Lead +
-Responsibilities: Logic
+Responsibilities: Logic & Model
 
 '''
 
