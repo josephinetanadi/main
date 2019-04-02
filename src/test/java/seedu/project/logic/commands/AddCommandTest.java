@@ -168,7 +168,7 @@ public class AddCommandTest {
 
         @Override
         public boolean hasGroupTag(GroupTag groupTag) {
-            return false;
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
@@ -183,7 +183,7 @@ public class AddCommandTest {
 
         @Override
         public void addGroupTag(GroupTag groupTag) {
-
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override

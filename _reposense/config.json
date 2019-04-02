@@ -3,27 +3,44 @@
 		{
 			"githubId": "arhjaye",
 			"displayName": "YOW...JIE",
-			"authorNames": ["arhjaye", "yow ren jie", "Yow Ren Jie"]
+			"authorNames": [
+				"arhjaye",
+				"yow ren jie",
+				"Yow Ren Jie"
+			]
 		},
 		{
 			"githubId": "andreathniah",
 			"displayName": "THN...REA",
-			"authorNames": ["andreathniah", "Andrea Thniah"]
+			"authorNames": [
+				"andreathniah",
+				"Andrea Thniah"
+			]
 		},
 		{
 			"githubId": "gautamrajulu",
 			"displayName": "SAN...ULU",
-			"authorNames": ["gautamrajulu", "Gautam Rajulu"]
+			"authorNames": [
+				"gautamrajulu",
+				"Gautam Rajulu"
+			]
 		},
 		{
 			"githubId": "rachellim10",
 			"displayName": "RAC... YU",
-			"authorNames": ["rachellim10", "Rachel Lim Fang Yu"]
+			"authorNames": [
+				"rachellim10",
+				"Rachel Lim Fang Yu"
+			]
 		},
 		{
 			"githubId": "josephinetanadi",
 			"displayName": "JOS...ADI",
-			"authorNames": ["josephinetanadi", "Josephine Tanadi"]
+			"authorNames": [
+				"josephinetanadi",
+				"Josephine Tanadi",
+				"081888"
+			]
 		}
 	]
 }
