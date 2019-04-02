@@ -18,7 +18,7 @@ NoteNote is a desktop project application used for managing multiple projects an
 ** Justification: This feature allows users to share projects with another user without the other user having to add projects and tasks manually.
 ** Highlights: The implementation was challenging as it requires us to change the current Storage Model to contain both projects and tasks.
 
-* *Major enhancement*: added *another layer of *
+* *Major enhancement*: *modified UI, Logic, Model and Storage components to suit NoteNote*
 ** What it does: loads project list upon start up and allows navigation between projects and tasks.
 ** Justification: This feature provides the background logic for users to interact with multiple projects and multiple tasks within each individual projects.
 ** Highlights: The implementation was challenging as it requires us to modify all existing components to suit our application.
