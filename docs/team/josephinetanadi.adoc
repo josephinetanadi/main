@@ -28,12 +28,12 @@ NoteNote is a desktop project application used for managing multiple projects an
 ** Updated the storage to store tasks within project and project within project list
 ** Minor modification to Add, Edit, Select, Delete and Clear command to support new project list model
 
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://nuscs2113-ay1819s2.github.io/dashboard-beta/#search=josephinetanadi[Functional code]]
 
 * *Other contributions*:
 
 ** Enhancements to existing features:
-*** Modified tests for existing features:
+*** Modified system tests for existing features:
 ** Documentation:
 *** Did cosmetic tweaks to existing contents of the User Guide:
 *** Did cosmetic tweaks to existing contents of the Developer Guide:
