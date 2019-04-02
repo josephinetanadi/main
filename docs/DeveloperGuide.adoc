@@ -402,25 +402,58 @@ Else Step 4. will continue to run to look for another version of the chosen task
 ** Cons: Harder to implement, can be considered for future version in v2.0
 // end::Comparetaskfeature[]
 
-// tag::listtags[]
+// tag::listtag[]
 === List Tag feature
 ==== Current Implementation
 
-[NOTE]
-This is not the final version of implementation as it is yet to be of OOP format. At this moment, this section lists down what have been done.
+Step 1: User starts to list all tags and their relevant tasks by `listtag`. `ListTagCommand` retrieves result of `Model#filteredTaskList()` and iterate through all the tasks and obtain a list of unique tags within each project state.
 
-Currently, the bulk of the list tag mechanism is faciliated at the `ListCommand`. It retrieves the result of `filteredTaskList` and cleans the result to get a list of unique tags. This result is stored in an `List<Tag>` which is then converted to a `Set<Tag>` to remove any duplicate entries.
-
-Through the list of unique tags, task names with the same tags are concatenated and eventually displayed to the `CommandResult`
+Step 2: Through this list of unique tags and another iteration through all tasks, task names with the same tags are concatenated to a string and displayed to `CommandResult`
 
 ==== Design Considerations
 
-* **Alternative 1 (current choice):** All cleaning of data and display will be handled by one file.
+* **Alternative 1 (current choice):** `getFilteredTaskList` to retrieve relevant information.
 ** Pros: Easy to implement.
-** Cons: Not of OOP standard. Have to parse through the result of `getFilteredTaskList` to retrieve relevant information.
+** Cons: Data from `getFilteredTaskList` have to be parsed and clean all in one file.
 * **Alternative 2:** Cleaning of data to be done at their respective/relevant class files.
 ** Pros: Will not clutter `ListTagCommand` file.
 // end::listtag[]
+
+// tag::definetag[]
+=== Define Tag feature
+==== Current Implementation
+
+The `definetag` feature allows users to create a group tag and add multiple child tags into it. It should be used in conjuction with `addtag` feature.
+
+Step 1: User creates new group tag and its associated children tag with `definetag`. `DefineTagCommandParser` create a new `GroupTag` object that contains the group tag’s name and its associated tags and return them to `DefineTagCommand`.
+
+Step 2: `DefineTagCommand` checks if GroupTag is unique via `Model#hasGroupTag` and adds the object to the model with `Model#addGroupTag` and `Model#commitProjectList` if it is.
+
+==== Design Considerations
+
+* **Alternative 1 (current choice):** Results of define tag is not stored.
+** Pros: Easy to implement.
+** Cons: Created group tag is lost once the NoteNote instance is restarted.
+* **Alternative 2:** Storing results of define tag.
+** Pros: Created group tag can be used between all instances of NoteNote.
+** Cons: Harder to implement.
+// end::definetag[]
+
+// tag::addtag[]
+=== Add Tag feature
+==== Current Implementation
+
+The `addtag` feature allows users to apply existing group tag to multiple tasks. It should be used in conjuction with `definetag` feature.
+
+Step 1: User selects task index and its favoured group tag with `addtag`. `AddTagCommandParser` parses the arguements and return them `AddTagCommand#AddTagCommand()`
+
+Step 2: `AddTagCommand` gets a updated task list with `Model#getFilteredTaskList()` and iterate to add tags in the `GroupTag` object to chosen task.
+
+==== Design Considerations
+
+* **Alternative 1 (current choice):** Results is stored.
+** Pros: Easy to implement.
+// end::addtag[]
 
 // tag::ViewTaskHistory[]
 === View Task Edit History Feature
