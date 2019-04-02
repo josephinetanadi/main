@@ -402,6 +402,21 @@ Else Step 4. will continue to run to look for another version of the chosen task
 ** Cons: Harder to implement, can be considered for future version in v2.0
 // end::Comparetaskfeature[]
 
+// tag::list[]
+=== List Feature
+==== Current Implementation
+
+Step 1: User uses list feature in task level to list all tasks and in project level to list all projects/
+
+Step 2: Program retrieves an updated version of `Model#filteredTaskList()` via `Model#updateFilteredTaskList()`.
+
+==== Design Considerations
+
+* **Current Choice: ** Check which level the program is on before retrieving the relevant list and displaying it
+
+** Pros: Single command for two levels
+// end::list[]
+
 // tag::listtag[]
 === List Tag feature
 ==== Current Implementation

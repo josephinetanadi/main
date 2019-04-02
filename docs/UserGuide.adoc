@@ -124,7 +124,7 @@ Examples:
 Outcome: Project Box (Panel C) will show the updated project with the new name.
 
 ==== List projects: `listprojects`
-Lists all projects within project list
+Lists all projects, is also used to switch back to project list from task list.
 
 * Format: `listproject`
 * Alias: `lp`, i.e. `listproject` is equivalent to `lp`
@@ -308,6 +308,13 @@ Examples:
 * `find Research`
 
 Outcome: Returns tasks containing the keyword `Research`. Task Box (Panel D) will be updated to display only tasks that matches the keyword.
+
+==== Listing all tasks: `list`
+Lists all tasks in the current project. Can also be used to show all tasks after finding a specific tasks
+
+* Format: `list`
+
+* Alias: `l`, i.e. `list` is equivalent to `l`
 
 ==== Deleting a task: `delete`
 
