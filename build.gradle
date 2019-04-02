@@ -77,7 +77,7 @@ dependencies {
 }
 
 shadowJar {
-    archiveName = 'project.jar'
+    archiveName = 'NoteNote.jar'
 
     destinationDir = file("${buildDir}/jar/")
 }
