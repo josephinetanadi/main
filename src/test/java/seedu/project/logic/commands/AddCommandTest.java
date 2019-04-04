@@ -167,6 +167,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<GroupTag> getGroupTagList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public boolean hasGroupTag(GroupTag groupTag) {
             throw new AssertionError("This method should not be called.");
         }

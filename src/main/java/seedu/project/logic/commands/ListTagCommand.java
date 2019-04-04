@@ -20,6 +20,7 @@ import seedu.project.model.task.Task;
  * Lists all unique tags and their tasks to the user.
  */
 public class ListTagCommand extends Command {
+    public static final String COMMAND_ALIAS = "lt";
     public static final String COMMAND_WORD = "listtag";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Shows a list of all available tags prefix and its related tasks. " + "Example: " + COMMAND_WORD;
@@ -45,17 +46,18 @@ public class ListTagCommand extends Command {
         uniqueTagList.addAll(uniqueTagSet);
 
         // arrange print string
-        List<String> stringToPrint = new ArrayList<>();
-        uniqueTagList.forEach(entry -> {
-            stringToPrint.add(entry.toStringWithoutBrackets());
-            filteredTasks.forEach(task -> {
-                if (task.getTags().contains(entry)) {
-                    stringToPrint.add(task.getName().toString());
+        String stringToPrint = "";
+        for (Tag tag : uniqueTagList) {
+            stringToPrint += tag.toStringWithoutBrackets() + ": ";
+            for (Task task : filteredTasks) {
+                if (task.getTags().contains(tag)) {
+                    stringToPrint += "[" + task.getName().toString() + "]";
                 }
-            });
-        });
+            }
+            stringToPrint += "\n";
+        }
 
-        return new CommandResult(stringToPrint.toString());
+        return new CommandResult(stringToPrint);
     }
 
 }
