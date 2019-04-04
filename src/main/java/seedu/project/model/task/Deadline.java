@@ -9,13 +9,21 @@ import static seedu.project.commons.util.AppUtil.checkArgument;
  */
 public class Deadline {
 
-    public static final String MESSAGE_CONSTRAINTS = "Deadline can take any values, and it should not be blank";
+    public static final String MESSAGE_CONSTRAINTS = "Deadline can take any values in the"
+            + " form of DD-MM-YYYY and it should not be blank \n"
+            + "DD -> 01 - 30 for Apr / Jun / Sep / Nov / Dec \n"
+            + "DD -> 01 - 31 for Jan / Mar / May / Jul / Aug / Oct \n"
+            + "DD -> 01 - 29 for Feb 2020 \n"
+            + "DD -> 01 - 28 for Feb 2019 / 2021\n"
+            + "MM -> 01 - 12 \n"
+            + "YYYY -> 2019 - 2021 \n";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "^[0-3]?[0-9]-[0-3]?[0-9]-(?:[0-9]{2})?[0-9]{2}$";
+    public static final String VALIDATION_REGEX = "^(3[01]|[12][0-9]|0[1-9])-(1[0-2]|0[1-9])-"
+            + "(20[1][9]|202[01])$";
 
     public final String value;
 
