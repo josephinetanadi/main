@@ -43,7 +43,7 @@ public class AnalyseCommand extends Command {
                     numTasksPerProject += 1;
                 }
                 toPrint += countCompleted + " tasks completed. ";
-                float percentageCompleted = ((float)countCompleted / (float)numTasksPerProject) * 100;
+                float percentageCompleted = ((float) countCompleted / (float) numTasksPerProject) * 100;
                 toPrint += "(Percentage of project completed: " + String.format("%.1f", percentageCompleted) + "%)\n";
             }
             return new CommandResult(toPrint);
