@@ -46,8 +46,7 @@ public class AddTagCommand extends Command {
 
         if (!LogicManager.getState()) {
             throw new CommandException(String.format(Messages.MESSAGE_GO_TO_TASK_LEVEL, COMMAND_WORD));
-        }
-        else if (index.getZeroBased() >= lastShownList.size()) {
+        } else if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
@@ -68,7 +67,7 @@ public class AddTagCommand extends Command {
             }
         });
 
-        if (!groupExists[0]){
+        if (!groupExists[0]) {
             throw new CommandException(String.format(MESSAGE_GROUPTAG_NOT_FOUND, this.groupTag));
         }
         model.setTask(targetTask, taskToComplete);
