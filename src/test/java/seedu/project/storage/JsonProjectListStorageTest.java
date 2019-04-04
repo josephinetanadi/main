@@ -3,12 +3,8 @@ package seedu.project.storage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static seedu.project.testutil.TypicalTasks.CP2106;
-import static seedu.project.testutil.TypicalTasks.FEEDBACK;
-import static seedu.project.testutil.TypicalTasks.LECTURE;
-import static seedu.project.testutil.TypicalTasks.SAMPLE2;
-import static seedu.project.testutil.TypicalTasks.TUTORIAL;
 import static seedu.project.testutil.TypicalTasks.CS2101;
-import static seedu.project.testutil.TypicalTasks.getTypicalProject;
+import static seedu.project.testutil.TypicalTasks.SAMPLE2;
 import static seedu.project.testutil.TypicalTasks.getTypicalProjectList;
 
 import java.io.IOException;
@@ -101,7 +97,8 @@ public class JsonProjectListStorageTest {
      */
     private void saveProjectList(ReadOnlyProjectList projectList, String filePath) {
         try {
-            new JsonProjectListStorage(Paths.get(filePath)).saveProjectList(projectList, addToTestDataPathIfNotNull(filePath));
+            new JsonProjectListStorage(Paths.get(filePath)).saveProjectList(projectList,
+                    addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }

@@ -45,7 +45,7 @@ public class ImportCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException, DataConversionException {
         requireNonNull(model);
-        if(FileUtil.isFileExists(toAdd)) {
+        if (FileUtil.isFileExists(toAdd)) {
             Optional<ReadOnlyProjectList> projectListToAdd = readProjectList();
             for (Project project : projectListToAdd.get().getProjectList()) {
                 if (model.hasProject(project)) {
