@@ -342,14 +342,25 @@ The entire project list could be found in *_./data/projectlist.json_*
 
 ==== Design Considerations
 
-===== Aspect: Tracking projects within project list and tasks within each project
+|===
+|*Consideration*|*Alternative one*|*Alternative two*
+|Method of tracking multiple projects within project list and multiple tasks within each project
+a|Each project will have its own *_<Project File>.json_* to keep track of tasks.
 
-* **Alternative 1:** Each project will have its own *_<Project File>.json_* to keep track of tasks.
-** Pros: Easy to implement.
-** Cons: May clutter data folder with too many project files. Application will have to read a new project file whenever user switches project.
-* **Alternative 2 (current choice):** All projects within project list and all tasks of all projects contained in *_project.json_* file.
+* Pros: Easy to implement.
+
+* Cons: May clutter data folder with too many project files. Application will have to read a new project file whenever user switches project.
+
+a|*Current Choice*
+
+All projects within project list and all tasks of all projects contained in *_project.json_* file.
+
 ** Pros: Will not clutter data folder.
+
 ** Cons: Entire project list has to be written to file every time project list is modified.
+
+This option was chosen as it facilitates importing and exporting projects to one file only.
+|===
 // end::importexport[]
 
 // tag::Comparetaskfeature[]
