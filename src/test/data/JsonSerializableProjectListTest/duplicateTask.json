@@ -5,13 +5,13 @@
     "tasks" : [ {
       "name": "Group meeting",
       "description": "find teammates for group discussion on presentation",
-      "deadline": "1-1-2011",
+      "deadline": "1-01-2019",
       "tagged": ["TYPICAL"]
     },
       {
         "name": "Group meeting",
         "description": "find teammates for group discussion on presentation",
-        "deadline": "1-1-2011",
+        "deadline": "1-01-2019",
         "tagged": ["TYPICAL"]
       } ]
   } ]

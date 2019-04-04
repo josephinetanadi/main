@@ -5,7 +5,6 @@ import static seedu.project.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.project.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.project.logic.commands.CommandTestUtil.showProjectAtIndex;
 import static seedu.project.testutil.TypicalIndexes.INDEX_FIRST_TASK;
-import static seedu.project.testutil.TypicalIndexes.INDEX_SECOND_TASK;
 import static seedu.project.testutil.TypicalTasks.getTypicalProjectList;
 
 import java.nio.file.Path;
@@ -55,13 +54,11 @@ public class ExportCommandTest {
     public void execute_validIndexUnfilteredList_success() throws Exception {
         Set<Index> idxToExport = new HashSet<>();
         idxToExport.add(INDEX_FIRST_TASK);
-        idxToExport.add(INDEX_SECOND_TASK);
         assertExecutionSuccess(idxToExport, projectListStorage.getProjectListFilePath());
         ReadOnlyProjectList retrieved = projectListStorage.readProjectList().get();
 
         ProjectList expectedOutput = new ProjectList();
         expectedOutput.addProject(model.getFilteredProjectList().get(0));
-        expectedOutput.addProject(model.getFilteredProjectList().get(1));
         assertEquals(expectedOutput, new ProjectList(retrieved));
     }
 

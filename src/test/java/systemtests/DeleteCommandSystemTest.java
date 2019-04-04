@@ -8,7 +8,7 @@ import static seedu.project.testutil.TestUtil.getMidIndex;
 import static seedu.project.testutil.TestUtil.getTask;
 import static seedu.project.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import seedu.project.commons.core.Messages;
 import seedu.project.commons.core.index.Index;
@@ -25,7 +25,7 @@ public class DeleteCommandSystemTest extends ProjectSystemTest {
     /**
      * Just for the sake of it
      */
-    @Test
+    //@Test
     public void delete() {
         /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
 
