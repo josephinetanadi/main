@@ -23,12 +23,14 @@ public class TaskBuilder {
     private Description description;
     private Deadline deadline;
     private Set<Tag> tags;
+    private int taskId;
 
     public TaskBuilder() {
         name = new Name(DEFAULT_NAME);
         description = new Description(DEFAULT_DESCRIPTION);
         deadline = new Deadline(DEFAULT_DEADLINE);
         tags = new HashSet<>();
+        taskId = 0;
     }
 
     /**
@@ -39,6 +41,7 @@ public class TaskBuilder {
         description = taskToCopy.getDescription();
         deadline = taskToCopy.getDeadline();
         tags = new HashSet<>(taskToCopy.getTags());
+        taskId = taskToCopy.getTaskId();
     }
 
     /**
