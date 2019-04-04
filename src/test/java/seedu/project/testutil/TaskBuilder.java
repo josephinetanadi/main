@@ -17,7 +17,7 @@ public class TaskBuilder {
 
     public static final String DEFAULT_NAME = "Milestone edit";
     public static final String DEFAULT_DESCRIPTION = "config labels, milestone, project board edit";
-    public static final String DEFAULT_DEADLINE = "1-1-2011";
+    public static final String DEFAULT_DEADLINE = "01-01-2019";
 
     private Name name;
     private Description description;
