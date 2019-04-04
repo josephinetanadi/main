@@ -32,6 +32,7 @@ public class AnalyseCommand extends Command {
         if (!LogicManager.getState()) {
             for (Project project: filteredProjects) {
                 int countCompleted = 0;
+                int numTasksPerProject = 0;
                 toPrint += project.getName().toString() + ": ";
                 ObservableList<Task> filteredTasks = project.getTaskList();
 
@@ -39,8 +40,11 @@ public class AnalyseCommand extends Command {
                     if (task.getTags().contains(new Tag("completed"))) {
                         countCompleted += 1;
                     }
+                    numTasksPerProject += 1;
                 }
-                toPrint += countCompleted + " tasks completed.\n";
+                toPrint += countCompleted + " tasks completed. ";
+                float percentageCompleted = ((float)countCompleted / (float)numTasksPerProject) * 100;
+                toPrint += "(Percentage of project completed: " + String.format("%.1f", percentageCompleted) + "%)\n";
             }
             return new CommandResult(toPrint);
         } else {
