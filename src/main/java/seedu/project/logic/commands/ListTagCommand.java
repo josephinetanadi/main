@@ -8,7 +8,10 @@ import java.util.List;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.project.commons.core.Messages;
 import seedu.project.logic.CommandHistory;
+import seedu.project.logic.LogicManager;
+import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Task;
@@ -22,10 +25,13 @@ public class ListTagCommand extends Command {
             + ": Shows a list of all available tags prefix and its related tasks. " + "Example: " + COMMAND_WORD;
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history) {
+    public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
         ObservableList<Task> filteredTasks = model.getFilteredTaskList();
-        System.out.println(filteredTasks);
+
+        if (!LogicManager.getState()) {
+            throw new CommandException(String.format(Messages.MESSAGE_GO_TO_TASK_LEVEL, COMMAND_WORD));
+        }
 
         // get set of unique tags
         List<Tag> allTags = new ArrayList<>();
@@ -46,7 +52,6 @@ public class ListTagCommand extends Command {
                 if (task.getTags().contains(entry)) {
                     stringToPrint.add(task.getName().toString());
                 }
-                System.out.println(stringToPrint);
             });
         });
 

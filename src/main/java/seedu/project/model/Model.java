@@ -65,7 +65,7 @@ public interface Model {
     ReadOnlyProjectList getProjectList();
 
     /**
-     * Returns true if a project with the same identity as {@code project} exists in the
+     * Returnsli true if a project with the same identity as {@code project} exists in the
      * project.
      */
     boolean hasProject(Project project);
@@ -77,7 +77,8 @@ public interface Model {
     boolean hasGroupTag(GroupTag groupTag);
 
     /**
-     * Deletes the given task. The task must exist in the project.
+     * Deletes the given task. The task../../
+     * must exist in the project.
      */
     void deleteProject(Project project);
 
