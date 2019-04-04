@@ -136,6 +136,22 @@ public class CommandTestUtil {
     }
 
     /**
+     * Updates {@code model}'s filtered list to show only the project at the given {@code targetIndex} in the
+     * {@code model}'s project list.
+     */
+    public static void showProjectAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredProjectList().size());
+
+        Project project = model.getFilteredProjectList().get(targetIndex.getZeroBased());
+        final String[] splitName = project.getName().fullName.split("\\s+");
+        //2nd index is chosen because sample project names are "Sample project 1" and "Sample project 2"
+        model.updateFilteredProjectList(new seedu.project.model.project.NameContainsKeywordsPredicate(Arrays
+                .asList(splitName[2])));
+
+        assertEquals(1, model.getFilteredProjectList().size());
+    }
+
+    /**
      * Updates {@code model}'s filtered list to show only the task at the given {@code targetIndex} in the
      * {@code model}'s project.
      */

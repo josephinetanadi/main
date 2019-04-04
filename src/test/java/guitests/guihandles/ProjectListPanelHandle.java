@@ -18,8 +18,8 @@ public class ProjectListPanelHandle extends NodeHandle<ListView<Project>> {
 
     private Optional<Project> lastRememberedSelectedProjectCard;
 
-    public ProjectListPanelHandle(ListView<Project> ProjectListPanelNode) {
-        super(ProjectListPanelNode);
+    public ProjectListPanelHandle(ListView<Project> projectListPanelNode) {
+        super(projectListPanelNode);
     }
 
     /**
@@ -65,13 +65,13 @@ public class ProjectListPanelHandle extends NodeHandle<ListView<Project>> {
     /**
      * Navigates the listview to display {@code Project}.
      */
-    public void navigateToCard(Project Project) {
-        if (!getRootNode().getItems().contains(Project)) {
+    public void navigateToCard(Project project) {
+        if (!getRootNode().getItems().contains(project)) {
             throw new IllegalArgumentException("Project does not exist.");
         }
 
         guiRobot.interact(() -> {
-            getRootNode().scrollTo(Project);
+            getRootNode().scrollTo(project);
         });
         guiRobot.pauseForHuman();
     }

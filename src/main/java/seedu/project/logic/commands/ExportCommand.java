@@ -2,7 +2,6 @@ package seedu.project.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.project.commons.core.Messages.MESSAGE_GO_TO_TASK_LEVEL;
-import static seedu.project.logic.commands.ImportCommand.MESSAGE_DUPLICATE_PROJECT;
 import static seedu.project.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.project.logic.parser.CliSyntax.PREFIX_OUTPUT;
 
@@ -36,6 +35,7 @@ public class ExportCommand extends Command {
             + PREFIX_OUTPUT + "./data/output.json";
 
     public static final String MESSAGE_SUCCESS_PROJECT = "Project exported: %1$s";
+    public static final String MESSAGE_DUPLICATE_PROJECT = "This project already exists in the project list";
 
     private final Set<Index> projectIdx;
     private final ProjectList projectsToExport = new ProjectList();
@@ -71,7 +71,7 @@ public class ExportCommand extends Command {
                 saveProjectList();
                 return new CommandResult(String.format(MESSAGE_SUCCESS_PROJECT, 1));
             } else {
-                return new CommandResult(String.format(MESSAGE_GO_TO_TASK_LEVEL, COMMAND_WORD));
+                throw new CommandException(String.format(MESSAGE_GO_TO_TASK_LEVEL, COMMAND_WORD));
             }
         } else {
             List<Project> lastShownList = model.getFilteredProjectList();
@@ -82,11 +82,6 @@ public class ExportCommand extends Command {
                 }
 
                 Project project = lastShownList.get(index.getZeroBased());
-
-                if (projectsToExport.hasProject(project)) {
-                    throw new CommandException(MESSAGE_DUPLICATE_PROJECT);
-                }
-
                 projectsToExport.addProject(project);
             }
             saveProjectList();
