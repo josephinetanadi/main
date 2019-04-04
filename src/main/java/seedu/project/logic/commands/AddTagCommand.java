@@ -58,7 +58,7 @@ public class AddTagCommand extends Command {
         targetTask.updateTaskId(taskId);
 
         Boolean[] groupExists = {false};
-        model.getProjectList().getGroupTagList().forEach(groupTag -> {
+        model.getGroupTagList().forEach(groupTag -> {
             if (groupTag.getName().toString().equals(this.groupTag)) {
                 groupTag.getTags().forEach(tag -> {
                     taskToComplete.addTag(tag);

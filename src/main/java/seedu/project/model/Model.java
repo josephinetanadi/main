@@ -70,6 +70,9 @@ public interface Model {
      */
     boolean hasProject(Project project);
 
+    /** Returns the ProjectList */
+    ObservableList<GroupTag> getGroupTagList();
+
     /**
      * Returns true if a GroupTag with the same identity as {@code GroupTag} exists in the
      * project.
