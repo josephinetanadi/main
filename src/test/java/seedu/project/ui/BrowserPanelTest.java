@@ -35,7 +35,8 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         // associated web page of a task
         guiRobot.interact(() -> selectedTask.set(CS2101_MILESTONE));
-        URL expectedTaskUrl = new URL(BrowserPanel.DEFAULT_PAGE.toString());
+        URL expectedTaskUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + CS2101_MILESTONE.getName().fullName
+                .replaceAll(" ", "%20"));
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedTaskUrl, browserPanelHandle.getLoadedUrl());

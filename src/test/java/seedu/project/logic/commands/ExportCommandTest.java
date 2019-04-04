@@ -107,10 +107,11 @@ public class ExportCommandTest {
     }
 
     @Test
-    public void execute_unselectedProjectUnfilteredList_failure() throws Exception {
+    public void execute_unselectedProjectUnfilteredList_failure() {
         LogicManager.setState(false);
         model.setSelectedProject(null);
-        assertExecutionFailure(projectListStorage.getProjectListFilePath(), Messages.MESSAGE_GO_TO_TASK_LEVEL);
+        assertExecutionFailure(projectListStorage.getProjectListFilePath(),
+                String.format(Messages.MESSAGE_GO_TO_TASK_LEVEL, ExportCommand.COMMAND_WORD));
     }
 
     /**
