@@ -156,7 +156,8 @@ Outcome: Result Box (Panel B) will will display all unique tags and associated t
 
 ==== Defining a group tag: `definetag`
 
-Define a group tag when you want to add multiple identical tags to multiple tasks easily.
+Define a group tag when you want to add multiple identical tags to multiple tasks easily. They can be carried out at both project and task level.
+However, group tag created exists for the entire NoteNote instance and will be lost once the user exits.
 
 After defining a group tag, use the addtag command to add a group tag to a task of your choice.
 
@@ -165,9 +166,17 @@ After defining a group tag, use the addtag command to add a group tag to a task 
 
 Example:
 
-* `definetag gt/SAMPLE t/TAG1 t/TAG2`
+* `definetag gt/Consultation t/Prepare demo t/Prepare questions`
 
-Outcome: A group tag called SAMPLE will be created which would contain tags TAG1 and TAG2.
+Outcome: A group tag called Consultation will be created which would contain tags Prepare demo and Prepare questions.
+
+[NOTE]
+====
+Group tags are only considered as duplicates in the following situations where both the group tag and child tags are identical:
+
+** `definetag gt/sample t/TAG0`
+** `definetag gt/sample t/TAG0`
+====
 
 ==== Adding a group tag: `addtag`
 
@@ -178,12 +187,20 @@ Add a previously defined group tag to a task.
 
 Example:
 
-* `addtag 1 gt/SAMPLE`
+* `addtag 1 gt/Consultation`
 
 Outcome: Task Box (Panel D) will show the updated task with newly added tags.
 
 [TIP]
 Tags defined under the group tag will be visible under the task instead of the group tag itself.
+
+[NOTE]
+====
+In cases where the user input pre-defined group tags of the following, `addtag INDEX gt/sample` command would apply tags both TAG1 and TAG2 to task at index 1
+
+* `definetag gt/sample t/TAG1`
+* `definetag gt/sample t/TAG2`
+====
 
 ==== Import a project list: `import`
 Use this function when importing a project list shared by a friend to import additional projects and tasks on top of your current project list.
@@ -493,7 +510,7 @@ Outcome: Task Box (Panel B) will display information of current version of the t
 |`list`|List all projects or tasks
 |`listDeadline`| List tasks according to deadline
 |`listproject`|Go back to project list panel from task list panel
-|`listtags`|List all unique tags and associated tasks within a project
+|`listtag`|List all unique tags and associated tasks within a project
 |`redo`|Redo modifications made to task
 |`select`|Select project or task to interact with
 |`taskhistory`|View all modifications made to file

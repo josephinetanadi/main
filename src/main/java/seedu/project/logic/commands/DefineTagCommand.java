@@ -17,9 +17,9 @@ public class DefineTagCommand extends Command {
     public static final String COMMAND_WORD = "definetag";
     public static final String SUCCESS_MESSAGE = "Group tag created: %1$s";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Allows users to define tag parent and its child tags\n"
-            + "Parameters: " + PREFIX_GROUPTAG + "GROUPTAG " + PREFIX_TAG + "TAG\n"
-            + "Example: " + COMMAND_WORD + " " + PREFIX_GROUPTAG + "Graded "
-            + PREFIX_TAG + "HighPriority " + PREFIX_TAG + "ToCheckWithOthers";
+            + "Parameters: " + PREFIX_GROUPTAG + "GROUPTAG " + PREFIX_TAG + "TAG [t/MORETAGS]\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_GROUPTAG + "Consultation "
+            + PREFIX_TAG + "Prepare demo " + PREFIX_TAG + "Prepare questions";
     public static final String MESSAGE_DUPLICATE_GROUPTAG = "This group tag already exists in the group tag list";
 
     private final GroupTag toAdd;
