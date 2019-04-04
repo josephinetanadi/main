@@ -17,9 +17,9 @@ import seedu.project.testutil.TypicalTasks;
 public class JsonSerializableProjectTest {
 
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonSerializableProjectTest");
-    private static final Path TYPICAL_TASKS_FILE = TEST_DATA_FOLDER.resolve("typicalTasksProject.json");
-    private static final Path INVALID_TASK_FILE = TEST_DATA_FOLDER.resolve("invalidTaskProject.json");
-    private static final Path DUPLICATE_TASK_FILE = TEST_DATA_FOLDER.resolve("duplicateTaskProject.json");
+    private static final Path TYPICAL_TASKS_FILE = TEST_DATA_FOLDER.resolve("typicalTasks.json");
+    private static final Path INVALID_TASK_FILE = TEST_DATA_FOLDER.resolve("invalidTask.json");
+    private static final Path DUPLICATE_TASK_FILE = TEST_DATA_FOLDER.resolve("duplicateTask.json");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();

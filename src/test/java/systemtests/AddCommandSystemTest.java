@@ -24,7 +24,7 @@ import static seedu.project.testutil.TypicalTasks.KEYWORD_MATCHING_TEST;
 import static seedu.project.testutil.TypicalTasks.LECTURE;
 import static seedu.project.testutil.TypicalTasks.QUIZ;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import seedu.project.commons.core.Messages;
 import seedu.project.commons.core.index.Index;
@@ -44,7 +44,7 @@ public class AddCommandSystemTest extends ProjectSystemTest {
     /**
      * Just for the sake of it
      */
-    @Test
+    //@Test
     public void add() {
         Model model = getModel();
 

@@ -62,13 +62,13 @@ public class JsonProjectStorageTest {
     @Test
     public void readProject_invalidTaskProject_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
-        readProject("invalidTaskProject.json");
+        readProject("invalidTask.json");
     }
 
     @Test
     public void readProject_invalidAndValidTaskProject_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
-        readProject("invalidAndValidTaskProject.json");
+        readProject("invalidAndValidTask.json");
     }
 
     @Test

@@ -62,6 +62,7 @@ public class DeleteCommand extends Command {
             history.addHistoryTaskId(Integer.toString(taskId));
 
             model.deleteTask(taskToDelete);
+            model.setProject(model.getSelectedProject(), (Project) model.getProject());
             model.commitProject();
             return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, taskToDelete));
         }

@@ -7,12 +7,14 @@ import java.util.Optional;
 
 import seedu.project.commons.exceptions.DataConversionException;
 import seedu.project.commons.exceptions.IllegalValueException;
+import seedu.project.commons.util.FileUtil;
 import seedu.project.commons.util.JsonUtil;
 import seedu.project.logic.CommandHistory;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
 import seedu.project.model.ReadOnlyProjectList;
 import seedu.project.model.project.Project;
+import seedu.project.model.task.exceptions.DuplicateTaskException;
 import seedu.project.storage.JsonSerializableProjectList;
 
 /**
@@ -27,6 +29,7 @@ public class ImportCommand extends Command {
             + "Parameters: PATH " + "Example: " + COMMAND_WORD + " " + "C:\\Users\\Documents\\project.json";
 
     public static final String MESSAGE_SUCCESS_PROJECT = "New project added: %1$s";
+    public static final String MESSAGE_PATH_INVALID = "Path is invalid!";
     public static final String MESSAGE_DUPLICATE_PROJECT = "This project already exists in the project list";
 
     private final Path toAdd;
@@ -42,16 +45,20 @@ public class ImportCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException, DataConversionException {
         requireNonNull(model);
-        Optional<ReadOnlyProjectList> projectListToAdd = readProjectList();
-        for (Project project : projectListToAdd.get().getProjectList()) {
-            if (model.hasProject(project)) {
-                throw new CommandException(MESSAGE_DUPLICATE_PROJECT);
+        if (FileUtil.isFileExists(toAdd)) {
+            Optional<ReadOnlyProjectList> projectListToAdd = readProjectList();
+            for (Project project : projectListToAdd.get().getProjectList()) {
+                if (model.hasProject(project)) {
+                    throw new CommandException(MESSAGE_DUPLICATE_PROJECT);
+                }
+                model.addProject(project);
             }
-            model.addProject(project);
+            model.commitProjectList();
+            return new CommandResult(String.format(MESSAGE_SUCCESS_PROJECT,
+                    projectListToAdd.get().getProjectList().size()));
+        } else {
+            throw new CommandException(MESSAGE_PATH_INVALID);
         }
-        model.commitProjectList();
-        return new CommandResult(String.format(MESSAGE_SUCCESS_PROJECT,
-                projectListToAdd.get().getProjectList().size()));
     }
 
     /**
@@ -67,8 +74,8 @@ public class ImportCommand extends Command {
 
         try {
             return Optional.of(jsonProjectList.get().toModelType());
-        } catch (IllegalValueException ive) {
-            throw new DataConversionException(ive);
+        } catch (IllegalValueException | DuplicateTaskException e) {
+            throw new DataConversionException(e);
         }
     }
 }

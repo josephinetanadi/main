@@ -334,6 +334,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public Project getSelectedProject() {
+            return new Project();
+        }
+
+        @Override
+        public void setProject(Project target, Project editedProject) {
+            // called by {@code AddCommand#execute()}
+        }
+
+        @Override
         public ReadOnlyProject getProject() {
             return new Project();
         }
