@@ -122,6 +122,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public ObservableList<GroupTag> getGroupTagList() {
+        return versionedProjectList.getGroupTagList();
+    }
+
+    @Override
     public boolean hasGroupTag(GroupTag groupTag) {
         requireNonNull(groupTag);
         return versionedProjectList.hasGroupTag(groupTag);

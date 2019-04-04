@@ -137,6 +137,9 @@ public class ProjectParser {
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
 
+        case ListTagCommand.COMMAND_ALIAS:
+            return new ListTagCommand();
+
         case ListTagCommand.COMMAND_WORD:
             return new ListTagCommand();
 
