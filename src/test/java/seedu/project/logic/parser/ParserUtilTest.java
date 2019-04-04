@@ -29,7 +29,7 @@ public class ParserUtilTest {
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "test task";
-    private static final String VALID_DEADLINE = "1-1-2011";
+    private static final String VALID_DEADLINE = "01-01-2019";
     private static final String VALID_DESCRIPTION = "test description";
     private static final String VALID_TAG_1 = "module1";
     private static final String VALID_TAG_2 = "module2";

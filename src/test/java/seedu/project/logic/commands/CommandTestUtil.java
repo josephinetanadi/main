@@ -31,8 +31,8 @@ public class CommandTestUtil {
     public static final String VALID_NAME_CP2106 = "Orbital Project";
     public static final String VALID_DESCRIPTION_CS2101 = "config labels, milestone, project board";
     public static final String VALID_DESCRIPTION_CP2106 = "listings, notifications";
-    public static final String VALID_DEADLINE_CS2101 = "1-1-2011";
-    public static final String VALID_DEADLINE_CP2106 = "20-6-2019";
+    public static final String VALID_DEADLINE_CS2101 = "01-01-2019";
+    public static final String VALID_DEADLINE_CP2106 = "20-06-2019";
     public static final String VALID_TAG_CS2101 = "CS2101";
     public static final String VALID_TAG_CP2106 = "CP2106";
 
