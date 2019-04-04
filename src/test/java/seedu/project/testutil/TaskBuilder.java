@@ -17,18 +17,20 @@ public class TaskBuilder {
 
     public static final String DEFAULT_NAME = "Milestone edit";
     public static final String DEFAULT_DESCRIPTION = "config labels, milestone, project board edit";
-    public static final String DEFAULT_DEADLINE = "1-1-2011";
+    public static final String DEFAULT_DEADLINE = "01-01-2019";
 
     private Name name;
     private Description description;
     private Deadline deadline;
     private Set<Tag> tags;
+    private int taskId;
 
     public TaskBuilder() {
         name = new Name(DEFAULT_NAME);
         description = new Description(DEFAULT_DESCRIPTION);
         deadline = new Deadline(DEFAULT_DEADLINE);
         tags = new HashSet<>();
+        taskId = 0;
     }
 
     /**
@@ -39,6 +41,7 @@ public class TaskBuilder {
         description = taskToCopy.getDescription();
         deadline = taskToCopy.getDeadline();
         tags = new HashSet<>(taskToCopy.getTags());
+        taskId = taskToCopy.getTaskId();
     }
 
     /**

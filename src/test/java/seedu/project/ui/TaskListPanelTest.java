@@ -80,7 +80,7 @@ public class TaskListPanelTest extends GuiUnitTest {
         for (int i = 0; i < taskCount; i++) {
             Name name = new Name(i + "a");
             Description description = new Description("abcd");
-            Deadline deadline = new Deadline("1-1-2011");
+            Deadline deadline = new Deadline("01-01-2019");
             Task task = new Task(name, description, deadline, Collections.emptySet());
             backingList.add(task);
         }

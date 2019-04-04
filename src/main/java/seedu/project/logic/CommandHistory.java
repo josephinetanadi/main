@@ -27,6 +27,7 @@ public class CommandHistory {
 
     public CommandHistory(CommandHistory commandHistory) {
         userInputHistory.addAll(commandHistory.userInputHistory);
+        userInputHistoryTaskId.addAll(commandHistory.userInputHistoryTaskId);
     }
 
     /**

@@ -18,9 +18,9 @@ import seedu.project.model.task.Task;
 public class SampleDataUtil {
     public static Task[] getSampleTasks() {
         return new Task[] {
-            new Task(new Name("Sample task 1"), new Description("This is a sample task"), new Deadline("1-1-2011"),
+            new Task(new Name("Sample task 1"), new Description("This is a sample task"), new Deadline("01-01-2019"),
                 getTagSet("SAMPLE")),
-            new Task(new Name("Sample task 2"), new Description("This is a sample task"), new Deadline("1-1-2011"),
+            new Task(new Name("Sample task 2"), new Description("This is a sample task"), new Deadline("01-01-2019"),
                     getTagSet("SAMPLE"))
         };
     }

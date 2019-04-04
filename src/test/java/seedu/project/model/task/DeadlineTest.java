@@ -30,8 +30,7 @@ public class DeadlineTest {
         assertFalse(Deadline.isValidDeadline(" ")); // spaces only
 
         // valid deadlines
-        assertTrue(Deadline.isValidDeadline("1-1-2011"));
-        assertTrue(Deadline.isValidDeadline("01-01-2011"));
-        assertTrue(Deadline.isValidDeadline("1-01-2011"));
+        assertTrue(Deadline.isValidDeadline("01-01-2019"));
+        assertTrue(Deadline.isValidDeadline("19-12-2019"));
     }
 }
