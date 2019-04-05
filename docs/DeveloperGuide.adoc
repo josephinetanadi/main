@@ -489,7 +489,7 @@ View task edit history allows the user to view a list of all the edit history of
 
 ==== Current Implementation
 
-Stores a parallel list `userInputHistoryTaskId` along `userInputHistory`, containing the taskId of `edit` commands.
+Stores a parallel list `userInputHistoryTaskId` along `userInputHistory`, containing the taskId of `edit`/`completed`/`addtag`/`delete` commands.
 
 The list will store `0` for all other commands.
 

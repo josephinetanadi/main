@@ -3,16 +3,19 @@
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== PROJECT: NoteNotex
+== PROJECT: NoteNote
+
 ---
 
 == Overview
 
-NoteNote is a desktop project application used for managing multiple projects and tasks. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+NoteNote is a desktop project application allowing you to manage multiple projects and tasks. You will interact with it through a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
 == Summary of contributions
 
 * *Major enhancement*: added *the ability to view command history for each individual task*
-** What it does: allows the user to view a command history of a chosen task with the command `taskhistory`. The command history will include commands that have a direct impact on the task (e.g. edit / completed / grouptag / delete)
+** What it does: allows you to view a command history of a chosen task with the command `taskhistory`. The command history will include commands that have a direct impact on the task (e.g. `edit` / `completed` / `addtag` / `delete`)
+
 ** Justification: Current implementation will only allow you to view the command history of every command (valid & invalid) that has been entered.
 But when handling multiple large projects, a user is bound to have numerous edits for the many task that is there.
 In this case the likelihood of a user forgetting / executing a wrong command is very probable. Thus, this feature allows a user
@@ -21,17 +24,19 @@ to view a record of the changes he made for a specific task instead of viewing i
 to the command of the same index in the command history.
 
 * *Minor enhancement*: added *the ability to compare a task to its previous version*
-** What it does: allows the user to view a direct comparison of a chosen task against its previous version before the edit with the command `compare`
-** Justification: To allow easy referencing for a chosen task in a neater method as this feature compares the differences and will only show you the result of the field (Name / Description / Deadline) that was changed, instead of all the field.
-** Highlights: Current undo feature is implemented as general undo for all commands.
-This compare feature serves as a base for a future feature which allows undo for a specific task where a user is able to undo to the version that is shown when `compare` executes.
+** What it does: allows you to view a direct comparison of a chosen task against its previous version before the edit with the command `compare`
+** Justification: To allow easy referencing for a chosen task in a neater method as this feature compares the differences and will only show you the result of the field (Name / Description / Deadline) that was changed, instead of all the fields.
+** Highlights: Current `undo` feature is implemented as general undo for all commands.
+This `compare` feature serves as a base for a future feature which allows `undo` for a specific task.
+ ***   You will be able to `undo` to the version that is shown when `compare` executes.
 
 * *Code contributed*: [https://nuscs2113-ay1819s2.github.io/dashboard-beta/#search=&timeframe=day&reverse=false&groupSelect=groupByRepos&breakdown=false&tabAuthor=arhjaye&tabRepo=CS2113-AY1819S2-T09-3_main_master&sort=displayName&since=2019-02-10&until=2019-04-01[Reposense]]
 
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.2` - `v1.3` (2 releases) on GitHub
+*** Managed releases `v1.2` - `v1.4` (3 releases) on GitHub
+
 *** Ensured deliverable's are met.
 ** Enhancements to existing features:
 *** Fixed existing tests cases to be based on new model infrastructure. (Pull requests https://github.com/CS2113-AY1819S2-T09-3/main/pull/107[#107])
@@ -44,7 +49,11 @@ This compare feature serves as a base for a future feature which allows undo for
 *** Managed formatting for UserGuide to ensure proper structuring and consistency.
 *** Added content for UserGuide for Task Level Commands.
 ** Community:
-*** Reported bugs & solutions to team (examples:  https://github.com/CS2113-AY1819S2-T09-3/main/issues/97[#97], https://github.com/CS2113-AY1819S2-T09-3/main/pull/128[#128], https://github.com/CS2113-AY1819S2-T09-3/main/pull/131[#131])
+*** Reported bugs & solutions to team
+(examples:  https://github.com/CS2113-AY1819S2-T09-3/main/issues/97[#97],
+https://github.com/CS2113-AY1819S2-T09-3/main/pull/128[#128],
+https://github.com/CS2113-AY1819S2-T09-3/main/pull/131[#131],
+https://github.com/CS2113-AY1819S2-T09-3/main/pull/141[#141])
 
 == Contributions to the User Guide
 
