@@ -202,6 +202,7 @@ In cases where the user input pre-defined group tags of the following, `addtag I
 * `definetag gt/sample t/TAG2`
 ====
 
+// tag::import[]
 ==== Import a project list: `import`
 Use this function when importing a project list shared by a friend to import additional projects and tasks on top of your current project list.
 
@@ -216,11 +217,19 @@ Examples:
 
 * `import C:\Users\Test\Desktop\import.json`
 
+.Before executing `import`
+image::BeforeImportCommand.png[width="600"]
+
+.After executing `import`
+image::AfterImportCommand.png[width="600"]
+
 [TIP]
 The full path to the JSON file has to be specified unless the file is contained within the application folder. If JSON file is contained in application folder, `import .\test.json` is sufficient.
 
 Outcome: Projects and tasks contained in JSON file will be imported and added on top of current project list. Command box will display number of projects added to project list.
+// end::import[]
 
+// tag::export[]
 ==== Export projects to JSON file: `export`
 You could export projects from your NoteNote instance to easily share project tasks with your friends. Projects are exported in JSON format and could be imported by another NoteNote instance using `import`.
 
@@ -236,6 +245,7 @@ Examples:
 Output path should be explicitly specified unless the output is to be within the application folder. If output is to be contained in application folder, the `export i/1,2,3 o/.\test.json` is sufficient.
 
 Outcome: JSON file will be created at output path specified.
+// end::export[]
 
 ==== Analyse progress of all projects: `analyse`
 View number of completed and uncompleted tasks of each project.
