@@ -1,44 +1,35 @@
 package seedu.project.ui;
 
-import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
-import static seedu.project.testutil.TypicalTasks.CS2101_MILESTONE;
-
-import java.net.URL;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.BrowserPanelHandle;
-import javafx.beans.property.SimpleObjectProperty;
-import seedu.project.model.project.Project;
-import seedu.project.model.task.Task;
 
 public class BrowserPanelTest extends GuiUnitTest {
-    private SimpleObjectProperty<Project> selectedProject = new SimpleObjectProperty<>();
-    private SimpleObjectProperty<Task> selectedTask = new SimpleObjectProperty<>();
+
     private BrowserPanel browserPanel;
     private BrowserPanelHandle browserPanelHandle;
 
     @Before
     public void setUp() {
-        guiRobot.interact(() -> browserPanel = new BrowserPanel(selectedProject, selectedTask));
+        browserPanel = new BrowserPanel();
         uiPartRule.setUiPart(browserPanel);
 
-        browserPanelHandle = new BrowserPanelHandle(browserPanel.getRoot());
+        browserPanelHandle = new BrowserPanelHandle(getChildNode(browserPanel.getRoot(),
+                BrowserPanelHandle.BROWSER_ID));
     }
 
     @Test
-    public void display() throws Exception {
-        // default web page
-        assertEquals(BrowserPanel.DEFAULT_PAGE, browserPanelHandle.getLoadedUrl());
+    public void display() {
+        // default result text
+        guiRobot.pauseForHuman();
+        assertEquals("", browserPanelHandle.getText());
 
-        // associated web page of a task
-        guiRobot.interact(() -> selectedTask.set(CS2101_MILESTONE));
-        URL expectedTaskUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + CS2101_MILESTONE.getName().fullName
-                .replaceAll(" ", "%20"));
-
-        waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedTaskUrl, browserPanelHandle.getLoadedUrl());
+        // new result received
+        guiRobot.interact(() -> browserPanel.setTaskDetails("Dummy task details"));
+        guiRobot.pauseForHuman();
+        assertEquals("Dummy task details", browserPanelHandle.getText());
     }
 }

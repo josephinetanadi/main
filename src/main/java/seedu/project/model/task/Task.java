@@ -132,6 +132,21 @@ public class Task implements Comparable<Task> {
     }
 
     /**
+     * Returns a new line version of toString() to display in browserPanel
+     */
+    public String browserDisplayToString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getName())
+                .append(" \nDescription: ")
+                .append(getDescription())
+                .append(" \nDeadline: ")
+                .append(getDeadline())
+                .append(" \nTags: ");
+        getTags().forEach(builder::append);
+        return builder.toString();
+    }
+
+    /**
      * Returns true if both tasks have the same identity and data fields.
      * This defines a stronger notion of equality between two tasks.
      */
