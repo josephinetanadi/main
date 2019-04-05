@@ -120,8 +120,7 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel(logic.selectedProjectProperty(), null);
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        browserPanel = new BrowserPanel();
 
         projectListPanel = new ProjectListPanel(logic.getFilteredProjectList(), logic.selectedProjectProperty(),
                 logic::setSelectedProject);
@@ -196,11 +195,17 @@ public class MainWindow extends UiPart<Stage> {
                         logic::setSelectedTask);
                 taskListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
                 projectListPanelPlaceholder.setDisable(true);
+
+                browserPlaceholder.getChildren().clear();
+                browserPlaceholder.getChildren().add(browserPanel.getRoot());
+                browserPanel.setTaskDetails(logic.selectedTaskProperty().getValue().browserDisplayToString());
             }
         } else if (commandText.equals(ListProjectCommand.COMMAND_WORD)
                 || commandText.equals(ListProjectCommand.COMMAND_ALIAS)) {
             taskListPanelPlaceholder.setDisable(true);
             projectListPanelPlaceholder.setDisable(false);
+
+            browserPlaceholder.getChildren().clear();
         }
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getProjectListFilePath(), logic.getProjectList(),
                 logic.getFilteredProjectList().size());

@@ -1,6 +1,5 @@
 package systemtests;
 
-import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -8,8 +7,6 @@ import static seedu.project.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.project.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.project.ui.testutil.GuiTestAssert.assertListMatching;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -28,6 +25,7 @@ import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.ProjectListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
+import guitests.guihandles.TaskCardHandle;
 import guitests.guihandles.TaskListPanelHandle;
 
 import seedu.project.TestApp;
@@ -39,7 +37,6 @@ import seedu.project.logic.commands.SelectCommand;
 import seedu.project.model.Model;
 import seedu.project.model.ProjectList;
 import seedu.project.testutil.TypicalTasks;
-import seedu.project.ui.BrowserPanel;
 import seedu.project.ui.CommandBox;
 
 /**
@@ -68,8 +65,6 @@ public abstract class ProjectSystemTest {
         setupHelper = new SystemTestSetupHelper();
         testApp = setupHelper.setupApplication(this::getInitialProjectList, getProjectListSaveLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
-
-        waitUntilBrowserLoaded(getBrowserPanel());
         assertApplicationStartingStateIsCorrect();
     }
 
@@ -137,8 +132,6 @@ public abstract class ProjectSystemTest {
         mainWindowHandle.getCommandBox().run(command);
 
         mainWindowHandle.refreshMainWindow();
-
-        waitUntilBrowserLoaded(getBrowserPanel());
     }
 
     /**
@@ -200,7 +193,6 @@ public abstract class ProjectSystemTest {
      */
     private void rememberStates() {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
-        getBrowserPanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getTaskListPanel().rememberSelectedTaskCard();
@@ -209,40 +201,34 @@ public abstract class ProjectSystemTest {
     /**
      * Asserts that the previously selected card is now deselected and the browser's url is now displaying the
      * default page.
-     * @see BrowserPanelHandle#isUrlChanged()
      */
     protected void assertSelectedCardDeselected() {
-        assertEquals(BrowserPanel.DEFAULT_PAGE, getBrowserPanel().getLoadedUrl());
+        assertEquals("", getBrowserPanel().getText());
         assertFalse(getTaskListPanel().isAnyCardSelected());
     }
 
     /**
      * Asserts that the browser's url is changed to display the details of the task in the task list panel at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
-     * @see BrowserPanelHandle#isUrlChanged()
      * @see TaskListPanelHandle#isSelectedTaskCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
         getTaskListPanel().navigateToCard(getTaskListPanel().getSelectedCardIndex());
-        String selectedCardName = getTaskListPanel().getHandleToSelectedCard().getName();
-        URL expectedUrl;
-        try {
-            expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + selectedCardName.replaceAll(" ", "%20"));
-        } catch (MalformedURLException mue) {
-            throw new AssertionError("URL expected to be valid.", mue);
-        }
-        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
+        TaskCardHandle selectedCardName = getTaskListPanel().getHandleToSelectedCard();
+        String expectedBrowserPanel = selectedCardName.getName()
+                + " \nDescription: " + selectedCardName.getDescription()
+                + " \nDeadline: " + selectedCardName.getDeadline()
+                + " \nTags: " + selectedCardName.getTags();
+        assertEquals(expectedBrowserPanel, getBrowserPanel().getText());
 
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getTaskListPanel().getSelectedCardIndex());
     }
 
     /**
      * Asserts that the browser's url and the selected card in the task list panel remain unchanged.
-     * @see BrowserPanelHandle#isUrlChanged()
      * @see TaskListPanelHandle#isSelectedTaskCardChanged()
      */
     protected void assertSelectedCardUnchanged() {
-        assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getTaskListPanel().isSelectedTaskCardChanged());
     }
 
@@ -289,7 +275,7 @@ public abstract class ProjectSystemTest {
         assertEquals("", getResultDisplay().getText());
         assertListMatching(getProjectListPanel(), getModel().getFilteredProjectList());
         assertListMatching(getTaskListPanel(), getModel().getFilteredTaskList());
-        assertEquals(BrowserPanel.DEFAULT_PAGE, getBrowserPanel().getLoadedUrl());
+        assertEquals("", getBrowserPanel().getText());
         assertEquals(Paths.get(".").resolve(testApp.getProjectListSaveLocation()).toString(),
                 getStatusBarFooter().getSaveLocation());
         assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
