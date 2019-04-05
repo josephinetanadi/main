@@ -17,7 +17,7 @@ import seedu.project.model.tag.Tag;
  * Represents a Task in the project.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Task implements Comparable<Task> {
+public class Task {
 
     private static int numberOfTask = 0;
 
@@ -43,40 +43,6 @@ public class Task implements Comparable<Task> {
 
         //numberOfTask++;
         this.taskId = hashCode();
-    }
-
-    /**
-     * Converts strings to the date type
-     */
-    private Date stringToDate(String s) {
-
-        Date result = null;
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
-            result = dateFormat.parse(s);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-    /**
-     * Comparator function for tasks
-     */
-    public int compareTo(Task anotherTask) {
-        String thisDeadline = (this.getDeadline()).toString();
-        String compareDeadline = (anotherTask.getDeadline()).toString();
-
-        Date thisTaskDate = stringToDate(thisDeadline);
-        Date compareTaskDate = stringToDate(compareDeadline);
-
-        if (thisTaskDate.after(compareTaskDate)) {
-            return 1;
-        } else if (compareTaskDate.after(thisTaskDate)) {
-            return -1;
-        } else {
-            return 0;
-        }
     }
 
     public int getTaskId() {
