@@ -51,6 +51,7 @@ image::apporg.png[width="790"]
 
 The application has two layers, the project layer and the task layer, as shown in Figure 1 above. There are some commands which work differently based on the layer they are in. This is covered in detail in Sections 6 and 7. The project layer contains all the projects the user has added while the task layer contains the tasks and subtasks assigned to a particular project.
 
+// tag::UIlayout[]
 === User Interface Layout
 
 image::applayout.png[width="790"]
@@ -66,6 +67,7 @@ Panel *A*, *C*, *D* are user-interactable while panels *B*, *E* are non-interact
 Panel A will always be active, allowing you to input your commands at any time.
 
 Upon first opening of the application, your active panel will start from *C*, and only upon choosing a project will your active panel change to *D*.
+// end::UIlayout[]
 
 
 == Quick Start
@@ -448,6 +450,7 @@ new task .
 Outcome: Reverses the `undo` action and adds the task back to the task list. Task
          Box (Panel D) will now display new task once again.
 
+// tag::taskhistory[]
 ==== List previously entered commands for a chosen task: `taskhistory`
 
 Lists all previous commands that directly affected a selected task in reverse
@@ -462,7 +465,9 @@ Example :
 
 Outcome: Results Box (Panel B) will display all previous commands which directly
 affects the task at index 1.
+// end::taskhistory[]
 
+// tag::compare[]
 ==== Compares a task with its previous version: `compare`
 
 Compares a selected task one version before it was edited and show the differences
@@ -487,6 +492,8 @@ Outcome: Task Box (Panel D) will display updated task at index 1 with the new
 Outcome: Task Box (Panel B) will display information of current version of the task at
          index 1 ( _sample task_ ) and the previous version of it ( _sample task edited_ ).
          Allows you to view a direct comparison of what was changed.
+
+// end::compare[]
 
 == FAQ
 

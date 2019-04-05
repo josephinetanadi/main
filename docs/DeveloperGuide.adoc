@@ -363,7 +363,7 @@ This option was chosen as it facilitates importing and exporting projects to one
 |===
 // end::importexport[]
 
-// tag::Comparetaskfeature[]
+// tag::compare[]
 === Compare Task feature
 
 The Compare Task feature allows the user to compare the past iteration of a task before it was edited.
@@ -411,7 +411,7 @@ Else Step 4. will continue to run to look for another version of the chosen task
 * **Alternative 2:** All tasks will have their own "versionedTask", keeping track of its own history per task.
 ** Pros: System performance will be better as you will iterate through lesser data.
 ** Cons: Harder to implement, can be considered for future version in v2.0
-// end::Comparetaskfeature[]
+// end::compare[]
 
 // tag::list[]
 === List Feature
@@ -445,6 +445,7 @@ Step 2: Through this list of unique tags and another iteration through all tasks
 ** Pros: Will not clutter `ListTagCommand` file.
 // end::listtag[]
 
+=======
 // tag::definetag[]
 === Define Tag feature
 ==== Current Implementation
@@ -481,7 +482,7 @@ Step 2: `AddTagCommand` gets a updated task list with `Model#getFilteredTaskList
 ** Pros: Easy to implement.
 // end::addtag[]
 
-// tag::ViewTaskHistory[]
+// tag::taskhistory[]
 === View Task Edit History Feature
 
 View task edit history allows the user to view a list of all the edit history of a chosen task.
@@ -517,7 +518,7 @@ Behaviour when a `edit` command  is called. `CommandHistory#addHistoryTaskId()` 
 * **Alternative 2:** All tasks will have their own `userInputHistoryTaskId`, keeping track of its own edit history.
 ** Pros: System performance will be better as you will iterate through lesser data, will have less wastage of space.
 ** Cons: Harder to implement, can be considered for future version in v2.0
-// end::ViewTaskHistory[]
+// end::taskhistory[]
 
 // tag::calendarview[]
 === [Proposed] Calendar View
