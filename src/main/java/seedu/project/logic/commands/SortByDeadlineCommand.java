@@ -2,33 +2,36 @@ package seedu.project.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.lang.String;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
+import seedu.project.commons.core.Messages;
 import seedu.project.logic.CommandHistory;
 import seedu.project.logic.LogicManager;
-import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
+import seedu.project.model.project.Project;
 import seedu.project.model.task.Task;
+import static seedu.project.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
 /**
  * Lists all tasks sorted ascending according to deadline.
  */
-public class ListByDeadlineCommand extends Command {
-    public static final String COMMAND_WORD = "listDeadline";
+public class SortByDeadlineCommand extends Command {
+    public static final String COMMAND_WORD = "sortDeadline";
+    public static final String COMMAND_ALIAS = "sd";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Shows a list of all available tasks sorted by the deadline" + "Example: " + COMMAND_WORD;
     public static final String MESSAGE_SUCCESS_TASK = "List sorted and displayed";
-    public static final String MESSAGE_WRONG_LAYER = "Please use this command in a specific project";
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
 
         if (!LogicManager.getState()) {
-            return new CommandResult(MESSAGE_WRONG_LAYER);
+            return new CommandResult(Messages.MESSAGE_GO_TO_TASK_LEVEL);
         }
         else {
             //ObservableList of all filteredTasks
@@ -47,13 +50,31 @@ public class ListByDeadlineCommand extends Command {
 
             SortedList<Task> sortedList = filteredTasks.sorted(taskComparator);
 
+            ArrayList<Task> properList = new ArrayList<Task>();
+
+            for (int i = 0; i < size; i++) {
+                properList.add(sortedList.get(i));
+            }
+
             //System.out.println(size);
 
             System.out.println("SortedList:");
 
+            model.clearTasks();
+
             for(int i = 0; i < size; i++) {
-                System.out.println(((sortedList.get(i)).getName()).toString());
+                System.out.println(((properList.get(i)).getName()).toString());
+                model.addTask(properList.get(i));
             }
+
+            model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+
+            model.commitProject();
+
+            //this will not work if user clicks on a different project while on task level??? lock UI at prev panel
+            model.setProject(model.getSelectedProject(), (Project) model.getProject()); //sync project list
+
+            model.commitProjectList();
 
             //System.out.println("FilteredTasks:");
 

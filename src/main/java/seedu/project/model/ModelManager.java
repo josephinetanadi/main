@@ -219,13 +219,6 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public updateFPJ (SortedList<Task> sortedList) {
-        for(int i = 0; i < sortedList.size(); i++) {
-            filteredTasks.set(i, sortedList.get(i));
-        }
-    }
-
-    @Override
     public void updateFilteredProjectList(Predicate<Project> predicate) {
         requireNonNull(predicate);
         filteredProjects.setPredicate(predicate);

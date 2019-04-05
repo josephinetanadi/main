@@ -113,14 +113,17 @@ public class VersionedProject extends Project {
         movingStatePointer--;
         while (movingStatePointer >= 0) {
             int taskIndex = projectStateList.get(movingStatePointer).getIndex(targetTaskId);
-            if (isThereDiff(target1, projectStateList.get(movingStatePointer).getTaskList()
-                    .get(taskIndex))) {
+            if (taskIndex != 0) {
+                if (isThereDiff(target1, projectStateList.get(movingStatePointer).getTaskList()
+                        .get(taskIndex))) {
 
-                return getDiffString(target1, projectStateList.get(movingStatePointer).getTaskList()
-                        .get(taskIndex));
-            } else {
-                movingStatePointer--;
+                    return getDiffString(target1, projectStateList.get(movingStatePointer).getTaskList()
+                            .get(taskIndex));
+                } else {
+                    movingStatePointer--;
+                }
             }
+            movingStatePointer--;
         }
         return null;
     }
