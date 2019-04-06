@@ -48,8 +48,10 @@ public class SelectCommand extends Command {
             model.setProject(filteredProjectList.get(targetIndex.getZeroBased()));
             model.setSelectedProject(filteredProjectList.get(targetIndex.getZeroBased()));
             LogicManager.setState(true);
-            //model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
-            model.setSelectedTask(model.getFilteredTaskList().get(0));
+
+            if (model.getFilteredTaskList().size() > 0) {
+                model.setSelectedTask(model.getFilteredTaskList().get(0));
+            }
             history.clearHistory();
             return new CommandResult(String.format(MESSAGE_SELECT_PROJECT_SUCCESS, targetIndex.getOneBased()));
         } else {

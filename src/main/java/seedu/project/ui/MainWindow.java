@@ -196,9 +196,14 @@ public class MainWindow extends UiPart<Stage> {
                 taskListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
                 projectListPanelPlaceholder.setDisable(true);
 
-                browserPlaceholder.getChildren().clear();
-                browserPlaceholder.getChildren().add(browserPanel.getRoot());
-                browserPanel.setTaskDetails(logic.selectedTaskProperty().getValue().browserDisplayToString());
+                if (logic.getFilteredTaskList().size() > 0) {
+                    if (logic.selectedTaskProperty().getValue() == null) {
+                        logic.setSelectedTask(logic.getFilteredTaskList().get(0));
+                    }
+                    browserPlaceholder.getChildren().clear();
+                    browserPlaceholder.getChildren().add(browserPanel.getRoot());
+                    browserPanel.setTaskDetails(logic.selectedTaskProperty().getValue().browserDisplayToString());
+                }
             }
         } else if (commandText.equals(ListProjectCommand.COMMAND_WORD)
                 || commandText.equals(ListProjectCommand.COMMAND_ALIAS)) {
