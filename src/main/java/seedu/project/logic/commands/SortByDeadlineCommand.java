@@ -1,10 +1,10 @@
 package seedu.project.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.project.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.lang.String;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -14,7 +14,6 @@ import seedu.project.logic.LogicManager;
 import seedu.project.model.Model;
 import seedu.project.model.project.Project;
 import seedu.project.model.task.Task;
-import static seedu.project.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
 /**
  * Lists all tasks sorted ascending according to deadline.
@@ -32,8 +31,7 @@ public class SortByDeadlineCommand extends Command {
 
         if (!LogicManager.getState()) {
             return new CommandResult(Messages.MESSAGE_GO_TO_TASK_LEVEL);
-        }
-        else {
+        } else {
             //ObservableList of all filteredTasks
             ObservableList<Task> filteredTasks = model.getFilteredTaskList();
 
@@ -62,7 +60,7 @@ public class SortByDeadlineCommand extends Command {
 
             model.clearTasks();
 
-            for(int i = 0; i < size; i++) {
+            for (int i = 0; i < size; i++) {
                 System.out.println(((properList.get(i)).getName()).toString());
                 model.addTask(properList.get(i));
             }

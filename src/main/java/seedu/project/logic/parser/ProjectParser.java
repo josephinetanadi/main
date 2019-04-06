@@ -6,7 +6,6 @@ import static seedu.project.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.project.logic.commands.SortByDeadlineCommand;
 import seedu.project.logic.commands.AddCommand;
 import seedu.project.logic.commands.AddTagCommand;
 import seedu.project.logic.commands.AnalyseCommand;
@@ -28,6 +27,7 @@ import seedu.project.logic.commands.ListProjectCommand;
 import seedu.project.logic.commands.ListTagCommand;
 import seedu.project.logic.commands.RedoCommand;
 import seedu.project.logic.commands.SelectCommand;
+import seedu.project.logic.commands.SortByDeadlineCommand;
 import seedu.project.logic.commands.TaskHistoryCommand;
 import seedu.project.logic.commands.UndoCommand;
 import seedu.project.logic.parser.exceptions.ParseException;

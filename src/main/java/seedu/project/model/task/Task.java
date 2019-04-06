@@ -2,10 +2,7 @@ package seedu.project.model.task;
 
 import static seedu.project.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;

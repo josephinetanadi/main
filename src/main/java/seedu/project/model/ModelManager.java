@@ -14,7 +14,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import seedu.project.commons.core.GuiSettings;
 import seedu.project.commons.core.LogsCenter;
 import seedu.project.model.project.Project;
