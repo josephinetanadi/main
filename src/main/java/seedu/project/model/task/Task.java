@@ -45,45 +45,6 @@ public class Task {
         this.taskId = hashCode();
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * Converts strings to the date type
-     */
-    private Date stringToDate(String s) {
-
-        Date result = null;
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-            result = dateFormat.parse(s);
-            System.out.println("result is: " + result + "\n");
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-    /**
-     * Comparator function for tasks
-     */
-    public int compareTo(Task anotherTask) {
-        String thisDeadline = (this.getDeadline()).toString();
-        String compareDeadline = (anotherTask.getDeadline()).toString();
-
-        Date thisTaskDate = stringToDate(thisDeadline);
-        Date compareTaskDate = stringToDate(compareDeadline);
-
-        if (thisTaskDate.after(compareTaskDate)) {
-            return 1;
-        } else if (compareTaskDate.after(thisTaskDate)) {
-            return -1;
-        } else {
-            return 0;
-        }
-    }
-
->>>>>>> master
     public int getTaskId() {
         return taskId;
     }

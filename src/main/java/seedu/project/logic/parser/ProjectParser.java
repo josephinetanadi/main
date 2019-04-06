@@ -6,10 +6,7 @@ import static seedu.project.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-<<<<<<< HEAD
-import seedu.project.logic.commands.*;
 import seedu.project.logic.commands.SortByDeadlineCommand;
-=======
 import seedu.project.logic.commands.AddCommand;
 import seedu.project.logic.commands.AddTagCommand;
 import seedu.project.logic.commands.AnalyseCommand;
@@ -26,7 +23,6 @@ import seedu.project.logic.commands.FindCommand;
 import seedu.project.logic.commands.HelpCommand;
 import seedu.project.logic.commands.HistoryCommand;
 import seedu.project.logic.commands.ImportCommand;
-import seedu.project.logic.commands.ListByDeadlineCommand;
 import seedu.project.logic.commands.ListCommand;
 import seedu.project.logic.commands.ListProjectCommand;
 import seedu.project.logic.commands.ListTagCommand;
@@ -34,7 +30,6 @@ import seedu.project.logic.commands.RedoCommand;
 import seedu.project.logic.commands.SelectCommand;
 import seedu.project.logic.commands.TaskHistoryCommand;
 import seedu.project.logic.commands.UndoCommand;
->>>>>>> master
 import seedu.project.logic.parser.exceptions.ParseException;
 
 /**
@@ -190,16 +185,11 @@ public class ProjectParser {
         case ExportCommand.COMMAND_ALIAS:
             return new ExportCommandParser().parse(arguments);
 
-<<<<<<< HEAD
         case SortByDeadlineCommand.COMMAND_WORD:
             return new SortByDeadlineCommand();
 
         case SortByDeadlineCommand.COMMAND_ALIAS:
             return new SortByDeadlineCommand();
-=======
-        case ListByDeadlineCommand.COMMAND_WORD:
-            return new ListByDeadlineCommand();
->>>>>>> master
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
