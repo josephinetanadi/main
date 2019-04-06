@@ -31,8 +31,8 @@ public class CommandTestUtil {
     public static final String VALID_NAME_CP2106 = "Orbital Project";
     public static final String VALID_DESCRIPTION_CS2101 = "config labels, milestone, project board";
     public static final String VALID_DESCRIPTION_CP2106 = "listings, notifications";
-    public static final String VALID_DEADLINE_CS2101 = "1-1-2011";
-    public static final String VALID_DEADLINE_CP2106 = "20-6-2019";
+    public static final String VALID_DEADLINE_CS2101 = "01-01-2019";
+    public static final String VALID_DEADLINE_CP2106 = "20-06-2019";
     public static final String VALID_TAG_CS2101 = "CS2101";
     public static final String VALID_TAG_CP2106 = "CP2106";
 
@@ -133,6 +133,22 @@ public class CommandTestUtil {
             assertEquals(expectedSelectedTask, actualModel.getSelectedTask());
             assertEquals(expectedCommandHistory, actualCommandHistory);
         }
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the project at the given {@code targetIndex} in the
+     * {@code model}'s project list.
+     */
+    public static void showProjectAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredProjectList().size());
+
+        Project project = model.getFilteredProjectList().get(targetIndex.getZeroBased());
+        final String[] splitName = project.getName().fullName.split("\\s+");
+        //2nd index is chosen because sample project names are "Sample project 1" and "Sample project 2"
+        model.updateFilteredProjectList(new seedu.project.model.project.NameContainsKeywordsPredicate(Arrays
+                .asList(splitName[2])));
+
+        assertEquals(1, model.getFilteredProjectList().size());
     }
 
     /**

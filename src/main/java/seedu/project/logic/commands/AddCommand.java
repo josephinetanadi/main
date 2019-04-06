@@ -26,7 +26,7 @@ public class AddCommand extends Command {
     public static final String TASK_MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the project. " + "Parameters: "
             + PREFIX_NAME + "NAME " + PREFIX_DESCRIPTION + "DESCRIPTION " + PREFIX_DEADLINE + "DEADLINE "
             + "[" + PREFIX_TAG + "TAG]...\n" + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "Sample Task 1 "
-            + PREFIX_DESCRIPTION + "This is a sample description " + PREFIX_DEADLINE + "1-1-2011 "
+            + PREFIX_DESCRIPTION + "This is a sample description " + PREFIX_DEADLINE + "01-01-2019 "
             + PREFIX_TAG + "SAMPLE " + PREFIX_TAG + "submission";
 
     public static final String MESSAGE_SUCCESS_PROJECT = "New project added: %1$s";
@@ -66,6 +66,7 @@ public class AddCommand extends Command {
             int taskId = ((Task) toAdd).getTaskId();
             history.addHistoryTaskId(Integer.toString(taskId));
 
+            model.setProject(model.getSelectedProject(), (Project) model.getProject());
             model.commitProject();
             return new CommandResult(String.format(MESSAGE_SUCCESS_TASK, toAdd));
         }

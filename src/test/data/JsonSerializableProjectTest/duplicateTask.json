@@ -1,0 +1,15 @@
+{
+	"tasks": [
+		{
+			"name": "Group meeting",
+			"description": "find teammates for group discussion on presentation",
+			"deadline": "01-01-2019",
+			"tagged": ["TYPICAL"]
+		},
+		{
+			"name": "Group meeting",
+			"description": "find teammates for group discussion on presentation",
+			"deadline": "01-01-2019"
+		}
+	]
+}

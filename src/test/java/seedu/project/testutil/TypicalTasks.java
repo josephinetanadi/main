@@ -26,35 +26,35 @@ public class TypicalTasks {
 
     public static final Task GROUP_MEETING = new TaskBuilder().withName("Group meeting")
             .withDescription("find teammates for group discussion on presentation")
-            .withDeadline("1-1-2011")
+            .withDeadline("01-01-2019")
             .withTags("TYPICAL").build();
     public static final Task REPORT_SUBMISSION = new TaskBuilder().withName("Report submission")
             .withDescription("submit report to John Doe")
-            .withDeadline("1-1-2011")
+            .withDeadline("01-01-2019")
             .withTags("TYPICAL").build();
     public static final Task FEEDBACK = new TaskBuilder().withName("Feedback")
             .withDescription("submit feedback")
-            .withDeadline("1-1-2011").build();
+            .withDeadline("01-01-2019").build();
     public static final Task TEACHING_FEEDBACK = new TaskBuilder().withName("Teaching Feedback")
             .withDescription("submit teaching feedback via portal")
-            .withDeadline("1-1-2011").withTags("TYPICAL").build();
+            .withDeadline("01-01-2019").withTags("TYPICAL").build();
     public static final Task PRINT = new TaskBuilder().withName("Print slides")
             .withDescription("print chapter 4 slides")
-            .withDeadline("1-1-2011").build();
+            .withDeadline("01-01-2019").build();
     public static final Task QUIZ = new TaskBuilder().withName("Complete quiz")
             .withDescription("attempt quiz at portal, multiple attempts possible")
-            .withDeadline("1-1-2011").build();
+            .withDeadline("01-01-2019").build();
     public static final Task CONSULTATION = new TaskBuilder().withName("Go for consultation")
             .withDescription("find mr john doe for consultation at office 04-15")
-            .withDeadline("1-1-2011").build();
+            .withDeadline("01-01-2019").build();
 
     // Manually added
     public static final Task LECTURE = new TaskBuilder().withName("Attend lecture")
             .withDescription("attend lecture at utown lecture theatre")
-            .withDeadline("1-1-2011").build();
+            .withDeadline("01-01-2019").build();
     public static final Task TUTORIAL = new TaskBuilder().withName("Attend tutorial")
             .withDescription("attend tutorial at utown classroom")
-            .withDeadline("1-1-2011").withTags("TUTORIAL").build();
+            .withDeadline("01-01-2019").withTags("TUTORIAL").build();
 
     public static final Project SAMPLE1 = new ProjectBuilder().withTask(GROUP_MEETING, PRINT,
             TEACHING_FEEDBACK, CONSULTATION, LECTURE, TUTORIAL).withName("Sample Project 1").build();

@@ -7,6 +7,7 @@ import static seedu.project.logic.commands.CommandTestUtil.DEADLINE_DESC_CS2101;
 import static seedu.project.logic.commands.CommandTestUtil.DESC_DESC_CS2101;
 import static seedu.project.logic.commands.CommandTestUtil.NAME_DESC_CS2101;
 import static seedu.project.testutil.TypicalTasks.CS2101_MILESTONE;
+import static seedu.project.testutil.TypicalTasks.getTypicalProjectList;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -28,6 +29,7 @@ import seedu.project.model.Model;
 import seedu.project.model.ModelManager;
 import seedu.project.model.ReadOnlyProjectList;
 import seedu.project.model.UserPrefs;
+import seedu.project.model.project.Project;
 import seedu.project.model.project.ReadOnlyProject;
 import seedu.project.model.task.Task;
 import seedu.project.storage.JsonProjectListStorage;
@@ -45,15 +47,18 @@ public class LogicManagerTest {
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-    private Model model = new ModelManager();
+    private Model model = new ModelManager(getTypicalProjectList(), new Project(), new UserPrefs());
     private Logic logic;
 
     @Before
     public void setUp() throws Exception {
         JsonProjectListStorage projectListStorage = new JsonProjectListStorage(temporaryFolder.newFile().toPath());
-        JsonProjectStorage projectStorage = new JsonProjectStorage(temporaryFolder.newFile().toPath());
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.newFile().toPath());
         StorageManager storage = new StorageManager(projectListStorage, userPrefsStorage);
+
+        model.setProject(model.getFilteredProjectList().get(0));
+        model.setSelectedProject(model.getFilteredProjectList().get(0));
+
         logic = new LogicManager(model, storage);
     }
 
@@ -88,7 +93,6 @@ public class LogicManagerTest {
         // Setup LogicManager with JsonProjectIoExceptionThrowingStub
         JsonProjectListStorage projectListStorage;
         projectListStorage = new JsonProjectListIoExceptionThrowingStub(temporaryFolder.newFile().toPath());
-        JsonProjectStorage projectStorage = new JsonProjectIoExceptionThrowingStub(temporaryFolder.newFile().toPath());
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.newFile().toPath());
         StorageManager storage = new StorageManager(projectListStorage, userPrefsStorage);
         logic = new LogicManager(model, storage);
@@ -96,11 +100,14 @@ public class LogicManagerTest {
         // Execute add command
         String addCommand = AddCommand.COMMAND_WORD + NAME_DESC_CS2101 + DESC_DESC_CS2101 + DEADLINE_DESC_CS2101;
         Task expectedTask = new TaskBuilder(CS2101_MILESTONE).withTags().build();
-        ModelManager expectedModel = new ModelManager();
+        ModelManager expectedModel = new ModelManager(getTypicalProjectList(), new Project(), new UserPrefs());
 
+        expectedModel.setProject(expectedModel.getFilteredProjectList().get(0));
+        expectedModel.setSelectedProject(expectedModel.getFilteredProjectList().get(0));
         LogicManager.setState(true);
 
         expectedModel.addTask(expectedTask);
+        expectedModel.setProject(expectedModel.getSelectedProject(), (Project) expectedModel.getProject());
         expectedModel.commitProject();
         String expectedMessage = LogicManager.FILE_OPS_ERROR_MESSAGE + DUMMY_IO_EXCEPTION;
         assertCommandBehavior(CommandException.class, addCommand, expectedMessage, expectedModel);
@@ -164,7 +171,7 @@ public class LogicManagerTest {
      * - {@code expectedModel}'s project was saved to the storage file.
      */
     private void assertCommandBehavior(Class<?> expectedException, String inputCommand, String expectedMessage,
-            Model expectedModel) {
+                                       Model expectedModel) {
 
         try {
             CommandResult result = logic.execute(inputCommand);

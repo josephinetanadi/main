@@ -17,7 +17,7 @@ import seedu.project.model.task.Task;
  * An Immutable Project that is serializable to JSON format.
  */
 @JsonRootName(value = "project")
-class JsonSerializableProject {
+public class JsonSerializableProject {
 
     public static final String MESSAGE_DUPLICATE_TASK = "Tasks list contains duplicate task(s).";
 

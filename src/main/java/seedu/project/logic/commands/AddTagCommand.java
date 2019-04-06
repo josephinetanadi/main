@@ -9,10 +9,10 @@ import java.util.List;
 import seedu.project.commons.core.Messages;
 import seedu.project.commons.core.index.Index;
 import seedu.project.logic.CommandHistory;
+import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
-import seedu.project.model.tag.GroupTag;
-import seedu.project.model.tag.Tag;
+import seedu.project.model.project.Project;
 import seedu.project.model.task.Task;
 
 /**
@@ -21,10 +21,12 @@ import seedu.project.model.task.Task;
 public class AddTagCommand extends Command {
     public static final String COMMAND_ALIAS = "at";
     public static final String COMMAND_WORD = "addtag";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a tag to the task. "
-            + "Parameters: INDEX (must be a positive integer) " + PREFIX_GROUPTAG + "GROUPTAG"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a group tag to the task.\n"
+            + "Parameters: INDEX (must be a positive integer) " + PREFIX_GROUPTAG + "GROUPTAG\n"
             + "Example: " + COMMAND_WORD + " 1 " + PREFIX_GROUPTAG + "sample";
-    public static final String MESSAGE_COMPLETED_SUCCESS = " Task completed.";
+    public static final String MESSAGE_COMPLETED_SUCCESS = " Group tag applied to task.";
+    public static final String MESSAGE_GROUPTAG_NOT_FOUND = "Group tag %1$s not found, please use "
+            + DefineTagCommand.COMMAND_WORD + " to add them first.";
 
     private final Index index;
     private final String groupTag;
@@ -42,21 +44,41 @@ public class AddTagCommand extends Command {
         requireNonNull(model);
         List<Task> lastShownList = model.getFilteredTaskList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
+        if (!LogicManager.getState()) {
+            throw new CommandException(String.format(Messages.MESSAGE_GO_TO_TASK_LEVEL, COMMAND_WORD));
+        } else if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
-        Task taskToComplete = lastShownList.get(index.getZeroBased());
-        for (GroupTag groupTag : model.getProjectList().getGroupTagList()) {
-            if (groupTag.getName().toString().equals(this.groupTag)) {
-                for (Tag t : groupTag.getTags()) {
-                    taskToComplete.addTag(t);
-                }
-            }
-        }
-        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        int taskId;
+        Task targetTask = lastShownList.get(index.getZeroBased());
+        Task taskToComplete = new Task(targetTask.getName(), targetTask.getDescription(),
+                targetTask.getDeadline(), targetTask.getTags());
+        taskId = targetTask.getTaskId();
+        targetTask.updateTaskId(taskId);
 
-        return new CommandResult(String.format(MESSAGE_COMPLETED_SUCCESS, taskToComplete));
+        Boolean[] groupExists = {false};
+        model.getGroupTagList().forEach(groupTag -> {
+            if (groupTag.getName().toString().equals(this.groupTag)) {
+                groupTag.getTags().forEach(tag -> {
+                    taskToComplete.addTag(tag);
+                    groupExists[0] = true;
+                });
+            }
+        });
+
+        if (!groupExists[0]) {
+            throw new CommandException(String.format(MESSAGE_GROUPTAG_NOT_FOUND, this.groupTag));
+        }
+        model.setTask(targetTask, taskToComplete);
+        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        model.commitProject();
+
+        //this will not work if user clicks on a different project while on task level??? lock UI at prev panel
+        model.setProject(model.getSelectedProject(), (Project) model.getProject()); //sync project list
+        model.commitProjectList();
+
+        return new CommandResult(String.format(MESSAGE_COMPLETED_SUCCESS, this.groupTag));
     }
 
     @Override

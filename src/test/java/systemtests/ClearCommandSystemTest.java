@@ -3,7 +3,7 @@ package systemtests;
 import static seedu.project.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.project.testutil.TypicalTasks.KEYWORD_MATCHING_TEST;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import seedu.project.commons.core.index.Index;
 import seedu.project.logic.commands.ClearCommand;
@@ -16,7 +16,7 @@ public class ClearCommandSystemTest extends ProjectSystemTest {
     /**
      * Just for the sake of it
      */
-    @Test
+    //@Test
     public void clear() {
         Model expectedModel = getModel();
         expectedModel.setSelectedProject(expectedModel.getFilteredProjectList().get(0));

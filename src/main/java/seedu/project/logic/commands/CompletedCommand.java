@@ -8,8 +8,10 @@ import java.util.List;
 import seedu.project.commons.core.Messages;
 import seedu.project.commons.core.index.Index;
 import seedu.project.logic.CommandHistory;
+import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
+import seedu.project.model.project.Project;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Task;
 
@@ -22,6 +24,7 @@ public class CompletedCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Completes a task and deletes it from view. "
             + "Parameters: INDEX (must be a positive integer) "
             + "Example: " + COMMAND_WORD + " 1";
+    public static final String MESSAGE_TASK_ALREADY_COMPLETED = "Task is already completed.";
     public static final String MESSAGE_COMPLETED_SUCCESS = " Task completed.";
 
     private final Index index;
@@ -37,16 +40,42 @@ public class CompletedCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
         List<Task> lastShownList = model.getFilteredTaskList();
+        int taskId;
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        if (!LogicManager.getState()) {
+            throw new CommandException(String.format(Messages.MESSAGE_GO_TO_TASK_LEVEL, COMMAND_WORD));
+        } else {
+            if (index.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+            }
+
+            Task taskToComplete = new Task(lastShownList.get(index.getZeroBased()).getName(),
+                    lastShownList.get(index.getZeroBased()).getDescription(),
+                    lastShownList.get(index.getZeroBased()).getDeadline(),
+                    lastShownList.get(index.getZeroBased()).getTags());
+
+            Task targetTask = lastShownList.get(index.getZeroBased());
+
+            taskId = targetTask.getTaskId();
+            taskToComplete.updateTaskId(taskId);
+            history.addHistoryTaskId(Integer.toString(taskId));
+
+            if (taskToComplete.getTags().contains(new Tag("completed"))) {
+                throw new CommandException(MESSAGE_TASK_ALREADY_COMPLETED);
+            } else {
+                taskToComplete.addTag(new Tag("completed"));
+
+                model.setTask(targetTask, taskToComplete);
+
+                model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+
+                model.commitProject();
+                model.setProject(model.getSelectedProject(), (Project) model.getProject()); // sync project list
+                model.commitProjectList();
+
+                return new CommandResult(String.format(MESSAGE_COMPLETED_SUCCESS, taskToComplete));
+            }
         }
-
-        Task taskToComplete = lastShownList.get(index.getZeroBased());
-        taskToComplete.addTag(new Tag("completed"));
-        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
-
-        return new CommandResult(String.format(MESSAGE_COMPLETED_SUCCESS, taskToComplete));
     }
 
     @Override

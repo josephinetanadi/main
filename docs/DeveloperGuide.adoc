@@ -300,7 +300,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
-// tag::storage[]
+// tag::importexport[]
 === Import/Export feature
 ==== Current Implementation
 
@@ -342,17 +342,28 @@ The entire project list could be found in *_./data/projectlist.json_*
 
 ==== Design Considerations
 
-===== Aspect: Tracking projects within project list and tasks within each project
+|===
+|*Consideration*|*Alternative one*|*Alternative two*
+|Method of tracking multiple projects within project list and multiple tasks within each project
+a|Each project will have its own *_<Project File>.json_* to keep track of tasks.
 
-* **Alternative 1:** Each project will have its own *_<Project File>.json_* to keep track of tasks.
-** Pros: Easy to implement.
-** Cons: May clutter data folder with too many project files. Application will have to read a new project file whenever user switches project.
-* **Alternative 2 (current choice):** All projects within project list and all tasks of all projects contained in *_project.json_* file.
+* Pros: Easy to implement.
+
+* Cons: May clutter data folder with too many project files. Application will have to read a new project file whenever user switches project.
+
+a|*Current Choice*
+
+All projects within project list and all tasks of all projects contained in *_project.json_* file.
+
 ** Pros: Will not clutter data folder.
-** Cons: Entire project list has to be written to file every time project list is modified.
-// end::storage[]
 
-// tag::Comparetaskfeature[]
+** Cons: Entire project list has to be written to file every time project list is modified.
+
+This option was chosen as it facilitates importing and exporting projects to one file only.
+|===
+// end::importexport[]
+
+// tag::compare[]
 === Compare Task feature
 
 The Compare Task feature allows the user to compare the past iteration of a task before it was edited.
@@ -400,36 +411,85 @@ Else Step 4. will continue to run to look for another version of the chosen task
 * **Alternative 2:** All tasks will have their own "versionedTask", keeping track of its own history per task.
 ** Pros: System performance will be better as you will iterate through lesser data.
 ** Cons: Harder to implement, can be considered for future version in v2.0
-// end::Comparetaskfeature[]
+// end::compare[]
 
-// tag::listtags[]
-=== List Tag feature
+// tag::list[]
+=== List Feature
 ==== Current Implementation
 
-[NOTE]
-This is not the final version of implementation as it is yet to be of OOP format. At this moment, this section lists down what have been done.
+Step 1: User uses list feature in task level to list all tasks and in project level to list all projects/
 
-Currently, the bulk of the list tag mechanism is faciliated at the `ListCommand`. It retrieves the result of `filteredTaskList` and cleans the result to get a list of unique tags. This result is stored in an `List<Tag>` which is then converted to a `Set<Tag>` to remove any duplicate entries.
-
-Through the list of unique tags, task names with the same tags are concatenated and eventually displayed to the `CommandResult`
+Step 2: Program retrieves an updated version of `Model#filteredTaskList()` via `Model#updateFilteredTaskList()`.
 
 ==== Design Considerations
 
-* **Alternative 1 (current choice):** All cleaning of data and display will be handled by one file.
+* **Current Choice: ** Check which level the program is on before retrieving the relevant list and displaying it
+
+** Pros: Single command for two levels
+// end::list[]
+
+// tag::listtag[]
+=== List Tag feature
+==== Current Implementation
+
+Step 1: User starts to list all tags and their relevant tasks by `listtag`. `ListTagCommand` retrieves result of `Model#filteredTaskList()` and iterate through all the tasks and obtain a list of unique tags within each project state.
+
+Step 2: Through this list of unique tags and another iteration through all tasks, task names with the same tags are concatenated to a string and displayed to `CommandResult`
+
+==== Design Considerations
+
+* **Alternative 1 (current choice):** `getFilteredTaskList` to retrieve relevant information.
 ** Pros: Easy to implement.
-** Cons: Not of OOP standard. Have to parse through the result of `getFilteredTaskList` to retrieve relevant information.
+** Cons: Data from `getFilteredTaskList` have to be parsed and clean all in one file.
 * **Alternative 2:** Cleaning of data to be done at their respective/relevant class files.
 ** Pros: Will not clutter `ListTagCommand` file.
 // end::listtag[]
 
-// tag::ViewTaskHistory[]
+=======
+// tag::definetag[]
+=== Define Tag feature
+==== Current Implementation
+
+The `definetag` feature allows users to create a group tag and add multiple child tags into it. It should be used in conjuction with `addtag` feature.
+
+Step 1: User creates new group tag and its associated children tag with `definetag`. `DefineTagCommandParser` create a new `GroupTag` object that contains the group tag’s name and its associated tags and return them to `DefineTagCommand`.
+
+Step 2: `DefineTagCommand` checks if GroupTag is unique via `Model#hasGroupTag` and adds the object to the model with `Model#addGroupTag` and `Model#commitProjectList` if it is.
+
+==== Design Considerations
+
+* **Alternative 1 (current choice):** Results of define tag is not stored.
+** Pros: Easy to implement.
+** Cons: Created group tag is lost once the NoteNote instance is restarted.
+* **Alternative 2:** Storing results of define tag.
+** Pros: Created group tag can be used between all instances of NoteNote.
+** Cons: Harder to implement.
+// end::definetag[]
+
+// tag::addtag[]
+=== Add Tag feature
+==== Current Implementation
+
+The `addtag` feature allows users to apply existing group tag to multiple tasks. It should be used in conjuction with `definetag` feature.
+
+Step 1: User selects task index and its favoured group tag with `addtag`. `AddTagCommandParser` parses the arguements and return them `AddTagCommand#AddTagCommand()`
+
+Step 2: `AddTagCommand` gets a updated task list with `Model#getFilteredTaskList()` and iterate to add tags in the `GroupTag` object to chosen task.
+
+==== Design Considerations
+
+* **Alternative 1 (current choice):** Results is stored.
+** Pros: Easy to implement.
+// end::addtag[]
+
+// tag::taskhistory[]
 === View Task Edit History Feature
 
 View task edit history allows the user to view a list of all the edit history of a chosen task.
 
 ==== Current Implementation
 
-Stores a parallel list `userInputHistoryTaskId` along `userInputHistory`, containing the taskId of `edit` commands.
+Stores a parallel list `userInputHistoryTaskId` along `userInputHistory`, containing the taskId of `edit`/`completed`/`addtag`/`delete` commands.
 
 The list will store `0` for all other commands.
 
@@ -458,7 +518,7 @@ Behaviour when a `edit` command  is called. `CommandHistory#addHistoryTaskId()` 
 * **Alternative 2:** All tasks will have their own `userInputHistoryTaskId`, keeping track of its own edit history.
 ** Pros: System performance will be better as you will iterate through lesser data, will have less wastage of space.
 ** Cons: Harder to implement, can be considered for future version in v2.0
-// end::ViewTaskHistory[]
+// end::taskhistory[]
 
 // tag::calendarview[]
 === [Proposed] Calendar View

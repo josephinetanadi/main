@@ -1,0 +1,47 @@
+{
+	"_comment": "Project save file which contains the same Task values as in TypicalTasks#getTypicalProject()",
+	"tasks": [
+		{
+			"name": "Group meeting",
+			"description": "find teammates for group discussion on presentation",
+			"deadline": "01-01-2019",
+			"tagged": ["TYPICAL"]
+		},
+		{
+			"name": "Report submission",
+			"description": "submit report to John Doe",
+			"deadline": "01-01-2019",
+			"tagged": ["TYPICAL"]
+		},
+		{
+			"name": "Feedback",
+			"description": "submit feedback",
+			"deadline": "01-01-2019",
+			"tagged": []
+		},
+		{
+			"name": "Teaching Feedback",
+			"description": "submit teaching feedback via portal",
+			"deadline": "01-01-2019",
+			"tagged": ["TYPICAL"]
+		},
+		{
+			"name": "Print slides",
+			"description": "print chapter 4 slides",
+			"deadline": "01-01-2019",
+			"tagged": []
+		},
+		{
+			"name": "Complete quiz",
+			"description": "attempt quiz at portal, multiple attempts possible",
+			"deadline": "01-01-2019",
+			"tagged": []
+		},
+		{
+			"name": "Go for consultation",
+			"description": "find mr john doe for consultation at office 04-15",
+			"deadline": "01-01-2019",
+			"tagged": []
+		}
+	]
+}

@@ -13,24 +13,24 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2113-AY1819S2-T09-3/main
 
 By: `Team CS2113T T09-3`      Since: `Mar 2019`      Licence: `MIT`
 
 == Introduction
 Welcome to NoteNote (NN)!
 
-Are you looking for an application that could help you to organize projects, keep track of tasks of each project, analyse your productivity and share your To-Do list with your friends?
+If you're looking for an application to organize your projects you've come to the right place! But that's not all NoteNote can do! NoteNote can also keep track of individual tasks, analyze your productivity and share your To-Do list with your friends!
 
-Well, you're at the right place! NoteNote is a task management application, designed by Computing students for Computing students, like yourself, to keep track of all your projects and tasks.
+We designed the application ground up for computing students, so you can say that NoteNote is designed for computing students, by computing students, so you can be sure that it will fulfil all your project management needs!
 
-More importantly, NN is optimized for those who prefer to work with a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI).
+Built for computing students, NoteNote uses minimal (GUI) elements, instead opting for a faster Command Line Interface (CLI) while maintaining the benefits of the GUI. So if you can type fast and are used to command line, NoteNote is sure to help manage your task faster than other traditional GUI based task managers.
 
-If you can type fast, NN can help you to manage your tasks faster than traditional GUI apps.
-
-Have we caught your interest? Jump to  <<Quick Start>> to get started. Enjoy!
+So just head over to our <<Quick Start>> section and begin your NoteNote experience!
 
 == How to use this guide
+
+There are several terms which we use throughout our guide. To make your life easier, please do read the following section to ensure that you are able to use our User Guide to the fullest extent!
 
 === Commands Format
 
@@ -51,6 +51,7 @@ image::apporg.png[width="790"]
 
 The application has two layers, the project layer and the task layer, as shown in Figure 1 above. There are some commands which work differently based on the layer they are in. This is covered in detail in Sections 6 and 7. The project layer contains all the projects the user has added while the task layer contains the tasks and subtasks assigned to a particular project.
 
+// tag::UIlayout[]
 === User Interface Layout
 
 image::applayout.png[width="790"]
@@ -66,6 +67,7 @@ Panel *A*, *C*, *D* are user-interactable while panels *B*, *E* are non-interact
 Panel A will always be active, allowing you to input your commands at any time.
 
 Upon first opening of the application, your active panel will start from *C*, and only upon choosing a project will your active panel change to *D*.
+// end::UIlayout[]
 
 
 == Quick Start
@@ -123,8 +125,8 @@ Examples:
 
 Outcome: Project Box (Panel C) will show the updated project with the new name.
 
-==== List projects: `listprojects`
-Lists all projects within project list
+==== List projects: `listproject`
+Lists all projects, is also used to switch back to project list from task list.
 
 * Format: `listproject`
 * Alias: `lp`, i.e. `listproject` is equivalent to `lp`
@@ -146,30 +148,112 @@ Examples:
 
 Outcome: Task Box (Panel D) will display all tasks within selected project. Active panel is now Panel D and all commands that is executed after this would be in the context of tasks.
 
+==== List all tags: `listtag`
+List all unique tags and associated tasks within a project
+
+* Format: `listtag`
+* Alias: `lt`, i.e. `listtag` is equivalent to `lt`
+
+Outcome: Result Box (Panel B) will will display all unique tags and associated tasks within a project.
+
+==== Defining a group tag: `definetag`
+
+Define a group tag when you want to add multiple identical tags to multiple tasks easily. They can be carried out at both project and task level.
+However, group tag created exists for the entire NoteNote instance and will be lost once the user exits.
+
+After defining a group tag, use the addtag command to add a group tag to a task of your choice.
+
+* Format: `definetag gt/GROUPTAG t/TAG [t/MORETAGS]`
+* Alias: `dt`, i.e. `definetag` is equivalent to `dt`
+
+Example:
+
+* `definetag gt/Consultation t/Prepare demo t/Prepare questions`
+
+Outcome: A group tag called Consultation will be created which would contain tags Prepare demo and Prepare questions.
+
+[NOTE]
+====
+Group tags are only considered as duplicates in the following situations where both the group tag and child tags are identical:
+
+** `definetag gt/sample t/TAG0`
+** `definetag gt/sample t/TAG0`
+====
+
+==== Adding a group tag: `addtag`
+
+Add a previously defined group tag to a task.
+
+* Format: `addtag INDEX gt/GROUPTAG`
+* Alias: `at`, i.e. `addtag` is equivalent to `at`
+
+Example:
+
+* `addtag 1 gt/Consultation`
+
+Outcome: Task Box (Panel D) will show the updated task with newly added tags.
+
+[TIP]
+Tags defined under the group tag will be visible under the task instead of the group tag itself.
+
+[NOTE]
+====
+In cases where the user input pre-defined group tags of the following, `addtag INDEX gt/sample` command would apply tags both TAG1 and TAG2 to task at index 1
+
+* `definetag gt/sample t/TAG1`
+* `definetag gt/sample t/TAG2`
+====
+
+// tag::import[]
 ==== Import a project list: `import`
-Import additional projects and tasks to add on to current project list. Source file must be a JSON file and follow  specific format. Refer to appendix A at the end of this user guide for the format to follow.
+Use this function when importing a project list shared by a friend to import additional projects and tasks on top of your current project list.
+
+Source file must be a JSON file and follow  specific format. See <<samplejson>>.
+
+This feature is recommended to be used together with `export` so that users need not manually generate a JSON file to `import`.
 
 * Format: `import PATH`
 * Alias: `i`, i.e. `import` is equivalent to `i`
 
 Examples:
 
-* `import /home/user/test.json`
+* `import C:\Users\Test\Desktop\import.json`
+
+.Before executing `import`
+image::BeforeImportCommand.png[width="600"]
+
+.After executing `import`
+image::AfterImportCommand.png[width="600"]
 
 [TIP]
-The full path to the JSON file has to be specified unless the file is contained within the application folder. In that case, `import ./test.json` is sufficient.
+The full path to the JSON file has to be specified unless the file is contained within the application folder. If JSON file is contained in application folder, `import .\test.json` is sufficient.
 
 Outcome: Projects and tasks contained in JSON file will be imported and added on top of current project list. Command box will display number of projects added to project list.
+// end::import[]
 
-==== Analyse progress of all projects: `analyse`
-View number of completed and uncompleted tasks of each project within a specified timeframe.
+// tag::export[]
+==== Export projects to JSON file: `export`
+You could export projects from your NoteNote instance to easily share project tasks with your friends. Projects are exported in JSON format and could be imported by another NoteNote instance using `import`.
 
-* Format: `analyse DATE_1 [DATE_2]`
-* Alias: `an`, i.e. `analyse` is equivalent to `an`
+* Format: `export i/INDEX o/OUTPUTPATH`
+* Alias: `ex`, i.e. `export` is equivalent to `ex`
 
 Examples:
 
-* `analyse 1-1-2020`
+* To export multiple projects: `export i/1,2,3 o/C:\Users\Test\Desktop\export.json`
+* To export currently selected project: `export o/C:\Users\Test\Desktop\export.json`
+
+[TIP]
+Output path should be explicitly specified unless the output is to be within the application folder. If output is to be contained in application folder, the `export i/1,2,3 o/.\test.json` is sufficient.
+
+Outcome: JSON file will be created at output path specified.
+// end::export[]
+
+==== Analyse progress of all projects: `analyse`
+View number of completed and uncompleted tasks of each project.
+
+* Format: `analyse`
+* Alias: `an`, i.e. `analyse` is equivalent to `an`
 
 Outcome: Task Box (Panel D) will display all tasks within selected project. Active panel is now Panel D and all commands that is executed after this would be in the context of tasks.
 
@@ -200,7 +284,7 @@ Affects panel D.
 
 Adds a task to the project identified by the index number used in the displayed project list.
 
-* Format: `add n/NAME [d/DESCRIPTION] [dl/DEADLINE] [t/TAG]`
+* Format: `add n/NAME [ds/DESCRIPTION] [dl/DEADLINE] [t/TAG]`
 * Alias: `a`, i.e. `add` is equivalent to `a`
 
 [TIP]
@@ -216,12 +300,12 @@ Outcome: Task Box (Panel D) will show the newly created task `Decide on Research
 
 Edits an existing task identified by the index number used in the displayed task list.
 
-* Format: `edit INDEX [n/NAME] [d/DESCRIPTION] [dl/DEADLINE] [t/TAG]...`
+* Format: `edit INDEX [n/NAME] [ds/DESCRIPTION] [dl/DEADLINE] [t/TAG]...`
 
 * Alias: `e`, i.e. `edit` is equivalent to `e`
 
 [TIP]
-At least 1 among the parameters of `[n/NAME] [d/DESCRIPTION] [dl/DEADLINE] [t/TAG]` must be included within the command.
+At least 1 among the parameters of `[n/NAME] [ds/DESCRIPTION] [dl/DEADLINE] [t/TAG]` must be included within the command.
 
 Example:
 
@@ -250,6 +334,13 @@ Examples:
 
 Outcome: Returns tasks containing the keyword `Research`. Task Box (Panel D) will be updated to display only tasks that matches the keyword.
 
+==== Listing all tasks: `list`
+Lists all tasks in the current project. Can also be used to show all tasks after finding a specific tasks
+
+* Format: `list`
+
+* Alias: `l`, i.e. `list` is equivalent to `l`
+
 ==== Deleting a task: `delete`
 
 Deletes the specified task identified by the index number used in the displayed task list.
@@ -264,11 +355,6 @@ The index *must be a positive integer* 1, 2, 3, …
 
 Examples:
 
-1. `list` +
-2. `delete 2`
-
-Outcome: Task Box (Panel D) will no longer display the second task in the project.
-
 1. `find Consult` +
 2. `delete 1`
 
@@ -276,7 +362,7 @@ Outcome: Task Box (Panel D) will no longer display the first task in the results
 
 ==== Completing a task: `completed`
 
-Marks the specified task identified by the index number used in the displayed task list as completed and removes it from view.
+Marks the specified task identified by the index number used in the displayed task list as completed by adding a `completed` tag to it.
 
 * Format: `completed INDEX`
 
@@ -287,10 +373,9 @@ Completed tasks will be used as statistics for the `analyse` feature, unlike del
 
 Examples:
 
-1. `select 2` +
-2. `completed 1`
+* `completed 1`
 
-Outcome: Task Box (Panel D) will no longer display the first task in the second project.
+Outcome: Task Box (Panel D) will show a `completed` tag for the first task.
 
 ==== Selecting a task: `select`
 
@@ -315,18 +400,13 @@ Examples:
 
 Outcome: Selects the first task in the results of the `find` command. Description Box (Panel E) will display all the details of the task selected.
 
-==== Sorting tasks: `sort`
-Sorts tasks by specified category.
+==== Sorting tasks: `listDeadline`
+Sorts tasks by deadline.
 
-* Format: `sort CATEGORY [ascend|descend]`
-* Sorts the tasks that are currently displayed by name, deadline and tags
+* Format: `listDeadline`
 
-Example:
-
-`sort deadline descend`
-
-Outcome: Task Box (Panel D) will be updated to display tasks sorted by their name
-         in descending order.
+Outcome: Task Box (Panel D) will be updated to display tasks sorted by their deadline
+         in ascending order.
 
 ==== Undo previous command : `undo`
 
@@ -370,6 +450,7 @@ new task .
 Outcome: Reverses the `undo` action and adds the task back to the task list. Task
          Box (Panel D) will now display new task once again.
 
+// tag::taskhistory[]
 ==== List previously entered commands for a chosen task: `taskhistory`
 
 Lists all previous commands that directly affected a selected task in reverse
@@ -384,7 +465,9 @@ Example :
 
 Outcome: Results Box (Panel B) will display all previous commands which directly
 affects the task at index 1.
+// end::taskhistory[]
 
+// tag::compare[]
 ==== Compares a task with its previous version: `compare`
 
 Compares a selected task one version before it was edited and show the differences
@@ -410,22 +493,7 @@ Outcome: Task Box (Panel B) will display information of current version of the t
          index 1 ( _sample task_ ) and the previous version of it ( _sample task edited_ ).
          Allows you to view a direct comparison of what was changed.
 
-==== Define group tags: `group`
-
-Group existing tags in the system.
-
-* Format: `group gt/GROUPTAGNAME [t/TAG]`
-* Alias: `g`, i.e. `group` is equivalent to `g`
-
-Examples:
-
-* `group gt/Task Completed t/To Review t/To Merge`
-
-[TIP]
-At least 2 `[t/TAG]` parameters must be specified.
-
-Outcome: Results Box (Panel B) will show the newly created group tag `Task completed` with its relevant tags `To Review` and `To Merge` respectively.
-
+// end::compare[]
 
 == FAQ
 
@@ -439,74 +507,36 @@ Outcome: Results Box (Panel B) will show the newly created group tag `Task compl
 == Command Summary
 
 |===
-|*Help*|`help`
-
-|*Add*|`add n/PROJECTNAME n/TASKNAME ds/DESCRIPTION dl/DEADLINE [t/TAG]...`
-
-e.g. `add n/Sample Task 1 ds/This is a sample task dl/1-1-2011 t/SAMPLE`
-
-|*Completed*|`completed INDEX`
-
-|*Clear*|`clear`
-
-|*Delete*|`delete INDEX`
-
-e.g. `delete 3`
-
-|*Edit*|`edit INDEX [n/NAME]`
-
-`edit INDEX [n/NAME] [ds/DESCRIPTION] [dl/DEADLINE] [t/TAG]...`
-
-e.g. `edit 2 n/Sample Task 1 ds/This is an edited task`
-
-|*Find*|`find KEYWORD [MORE_KEYWORDS]`
-
-e.g. `find Report Project`
-
-|*List*|`list`
-
-|*List project*|`listproject`
-
-|*List tags*|`listtags`
-
-|*Define group tags*|`group gt/GROUPTAGNAME [t/TAG]`
-
-e.g. `group gt/task completed t/to review t/to merge`
-
-|*Select*|`select INDEX`
-
-e.g.`select 2`
-
-|*Sort*|sort CATEGORY [ascend\|descend]`
-
-e.g. `sort deadline descend`
-
-|*Import*|`import PATH`
-
-|*Export*|`export FILTER`
-
-|*Analyse*|`analyse DATE_1 [DATE_2]`
-
-|*View*|`view`
-
-|*History*|`history`
-
-|*Task history*|`taskhistory INDEX`
-
-|*Compare*|`compare INDEX`
-
-|*Undo*|`undo`
-
-|*Redo*|`redo`
-
-|*Clear*|`clear`
-
-|*Exit*|`exit`
-
+|*Command*|*Description*
+|`add`|Add a new project or task
+|`addtag`|Add a group tag to a task
+|`analyse`|View task completion rate
+|`clear`|Clear all tasks in project
+|`clear`|Clears all tasks
+|`compare`|Compare current task with previous version
+|`completed`|Marks task as completed
+|`definetag`|Define a group tag
+|`delete`|Deletes project or task
+|`edit`|Edits description of project or task
+|`exit`|Exit application
+|`export`|Export projects to external JSON file
+|`find`|Find for specific project or task
+|`help`|Display help menu
+|`history`|View all commands previously entered
+|`import`|Import projects from external JSON file
+|`list`|List all projects or tasks
+|`listDeadline`| List tasks according to deadline
+|`listproject`|Go back to project list panel from task list panel
+|`listtag`|List all unique tags and associated tasks within a project
+|`redo`|Redo modifications made to task
+|`select`|Select project or task to interact with
+|`taskhistory`|View all modifications made to file
+|`undo`|Undo modifications made to task
 |===
 
 == Appendix A
 
+[[samplejson]]
 === Sample JSON file for `import`
 ```
 {

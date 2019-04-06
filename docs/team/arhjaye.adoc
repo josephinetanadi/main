@@ -1,47 +1,59 @@
-= John Doe - Project Portfolio
+= Yow Ren Jie - Project Portfolio
 :site-section: AboutUs
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== PROJECT: Project - Level 4
+== PROJECT: NoteNote
 
 ---
 
 == Overview
 
-Project - Level 4 is a desktop project application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+NoteNote is a desktop project application allowing you to manage multiple projects and tasks. You will interact with it through a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
 
 == Summary of contributions
 
-* *Major enhancement*: added *the ability to undo/redo previous commands*
-** What it does: allows the user to undo all previous commands one at a time. Preceding undo commands can be reversed by using the redo command.
-** Justification: This feature improves the product significantly because a user can make mistakes in commands and the app should provide a convenient way to rectify them.
-** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
-** Credits: _{mention here if you reused any code/ideas from elsewhere or if a third-party library is heavily used in the feature so that a reader can make a more accurate judgement of how much effort went into the feature}_
+* *Major enhancement*: added *the ability to view command history for each individual task*
+** What it does: allows you to view a command history of a chosen task with the command `taskhistory`. The command history will include commands that have a direct impact on the task (e.g. `edit` / `completed` / `addtag` / `delete`)
 
-* *Minor enhancement*: added a history command that allows the user to navigate to previous commands using up/down keys.
+** Justification: Current implementation will only allow you to view the command history of every command (valid & invalid) that has been entered.
+But when handling multiple large projects, a user is bound to have numerous edits for the many task that is there.
+In this case the likelihood of a user forgetting / executing a wrong command is very probable. Thus, this feature allows a user
+to view a record of the changes he made for a specific task instead of viewing it as a whole project. Allowing easy referencing for a user.
+** Highlights: This feature is implemented by creating another stack parallel to the existing command history stack. This new stack will contain the unique ID of a task corresponding
+to the command of the same index in the command history.
 
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Minor enhancement*: added *the ability to compare a task to its previous version*
+** What it does: allows you to view a direct comparison of a chosen task against its previous version before the edit with the command `compare`
+** Justification: To allow easy referencing for a chosen task in a neater method as this feature compares the differences and will only show you the result of the field (Name / Description / Deadline) that was changed, instead of all the fields.
+** Highlights: Current `undo` feature is implemented as general undo for all commands.
+This `compare` feature serves as a base for a future feature which allows `undo` for a specific task.
+ ***   You will be able to `undo` to the version that is shown when `compare` executes.
+
+* *Code contributed*: [https://nuscs2113-ay1819s2.github.io/dashboard-beta/#search=&timeframe=day&reverse=false&groupSelect=groupByRepos&breakdown=false&tabAuthor=arhjaye&tabRepo=CS2113-AY1819S2-T09-3_main_master&sort=displayName&since=2019-02-10&until=2019-04-01[Reposense]]
 
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
-** Enhancements to existing features:
-*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
-** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
-*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
-** Tools:
-*** Integrated a third party library (Natty) to the project (https://github.com[#42])
-*** Integrated a new Github plugin (CircleCI) to the team repo
+*** Managed releases `v1.2` - `v1.4` (3 releases) on GitHub
 
-_{you can add/remove categories in the list above}_
+*** Ensured deliverable's are met.
+** Enhancements to existing features:
+*** Fixed existing tests cases to be based on new model infrastructure. (Pull requests https://github.com/CS2113-AY1819S2-T09-3/main/pull/107[#107])
+*** Ensure code coverage is met during product release.
+*** Display total projects within UI Status Bar Footer (Pull requests https://github.com/CS2113-AY1819S2-T09-3/main/pull/17[#17])
+** Documentation:
+*** Updated DeveloperGuide & UserGuide to include feature implementations.
+*** Update diagrams for DeveloperGuide to reflect existing architecture used.
+*** Added user stories & use cases for DeveloperGuide
+*** Managed formatting for UserGuide to ensure proper structuring and consistency.
+*** Added content for UserGuide for Task Level Commands.
+** Community:
+*** Reported bugs & solutions to team
+(examples:  https://github.com/CS2113-AY1819S2-T09-3/main/issues/97[#97],
+https://github.com/CS2113-AY1819S2-T09-3/main/pull/128[#128],
+https://github.com/CS2113-AY1819S2-T09-3/main/pull/131[#131],
+https://github.com/CS2113-AY1819S2-T09-3/main/pull/141[#141])
 
 == Contributions to the User Guide
 
@@ -50,9 +62,11 @@ _{you can add/remove categories in the list above}_
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=UIlayout]
 
-include::../UserGuide.adoc[tag=dataencryption]
+include::../UserGuide.adoc[tag=compare]
+
+include::../UserGuide.adoc[tag=taskhistory]
 
 == Contributions to the Developer Guide
 
@@ -60,13 +74,7 @@ include::../UserGuide.adoc[tag=dataencryption]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=compare]
 
-include::../DeveloperGuide.adoc[tag=dataencryption]
+include::../DeveloperGuide.adoc[tag=taskhistory]
 
-
-== PROJECT: PowerPointLabs
-
----
-
-_{Optionally, you may include other projects in your portfolio.}_

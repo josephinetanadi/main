@@ -53,6 +53,7 @@ public class DeleteCommandTest {
 
         //expectedModel.deleteProject(projectToDelete);
         expectedModel.deleteTask(taskToDelete);
+        expectedModel.setProject(expectedModel.getSelectedProject(), (Project) expectedModel.getProject());
         //expectedModel.commitProjectList();
         expectedModel.commitProject();
 
@@ -91,6 +92,7 @@ public class DeleteCommandTest {
         //String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PROJECT_SUCCESS, projectToDelete);
         LogicManager.setState(true);
         expectedModel.deleteTask(taskToDelete);
+        expectedModel.setProject(expectedModel.getSelectedProject(), (Project) expectedModel.getProject());
         expectedModel.commitProject();
         showNoTask(expectedModel);
 
@@ -130,6 +132,7 @@ public class DeleteCommandTest {
         LogicManager.setState(true);
 
         expectedModel.deleteTask(taskToDelete);
+        expectedModel.setProject(expectedModel.getSelectedProject(), (Project) expectedModel.getProject());
         expectedModel.commitProject();
 
         // delete -> first task deleted
@@ -186,6 +189,7 @@ public class DeleteCommandTest {
         showTaskAtIndex(model, INDEX_SECOND_TASK);
         Task taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
         expectedModel.deleteTask(taskToDelete);
+        expectedModel.setProject(expectedModel.getSelectedProject(), (Project) expectedModel.getProject());
         expectedModel.commitProject();
 
         // delete -> deletes second task in unfiltered task list / first task in filtered task list

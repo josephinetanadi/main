@@ -7,6 +7,7 @@ import java.util.List;
 import seedu.project.commons.core.Messages;
 import seedu.project.commons.core.index.Index;
 import seedu.project.logic.CommandHistory;
+import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
 import seedu.project.model.task.Task;
@@ -38,22 +39,29 @@ public class CompareCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        List<Task> lastShownList = model.getFilteredTaskList();
+        if (!LogicManager.getState()) {
 
-        Task tempTask;
+            throw new CommandException(String.format(Messages.MESSAGE_GO_TO_TASK_LEVEL, COMMAND_WORD));
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-        }
-
-        Task taskToCompare = lastShownList.get(targetIndex.getZeroBased());
-        //tempTask = model.compareTask(taskToCompare);
-        List<String> tempString = model.compareTask(taskToCompare);;
-        model.commitProject();
-        if (tempString != null) {
-            return new CommandResult(String.format(MESSAGE_COMPARE_TASK_SUCCESS, tempString.get(0), tempString.get(1)));
         } else {
-            return new CommandResult(MESSAGE_COMPARE_TASK_FAILURE);
+            List<Task> lastShownList = model.getFilteredTaskList();
+
+            Task tempTask;
+
+            if (targetIndex.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+            }
+
+            Task taskToCompare = lastShownList.get(targetIndex.getZeroBased());
+            //tempTask = model.compareTask(taskToCompare);
+            List<String> tempString = model.compareTask(taskToCompare);;
+            model.commitProject();
+            if (tempString != null) {
+                return new CommandResult(String.format(MESSAGE_COMPARE_TASK_SUCCESS,
+                        tempString.get(0), tempString.get(1)));
+            } else {
+                return new CommandResult(MESSAGE_COMPARE_TASK_FAILURE);
+            }
         }
 
     }

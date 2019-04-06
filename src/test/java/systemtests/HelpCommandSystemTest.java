@@ -14,7 +14,6 @@ import guitests.guihandles.HelpWindowHandle;
 import seedu.project.logic.commands.DeleteCommand;
 import seedu.project.logic.commands.HelpCommand;
 import seedu.project.logic.commands.SelectCommand;
-import seedu.project.ui.BrowserPanel;
 import seedu.project.ui.StatusBarFooter;
 
 /**
@@ -67,7 +66,7 @@ public class HelpCommandSystemTest extends ProjectSystemTest {
         assertEquals("", getCommandBox().getInput());
         assertCommandBoxShowsDefaultStyle();
         assertNotEquals(HelpCommand.SHOWING_HELP_MESSAGE, getResultDisplay().getText());
-        assertNotEquals(BrowserPanel.DEFAULT_PAGE, getBrowserPanel().getLoadedUrl());
+        assertNotEquals("", getBrowserPanel().getText());
         assertListMatching(getTaskListPanel(), getModel().getFilteredTaskList());
 
         // assert that the status bar too is updated correctly while the help window is open

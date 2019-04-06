@@ -1,0 +1,9 @@
+{
+	"tasks": [
+		{
+			"name": "Task with invalid name field: Gr0up Meet!ing",
+			"description": "asdfghjkl",
+			"deadline": "01-01-2019"
+		}
+	]
+}

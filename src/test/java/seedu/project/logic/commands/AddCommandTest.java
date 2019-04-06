@@ -167,8 +167,13 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<GroupTag> getGroupTagList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public boolean hasGroupTag(GroupTag groupTag) {
-            return false;
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
@@ -183,7 +188,7 @@ public class AddCommandTest {
 
         @Override
         public void addGroupTag(GroupTag groupTag) {
-
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
@@ -330,6 +335,16 @@ public class AddCommandTest {
 
         @Override
         public void commitProject() {
+            // called by {@code AddCommand#execute()}
+        }
+
+        @Override
+        public Project getSelectedProject() {
+            return new Project();
+        }
+
+        @Override
+        public void setProject(Project target, Project editedProject) {
             // called by {@code AddCommand#execute()}
         }
 

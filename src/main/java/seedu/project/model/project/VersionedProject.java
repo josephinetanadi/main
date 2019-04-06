@@ -134,8 +134,6 @@ public class VersionedProject extends Project {
      * {@code task1, task2} must exist in the project
      */
     public boolean isThereDiff(Task task1, Task task2) {
-        System.out.print(task1 + "\n");
-        System.out.print(task2 + "\n\n");
         if (task1.getName() != task2.getName()) {
             return true;
         } else if (task1.getDescription() != task2.getDescription()) {
@@ -167,18 +165,22 @@ public class VersionedProject extends Project {
                 taskReturnString = ("Description: " + task1.getDescription());
                 targetReturnString = ("Description: " + target.getDescription());
 
+            } else {
+                taskReturnString = (taskReturnString + " | Description: " + task1.getDescription());
+                targetReturnString = (targetReturnString + " | Description: " + target.getDescription());
             }
-            taskReturnString = (taskReturnString + " | Description: " + task1.getDescription());
-            targetReturnString = (targetReturnString + " | Description: " + target.getDescription());
+
         }
         if (task1.getDeadline() != target.getDeadline()) {
             if (taskReturnString == null) {
                 taskReturnString = ("Deadline: " + task1.getDeadline());
                 targetReturnString = ("Deadline: " + target.getDeadline());
 
+            } else {
+                taskReturnString = (taskReturnString + " | Deadline: " + task1.getDeadline());
+                targetReturnString = (targetReturnString + " | Deadline: " + target.getDeadline());
             }
-            taskReturnString = (taskReturnString + " | Deadline: " + task1.getDeadline());
-            targetReturnString = (targetReturnString + " | Deadline: " + target.getDeadline());
+
         }
 
         returnString.add(taskReturnString);
