@@ -139,7 +139,7 @@ Selects a project identified by the index number used in the displayed project l
 * Format: `select INDEX`
 * Alias: `s`, i.e. `select` is equivalent to `s`
 
-[TIP]
+[NOTE]
 If the **immediate predecessor command** is `listproject`, `select` will select a project and display tasks, else `select` will select a task and display task information
 
 Examples:
@@ -463,8 +463,12 @@ Example :
 
 *  `taskhistory 1`
 
-Outcome: Results Box (Panel B) will display all previous commands which directly
-affects the task at index 1.
+Outcome:
+
+image::taskhistorysample.png[width="900", title="Example Outcome for `taskhistory` command"]
+
+Results Box (Panel B) will display all previous commands which directly
+affects the task at index 1 (Figure 3).
 // end::taskhistory[]
 
 // tag::compare[]
@@ -489,10 +493,13 @@ Outcome: Task Box (Panel D) will display updated task at index 1 with the new
 
 * `compare 1`
 
-Outcome: Task Box (Panel B) will display information of current version of the task at
-         index 1 ( _sample task_ ) and the previous version of it ( _sample task edited_ ).
-         Allows you to view a direct comparison of what was changed.
+Outcome:
 
+image::comparesample.png[width="900", title="Example Outcome for `compare` command"]
+
+Task Box (Panel B) will display information of current version of the task at
+         index 1 ( _sample task_ ) and the previous version of it ( _sample task edited_ ) (Figure 4).
+         Allows you to view a direct comparison of what was changed.
 // end::compare[]
 
 == FAQ

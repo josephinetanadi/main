@@ -376,9 +376,10 @@ Building on top of the Undo/Redo feature, it is facilitated by `VersionedProject
 
 These operations are exposed in the `Model` interface as `Model#compareTask()`.
 
-Given below is an example usage scenario and how the Compare Task mechanism behaves.
+image::compare1.png[width="900", title="Example of VersionedProject when `edit` on Task B"]
 
-image::compare1.png[width="900"]
+Given above (Figure 8.) is an example usage scenario and how the Compare Task mechanism behaves.
+
 
 Step 1. The user selects the task to compare by entering the index of the task that is shown. `CompareCommandParser#CompareCommand()` will then get the index of the task
 within `projectStateList` and passed into `CompareCommand#CommandResult()`.
@@ -387,30 +388,49 @@ Step 2. The index will then be used by `CompareCommand#CommandResult()` to retri
 
 Step 3. `VersionedProject#compareTask()` will retrieve the unique `taskId` of the chosen task.
 
-image::compare2.png[width="900"]
+image::compare2.png[width="900", title="Process of how `compare` command will flow"]
 
 Step 4. `VersionedProject#compareTask()` will iterate through all the the tasks within each project state. The `taskId`
-will be used to determine if the task encountered during the iteration is the same as the chosen task.
+will be used to determine if the task encountered during the iteration is the same as the chosen task (Figure 9, A).
 
 [NOTE]
 If no same tasks are found after iterating through all the project states, or if there is no difference in all the task
 that is encountered, "Nothing to compare" will be showed to the user.
 
-Step 5. If the task encountered is the same as the chosen task, the 2 task will be compared against their name, description & deadline.
+Step 5. If the task encountered is the same as the chosen task, the 2 task will be compared against their name, description & deadline (Figure 9, B).
 
-image::compare 3.png[width="800"]
+image::compare 3.png[width="800", title="A successful `compare` where name is different"]
 
-Step 6. If there is a difference in any of the fields in the comparison, the difference will be showed to the user.
-Else Step 4. will continue to run to look for another version of the chosen task to compare.
+Step 6. If there is a difference in any of the fields in the comparison (Figure 10), the difference will be showed to the user.
+Else Step 4. will continue to run to look for another version of the chosen task to compare (Figure 9, C).
 
 ==== Design Considerations
+Two designs was considered for the implementation of `compare`. The pros and cons of the designs are listed in the table below
+and our *chosen option is Alternative 1*
+|===
+| |Alternative 1 | Alternative 2
+|Design
+|Utilise existing versionedProject to look for the specific task in previous versions.
+|All tasks will have their own "versionedTask", keeping track of its own history per task.
 
-* **Alternative 1 (current choice):** Utilise existing versionedProject to look for the specific in previous verions.
-** Pros: Easy to implement.
-** Cons: A large versionedProject might result in a slow system performance.
-* **Alternative 2:** All tasks will have their own "versionedTask", keeping track of its own history per task.
-** Pros: System performance will be better as you will iterate through lesser data.
-** Cons: Harder to implement, can be considered for future version in v2.0
+|Pros
+|Easy to implement.
+|System performance will be better as you will iterate through lesser data.
+
+|Cons
+|A large versionedProject might result in a slow system performance.
+|Harder to implement, can be considered for future version in v2.0
+
+|Implementation Choice
+|*Implemented*
+|
+|===
+
+==== Sequence Diagram (`compare`)
+
+image::compareseq.png[width="900", title="Sequence Diagram for `compare` Command"]
+
+Given above (Figure 11) is the sequence diagram when `compare` is called.
 // end::compare[]
 
 // tag::list[]
@@ -445,7 +465,6 @@ Step 2: Through this list of unique tags and another iteration through all tasks
 ** Pros: Will not clutter `ListTagCommand` file.
 // end::listtag[]
 
-=======
 // tag::definetag[]
 === Define Tag feature
 ==== Current Implementation
@@ -497,27 +516,46 @@ It is facilitated by `CommandHistory` and implements the following operations:
 
 * `CommandHistory#addHistoryTaskId()` -- Adds taskId to the index that is the same as the `edit` command. Pads `0` for all other commands.
 
-Given below is an example usage scenario and how the Compare Task mechanism behaves.
+image::ViewTaskHistorySeq1.png[width="900", title="Behaviour of userTaskHistoryTaskId during `add` commands"]
 
-image::ViewTaskHistorySeq1.png[width="900"]
+Given above (Figure 12) is an example usage scenario of how the Task History mechanism behaves.
 
-Behaviour when all other commands (not `edit`) is called. `CommandHistory#addHistoryTaskId()` will not be called thus `userInputHistoryTaskId` will not be updated.
+Note the behaviour of useTaskHistoryTaskId when all other commands (not `edit`) is called (Figure 12). `CommandHistory#addHistoryTaskId()` will not be called thus `userInputHistoryTaskId` will not be updated.
 However `userInputHistory` will still be updated as usual.
 
-image::ViewTaskHistorySeq2.png[width="900"]
+image::ViewTaskHistorySeq2.png[width="900", title="Behaviour of userTaskHistoryTaskId during `edit` commands"]
 
-Behaviour when a `edit` command  is called. `CommandHistory#addHistoryTaskId()` will be called thus `userInputHistoryTaskId` will be updated with the taskId of the task where the
+Note the behaviour when a `edit` command  is called (Figure 13). `CommandHistory#addHistoryTaskId()` will be called thus `userInputHistoryTaskId` will be updated with the taskId of the task where the
 `edit` command is called on. Observe that positions of previous non-`edit` command will be filled with `0`. `userInputHistory` will still be updated as usual.
+
+==== Sequence Diagram (`taskhistory`)
+
+image::taskhistoryseq.png[width="900", title="Sequence Diagram for `taskhistory` Command"]
+
+Given above (Figure 14) is the sequence diagram when `taskhistory` is called.
 
 
 ==== Design Considerations
+Two designs was considered for the implementation of `taskhistory`. The pros and cons of the designs are listed in the table below
+and our *chosen option is Alternative 1*
+|===
+| |Alternative 1 | Alternative 2
+|Design
+|Implement a separate list `userInputHistoryTaskId` alongside `userInputHistory` to contain taskId of task where `edit` is called on.
+|All tasks will have their own `userInputHistoryTaskId`, keeping track of its own edit history.
 
-* **Alternative 1 (current choice):** Implement a separate list `userInputHistoryTaskId` alongside `userInputHistory` to contain taskId of task where `edit` is called on.
-** Pros: Easy to implement.
-** Cons: A large `userInputHistoryTaskId` might result in a slower system performance during search and contains wasted space as well.
-* **Alternative 2:** All tasks will have their own `userInputHistoryTaskId`, keeping track of its own edit history.
-** Pros: System performance will be better as you will iterate through lesser data, will have less wastage of space.
-** Cons: Harder to implement, can be considered for future version in v2.0
+|Pros
+|Easy to implement.
+|System performance will be better as you will iterate through lesser data, will have less wastage of space.
+
+|Cons
+|A large `userInputHistoryTaskId` might result in a slower system performance during search and contains wasted space as well.
+|Harder to implement, can be considered for future version in v2.0.
+
+|Implementation Choice
+|*Implemented*
+|
+|===
 // end::taskhistory[]
 
 // tag::calendarview[]
