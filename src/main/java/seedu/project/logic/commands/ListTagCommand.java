@@ -44,7 +44,6 @@ public class ListTagCommand extends Command {
         // convert uniqueTag set to list
         List<Tag> uniqueTagList = new ArrayList<>();
         uniqueTagList.addAll(uniqueTagSet);
-
         // arrange print string
         String stringToPrint = "";
         for (Tag tag : uniqueTagList) {

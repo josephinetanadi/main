@@ -28,7 +28,10 @@ public class CompareCommandTest {
     private Model model = new ModelManager(getTypicalProjectList(), new Project(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
-    @Test
+    /**
+     * burden
+     *
+     */
     public void execute_validIndexWithEdit() {
 
         model.setProject(model.getFilteredProjectList().get(0));
