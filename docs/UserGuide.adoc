@@ -284,7 +284,7 @@ Affects panel D.
 
 Adds a task to the project identified by the index number used in the displayed project list.
 
-* Format: `add n/NAME [ds/DESCRIPTION] [dl/DEADLINE] [t/TAG]`
+* Format: `add n/NAME ds/DESCRIPTION dl/DEADLINE [t/TAG]`
 * Alias: `a`, i.e. `add` is equivalent to `a`
 
 [TIP]
@@ -295,6 +295,20 @@ Example:
 * `add n/Decide on Research Paper Topic dl/1-1-2020`
 
 Outcome: Task Box (Panel D) will show the newly created task `Decide on Research Paper Topic` with deadline `1 January 2020`.
+
+==== Clearing all task: `clear`
+
+Clears all task in the project that is selected.
+
+* Format: `clear`
+
+* Alias: `cl`, i.e. `clear` is equivalent to `cl`
+
+Example:
+
+* `clear`
+
+Outcome: Task Box (Panel D) will now show 0 task.
 
 ==== Editing a task: `edit`
 
@@ -416,6 +430,11 @@ executed.
 * Format: `undo`
 * Alias: `u` i.e. `undo` is equivalent to `u`
 
+****
+* Take note that if you `listproject`, the history of commands will be cleared,
+thus `undo` will no longer work as intended when you return to view the project tasks.
+****
+
 Example:
 
 *  `add n/sample task` ...
@@ -433,6 +452,11 @@ Reverses the most recent `undo` command.
 
 * Format: `redo`
 * Alias: `r` i.e. `redo` is equivalent to `r`
+
+****
+* Take note that if you `listproject`, the history of commands will be cleared,
+thus `redo` will no longer work as intended when you return to view the project tasks.
+****
 
 Example:
 
@@ -459,6 +483,11 @@ chronological order.
 * Format: `taskhistory INDEX`
 * Alias: `th` i.e. `taskhistory` is equivalent to `th`
 
+****
+* Take note that if you `listproject`, the history of commands will be cleared,
+thus `taskhistory` will no longer work as intended when you return to view the project tasks.
+****
+
 Example :
 
 *  `taskhistory 1`
@@ -479,6 +508,13 @@ in the task.
 
 * Format: `compare INDEX`
 * Alias: `c` i.e. `compare` is equivalent to `c`
+
+****
+* `compare` only compares Name, Description, Deadline of a Task.
+* Take note that tags will not be compared.
+* Take note that if you `listproject`, the history of commands will be cleared,
+ thus `compare` will no longer work as intended when you return to view the project tasks.
+****
 
 Example :
 
@@ -519,7 +555,6 @@ Task Box (Panel B) will display information of current version of the task at
 |`addtag`|Add a group tag to a task
 |`analyse`|View task completion rate
 |`clear`|Clear all tasks in project
-|`clear`|Clears all tasks
 |`compare`|Compare current task with previous version
 |`completed`|Marks task as completed
 |`definetag`|Define a group tag
