@@ -10,6 +10,7 @@ import seedu.project.logic.CommandHistory;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
 import seedu.project.model.project.Project;
+import seedu.project.model.project.VersionedProject;
 import seedu.project.model.task.Task;
 
 /**
@@ -72,8 +73,11 @@ public class AddCommand extends Command {
             System.out.println(model.getSelectedProject().getName());
             System.out.println(model.getProject());
 
-            model.setProject(model.getSelectedProject(), (Project) model.getProject());
-            //model.setSelectedProject((Project) model.getProject() );
+            if (model.getProject().getClass().equals(VersionedProject.class)) {
+                model.setProject(model.getSelectedProject(), (VersionedProject) model.getProject());
+            } else {
+                model.setProject(model.getSelectedProject(), (Project) model.getProject());
+            }
             model.commitProjectList();
 
             return new CommandResult(String.format(MESSAGE_SUCCESS_TASK, toAdd));

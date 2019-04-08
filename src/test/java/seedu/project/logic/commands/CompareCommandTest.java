@@ -21,6 +21,7 @@ import seedu.project.model.ModelManager;
 import seedu.project.model.ProjectList;
 import seedu.project.model.UserPrefs;
 import seedu.project.model.project.Project;
+import seedu.project.model.project.VersionedProject;
 import seedu.project.model.task.Task;
 import seedu.project.testutil.TaskBuilder;
 
@@ -67,8 +68,11 @@ public class CompareCommandTest {
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         model.commitProject();
 
-        model.setProject(model.getSelectedProject(),
-                (Project) model.getProject()); //sync project list
+        if (model.getProject().getClass().equals(VersionedProject.class)) {
+            model.setProject(model.getSelectedProject(), (VersionedProject) model.getProject());
+        } else {
+            model.setProject(model.getSelectedProject(), (Project) model.getProject());
+        }
         model.commitProjectList();
 
         List<String> tempString = expectedModel.compareTask(expectedModel.getFilteredTaskList().get(0));
@@ -122,8 +126,11 @@ public class CompareCommandTest {
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         model.commitProject();
 
-        model.setProject(model.getSelectedProject(),
-                (Project) model.getProject()); //sync project list
+        if (model.getProject().getClass().equals(VersionedProject.class)) {
+            model.setProject(model.getSelectedProject(), (VersionedProject) model.getProject());
+        } else {
+            model.setProject(model.getSelectedProject(), (Project) model.getProject());
+        }
         model.commitProjectList();
 
         List<String> tempString = expectedModel.compareTask(expectedModel.getFilteredTaskList().get(0));

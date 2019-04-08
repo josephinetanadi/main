@@ -23,6 +23,7 @@ import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
 import seedu.project.model.Name;
 import seedu.project.model.project.Project;
+import seedu.project.model.project.VersionedProject;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Deadline;
 import seedu.project.model.task.Description;
@@ -123,7 +124,11 @@ public class EditCommand extends Command {
 
             model.commitProject();
             //this will not work if user clicks on a different project while on task level??? lock UI at prev panel
-            model.setProject(model.getSelectedProject(), (Project) model.getProject()); //sync project list
+            if (model.getProject().getClass().equals(VersionedProject.class)) {
+                model.setProject(model.getSelectedProject(), (VersionedProject) model.getProject());
+            } else {
+                model.setProject(model.getSelectedProject(), (Project) model.getProject());
+            }
             model.commitProjectList();
             return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
         }

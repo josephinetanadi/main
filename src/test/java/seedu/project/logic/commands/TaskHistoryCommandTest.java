@@ -22,6 +22,7 @@ import seedu.project.model.ModelManager;
 import seedu.project.model.ProjectList;
 import seedu.project.model.UserPrefs;
 import seedu.project.model.project.Project;
+import seedu.project.model.project.VersionedProject;
 import seedu.project.model.task.Task;
 import seedu.project.testutil.TaskBuilder;
 
@@ -91,16 +92,22 @@ public class TaskHistoryCommandTest {
         model.setTask(model.getFilteredTaskList().get(0), editedTask1);
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         model.commitProject();
-        model.setProject(model.getSelectedProject(),
-                (Project) model.getProject()); //sync project list
+        if (model.getProject().getClass().equals(VersionedProject.class)) {
+            model.setProject(model.getSelectedProject(), (VersionedProject) model.getProject());
+        } else {
+            model.setProject(model.getSelectedProject(), (Project) model.getProject());
+        }
         model.commitProjectList();
 
         //Add second task
         model.setTask(model.getFilteredTaskList().get(0), editedTask2);
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         model.commitProject();
-        model.setProject(model.getSelectedProject(),
-                (Project) model.getProject()); //sync project list
+        if (model.getProject().getClass().equals(VersionedProject.class)) {
+            model.setProject(model.getSelectedProject(), (VersionedProject) model.getProject());
+        } else {
+            model.setProject(model.getSelectedProject(), (Project) model.getProject());
+        }
         model.commitProjectList();
 
         //String expectedMessage = String.format(compareCommand.MESSAGE_COMPARE_TASK_SUCCESS,
@@ -136,8 +143,11 @@ public class TaskHistoryCommandTest {
 
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         model.commitProject();
-        model.setProject(model.getSelectedProject(),
-                (Project) model.getProject()); //sync project list
+        if (model.getProject().getClass().equals(VersionedProject.class)) {
+            model.setProject(model.getSelectedProject(), (VersionedProject) model.getProject());
+        } else {
+            model.setProject(model.getSelectedProject(), (Project) model.getProject());
+        }
         model.commitProjectList();
 
         expectedModel.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
