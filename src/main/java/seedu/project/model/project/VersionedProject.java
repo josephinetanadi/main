@@ -110,6 +110,7 @@ public class VersionedProject extends Project {
     public List<String> compareTask(Task target1) {
         int targetTaskId = target1.getTaskId();
         int movingStatePointer = currentStatePointer;
+
         movingStatePointer--;
         while (movingStatePointer >= 0) {
             int taskIndex = projectStateList.get(movingStatePointer).getIndex(targetTaskId);
@@ -121,8 +122,6 @@ public class VersionedProject extends Project {
 
                     return getDiffString(target1, projectStateList.get(movingStatePointer).getTaskList()
                             .get(taskIndex));
-                } else {
-                    movingStatePointer--;
                 }
             }
             movingStatePointer--;

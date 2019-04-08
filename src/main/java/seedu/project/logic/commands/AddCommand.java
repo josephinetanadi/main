@@ -69,9 +69,6 @@ public class AddCommand extends Command {
             int taskId = ((Task) toAdd).getTaskId();
             history.addHistoryTaskId(Integer.toString(taskId));
 
-            System.out.println("before");
-            System.out.println(model.getSelectedProject().getName());
-            System.out.println(model.getProject());
 
             if (model.getProject().getClass().equals(VersionedProject.class)) {
                 model.setProject(model.getSelectedProject(), (VersionedProject) model.getProject());

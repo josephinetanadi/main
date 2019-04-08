@@ -76,7 +76,6 @@ public class CompareCommandTest {
         model.commitProjectList();
 
         List<String> tempString = expectedModel.compareTask(expectedModel.getFilteredTaskList().get(0));
-        expectedModel.commitProject();
 
         //String expectedMessage = String.format(compareCommand.MESSAGE_COMPARE_TASK_SUCCESS,
         // tempString.get(0), tempString.get(1));
@@ -134,7 +133,6 @@ public class CompareCommandTest {
         model.commitProjectList();
 
         List<String> tempString = expectedModel.compareTask(expectedModel.getFilteredTaskList().get(0));
-        expectedModel.commitProject();
 
         assertCommandSuccess(compareCommand, model, commandHistory,
                 compareCommand.MESSAGE_COMPARE_TASK_FAILURE, expectedModel);

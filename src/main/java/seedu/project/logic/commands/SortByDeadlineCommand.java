@@ -39,8 +39,25 @@ public class SortByDeadlineCommand extends Command {
             Comparator<Task> taskComparator = new Comparator<Task>() {
                 @Override
                 public int compare(Task o1, Task o2) {
-                    return (o1.getDeadline().toString()).compareTo(o2.getDeadline().toString());
+                    String[] arrString = o1.getDeadline().toString().split("-", 3);
+                    String o1Temp = arrString[2] + arrString[1] + arrString[0];
+                    int o1TempInt = Integer.parseInt(o1Temp);
+
+                    String[] arrString2 = o2.getDeadline().toString().split("-", 3);
+                    String o2Temp = arrString2[2] + arrString2[1] + arrString2[0];
+                    int o2TemptInt = Integer.parseInt(o2Temp);
+
+                    if (o2TemptInt - o1TempInt > 0) {
+                        return -1;
+                    } else if (o2TemptInt - o1TempInt == 0) {
+                        return 0;
+                    } else if (o2TemptInt - o1TempInt < 0) {
+                        return 1;
+                    }
+
+                    return 0;
                 }
+
             };
 
             int size = filteredTasks.size();
