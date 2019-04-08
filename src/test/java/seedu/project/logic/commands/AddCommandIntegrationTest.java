@@ -44,6 +44,7 @@ public class AddCommandIntegrationTest {
         expectedModel.addTask(validTask);
         expectedModel.setProject(expectedModel.getSelectedProject(), (Project) expectedModel.getProject());
         expectedModel.commitProject();
+        expectedModel.commitProjectList();
 
         assertCommandSuccess(new AddCommand(validTask), model, commandHistory,
                 String.format(AddCommand.MESSAGE_SUCCESS_TASK, validTask), expectedModel);

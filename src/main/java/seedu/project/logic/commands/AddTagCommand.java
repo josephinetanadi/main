@@ -57,6 +57,8 @@ public class AddTagCommand extends Command {
         taskId = targetTask.getTaskId();
         targetTask.updateTaskId(taskId);
 
+        history.addHistoryTaskId(Integer.toString(taskId));
+
         Boolean[] groupExists = {false};
         model.getGroupTagList().forEach(groupTag -> {
             if (groupTag.getName().toString().equals(this.groupTag)) {

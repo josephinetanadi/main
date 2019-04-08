@@ -151,6 +151,7 @@ public class UniqueTaskList implements Iterable<Task> {
             }
         }
         index--;
-        return 0;
+        return -1;
     }
+
 }

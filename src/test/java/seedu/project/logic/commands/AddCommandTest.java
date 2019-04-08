@@ -339,6 +339,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void commitProjectList() {
+            // called by {@code AddCommand#execute()}
+        }
+
+        @Override
         public Project getSelectedProject() {
             return new Project();
         }

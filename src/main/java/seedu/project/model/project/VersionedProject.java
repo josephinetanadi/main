@@ -113,7 +113,9 @@ public class VersionedProject extends Project {
         movingStatePointer--;
         while (movingStatePointer >= 0) {
             int taskIndex = projectStateList.get(movingStatePointer).getIndex(targetTaskId);
-            if (taskIndex != 0) {
+
+            if (taskIndex != -1) {
+
                 if (isThereDiff(target1, projectStateList.get(movingStatePointer).getTaskList()
                         .get(taskIndex))) {
 
@@ -134,11 +136,11 @@ public class VersionedProject extends Project {
      * {@code task1, task2} must exist in the project
      */
     public boolean isThereDiff(Task task1, Task task2) {
-        if (task1.getName() != task2.getName()) {
+        if (!task1.getName().equals(task2.getName())) {
             return true;
-        } else if (task1.getDescription() != task2.getDescription()) {
+        } else if (!task1.getDescription().equals(task2.getDescription())) {
             return true;
-        } else if (task1.getDeadline() != task2.getDeadline()) {
+        } else if (!task1.getDeadline().equals(task2.getDeadline())) {
             return true;
         } else {
             return false;
@@ -156,11 +158,12 @@ public class VersionedProject extends Project {
         List<String> returnString = new ArrayList<>();
         // Arrays.asList(" ", " ");
 
-        if (task1.getName() != target.getName()) {
+        //if (task1.getName() != target.getName()) {
+        if (!task1.getName().equals(target.getName())) {
             taskReturnString = ("Name: " + task1.getName());
             targetReturnString = ("Name: " + target.getName());
         }
-        if (task1.getDescription() != target.getDescription()) {
+        if (!task1.getDescription().equals(target.getDescription())) {
             if (taskReturnString == null) {
                 taskReturnString = ("Description: " + task1.getDescription());
                 targetReturnString = ("Description: " + target.getDescription());
@@ -171,7 +174,7 @@ public class VersionedProject extends Project {
             }
 
         }
-        if (task1.getDeadline() != target.getDeadline()) {
+        if (!task1.getDeadline().equals(target.getDeadline())) {
             if (taskReturnString == null) {
                 taskReturnString = ("Deadline: " + task1.getDeadline());
                 targetReturnString = ("Deadline: " + target.getDeadline());

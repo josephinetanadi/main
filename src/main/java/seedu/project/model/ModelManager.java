@@ -153,6 +153,8 @@ public class ModelManager implements Model {
         requireAllNonNull(target, editedProject);
 
         versionedProjectList.setProject(target, editedProject);
+        setSelectedProject(editedProject);
+        //this.setSelectedProject( (Project) this.getProject());
     }
 
     // =========== Project
