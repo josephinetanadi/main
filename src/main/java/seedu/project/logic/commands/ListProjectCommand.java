@@ -6,6 +6,7 @@ import seedu.project.logic.CommandHistory;
 import seedu.project.logic.LogicManager;
 import seedu.project.model.Model;
 import seedu.project.model.project.Project;
+import seedu.project.model.project.VersionedProject;
 
 /**
  * Lists all tasks in the project to the user.
@@ -23,7 +24,11 @@ public class ListProjectCommand extends Command {
         if (LogicManager.getState()) {
             LogicManager.setState(false);
             //sync versionedProject with versionedProjectList
-            model.setProject(model.getSelectedProject(), (Project) model.getProject());
+            if (model.getProject().getClass().equals(VersionedProject.class)) {
+                model.setProject(model.getSelectedProject(), (VersionedProject) model.getProject());
+            } else {
+                model.setProject(model.getSelectedProject(), (Project) model.getProject());
+            }
             model.setSelectedProject(model.getFilteredProjectList().get(0));
             model.setSelectedTask(null);
         }
