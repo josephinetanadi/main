@@ -28,6 +28,8 @@ public class TestApp extends MainApp {
 
     public static final Path SAVE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("sampleProjectList.json");
+    public static final Path IMPORT_LOCATION_FOR_TESTING =
+            TestUtil.getFilePathInSandboxFolder("import.json");
 
     protected static final Path DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");

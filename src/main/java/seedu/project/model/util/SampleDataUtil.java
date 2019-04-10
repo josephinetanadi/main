@@ -32,6 +32,13 @@ public class SampleDataUtil {
         };
     }
 
+    public static Project[] getProjectsToImport() {
+        return new Project[] {
+            new Project(new Name("Sample project 3")),
+            new Project(new Name("Sample project 4"))
+        };
+    }
+
     public static ProjectList getSampleProjectList() {
         ProjectList projectList = new ProjectList();
         for (Project project : getSampleProjects()) {

@@ -252,6 +252,11 @@ public class ModelManager implements Model {
     // =================================================================================
 
     @Override
+    public boolean canUndoProjectList() {
+        return versionedProjectList.canUndo();
+    }
+
+    @Override
     public boolean canUndoProject() {
         return versionedProject.canUndo();
     }
@@ -259,6 +264,11 @@ public class ModelManager implements Model {
     @Override
     public boolean canRedoProject() {
         return versionedProject.canRedo();
+    }
+
+    @Override
+    public void undoProjectList() {
+        versionedProjectList.undo();
     }
 
     @Override
