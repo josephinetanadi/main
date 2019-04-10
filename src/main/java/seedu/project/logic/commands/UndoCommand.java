@@ -1,9 +1,9 @@
 package seedu.project.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.project.model.Model.PREDICATE_SHOW_ALL_PROJECTS;
 import static seedu.project.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
-import seedu.project.commons.core.Messages;
 import seedu.project.logic.CommandHistory;
 import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.exceptions.CommandException;
@@ -25,7 +25,13 @@ public class UndoCommand extends Command {
 
         if (!LogicManager.getState()) {
 
-            throw new CommandException(String.format(Messages.MESSAGE_GO_TO_TASK_LEVEL, COMMAND_WORD));
+            if (!model.canUndoProjectList()) {
+                throw new CommandException(MESSAGE_FAILURE);
+            }
+
+            model.undoProjectList();
+            model.updateFilteredProjectList(PREDICATE_SHOW_ALL_PROJECTS);
+            return new CommandResult(MESSAGE_SUCCESS);
 
         } else {
 

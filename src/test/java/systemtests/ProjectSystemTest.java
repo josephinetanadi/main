@@ -3,6 +3,7 @@ package systemtests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.project.TestApp.IMPORT_LOCATION_FOR_TESTING;
 import static seedu.project.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.project.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.project.ui.testutil.GuiTestAssert.assertListMatching;
@@ -30,12 +31,18 @@ import guitests.guihandles.TaskListPanelHandle;
 
 import seedu.project.TestApp;
 import seedu.project.commons.core.index.Index;
+import seedu.project.commons.util.FileUtil;
+import seedu.project.commons.util.JsonUtil;
 import seedu.project.logic.commands.ClearCommand;
 import seedu.project.logic.commands.FindCommand;
 import seedu.project.logic.commands.ListCommand;
+import seedu.project.logic.commands.ListProjectCommand;
 import seedu.project.logic.commands.SelectCommand;
 import seedu.project.model.Model;
 import seedu.project.model.ProjectList;
+import seedu.project.model.project.Project;
+import seedu.project.model.util.SampleDataUtil;
+import seedu.project.storage.JsonSerializableProjectList;
 import seedu.project.testutil.TypicalTasks;
 import seedu.project.ui.CommandBox;
 
@@ -85,6 +92,18 @@ public abstract class ProjectSystemTest {
      */
     protected Path getProjectListSaveLocation() {
         return TestApp.SAVE_LOCATION_FOR_TESTING;
+    }
+
+    /**
+     * Returns the directory of the project list file.
+     */
+    protected void createImportFile() throws Exception {
+        ProjectList projectListToImport = new ProjectList();
+        for (Project p : SampleDataUtil.getProjectsToImport()) {
+            projectListToImport.addProject(p);
+        }
+        FileUtil.createIfMissing(IMPORT_LOCATION_FOR_TESTING);
+        JsonUtil.saveJsonFile(new JsonSerializableProjectList(projectListToImport), IMPORT_LOCATION_FOR_TESTING);
     }
 
     public MainWindowHandle getMainWindowHandle() {
@@ -156,6 +175,14 @@ public abstract class ProjectSystemTest {
     protected void selectProject(Index index) {
         executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
         assertEquals(index.getZeroBased(), getProjectListPanel().getSelectedCardIndex());
+    }
+
+    /**
+     * Lists all project
+     */
+    protected void listProject() {
+        executeCommand(ListProjectCommand.COMMAND_WORD);
+        assertEquals(getModel().getFilteredProjectList().size(), getProjectListPanel().getListSize());
     }
 
     /**
