@@ -1,12 +1,9 @@
 package seedu.project.logic.commands;
 
-import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_CP2106;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_CS2101;
 import static seedu.project.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.project.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.project.model.Model.PREDICATE_SHOW_ALL_TASKS;
 import static seedu.project.testutil.TypicalIndexes.INDEX_FIRST_TASK;
-import static seedu.project.testutil.TypicalIndexes.INDEX_SECOND_TASK;
 import static seedu.project.testutil.TypicalTasks.getTypicalProjectList;
 
 import org.junit.Test;

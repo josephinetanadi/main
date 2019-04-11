@@ -7,9 +7,6 @@ import static seedu.project.model.Model.PREDICATE_SHOW_ALL_TASKS;
 import static seedu.project.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.project.testutil.TypicalTasks.getTypicalProjectList;
 
-import java.util.ArrayList;
-import java.util.Set;
-
 import org.junit.Test;
 
 import seedu.project.commons.core.Messages;
@@ -21,7 +18,6 @@ import seedu.project.model.ModelManager;
 import seedu.project.model.ProjectList;
 import seedu.project.model.UserPrefs;
 import seedu.project.model.project.Project;
-import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Task;
 import seedu.project.testutil.TaskBuilder;
 
