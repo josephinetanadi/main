@@ -170,6 +170,11 @@ public interface Model {
     void updateFilteredTaskList(Predicate<Task> predicate);
 
     /**
+     * Returns true if the model has previous project list states to restore.
+     */
+    boolean canUndoProjectList();
+
+    /**
      * Returns true if the model has previous project states to restore.
      */
     boolean canUndoProject();
@@ -178,6 +183,11 @@ public interface Model {
      * Returns true if the model has undone project states to restore.
      */
     boolean canRedoProject();
+
+    /**
+     * Restores the model's project list to its previous state.
+     */
+    void undoProjectList();
 
     /**
      * Restores the model's project to its previous state.

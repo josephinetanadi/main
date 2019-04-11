@@ -88,8 +88,10 @@ public class UniqueProjectList implements Iterable<Project> {
         if (!projectsAreUnique(projects)) {
             throw new DuplicateProjectException();
         }
-
-        internalList.setAll(projects);
+        internalList.clear();
+        for (Project p : projects) {
+            internalList.add(new Project(p));
+        }
     }
 
     /**

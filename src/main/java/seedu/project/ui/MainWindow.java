@@ -121,6 +121,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
+        browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         projectListPanel = new ProjectListPanel(logic.getFilteredProjectList(), logic.selectedProjectProperty(),
                 logic::setSelectedProject);
@@ -189,13 +190,6 @@ public class MainWindow extends UiPart<Stage> {
         if (commandText.contains(SelectCommand.COMMAND_WORD)
                 || commandText.contains(SelectCommand.COMMAND_ALIAS + " ")) {
             if (LogicManager.getState()) { //to update task list panel
-                taskListPanelPlaceholder.setDisable(false);
-                taskListPanelPlaceholder.getChildren().clear();
-                taskListPanel = new TaskListPanel(logic.getFilteredTaskList(), logic.selectedTaskProperty(),
-                        logic::setSelectedTask);
-                taskListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
-                projectListPanelPlaceholder.setDisable(true);
-
                 if (logic.getFilteredTaskList().size() > 0) {
                     if (logic.selectedTaskProperty().getValue() == null) {
                         logic.setSelectedTask(logic.getFilteredTaskList().get(0));
@@ -204,6 +198,12 @@ public class MainWindow extends UiPart<Stage> {
                     browserPlaceholder.getChildren().add(browserPanel.getRoot());
                     browserPanel.setTaskDetails(logic.selectedTaskProperty().getValue().browserDisplayToString());
                 }
+                taskListPanelPlaceholder.setDisable(false);
+                taskListPanelPlaceholder.getChildren().clear();
+                taskListPanel = new TaskListPanel(logic.getFilteredTaskList(), logic.selectedTaskProperty(),
+                        logic::setSelectedTask);
+                taskListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
+                projectListPanelPlaceholder.setDisable(true);
             }
         } else if (commandText.equals(ListProjectCommand.COMMAND_WORD)
                 || commandText.equals(ListProjectCommand.COMMAND_ALIAS)) {

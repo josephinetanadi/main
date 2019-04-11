@@ -4,7 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.project.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.project.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.project.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.project.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.project.logic.parser.CliSyntax.PREFIX_OUTPUT;
 import static seedu.project.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.io.IOException;
@@ -35,6 +37,8 @@ public class CommandTestUtil {
     public static final String VALID_DEADLINE_CP2106 = "20-06-2019";
     public static final String VALID_TAG_CS2101 = "CS2101";
     public static final String VALID_TAG_CP2106 = "CP2106";
+    public static final String VALID_PATH_EXPORT = "./data/export.json";
+    public static final String VALID_INDEX = "1";
 
     public static final String VALID_PROJECT_NAME_CS2101 = "CS2101 Project";
     public static final String VALID_PROJECT_NAME_CP2106 = "CP2106 Project";
@@ -47,6 +51,9 @@ public class CommandTestUtil {
     public static final String DEADLINE_DESC_CP2106 = " " + PREFIX_DEADLINE + VALID_DEADLINE_CP2106;
     public static final String TAG_DESC_CS2101 = " " + PREFIX_TAG + VALID_TAG_CS2101;
     public static final String TAG_DESC_CP2106 = " " + PREFIX_TAG + VALID_TAG_CP2106;
+    public static final String PATH_EXPORT_SELECTED = " " + PREFIX_OUTPUT + VALID_PATH_EXPORT;
+    public static final String PATH_EXPORT_INDEX = " " + PREFIX_INDEX + VALID_INDEX + " "
+            + PREFIX_OUTPUT + VALID_PATH_EXPORT;
 
     public static final String NAME_DESC_CS2101_PROJECT = " " + PREFIX_NAME + VALID_PROJECT_NAME_CS2101;
     public static final String NAME_DESC_CP2106_PROJECT = " " + PREFIX_NAME + VALID_PROJECT_NAME_CP2106;
@@ -55,6 +62,7 @@ public class CommandTestUtil {
     public static final String INVALID_DESC_DESC = " " + PREFIX_DESCRIPTION + ""; // '(blank)' not allowed in desc
     public static final String INVALID_DEADLINE_DESC = " " + PREFIX_DEADLINE + "112011"; // does not follow date format
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "mod*"; // '*' not allowed in tags
+    public static final String INVALID_INDEX = " " + PREFIX_INDEX + "5";
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
