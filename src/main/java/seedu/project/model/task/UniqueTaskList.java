@@ -145,14 +145,13 @@ public class UniqueTaskList implements Iterable<Task> {
 
         while (index < totalTask) {
             if (internalList.get(index).getTaskId() == taskId) {
-                System.out.print ("index is : " + index + "\n");
                 return index;
             } else {
                 index++;
             }
         }
         index--;
-        System.out.print ("return here index is : " + index + "\n");
-        return index;
+        return -1;
     }
+
 }

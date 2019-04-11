@@ -122,6 +122,7 @@ public class ProjectList implements ReadOnlyProjectList {
 
         projects.setProject(target, editedProject);
         indicateModified();
+
     }
 
     /**

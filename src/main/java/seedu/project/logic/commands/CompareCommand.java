@@ -55,7 +55,6 @@ public class CompareCommand extends Command {
             Task taskToCompare = lastShownList.get(targetIndex.getZeroBased());
             //tempTask = model.compareTask(taskToCompare);
             List<String> tempString = model.compareTask(taskToCompare);;
-            model.commitProject();
             if (tempString != null) {
                 return new CommandResult(String.format(MESSAGE_COMPARE_TASK_SUCCESS,
                         tempString.get(0), tempString.get(1)));

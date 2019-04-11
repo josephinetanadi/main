@@ -11,6 +11,7 @@ import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
 import seedu.project.model.project.Project;
+import seedu.project.model.project.VersionedProject;
 import seedu.project.model.task.Task;
 
 /**
@@ -62,7 +63,11 @@ public class DeleteCommand extends Command {
             history.addHistoryTaskId(Integer.toString(taskId));
 
             model.deleteTask(taskToDelete);
-            model.setProject(model.getSelectedProject(), (Project) model.getProject());
+            if (model.getProject().getClass().equals(VersionedProject.class)) {
+                model.setProject(model.getSelectedProject(), (VersionedProject) model.getProject());
+            } else {
+                model.setProject(model.getSelectedProject(), (Project) model.getProject());
+            }
             model.commitProject();
             return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, taskToDelete));
         }

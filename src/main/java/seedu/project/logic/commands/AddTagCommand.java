@@ -13,6 +13,7 @@ import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
 import seedu.project.model.project.Project;
+import seedu.project.model.project.VersionedProject;
 import seedu.project.model.task.Task;
 
 /**
@@ -57,6 +58,8 @@ public class AddTagCommand extends Command {
         taskId = targetTask.getTaskId();
         targetTask.updateTaskId(taskId);
 
+        history.addHistoryTaskId(Integer.toString(taskId));
+
         Boolean[] groupExists = {false};
         model.getGroupTagList().forEach(groupTag -> {
             if (groupTag.getName().toString().equals(this.groupTag)) {
@@ -75,7 +78,11 @@ public class AddTagCommand extends Command {
         model.commitProject();
 
         //this will not work if user clicks on a different project while on task level??? lock UI at prev panel
-        model.setProject(model.getSelectedProject(), (Project) model.getProject()); //sync project list
+        if (model.getProject().getClass().equals(VersionedProject.class)) {
+            model.setProject(model.getSelectedProject(), (VersionedProject) model.getProject());
+        } else {
+            model.setProject(model.getSelectedProject(), (Project) model.getProject());
+        }
         model.commitProjectList();
 
         return new CommandResult(String.format(MESSAGE_COMPLETED_SUCCESS, this.groupTag));

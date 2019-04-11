@@ -12,6 +12,7 @@ import seedu.project.logic.LogicManager;
 import seedu.project.logic.commands.exceptions.CommandException;
 import seedu.project.model.Model;
 import seedu.project.model.project.Project;
+import seedu.project.model.project.VersionedProject;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Task;
 
@@ -70,7 +71,11 @@ public class CompletedCommand extends Command {
                 model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
 
                 model.commitProject();
-                model.setProject(model.getSelectedProject(), (Project) model.getProject()); // sync project list
+                if (model.getProject().getClass().equals(VersionedProject.class)) {
+                    model.setProject(model.getSelectedProject(), (VersionedProject) model.getProject());
+                } else {
+                    model.setProject(model.getSelectedProject(), (Project) model.getProject());
+                }
                 model.commitProjectList();
 
                 return new CommandResult(String.format(MESSAGE_COMPLETED_SUCCESS, taskToComplete.getName()));

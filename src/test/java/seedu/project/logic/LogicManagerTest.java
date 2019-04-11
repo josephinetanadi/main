@@ -109,6 +109,7 @@ public class LogicManagerTest {
         expectedModel.addTask(expectedTask);
         expectedModel.setProject(expectedModel.getSelectedProject(), (Project) expectedModel.getProject());
         expectedModel.commitProject();
+        expectedModel.commitProjectList();
         String expectedMessage = LogicManager.FILE_OPS_ERROR_MESSAGE + DUMMY_IO_EXCEPTION;
         assertCommandBehavior(CommandException.class, addCommand, expectedMessage, expectedModel);
         assertHistoryCorrect(addCommand);

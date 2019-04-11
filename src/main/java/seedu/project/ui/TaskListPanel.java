@@ -28,6 +28,7 @@ public class TaskListPanel extends UiPart<Region> {
         super(FXML);
         taskListView.setItems(taskList);
         taskListView.setCellFactory(listView -> new TaskListViewCell());
+        taskListView.getSelectionModel().select(selectedTask.getValue());
         taskListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             logger.fine("Selection in task list panel changed to : '" + newValue + "'");
             onSelectedTaskChange.accept(newValue);

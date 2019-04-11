@@ -33,6 +33,7 @@ import seedu.project.logic.commands.UndoCommand;
 import seedu.project.model.Model;
 import seedu.project.model.Name;
 import seedu.project.model.project.Project;
+import seedu.project.model.project.VersionedProject;
 import seedu.project.model.tag.Tag;
 import seedu.project.model.task.Deadline;
 import seedu.project.model.task.Description;
@@ -190,6 +191,11 @@ public class AddCommandSystemTest extends ProjectSystemTest {
     private void assertCommandSuccess(String command, Task toAdd) {
         Model expectedModel = getModel();
         expectedModel.addTask(toAdd);
+        if (expectedModel.getProject().getClass().equals(VersionedProject.class)) {
+            expectedModel.setProject(expectedModel.getSelectedProject(), (VersionedProject) expectedModel.getProject());
+        } else {
+            expectedModel.setProject(expectedModel.getSelectedProject(), (Project) expectedModel.getProject());
+        }
         String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS_TASK, toAdd);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
     }

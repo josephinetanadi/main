@@ -21,6 +21,7 @@ import seedu.project.model.ModelManager;
 import seedu.project.model.ProjectList;
 import seedu.project.model.UserPrefs;
 import seedu.project.model.project.Project;
+import seedu.project.model.project.VersionedProject;
 import seedu.project.model.task.Task;
 import seedu.project.testutil.TaskBuilder;
 
@@ -38,12 +39,11 @@ public class CompareCommandTest {
 
         Task taskInFilteredList = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
         Task editedTask = new TaskBuilder(taskInFilteredList).withName(VALID_NAME_CP2106).build();
+        editedTask.updateTaskId(taskInFilteredList.getTaskId());
         CompareCommand compareCommand = new CompareCommand(INDEX_FIRST_TASK);
 
-        String tempCurrent = "Name: Orbital Project | Description: find teammates for group"
-                + " discussion on presentation | Deadline: 01-01-2019";
-        String tempCompared = "Name: Attend tutorial | Description: attend tutorial at utown "
-                + "classroom | Deadline: 01-01-2019";
+        String tempCurrent = "Name: Orbital Project";
+        String tempCompared = "Name: Group meeting";
         String expectedMessage = String.format(compareCommand.MESSAGE_COMPARE_TASK_SUCCESS, tempCurrent, tempCompared);
 
         Model expectedModel = new ModelManager(
@@ -56,7 +56,7 @@ public class CompareCommandTest {
 
         LogicManager.setState(true);
 
-        expectedModel.setTask(model.getFilteredTaskList().get(0), editedTask);
+        expectedModel.setTask(expectedModel.getFilteredTaskList().get(0), editedTask);
         expectedModel.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         expectedModel.commitProject();
 
@@ -68,12 +68,14 @@ public class CompareCommandTest {
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         model.commitProject();
 
-        model.setProject(model.getSelectedProject(),
-                (Project) model.getProject()); //sync project list
+        if (model.getProject().getClass().equals(VersionedProject.class)) {
+            model.setProject(model.getSelectedProject(), (VersionedProject) model.getProject());
+        } else {
+            model.setProject(model.getSelectedProject(), (Project) model.getProject());
+        }
         model.commitProjectList();
 
         List<String> tempString = expectedModel.compareTask(expectedModel.getFilteredTaskList().get(0));
-        expectedModel.commitProject();
 
         //String expectedMessage = String.format(compareCommand.MESSAGE_COMPARE_TASK_SUCCESS,
         // tempString.get(0), tempString.get(1));
@@ -123,12 +125,14 @@ public class CompareCommandTest {
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         model.commitProject();
 
-        model.setProject(model.getSelectedProject(),
-                (Project) model.getProject()); //sync project list
+        if (model.getProject().getClass().equals(VersionedProject.class)) {
+            model.setProject(model.getSelectedProject(), (VersionedProject) model.getProject());
+        } else {
+            model.setProject(model.getSelectedProject(), (Project) model.getProject());
+        }
         model.commitProjectList();
 
         List<String> tempString = expectedModel.compareTask(expectedModel.getFilteredTaskList().get(0));
-        expectedModel.commitProject();
 
         assertCommandSuccess(compareCommand, model, commandHistory,
                 compareCommand.MESSAGE_COMPARE_TASK_FAILURE, expectedModel);

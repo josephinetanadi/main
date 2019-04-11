@@ -41,6 +41,8 @@ public class SelectCommand extends Command {
         if (!LogicManager.getState()) {
             List<Project> filteredProjectList = model.getFilteredProjectList();
 
+            System.out.print(targetIndex);
+
             if (targetIndex.getZeroBased() >= filteredProjectList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PROJECT_DISPLAYED_INDEX);
             }

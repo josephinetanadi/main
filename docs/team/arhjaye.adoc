@@ -56,11 +56,15 @@ https://github.com/CS2113-AY1819S2-T09-3/main/pull/131[#131],
 https://github.com/CS2113-AY1819S2-T09-3/main/pull/141[#141])
 
 == Contributions to the User Guide
+Given below is a snippet of the User Guide documentation for my above listed enhancements.
+_You will be able to a look at my documenting abilities, to produce *concise guides* & being *audience focused*._
 
+=== Glossary
+[TIP]
+Represents an additional information that is good to know
+[NOTE]
+Represents an additional information where if not taken into considerdation, will affect command operations
 
-|===
-|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
-|===
 
 include::../UserGuide.adoc[tag=UIlayout]
 
@@ -70,9 +74,9 @@ include::../UserGuide.adoc[tag=taskhistory]
 
 == Contributions to the Developer Guide
 
-|===
-|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
-|===
+Given below is a snippet of the Developer Guide Documentation for my above listed enhancements.
+_You will be able to a look at my technical documentation abilities, utilizing *UML Sequence Diagrams* & *custom-purported
+diagrams* to explain complicated processes in *simpler terms*._
 
 include::../DeveloperGuide.adoc[tag=compare]
 

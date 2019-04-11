@@ -153,6 +153,8 @@ public class ModelManager implements Model {
         requireAllNonNull(target, editedProject);
 
         versionedProjectList.setProject(target, editedProject);
+        setSelectedProject(editedProject);
+        //this.setSelectedProject( (Project) this.getProject());
     }
 
     // =========== Project
@@ -250,6 +252,11 @@ public class ModelManager implements Model {
     // =================================================================================
 
     @Override
+    public boolean canUndoProjectList() {
+        return versionedProjectList.canUndo();
+    }
+
+    @Override
     public boolean canUndoProject() {
         return versionedProject.canUndo();
     }
@@ -257,6 +264,11 @@ public class ModelManager implements Model {
     @Override
     public boolean canRedoProject() {
         return versionedProject.canRedo();
+    }
+
+    @Override
+    public void undoProjectList() {
+        versionedProjectList.undo();
     }
 
     @Override

@@ -252,12 +252,22 @@ public class AddCommandTest {
         }
 
         @Override
+        public boolean canUndoProjectList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public boolean canUndoProject() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public boolean canRedoProject() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void undoProjectList() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -335,6 +345,11 @@ public class AddCommandTest {
 
         @Override
         public void commitProject() {
+            // called by {@code AddCommand#execute()}
+        }
+
+        @Override
+        public void commitProjectList() {
             // called by {@code AddCommand#execute()}
         }
 
