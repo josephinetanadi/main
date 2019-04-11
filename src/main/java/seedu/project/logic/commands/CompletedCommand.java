@@ -25,7 +25,7 @@ public class CompletedCommand extends Command {
             + "Parameters: INDEX (must be a positive integer) "
             + "Example: " + COMMAND_WORD + " 1";
     public static final String MESSAGE_TASK_ALREADY_COMPLETED = "Task is already completed.";
-    public static final String MESSAGE_COMPLETED_SUCCESS = " Task completed.";
+    public static final String MESSAGE_COMPLETED_SUCCESS = "%1$s completed.";
 
     private final Index index;
     /**
@@ -73,7 +73,7 @@ public class CompletedCommand extends Command {
                 model.setProject(model.getSelectedProject(), (Project) model.getProject()); // sync project list
                 model.commitProjectList();
 
-                return new CommandResult(String.format(MESSAGE_COMPLETED_SUCCESS, taskToComplete));
+                return new CommandResult(String.format(MESSAGE_COMPLETED_SUCCESS, taskToComplete.getName()));
             }
         }
     }
