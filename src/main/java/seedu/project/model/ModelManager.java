@@ -4,8 +4,11 @@ import static java.util.Objects.requireNonNull;
 import static seedu.project.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -240,6 +243,34 @@ public class ModelManager implements Model {
     @Override
     public ObservableList<Task> getFilteredTaskList() {
         return filteredTasks;
+    }
+
+    /**
+     * Returns string of tags and their associated task name {@code String}
+     */
+    public String getFilteredTagList() {
+        // get set of unique tags
+        List<Tag> allTags = new ArrayList<>();
+        filteredTasks.forEach(entry -> {
+            entry.getTags().forEach(tag -> allTags.add(tag));
+        });
+        Set<Tag> uniqueTagSet = new HashSet<>(allTags);
+
+        // convert uniqueTag set to list
+        List<Tag> uniqueTagList = new ArrayList<>();
+        uniqueTagList.addAll(uniqueTagSet);
+        // arrange print string
+        String stringToPrint = "";
+        for (Tag tag : uniqueTagList) {
+            stringToPrint += tag.toStringWithoutBrackets() + ": ";
+            for (Task task : filteredTasks) {
+                if (task.getTags().contains(tag)) {
+                    stringToPrint += "[" + task.getName().toString() + "]";
+                }
+            }
+            stringToPrint += "\n";
+        }
+        return stringToPrint;
     }
 
     @Override
