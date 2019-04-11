@@ -76,12 +76,13 @@ public class CommandTestUtil {
                 .withTags(VALID_TAG_CS2101).build();
         DESC_CP2106 = new EditTaskDescriptorBuilder().withName(VALID_NAME_CP2106)
                 .withDescription(VALID_DESCRIPTION_CP2106).withDeadline(VALID_DEADLINE_CP2106)
-                .withTags(VALID_TAG_CP2106).build();
+                .withTags(VALID_TAG_CP2106, VALID_TAG_CS2101).build();
     }
 
     /**
      * Executes the given {@code command}, confirms that <br>
-     * - the returned {@link CommandResult} matches {@code expectedCommandResult} <br>
+     * - the returned {@link CommandResult} matches {@code expectedCommandResult}
+     * <br>
      * - the {@code actualModel} matches {@code expectedModel} <br>
      * - the {@code actualCommandHistory} remains unchanged.
      */
@@ -103,7 +104,8 @@ public class CommandTestUtil {
     }
 
     /**
-     * Convenience wrapper to {@link #assertCommandSuccess(Command, Model, CommandHistory, CommandResult, Model)}
+     * Convenience wrapper to
+     * {@link #assertCommandSuccess(Command, Model, CommandHistory, CommandResult, Model)}
      * that takes a string {@code expectedMessage}.
      */
     public static void assertCommandSuccess(Command command, Model actualModel, CommandHistory actualCommandHistory,
@@ -116,7 +118,8 @@ public class CommandTestUtil {
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
      * - the CommandException message matches {@code expectedMessage} <br>
-     * - the project, filtered task list and selected task in {@code actualModel} remain unchanged <br>
+     * - the project, filtered task list and selected task in {@code actualModel}
+     * remain unchanged <br>
      * - {@code actualCommandHistory} remains unchanged.
      */
     public static void assertCommandFailure(Command command, Model actualModel, CommandHistory actualCommandHistory,
@@ -144,24 +147,25 @@ public class CommandTestUtil {
     }
 
     /**
-     * Updates {@code model}'s filtered list to show only the project at the given {@code targetIndex} in the
-     * {@code model}'s project list.
+     * Updates {@code model}'s filtered list to show only the project at the given
+     * {@code targetIndex} in the {@code model}'s project list.
      */
     public static void showProjectAtIndex(Model model, Index targetIndex) {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredProjectList().size());
 
         Project project = model.getFilteredProjectList().get(targetIndex.getZeroBased());
         final String[] splitName = project.getName().fullName.split("\\s+");
-        //2nd index is chosen because sample project names are "Sample project 1" and "Sample project 2"
-        model.updateFilteredProjectList(new seedu.project.model.project.NameContainsKeywordsPredicate(Arrays
-                .asList(splitName[2])));
+        // 2nd index is chosen because sample project names are "Sample project 1" and
+        // "Sample project 2"
+        model.updateFilteredProjectList(
+                new seedu.project.model.project.NameContainsKeywordsPredicate(Arrays.asList(splitName[2])));
 
         assertEquals(1, model.getFilteredProjectList().size());
     }
 
     /**
-     * Updates {@code model}'s filtered list to show only the task at the given {@code targetIndex} in the
-     * {@code model}'s project.
+     * Updates {@code model}'s filtered list to show only the task at the given
+     * {@code targetIndex} in the {@code model}'s project.
      */
     public static void showTaskAtIndex(Model model, Index targetIndex) {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredTaskList().size());
@@ -174,7 +178,8 @@ public class CommandTestUtil {
     }
 
     /**
-     * Deletes the first task in {@code model}'s filtered list from {@code model}'s project.
+     * Deletes the first task in {@code model}'s filtered list from {@code model}'s
+     * project.
      */
     public static void deleteFirstTask(Model model) {
         Task firstTask = model.getFilteredTaskList().get(0);

@@ -25,7 +25,7 @@ public class AddTagCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a group tag to the task.\n"
             + "Parameters: INDEX (must be a positive integer) " + PREFIX_GROUPTAG + "GROUPTAG\n"
             + "Example: " + COMMAND_WORD + " 1 " + PREFIX_GROUPTAG + "sample";
-    public static final String MESSAGE_COMPLETED_SUCCESS = " Group tag applied to task.";
+    public static final String MESSAGE_COMPLETED_SUCCESS = "Group tag %1$s applied to task.";
     public static final String MESSAGE_GROUPTAG_NOT_FOUND = "Group tag %1$s not found, please use "
             + DefineTagCommand.COMMAND_WORD + " to add them first.";
 
