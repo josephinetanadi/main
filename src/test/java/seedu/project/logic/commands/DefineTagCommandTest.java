@@ -1,14 +1,10 @@
 package seedu.project.logic.commands;
 
-import static org.junit.Assert.assertEquals;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_CS2101;
 import static seedu.project.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.project.logic.commands.CommandTestUtil.assertCommandSuccess;
-
-import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_CP2106;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_CS2101;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_CP2106;
-import static seedu.project.model.Model.PREDICATE_SHOW_ALL_TASKS;
-import static seedu.project.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.project.testutil.TypicalTasks.getTypicalProjectList;
 
 import java.util.Arrays;
@@ -36,7 +32,8 @@ public class DefineTagCommandTest {
     public void execute_duplicateDefineTag_failure() {
         model.setProject(model.getFilteredProjectList().get(0));
 
-        Set<Tag> sampleTargetSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_CS2101), new Tag(VALID_TAG_CP2106)));
+        Set<Tag> sampleTargetSet = new HashSet<Tag>(
+                Arrays.asList(new Tag(VALID_TAG_CS2101), new Tag(VALID_TAG_CP2106)));
         Name sampleTargetName = new Name(VALID_NAME_CP2106);
         GroupTag sampleGroupTag = new GroupTag(sampleTargetName, sampleTargetSet);
 
@@ -44,7 +41,8 @@ public class DefineTagCommandTest {
         LogicManager.setState(true);
 
         DefineTagCommand defineTagCommand = new DefineTagCommand(sampleGroupTag);
-        assertCommandFailure(defineTagCommand, model, commandHistory, defineTagCommand.MESSAGE_DUPLICATE_GROUPTAG);
+        String expectedMessage = defineTagCommand.MESSAGE_DUPLICATE_GROUPTAG;
+        assertCommandFailure(defineTagCommand, model, commandHistory, expectedMessage);
     }
 
     @Test
@@ -52,14 +50,15 @@ public class DefineTagCommandTest {
         model.setProject(model.getFilteredProjectList().get(0));
         expectedModel.setProject(model.getFilteredProjectList().get(0));
 
-        Set<Tag> sampleTargetSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_CS2101), new Tag(VALID_TAG_CP2106)));
+        Set<Tag> sampleTargetSet = new HashSet<Tag>(
+                Arrays.asList(new Tag(VALID_TAG_CS2101), new Tag(VALID_TAG_CP2106)));
         Name sampleTargetName = new Name(VALID_NAME_CP2106);
         GroupTag sampleGroupTag = new GroupTag(sampleTargetName, sampleTargetSet);
 
         DefineTagCommand defineTagCommand = new DefineTagCommand(sampleGroupTag);
         String expectedMessage = String.format(defineTagCommand.SUCCESS_MESSAGE, sampleGroupTag.getName().toString());
-        expectedModel.addGroupTag(sampleGroupTag); // isit because its not executed?
-        LogicManager.setState(true);
+        expectedModel.addGroupTag(sampleGroupTag);
+        expectedModel.commitProjectList();
 
         assertCommandSuccess(defineTagCommand, model, commandHistory, expectedMessage, expectedModel);
     }

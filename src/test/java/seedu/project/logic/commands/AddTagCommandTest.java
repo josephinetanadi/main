@@ -1,11 +1,10 @@
 package seedu.project.logic.commands;
 
+import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_CP2106;
+import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_CS2101;
 import static seedu.project.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.project.logic.commands.CommandTestUtil.assertCommandSuccess;
-
-import static seedu.project.logic.commands.CommandTestUtil.VALID_NAME_CP2106;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_CS2101;
-import static seedu.project.logic.commands.CommandTestUtil.VALID_TAG_CP2106;
 import static seedu.project.model.Model.PREDICATE_SHOW_ALL_TASKS;
 import static seedu.project.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.project.testutil.TypicalTasks.getTypicalProjectList;
@@ -41,7 +40,8 @@ public class AddTagCommandTest {
         model.setSelectedProject(model.getFilteredProjectList().get(0));
         LogicManager.setState(true);
 
-        Set<Tag> sampleTargetSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_CS2101), new Tag(VALID_TAG_CP2106)));
+        Set<Tag> sampleTargetSet = new HashSet<Tag>(
+                Arrays.asList(new Tag(VALID_TAG_CS2101), new Tag(VALID_TAG_CP2106)));
         Name sampleTargetName = new Name(VALID_NAME_CP2106);
 
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
@@ -60,11 +60,14 @@ public class AddTagCommandTest {
         TaskBuilder taskInList = new TaskBuilder(lastTask);
         Task taskToComplete = taskInList.withTags(VALID_TAG_CS2101, VALID_TAG_CP2106).build();
 
-        Set<Tag> sampleTargetSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_CS2101), new Tag(VALID_TAG_CP2106)));
+        Set<Tag> sampleTargetSet = new HashSet<Tag>(
+                Arrays.asList(new Tag(VALID_TAG_CS2101), new Tag(VALID_TAG_CP2106)));
         GroupTag sampleGroupTag = new GroupTag(lastTask.getName(), sampleTargetSet);
-        AddTagCommand addTagCommand = new AddTagCommand(INDEX_FIRST_TASK, sampleGroupTag.getName().toString());
+        AddTagCommand addTagCommand =
+                new AddTagCommand(INDEX_FIRST_TASK, sampleGroupTag.getName().toString());
 
-        String expectedMessage = String.format(addTagCommand.MESSAGE_GROUPTAG_NOT_FOUND, sampleGroupTag.getName().toString());
+        String expectedMessage = String.format(
+                addTagCommand.MESSAGE_GROUPTAG_NOT_FOUND, sampleGroupTag.getName().toString());
         Model expectedModel = new ModelManager(
                 new ProjectList(model.getProjectList()), new Project(model.getProject()), new UserPrefs());
 
@@ -77,10 +80,11 @@ public class AddTagCommandTest {
         expectedModel.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         expectedModel.commitProject();
 
-        expectedModel.setProject(expectedModel.getSelectedProject(), (Project) expectedModel.getProject());
+        expectedModel.setProject(
+                expectedModel.getSelectedProject(), (Project) expectedModel.getProject());
         expectedModel.commitProjectList();
 
-        assertCommandFailure(addTagCommand,model, commandHistory, expectedMessage);
+        assertCommandFailure(addTagCommand, model, commandHistory, expectedMessage);
     }
 
 
@@ -90,26 +94,29 @@ public class AddTagCommandTest {
         model.setSelectedProject(model.getFilteredProjectList().get(0));
         LogicManager.setState(true);
 
+        Model expectedModel = new ModelManager(
+                new ProjectList(model.getProjectList()), new Project(model.getProject()), new UserPrefs());
+
         Index indexLastTask = Index.fromOneBased(model.getFilteredTaskList().size());
         Task lastTask = model.getFilteredTaskList().get(indexLastTask.getZeroBased());
         TaskBuilder taskInList = new TaskBuilder(lastTask);
-        Task taskToComplete = taskInList.withTags(VALID_TAG_CS2101, VALID_TAG_CP2106).build();
+        Task taskToComplete = taskInList.withTags(VALID_TAG_CS2101, VALID_TAG_CP2106, "TUTORIAL").build();
 
-        Set<Tag> sampleTargetSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_CS2101), new Tag(VALID_TAG_CP2106)));
+        int taskId = lastTask.getTaskId();
+        taskToComplete.updateTaskId(taskId);
+        commandHistory.addHistoryTaskId(Integer.toString(taskId));
+
+        Set<Tag> sampleTargetSet = new HashSet<Tag>(
+                Arrays.asList(new Tag(VALID_TAG_CS2101), new Tag(VALID_TAG_CP2106)));
         GroupTag sampleGroupTag = new GroupTag(lastTask.getName(), sampleTargetSet);
-        AddTagCommand addTagCommand = new AddTagCommand(INDEX_FIRST_TASK, sampleGroupTag.getName().toString());
+        AddTagCommand addTagCommand = new AddTagCommand(indexLastTask, sampleGroupTag.getName().toString());
         model.addGroupTag(sampleGroupTag);
-
-
-        String expectedMessage = String.format(addTagCommand.MESSAGE_COMPLETED_SUCCESS, sampleGroupTag.getName().toString());
-        Model expectedModel = new ModelManager(
-                new ProjectList(model.getProjectList()), new Project(model.getProject()), new UserPrefs());
+        String expectedMessage = String.format(addTagCommand.MESSAGE_COMPLETED_SUCCESS,
+                sampleGroupTag.getName().toString());
 
         expectedModel.setProject(model.getFilteredProjectList().get(0));
         expectedModel.setSelectedProject(model.getFilteredProjectList().get(0));
         expectedModel.addGroupTag(sampleGroupTag);
-
-        LogicManager.setState(true);
 
         expectedModel.setTask(lastTask, taskToComplete);
         expectedModel.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
@@ -118,8 +125,6 @@ public class AddTagCommandTest {
         expectedModel.setProject(expectedModel.getSelectedProject(), (Project) expectedModel.getProject());
         expectedModel.commitProjectList();
         assertCommandSuccess(addTagCommand, model, commandHistory, expectedMessage, expectedModel);
-//        assertCommandFailure(addTagCommand, expectedModel, commandHistory, expectedMessage);
-
     }
 }
 
