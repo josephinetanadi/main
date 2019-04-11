@@ -148,14 +148,6 @@ Examples:
 
 Outcome: Task Box (Panel D) will display all tasks within selected project. Active panel is now Panel D and all commands that is executed after this would be in the context of tasks.
 
-==== List all tags: `listtag`
-List all unique tags and associated tasks within a project
-
-* Format: `listtag`
-* Alias: `lt`, i.e. `listtag` is equivalent to `lt`
-
-Outcome: Result Box (Panel B) will will display all unique tags and associated tasks within a project.
-
 ==== Defining a group tag: `definetag`
 
 Define a group tag when you want to add multiple identical tags to multiple tasks easily. They can be carried out at both project and task level.
@@ -178,30 +170,6 @@ Group tags are only considered as duplicates in the following situations where b
 
 ** `definetag gt/sample t/TAG0`
 ** `definetag gt/sample t/TAG0`
-====
-
-==== Adding a group tag: `addtag`
-
-Add a previously defined group tag to a task.
-
-* Format: `addtag INDEX gt/GROUPTAG`
-* Alias: `at`, i.e. `addtag` is equivalent to `at`
-
-Example:
-
-* `addtag 1 gt/Consultation`
-
-Outcome: Task Box (Panel D) will show the updated task with newly added tags.
-
-[TIP]
-Tags defined under the group tag will be visible under the task instead of the group tag itself.
-
-[NOTE]
-====
-In cases where the user input pre-defined group tags of the following, `addtag INDEX gt/sample` command would apply tags both TAG1 and TAG2 to task at index 1
-
-* `definetag gt/sample t/TAG1`
-* `definetag gt/sample t/TAG2`
 ====
 
 // tag::import[]
@@ -296,6 +264,30 @@ Example:
 
 Outcome: Task Box (Panel D) will show the newly created task `Decide on Research Paper Topic` with deadline `1 January 2020`.
 
+==== Adding a group tag: `addtag`
+
+Add a previously defined group tag to a task.
+
+* Format: `addtag INDEX gt/GROUPTAG`
+* Alias: `at`, i.e. `addtag` is equivalent to `at`
+
+Example:
+
+* `addtag 1 gt/Consultation`
+
+Outcome: Task Box (Panel D) will show the updated task with newly added tags.
+
+[TIP]
+Tags defined under the group tag will be visible under the task instead of the group tag itself.
+
+[NOTE]
+====
+In cases where the user input pre-defined group tags of the following, `addtag INDEX gt/sample` command would apply tags both TAG1 and TAG2 to task at index 1
+
+* `definetag gt/sample t/TAG1`
+* `definetag gt/sample t/TAG2`
+====
+
 ==== Clearing all task: `clear`
 
 Clears all task in the project that is selected.
@@ -354,6 +346,14 @@ Lists all tasks in the current project. Can also be used to show all tasks after
 * Format: `list`
 
 * Alias: `l`, i.e. `list` is equivalent to `l`
+
+==== List all tags: `listtag`
+List all unique tags and associated tasks within a project
+
+* Format: `listtag`
+* Alias: `lt`, i.e. `listtag` is equivalent to `lt`
+
+Outcome: Result Box (Panel B) will will display all unique tags and associated tasks within a project.
 
 ==== Deleting a task: `delete`
 
