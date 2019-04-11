@@ -68,7 +68,8 @@ public class CommandTestUtil {
                 .withTags(VALID_TAG_CS2101).build();
         DESC_CP2106 = new EditTaskDescriptorBuilder().withName(VALID_NAME_CP2106)
                 .withDescription(VALID_DESCRIPTION_CP2106).withDeadline(VALID_DEADLINE_CP2106)
-                .withTags(VALID_TAG_CP2106).build();
+                .withTags(VALID_TAG_CP2106, VALID_TAG_CS2101)
+                .build();
     }
 
     /**
