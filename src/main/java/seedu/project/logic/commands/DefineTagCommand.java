@@ -20,7 +20,7 @@ public class DefineTagCommand extends Command {
             + "Parameters: " + PREFIX_GROUPTAG + "GROUPTAG " + PREFIX_TAG + "TAG [t/MORETAGS]\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_GROUPTAG + "Consultation "
             + PREFIX_TAG + "Prepare demo " + PREFIX_TAG + "Prepare questions";
-    public static final String MESSAGE_DUPLICATE_GROUPTAG = "This group tag already exists in the group tag list";
+    public static final String MESSAGE_DUPLICATE_GROUPTAG = "Group tag %1$s already exists in the group tag list";
 
     private final GroupTag toAdd;
 
