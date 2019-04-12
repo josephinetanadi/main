@@ -189,16 +189,20 @@ Examples:
 
 * `import C:\Users\Test\Desktop\import.json`
 
+[TIP]
+The full path to the JSON file has to be specified unless the file is contained within the application folder. If JSON file is contained in application folder, `import .\test.json` is sufficient.
+
+Outcome: Command box will display number of projects added to project list. Projects and tasks contained in JSON file will be imported and added to current project list.
+Refer to diagrams below on what NoteNote will display before and after successful execution of `import`.
+
 .Before executing `import`
 image::BeforeImportCommand.png[width="600"]
+
+{empty} +
 
 .After executing `import`
 image::AfterImportCommand.png[width="600"]
 
-[TIP]
-The full path to the JSON file has to be specified unless the file is contained within the application folder. If JSON file is contained in application folder, `import .\test.json` is sufficient.
-
-Outcome: Projects and tasks contained in JSON file will be imported and added on top of current project list. Command box will display number of projects added to project list.
 // end::import[]
 
 // tag::export[]
@@ -217,6 +221,9 @@ Examples:
 Output path should be explicitly specified unless the output is to be within the application folder. If output is to be contained in application folder, the `export i/1,2,3 o/.\test.json` is sufficient.
 
 Outcome: JSON file will be created at output path specified.
+
+.After executing `export`
+image::AfterExportCommand.png[width="600"]
 // end::export[]
 
 ==== Analyse progress of all projects: `analyse`
