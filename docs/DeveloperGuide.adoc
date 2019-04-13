@@ -685,7 +685,7 @@ The following sequence diagram shows how the completed operation works:
 image::Completed.png[width="800", title="Sequence Diagram for `completed` Command"]]
 
 {blank} +
- 
+
 Step 4. The user goes back to project level using `listproject`. `setProject` is invoked to sync `VersionedProject` with `VersionedProjectList`.
 
 Step 5. The user enters `analyse` to view statistics of all the projects.
