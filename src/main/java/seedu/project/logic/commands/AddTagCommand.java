@@ -53,7 +53,7 @@ public class AddTagCommand extends Command {
 
         int taskId;
         Task targetTask = lastShownList.get(index.getZeroBased());
-        Task taskToComplete = new Task(targetTask.getName(), targetTask.getDescription(),
+        Task taskToAdd = new Task(targetTask.getName(), targetTask.getDescription(),
                 targetTask.getDeadline(), targetTask.getTags());
         taskId = targetTask.getTaskId();
         targetTask.updateTaskId(taskId);
@@ -64,7 +64,7 @@ public class AddTagCommand extends Command {
         model.getGroupTagList().forEach(groupTag -> {
             if (groupTag.getName().toString().equals(this.groupTag)) {
                 groupTag.getTags().forEach(tag -> {
-                    taskToComplete.addTag(tag);
+                    taskToAdd.addTag(tag);
                     groupExists[0] = true;
                 });
             }
@@ -73,11 +73,10 @@ public class AddTagCommand extends Command {
         if (!groupExists[0]) {
             throw new CommandException(String.format(MESSAGE_GROUPTAG_NOT_FOUND, this.groupTag));
         }
-        model.setTask(targetTask, taskToComplete);
+        model.setTask(targetTask, taskToAdd);
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         model.commitProject();
 
-        //this will not work if user clicks on a different project while on task level??? lock UI at prev panel
         if (model.getProject().getClass().equals(VersionedProject.class)) {
             model.setProject(model.getSelectedProject(), (VersionedProject) model.getProject());
         } else {
