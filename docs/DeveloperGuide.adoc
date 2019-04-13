@@ -1090,3 +1090,33 @@ _{ more test cases ... }_
    Expected: Similar to previous.
 
 _{ more test cases ... }_
+
+=== Importing projects
+
+. Import new projects from an external JSON file
+
+.. Prerequisites: JSON file to import should exist and should not contain any duplicate projects.
+.. Test case: `import ./data/import.json` +
+   Expected: New projects will be added to the list and displayed at Project List panel.
+.. Test case: `import ./data/filethatdoesnotexist.json` +
+   Expected: No new projects are added to the list as JSON file does not exists.
+.. Other incorrect import commands to try: `import`
+
+=== Exporting projects
+
+. Export multiple projects to an external JSON file
+
+.. Prerequisites: At least one project should exist in project list.
+.. Test case: `export i/1 o/./data/export.json` +
+   Expected: Project at index 1 and its tasks will be exported to specified JSON file.
+.. Test case: `export i/1,2 o/./data/export.json` +
+   Expected: Projects at index 1 and 2 and its tasks will be exported to specified JSON file.
+.. Other incorrect export commands to try: `export`, `export i/x o/./data/export.json` (where x is larger than the list size)
+
+. Export selected project to an external JSON file
+
+.. Prerequisites: At least one project should exist in project list. Select a project to export using the `select _x_` command from project level (where _x_ is the project ID).
+.. Test case: `export o/./data/export.json` +
+   Expected: Selected project and its tasks will be exported to specified JSON file.
+.. Other incorrect export commands to try: `export`
+
