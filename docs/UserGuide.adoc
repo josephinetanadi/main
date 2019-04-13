@@ -244,7 +244,7 @@ View number of completed tasks for each project, and percentage of each project 
 
 Outcome:
 
-image::AnalyseOutcome.png[width="600", title="Example Outcome for `analyse` command"]
+image::AnalyseOutcome.PNG[width="600", title="Example Outcome for `analyse` command"]
 
 Results Box (Panel B) will display number of completed tasks for each project, and percentage of each project completed, as shown in the above figure.
 // end::analyse[]
@@ -423,13 +423,13 @@ Completed tasks will be used as statistics for the `analyse` feature, unlike del
 
 Examples:
 
-* `completed 1`
+* `completed 3`
 
 Outcome:
 
-image::CompletedOutcome.png[width="600", title="Example Outcome for `completed` command"]
+image::CompletedOutcome.PNG[width="300", title="Example Outcome for `completed` command"]
 
-Task Box (Panel D) will display a `completed` tag for the first task, as shown in the above figure.
+Task Box (Panel D) will display a `completed` tag for the third task, as shown in the above figure.
 // end::completed[]
 
 ==== Selecting a task: `select`
