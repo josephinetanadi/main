@@ -226,13 +226,19 @@ Outcome: JSON file will be created at output path specified.
 image::AfterExportCommand.png[width="600"]
 // end::export[]
 
+// tag::analyse[]
 ==== Analyse progress of all projects: `analyse`
-View number of completed and uncompleted tasks of each project.
+View number of completed tasks for each project, and percentage of each project completed.
 
 * Format: `analyse`
 * Alias: `an`, i.e. `analyse` is equivalent to `an`
 
-Outcome: Task Box (Panel D) will display all tasks within selected project. Active panel is now Panel D and all commands that is executed after this would be in the context of tasks.
+Outcome:
+
+image::AnalyseOutcome.png[width="600", title="Example Outcome for `analyse` command"]
+
+Results Box (Panel B) will display number of completed tasks for each project, and percentage of each project completed, as shown in the above figure.
+// end::analyse[]
 
 ==== List previously entered commands: `history`
 
@@ -387,6 +393,7 @@ Examples:
 
 Outcome: Task Box (Panel D) will no longer display the first task in the results of the `find` command.
 
+// tag::completed[]
 ==== Completing a task: `completed`
 
 Marks the specified task identified by the index number used in the displayed task list as completed by adding a `completed` tag to it.
@@ -402,7 +409,12 @@ Examples:
 
 * `completed 1`
 
-Outcome: Task Box (Panel D) will show a `completed` tag for the first task.
+Outcome:
+
+image::CompletedOutcome.png[width="600", title="Example Outcome for `completed` command"]
+
+Task Box (Panel D) will display a `completed` tag for the first task, as shown in the above figure.
+// end::completed[]
 
 ==== Selecting a task: `select`
 
@@ -566,7 +578,7 @@ Task Box (Panel B) will display information of current version of the task at
 |*Command*|*Description*
 |`add`|Add a new project or task
 |`addtag`|Add a group tag to a task
-|`analyse`|View task completion rate
+|`analyse`|View completion statistics for all projects
 |`clear`|Clear all tasks in project
 |`compare`|Compare current task with previous version
 |`completed`|Marks task as completed

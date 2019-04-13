@@ -572,32 +572,103 @@ and our *chosen option is Alternative 1*
 |===
 // end::taskhistory[]
 
-// tag::calendarview[]
-=== [Proposed] Calendar View
-[NOTE]
-As of v1.2, this feature is still in the process of implementation.
+// tag::completedanalyse[]
+=== Completed/Analyse feature
 
-==== Proposed Implementation
-The calendar leverages on the Google calendar API to enable this feature. A sample usage, along with the behaviour of the calendar model at each step, is given below:
+The `completed` feature allows for tasks to be marked as completed. +
+The `analyse` feature allows for viewing of statistics for each project, including:
 
-* Step 1: The user launches the application and executes `add n/Decide on Research Paper Topic d/Security-related by/01/01/2020 t/cs3235`. +
-* Step 2: The `AddCommandParser` parses out the strings for the name, description, deadline and tag. +
-* Step 3: `ParserUtil` checks that the input strings are valid, and initialises the `Name`, `Description`, `Deadline` and `Tag`. +
-* Step 4: A new `CalendarEvent` is initialised and will be displayed in the calendar GUI.
+* Number of tasks completed for each project
+* Percentage of each project completed
+
+==== Current Implementation
+The `completed` feature obtains the target task from `FilteredTaskList` based on the task index given by the user, and adds a `completed` tag to it. +
+Additionally, it implements the following operations:
+
+* `VersionedProject#commit()` — Saves the current project state in its history
+* `VersionedProjectList#commit()` — Saves the current project list state in its history
+
+These operations are exposed in the Model interface as `Model#commitProject()` and `Model#commitProjectList()` respectively.
+
+Given below is an example usage scenario and how the completed/analyse mechanism behaves at each step.
+
+Step 1. The user launches the application. `projectList` will be populated by invoking `StorageManager#readProjectList`.
+
+Step 2. The user selects a project. `setProject()` is invoked based on `filteredProjectList`, and the tasks for that project are displayed via invoking `filteredTaskList`.
+
+Step 3. The user marks a task as completed by entering `completed` followed by the index of the task.
+
+.. `lastShownList` of all tasks in the current project is obtained from `Model` using `getFilteredTaskList()`.
+.. Two identical tasks, `targetTask` and `taskToComplete`, are created based on `lastShownList` using the index from user input.
+.. Tags of `taskToComplete` are obtained using `getTags()` and checked if they contain a `completed` tag. If it does not, this indicates that the task has not been completed yet, and a `completed` tag will be added.
+
+The following sequence diagram shows how the completed operation works:
+
+image::Completed.png[width="800", title="Sequence Diagram for `completed` Command"]]
+
+Step 4. The user goes back to project level using `listproject`. `setProject` is invoked to sync `VersionedProject` with `VersionedProjectList`.
+
+Step 5. The user enters `analyse` to view statistics of all the projects.
+
+.. `filteredProjects` is obtained from `getFilteredProjectList()`.
+.. For each project in `filteredProjects`, `filteredTasks` is obtained from `getTaskList()`.
+.. For each task in `filteredTasks`, `getTags()` is invoked to check if the task has a `completed` tag.
+.. The result returned is the number of tasks completed in each project, and the percentage of each project completed.
+
+The following sequence diagram shows how the analyse operation works:
+
+image::Analyse.png[width="800", title="Sequence Diagram for `analyse` Command"]]
 
 ==== Design Considerations
 
-===== Aspect: Navigation of calendar feature
+===== Aspect: Implementation of `completed` feature
 
-* **Alternative 1 (current choice):** Keyboard arrows (up, down, left, right) to toggle between dates.
-** Pros: Easier to implement and fits the project direction of focusing on CLI.
-** Cons: Less user-friendly to toggle to a date far in the future.
-* **Alternative 2:** Keyboard arrows and scroll wheel.
-** Pros: More user-friendly.
-** Cons: More things to factor in during implementation, and possibly more issues as well.
+Two designs were considered for the implementation of `completed`. The pros and cons of the designs are listed in the table below
+and our *chosen option is Alternative 1*.
+|===
+| |Alternative 1 | Alternative 2
+|Design
+|`completed` tag added to task, which remains visible in Task List.
+|Task saved to Storage and removed from display in Task List.
 
+|Pros
+|Adding a specific tag to the existing task can be done using existing `addTag()`.
+|`DeleteCommand` can be used to delete task from Task List.
 
-// end::calendarview[]
+|Cons
+|Completed task needed to be updated in Task List and Project List.
+|Storage needs to keep track of all the completed tasks and be able to separate them based on the projects they were under.
+
+|Implementation Choice
+|*Implemented* +
+This option allows for the user to still be able to view which tasks have been completed, which helps to gauge their own progress.
+|
+|===
+
+{blank} +
+
+Two designs were considered for the implementation of `analyse`. The pros and cons of the designs are listed in the table below
+and our *chosen option is Alternative 2*.
+|===
+| |Alternative 1 | Alternative 2
+|Design
+|`analyse` can only display statistics for one project at a time.
+|`analyse` can display statistics for all project at one go.
+
+|Pros
+|Easier as only need to iterate through one project's tasks.
+|User can easily view progress on all projects with one command.
+
+|Cons
+|User will need to select each project and call `analyse` separately.
+|More complicated as need to iterate through all tasks in all projects.
+
+|Implementation Choice
+|
+|*Implemented* +
+User will experience greater convenience and ease of use if one command can display statistics across all projects.
+|===
+// end::completedanalyse[]
 
 === Logging
 
