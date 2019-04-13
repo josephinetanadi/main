@@ -176,9 +176,9 @@ Group tags are only considered as duplicates in the following situations where b
 
 // tag::import[]
 ==== Import a project list: `import`
-Use this function when importing a project list shared by a friend to import additional projects and tasks on top of your current project list.
+Import projects and tasks to your NoteNote instance from project list shared by a friend. New projects and tasks will be added on top of current project list.
 
-Source file must be a JSON file and follow  specific format. See <<samplejson>>.
+Source file must be a JSON file and follow a specific format. See <<samplejson>>.
 
 This feature is recommended to be used together with `export` so that users need not manually generate a JSON file to `import`.
 
@@ -193,6 +193,7 @@ Examples:
 The full path to the JSON file has to be specified unless the file is contained within the application folder. If JSON file is contained in application folder, `import .\test.json` is sufficient.
 
 Outcome: Command box will display number of projects added to project list. Projects and tasks contained in JSON file will be imported and added to current project list.
+
 Refer to diagrams below on what NoteNote will display before and after successful execution of `import`.
 
 .Before executing `import`
@@ -207,18 +208,21 @@ image::AfterImportCommand.png[width="600"]
 
 // tag::export[]
 ==== Export projects to JSON file: `export`
-You could export projects from your NoteNote instance to easily share project tasks with your friends. Projects are exported in JSON format and could be imported by another NoteNote instance using `import`.
+Export projects from your NoteNote instance to easily share projects and tasks with your friends. Projects are exported in JSON format and could be imported by another NoteNote instance using `import`.
 
-* Format: `export i/INDEX o/OUTPUTPATH`
+* Format: `export [i/INDEX] o/OUTPUTPATH`
 * Alias: `ex`, i.e. `export` is equivalent to `ex`
 
 Examples:
 
-* To export multiple projects: `export i/1,2,3 o/C:\Users\Test\Desktop\export.json`
-* To export currently selected project: `export o/C:\Users\Test\Desktop\export.json`
+* To export currently selected project:
+. `select 1`
+. `export o/C:\Users\Test\Desktop\export.json`
+* To export multiple projects:
+. `export i/1,2,3 o/C:\Users\Test\Desktop\export.json`
 
 [TIP]
-Output path should be explicitly specified unless the output is to be within the application folder. If output is to be contained in application folder, the `export i/1,2,3 o/.\test.json` is sufficient.
+Output path should be explicitly specified unless the output is to be within the application folder. If output is to be contained in application folder, the relative path `export i/1,2,3 o/.\test.json` is sufficient.
 
 Outcome: JSON file will be created at output path specified.
 
