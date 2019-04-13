@@ -21,9 +21,10 @@ My contributions to NoteNote includes the introduction of an import and export f
 the refactoring required to morph the original AddressBook application to NoteNote.
 
 * *Enhancement 1*: added *the ability to import and export projects*
-** What it does: import new projects from a JSON file and export selected projects to a JSON file
+** What it does: Import new projects from a JSON file and export selected projects to a JSON file
 ** Justification: This feature allows you to share projects with another user without having to add projects and tasks manually.
-** Highlights: The implementation was challenging as it requires us to understand the implementation of the Storage component and the utilities that it relies on which we could take advantage of to implement our feature.
+** Highlights: The implementation was challenging as it requires us to familiarize ourselves with the existing implementation of the Storage component and tweak it to support NoteNote's storage requirement.
+Furthermore, we also had to understand the utilities (e.g. `FileUtil`, `JsonUtil`) that the Storage component relies on so as to take advantage of these utilities to implement `import` and `export`.
 
 * *Enhancement 2*: *modified UI, Logic, Model and Storage components for NoteNote*
 ** What it does:
@@ -31,24 +32,19 @@ the refactoring required to morph the original AddressBook application to NoteNo
 *** Logic is tweaked to load project list upon start up and associate projects with their tasks to allow navigation between projects and tasks.
 *** Introduce new classes in Model to support implementation of Project List, Project and Task.
 *** Storage is modified to keep track of multiple tasks within a project and multiple projects within a project list
-** Justification: Morphing existing AddressBook application to NoteNote.
-** Highlights: Implementation was challenging as it requires us to modify all existing components simultaneously due to interlinked components.
-
-* *Minor enhancement*:
-** Updated the *UI* to include a Project List Panel and Task List Panel
-** Updated the *storage* to store tasks within project and project within project list
-** Minor modification to *Add, Edit, Select, Delete and Clear command* to support new project list model
+** Justification: The current implementation of AddressBook is unable to support all the functions of NoteNote and requires us to heavily morph the existing AddressBook application to NoteNote.
+** Highlights: The implementation was challenging as it requires us to understand the implementation of all components and modify them simultaneously.
 
 * *Code contributed*: [https://nuscs2113-ay1819s2.github.io/dashboard-beta/#search=josephinetanadi[Functional code]]
 
 * *Other contributions*:
 
 ** Enhancements to existing features:
-*** Wrote tests for `import` and `export` feature
-*** Modified tests for existing features
+*** Wrote tests for `import` and `export` feature: [https://github.com/CS2113-AY1819S2-T09-3/main/pull/144[#144]], [https://github.com/CS2113-AY1819S2-T09-3/main/pull/187[#187]]
+*** Modified tests for existing features: [https://github.com/CS2113-AY1819S2-T09-3/main/pull/42[#42]], [https://github.com/CS2113-AY1819S2-T09-3/main/pull/144[#144]]
 ** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide:
-*** Did cosmetic tweaks to existing contents of the Developer Guide:
+*** Did cosmetic tweaks to existing contents of the User Guide: [https://github.com/CS2113-AY1819S2-T09-3/main/pull/88[#88]], [https://github.com/CS2113-AY1819S2-T09-3/main/pull/122[#122]], [https://github.com/CS2113-AY1819S2-T09-3/main/pull/172[#172]]
+*** Did cosmetic tweaks to existing contents of the Developer Guide: [https://github.com/CS2113-AY1819S2-T09-3/main/pull/117[#117]], [https://github.com/CS2113-AY1819S2-T09-3/main/pull/172[#172]]
 
 == Contributions to the User Guide
 
