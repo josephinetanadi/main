@@ -154,16 +154,19 @@ Outcome: Task Box (Panel D) will display all tasks within selected project. Acti
 Define a group tag when you want to add multiple identical tags to multiple tasks easily. They can be carried out at both project and task level.
 However, group tag created exists for the entire NoteNote instance and will be lost once the user exits.
 
-After defining a group tag, use the addtag command to add a group tag to a task of your choice.
+After defining a group tag, use the `addtag` command to add a group tag to a task of your choice. Note that duplicated group tags cannot be created.
 
 * Format: `definetag gt/GROUPTAG t/TAG [t/MORETAGS]`
 * Alias: `dt`, i.e. `definetag` is equivalent to `dt`
 
 Example:
 
-* `definetag gt/Consultation t/Prepare demo t/Prepare questions`
+* `definetag gt/Consultation t/PrepareDemo t/PrepareQuestions`
 
-Outcome: A group tag called Consultation will be created which would contain tags Prepare demo and Prepare questions.
+Outcome: A group tag called Consultation will be created which would contain tags PrepareDemo and PrepareQuestions.
+
+.After excuting `definetag`
+image::AfterDefineTag.png[width="800"]
 
 [NOTE]
 ====
@@ -171,6 +174,9 @@ Group tags are only considered as duplicates in the following situations where b
 
 ** `definetag gt/sample t/TAG0`
 ** `definetag gt/sample t/TAG0`
+
+In situations where users input `definetag gt/sample1 gt/sample2 t/TAG`, only the last group tag parameter (i.e. `gt/sample2`) will be accepted.
+
 ====
 // end::definetag[]
 
@@ -193,7 +199,6 @@ Examples:
 The full path to the JSON file has to be specified unless the file is contained within the application folder. If JSON file is contained in application folder, `import .\test.json` is sufficient.
 
 Outcome: Command box will display number of projects added to project list. Projects and tasks contained in JSON file will be imported and added to current project list.
-
 Refer to diagrams below on what NoteNote will display before and after successful execution of `import`.
 
 .Before executing `import`
@@ -297,6 +302,9 @@ Example:
 
 Outcome: Task Box (Panel D) will show the updated task with newly added tags.
 
+.After executing `addtag`
+image::AfterAddTag.png[width="600"]
+
 [TIP]
 Tags defined under the group tag will be visible under the task instead of the group tag itself.
 
@@ -376,6 +384,10 @@ List all unique tags and associated tasks within a project
 * Alias: `lt`, i.e. `listtag` is equivalent to `lt`
 
 Outcome: Result Box (Panel B) will will display all unique tags and associated tasks within a project.
+
+.After executing `listtag`
+image::AfterListTag.png[width="800"]
+
 // end::listtag[]
 
 ==== Deleting a task: `delete`
