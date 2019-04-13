@@ -14,7 +14,7 @@
 This application was developed by a team of four for CS2113T, an module from the National University of Singapore over 13 weeks.
 
 .Application Layout
-image::applayout.png[width="800"]
+image::demolayout.png[width="800"]
 
 == Summary of contributions
 The introduction of group tags, a feature split into two seperate commands, are my main contributions to NoteNote. I also worked on enhancing the `listtag` feature and refactoring the original AddressBook into NoteNote.
