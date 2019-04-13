@@ -23,14 +23,15 @@ public class AddTagCommand extends Command {
     public static final String COMMAND_ALIAS = "at";
     public static final String COMMAND_WORD = "addtag";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a group tag to the task.\n"
-            + "Parameters: INDEX (must be a positive integer) " + PREFIX_GROUPTAG + "GROUPTAG\n"
-            + "Example: " + COMMAND_WORD + " 1 " + PREFIX_GROUPTAG + "sample";
+            + "Parameters: INDEX (must be a positive integer) " + PREFIX_GROUPTAG + "GROUPTAG\t" + "Example: "
+            + COMMAND_WORD + " 1 " + PREFIX_GROUPTAG + "Consultation";
     public static final String MESSAGE_COMPLETED_SUCCESS = "Group tag %1$s applied to task.";
     public static final String MESSAGE_GROUPTAG_NOT_FOUND = "Group tag %1$s not found, please use "
             + DefineTagCommand.COMMAND_WORD + " to add them first.";
 
     private final Index index;
     private final String groupTag;
+
     /**
      * @param index of the task in the filtered task list to be completed
      */
@@ -53,14 +54,14 @@ public class AddTagCommand extends Command {
 
         int taskId;
         Task targetTask = lastShownList.get(index.getZeroBased());
-        Task taskToAdd = new Task(targetTask.getName(), targetTask.getDescription(),
-                targetTask.getDeadline(), targetTask.getTags());
+        Task taskToAdd = new Task(targetTask.getName(), targetTask.getDescription(), targetTask.getDeadline(),
+                targetTask.getTags());
         taskId = targetTask.getTaskId();
         targetTask.updateTaskId(taskId);
 
         history.addHistoryTaskId(Integer.toString(taskId));
 
-        Boolean[] groupExists = {false};
+        Boolean[] groupExists = { false };
         model.getGroupTagList().forEach(groupTag -> {
             if (groupTag.getName().toString().equals(this.groupTag)) {
                 groupTag.getTags().forEach(tag -> {

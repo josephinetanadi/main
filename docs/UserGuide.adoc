@@ -182,9 +182,9 @@ In situations where users input `definetag gt/sample1 gt/sample2 t/TAG`, only th
 
 // tag::import[]
 ==== Import a project list: `import`
-Use this function when importing a project list shared by a friend to import additional projects and tasks on top of your current project list.
+Import projects and tasks to your NoteNote instance from project list shared by a friend. New projects and tasks will be added on top of current project list.
 
-Source file must be a JSON file and follow  specific format. See <<samplejson>>.
+Source file must be a JSON file and follow a specific format. See <<samplejson>>.
 
 This feature is recommended to be used together with `export` so that users need not manually generate a JSON file to `import`.
 
@@ -213,18 +213,21 @@ image::AfterImportCommand.png[width="600"]
 
 // tag::export[]
 ==== Export projects to JSON file: `export`
-You could export projects from your NoteNote instance to easily share project tasks with your friends. Projects are exported in JSON format and could be imported by another NoteNote instance using `import`.
+Export projects from your NoteNote instance to easily share projects and tasks with your friends. Projects are exported in JSON format and could be imported by another NoteNote instance using `import`.
 
-* Format: `export i/INDEX o/OUTPUTPATH`
+* Format: `export [i/INDEX] o/OUTPUTPATH`
 * Alias: `ex`, i.e. `export` is equivalent to `ex`
 
 Examples:
 
-* To export multiple projects: `export i/1,2,3 o/C:\Users\Test\Desktop\export.json`
-* To export currently selected project: `export o/C:\Users\Test\Desktop\export.json`
+* To export currently selected project:
+. `select 1`
+. `export o/C:\Users\Test\Desktop\export.json`
+* To export multiple projects:
+. `export i/1,2,3 o/C:\Users\Test\Desktop\export.json`
 
 [TIP]
-Output path should be explicitly specified unless the output is to be within the application folder. If output is to be contained in application folder, the `export i/1,2,3 o/.\test.json` is sufficient.
+Output path should be explicitly specified unless the output is to be within the application folder. If output is to be contained in application folder, the relative path `export i/1,2,3 o/.\test.json` is sufficient.
 
 Outcome: JSON file will be created at output path specified.
 
@@ -232,13 +235,19 @@ Outcome: JSON file will be created at output path specified.
 image::AfterExportCommand.png[width="600"]
 // end::export[]
 
+// tag::analyse[]
 ==== Analyse progress of all projects: `analyse`
-View number of completed and uncompleted tasks of each project.
+View number of completed tasks for each project, and percentage of each project completed.
 
 * Format: `analyse`
 * Alias: `an`, i.e. `analyse` is equivalent to `an`
 
-Outcome: Task Box (Panel D) will display all tasks within selected project. Active panel is now Panel D and all commands that is executed after this would be in the context of tasks.
+Outcome:
+
+image::AnalyseOutcome.png[width="600", title="Example Outcome for `analyse` command"]
+
+Results Box (Panel B) will display number of completed tasks for each project, and percentage of each project completed, as shown in the above figure.
+// end::analyse[]
 
 ==== List previously entered commands: `history`
 
@@ -400,6 +409,7 @@ Examples:
 
 Outcome: Task Box (Panel D) will no longer display the first task in the results of the `find` command.
 
+// tag::completed[]
 ==== Completing a task: `completed`
 
 Marks the specified task identified by the index number used in the displayed task list as completed by adding a `completed` tag to it.
@@ -415,7 +425,12 @@ Examples:
 
 * `completed 1`
 
-Outcome: Task Box (Panel D) will show a `completed` tag for the first task.
+Outcome:
+
+image::CompletedOutcome.png[width="600", title="Example Outcome for `completed` command"]
+
+Task Box (Panel D) will display a `completed` tag for the first task, as shown in the above figure.
+// end::completed[]
 
 ==== Selecting a task: `select`
 
@@ -579,7 +594,7 @@ Task Box (Panel B) will display information of current version of the task at
 |*Command*|*Description*
 |`add`|Add a new project or task
 |`addtag`|Add a group tag to a task
-|`analyse`|View task completion rate
+|`analyse`|View completion statistics for all projects
 |`clear`|Clear all tasks in project
 |`compare`|Compare current task with previous version
 |`completed`|Marks task as completed
