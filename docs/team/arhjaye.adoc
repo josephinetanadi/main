@@ -43,7 +43,7 @@ This `compare` feature serves as a base for a future feature which allows `undo`
 *** Ensure code coverage is met during product release.
 *** Display total projects within UI Status Bar Footer (Pull requests https://github.com/CS2113-AY1819S2-T09-3/main/pull/17[#17])
 ** Documentation:
-*** Updated DeveloperGuide & UserGuide to include feature implementations.
+*** Update DeveloperGuide & UserGuide to include feature implementations.
 *** Update diagrams for DeveloperGuide to reflect existing architecture used.
 *** Added user stories & use cases for DeveloperGuide
 *** Managed formatting for UserGuide to ensure proper structuring and consistency.
@@ -55,16 +55,18 @@ https://github.com/CS2113-AY1819S2-T09-3/main/pull/128[#128],
 https://github.com/CS2113-AY1819S2-T09-3/main/pull/131[#131],
 https://github.com/CS2113-AY1819S2-T09-3/main/pull/141[#141])
 
-== Contributions to the User Guide
-Given below is a snippet of the User Guide documentation for my above listed enhancements.
-_You will be able to a look at my documenting abilities, to produce *concise guides* & being *audience focused*._
+== Documentations
 
 === Glossary
 [TIP]
 Represents an additional information that is good to know
 [NOTE]
-Represents an additional information where if not taken into considerdation, will affect command operations
+Represents an additional information where if not taken into consideration, will affect command operations
 
+
+=== Contributions to the User Guide
+Given below is a snippet of the User Guide documentation for my above listed enhancements.
+_You will be able to a look at my documenting abilities, to produce *concise guides* & being *audience focused*._
 
 include::../UserGuide.adoc[tag=UIlayout]
 
@@ -72,7 +74,7 @@ include::../UserGuide.adoc[tag=compare]
 
 include::../UserGuide.adoc[tag=taskhistory]
 
-== Contributions to the Developer Guide
+=== Contributions to the Developer Guide
 
 Given below is a snippet of the Developer Guide Documentation for my above listed enhancements.
 _You will be able to a look at my technical documentation abilities, utilizing *UML Sequence Diagrams* & *custom-purported

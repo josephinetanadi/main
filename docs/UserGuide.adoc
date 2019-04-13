@@ -524,10 +524,12 @@ chronological order.
 * Format: `taskhistory INDEX`
 * Alias: `th` i.e. `taskhistory` is equivalent to `th`
 
-****
-* Take note that if you `listproject`, the history of commands will be cleared,
-thus `taskhistory` will no longer work as intended when you return to view the project tasks.
-****
+[NOTE]
+ Take note that if you `listproject`, the history of commands will be cleared,
+thus `taskhistory` will no longer work as intended when you return to view the project tasks. +
+[TIP]
+ Only `edit`/`completed`/`addtag`/`delete` commands will be recorded
+
 
 Example :
 
@@ -538,7 +540,7 @@ Outcome:
 image::taskhistorysample.png[width="900", title="Example Outcome for `taskhistory` command"]
 
 Results Box (Panel B) will display all previous commands which directly
-affects the task at index 1 (Figure 3).
+affects the task at index 1 (Figure 6).
 // end::taskhistory[]
 
 // tag::compare[]
@@ -550,12 +552,13 @@ in the task.
 * Format: `compare INDEX`
 * Alias: `c` i.e. `compare` is equivalent to `c`
 
-****
-* `compare` only compares Name, Description, Deadline of a Task.
-* Take note that tags will not be compared.
-* Take note that if you `listproject`, the history of commands will be cleared,
+[TIP]
+`compare` only compares Name, Description, Deadline of a Task.
+ Note that tags will not be compared.
+
+[NOTE]
+If you `listproject`, the history of commands will be cleared,
  thus `compare` will no longer work as intended when you return to view the project tasks.
-****
 
 Example :
 
@@ -575,7 +578,7 @@ Outcome:
 image::comparesample.png[width="900", title="Example Outcome for `compare` command"]
 
 Task Box (Panel B) will display information of current version of the task at
-         index 1 ( _sample task_ ) and the previous version of it ( _sample task edited_ ) (Figure 4).
+         index 1 ( _sample task_ ) and the previous version of it ( _sample task edited_ ) (Figure 7).
          Allows you to view a direct comparison of what was changed.
 // end::compare[]
 
