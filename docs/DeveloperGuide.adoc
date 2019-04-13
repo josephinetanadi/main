@@ -481,7 +481,7 @@ Step 3: User displays all tags and their associated tasks in the project by ente
 
 The following sequence diagram shows how the List Tag operation works:
 
-image::ListTagSequenceDiagram.png[width="900", title="Sequence Diagram for `listtag` Command"]
+image::ListTagSequenceDiagram.png[width="600", title="Sequence Diagram for `listtag` Command"]
 
 ==== Design Considerations
 Two designs was considered for the implementation of `listtag`. The pros and cons of the designs are listed in the table below
@@ -499,12 +499,6 @@ and our *chosen option is Alternative 1*
 |Cons
 |A large `Model` might result in a slow system performance.
 |`ListTagCommand` will be cluttered and many of its functions will not be reusable.
-
-|Implementation Choice
-|*Implemented*
-
-This option allows for other commands such as `ListTagCommandTest` to make use of the same function without rewriting the same logic.
-|
 |===
 // end::listtag[]
 
@@ -525,7 +519,7 @@ Step 4: `DefineTagCommand` checks if the returned `GroupTag` is unique via `Mode
 
 The following sequence diagram shows how the Define Tag operation works:
 
-image::DefineTagSequenceDiagram.png[width="900", title="Sequence Diagram for `definetag` Command"]
+image::DefineTagSequenceDiagram.png[width="600", title="Sequence Diagram for `definetag` Command"]
 
 ==== Design Considerations
 Two designs was considered for the implementation of `definetag`. The pros and cons of the designs are listed in the table below and our *chosen option is Alternative 1*
@@ -542,10 +536,6 @@ Two designs was considered for the implementation of `definetag`. The pros and c
 |Cons
 |All group tags created in `DefineTagCommand` will be lost once the instance of `NoteNote` is closed.
 |Harder to implement, can be considered for future version in v2.0
-
-|Implementation Choice
-|*Implemented*
-|
 |===
 // end::definetag[]
 
@@ -582,8 +572,7 @@ Step 3: User applies the group tag and its associated child tags in the selected
 
 The following sequence diagram shows how the Add Tag operation works:
 
-image::AddTagSequenceDiagram.png[width="900", title="Sequence Diagram for `addtag` Command"]
-
+image::AddTagSequenceDiagram.png[width="600", title="Sequence Diagram for `addtag` Command"]
 
 ==== Design Considerations
 Two designs was considered for the implementation of `definetag`. The pros and cons of the designs are listed in the table below
@@ -592,7 +581,7 @@ and our *chosen option is Alternative 1*
 | |Alternative 1 | Alternative 2
 |Design
 |Tags in group tag are added to the task by a separate command and remain visible in Task List
-|`addTagCommand` to be incoperated in `addCommand` directly. (i.e. users can add a group tag into a task via the existing `add` and `edit` command with `gt/GROUPTAG` as a parameter)
+|Users can add a group tag into a task via the existing `add` and `edit` command with `gt/GROUPTAG` as a parameter
 
 |Pros
 |Easy to implement
@@ -601,10 +590,6 @@ and our *chosen option is Alternative 1*
 |Cons
 |Might be confusing to users since tags are usually added via `add` or `edit` commands
 |Harder to implement, can be considered for future version in v2.0
-
-|Implementation Choice
-|*Implemented*
-|
 |===
 // end::addtag[]
 
