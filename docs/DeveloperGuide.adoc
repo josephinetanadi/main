@@ -1236,3 +1236,24 @@ _{ more test cases ... }_
 .. Test case: `addtag 1 gt/NonExistentTag` +
    Expected: No group tag will be applied to task and the Result box will display "Group tag NonExistentTag not found, please use definetag to add them first." error.
 .. Other incorrect export commands to try: `addtag`, `addtag x gt/Consultation` (where x is not a valid index)
+
+=== Completing a task
+
+. Adds `completed` tag to task
+
+.. Prerequisites:
+    * At least one task should exist in selected project
+    * Users should have already navigated to task level
+.. Test case: `completed 1` +
+   Expected: Task Box displays the updated task with a newly added `completed` tag.
+.. Test case: `completed` +
+   Expected: No `completed` tag is added to any task in Task Box. Results Box displays error message "The task index provided is invalid".
+.. Other incorrect completed commands to try: `completed 1 2`, `completed`, `completed x` (where x is not a valid index)
+
+=== Analysing projects
+
+. Displays number of completed tasks for each project, and percentage of each project completed
+
+.. Test case: `analyse` +
+   Expected: Results Box displays "<Name of project>: x tasks completed. (Percentage of project completed: yy.y%)", with the fields matching the details and statistics for each project.
+.. Note that the addition of parameters (e.g. `analyse 1`, `analyse -5` etc.) will automatically be ignored and still result in the correct execution of `analyse`.
