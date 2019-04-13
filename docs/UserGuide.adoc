@@ -249,6 +249,7 @@ Output path should be explicitly specified unless the output is to be within the
 Outcome: JSON file will be created at output path specified.
 // end::export[]
 
+// tag::analyse[]
 ==== Analyse progress of all projects: `analyse`
 View number of completed tasks for each project, and percentage of each project completed.
 
@@ -260,6 +261,7 @@ Outcome:
 image::AnalyseOutcome.png[width="600", title="Example Outcome for `analyse` command"]
 
 Results Box (Panel B) will display number of completed tasks for each project, and percentage of each project completed, as shown in the above figure.
+// end::analyse[]
 
 ==== List previously entered commands: `history`
 
@@ -378,6 +380,7 @@ Examples:
 
 Outcome: Task Box (Panel D) will no longer display the first task in the results of the `find` command.
 
+// tag::completed[]
 ==== Completing a task: `completed`
 
 Marks the specified task identified by the index number used in the displayed task list as completed by adding a `completed` tag to it.
@@ -398,6 +401,7 @@ Outcome:
 image::CompletedOutcome.png[width="600", title="Example Outcome for `completed` command"]
 
 Task Box (Panel D) will display a `completed` tag for the first task, as shown in the above figure.
+// end::completed[]
 
 ==== Selecting a task: `select`
 

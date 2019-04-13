@@ -60,9 +60,9 @@ image::CmdAlias.png[width="600", title="`completed` command (left) versus its sh
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=analyse]
-
 include::../UserGuide.adoc[tag=completed]
+
+include::../UserGuide.adoc[tag=analyse]
 
 == Contributions to the Developer Guide
 
