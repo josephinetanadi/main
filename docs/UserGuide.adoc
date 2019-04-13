@@ -161,9 +161,9 @@ After defining a group tag, use the addtag command to add a group tag to a task 
 
 Example:
 
-* `definetag gt/Consultation t/Prepare demo t/Prepare questions`
+* `definetag gt/Consultation t/PrepareDemo t/PrepareQuestions`
 
-Outcome: A group tag called Consultation will be created which would contain tags Prepare demo and Prepare questions.
+Outcome: A group tag called Consultation will be created which would contain tags PrepareDemo and PrepareQuestions.
 
 [NOTE]
 ====
