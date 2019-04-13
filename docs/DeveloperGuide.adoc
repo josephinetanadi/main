@@ -684,6 +684,8 @@ The following sequence diagram shows how the completed operation works:
 
 image::Completed.png[width="800", title="Sequence Diagram for `completed` Command"]]
 
+{blank} +
+ 
 Step 4. The user goes back to project level using `listproject`. `setProject` is invoked to sync `VersionedProject` with `VersionedProjectList`.
 
 Step 5. The user enters `analyse` to view statistics of all the projects.
@@ -1220,7 +1222,7 @@ _{ more test cases ... }_
    Expected: "Group tag created: name2" will be displayed at the Result box.
 .. Test case: `definetag gt/duplicatename t/differenttag` +
    Expected: No group tag will be created and the Result box will display "Group tag Consultation already exists in the group tag list" error.
-.. Other incorrect import commands to try: `definetag`
+.. Other incorrect define tag commands to try: `definetag`
 
 === Add tags
 
@@ -1235,7 +1237,7 @@ _{ more test cases ... }_
    Expected: Task box will show the updated task with newly added tags from the ExtraGroup group tag.
 .. Test case: `addtag 1 gt/NonExistentTag` +
    Expected: No group tag will be applied to task and the Result box will display "Group tag NonExistentTag not found, please use definetag to add them first." error.
-.. Other incorrect export commands to try: `addtag`, `addtag x gt/Consultation` (where x is not a valid index)
+.. Other incorrect add tag commands to try: `addtag`, `addtag x gt/Consultation` (where x is not a valid index)
 
 === Completing a task
 
