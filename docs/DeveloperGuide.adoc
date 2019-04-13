@@ -464,55 +464,148 @@ Step 2: Program retrieves an updated version of `Model#filteredTaskList()` via `
 
 // tag::listtag[]
 === List Tag feature
+The `listtag` feature allows users to list all unique tags and associated tasks within a project.
+It requires users to navigate to a project first with `select` command before executing the `listtag` command. Failure to do so would trigger an error message prompting users to do so.
+
 ==== Current Implementation
+Step 1. The user launches the application. `projectList` will be populated by invoking `StorageManager#readProjectList`.
 
-Step 1: User starts to list all tags and their relevant tasks by `listtag`. `ListTagCommand` retrieves result of `Model#filteredTaskList()` and iterate through all the tasks and obtain a list of unique tags within each project state.
+Step 2. The user selects a project. `setProject()` is invoked based on `Model#filteredProjectList`, and the tasks for that project are displayed via invoking `Model#filteredTaskList`.
 
-Step 2: Through this list of unique tags and another iteration through all tasks, task names with the same tags are concatenated to a string and displayed to `CommandResult`
+Step 3: User displays all tags and their associated tasks in the project by entering `listtag` and the following operations are carried out:
+
+* `ListTagCommand` calls `Model#getTagWithTaskList()` who in turns calls `Model#getUniqueTagList()`
+* `Model#getUniqueTagList()` makes use of the list of tasks obtained from `filteredTask` to iterate through all tasks and returns a list of unique tags within each project state
+* `Model#getTagWithTaskList()` uses a nested loop to iterate through this list of unique tags and the list of tasks to concatenate all tasks with the same tags into a string
+* This string is returned to `ListTagCommand` and displayed to `CommandResult`
+
+The following sequence diagram shows how the List Tag operation works:
+
+image::ListTagSequenceDiagram.png[width="900", title="Sequence Diagram for `listtag` Command"]
 
 ==== Design Considerations
+Two designs was considered for the implementation of `listtag`. The pros and cons of the designs are listed in the table below
+and our *chosen option is Alternative 1*
+|===
+| |Alternative 1 | Alternative 2
+|Design
+|Seperate parsing and cleaning of `filteredTask` to obtain the string of tags with their associated task to be done at `Model`
+|Parsing and cleaning of `filteredTask` to obtain the string of tags with their associated task to be done directly at `ListTagCommand`
 
-* **Alternative 1 (current choice):** `getFilteredTaskList` to retrieve relevant information.
-** Pros: Easy to implement.
-** Cons: Data from `getFilteredTaskList` have to be parsed and clean all in one file.
-* **Alternative 2:** Cleaning of data to be done at their respective/relevant class files.
-** Pros: Will not clutter `ListTagCommand` file.
+|Pros
+|Functions are reusable since they are located `Model`
+|Easy to implement.
+
+|Cons
+|A large `Model` might result in a slow system performance.
+|`ListTagCommand` will be cluttered and many of its functions will not be reusable.
+
+|Implementation Choice
+|*Implemented*
+
+This option allows for other commands such as `ListTagCommandTest` to make use of the same function without rewriting the same logic.
+|
+|===
 // end::listtag[]
 
 // tag::definetag[]
 === Define Tag feature
+The `definetag` feature allows users to create a group tag and add multiple child tags into it. It should be used in conjunction with `addtag` feature.
+
 ==== Current Implementation
+`definetag` feature can be used on both `project` and `task` level. Duplicated group tags created from `definetag` command are not allowed.
 
-The `definetag` feature allows users to create a group tag and add multiple child tags into it. It should be used in conjuction with `addtag` feature.
+Step 1. The user launches the application. `projectList` will be populated by invoking `StorageManager#readProjectList`.
 
-Step 1: User creates new group tag and its associated children tag with `definetag`. `DefineTagCommandParser` create a new `GroupTag` object that contains the group tag’s name and its associated tags and return them to `DefineTagCommand`.
+Step 2: User creates a new group tag and its associated child tags with `definetag`.
 
-Step 2: `DefineTagCommand` checks if GroupTag is unique via `Model#hasGroupTag` and adds the object to the model with `Model#addGroupTag` and `Model#commitProjectList` if it is.
+Step 3: `DefineTagCommandParser` create a new `GroupTag` object from the user's input. The object contains the group tag’s name and its associated tags and are return to `DefineTagCommand`.
+
+Step 4: `DefineTagCommand` checks if the returned `GroupTag` is unique via `Model#hasGroupTag()` and adds the object to the model with `Model#addGroupTag()` and `Model#commitProjectList` if it is.
+
+The following sequence diagram shows how the Define Tag operation works:
+
+image::DefineTagSequenceDiagram.png[width="900", title="Sequence Diagram for `definetag` Command"]
 
 ==== Design Considerations
+Two designs was considered for the implementation of `definetag`. The pros and cons of the designs are listed in the table below and our *chosen option is Alternative 1*
+|===
+| |Alternative 1 | Alternative 2
+|Design
+|Redefine group tag and its associated child tags every instances of `NoteNote`.
+|Saves the group tags and its associated child tags created via `DefineTagCommand` into storage
 
-* **Alternative 1 (current choice):** Results of define tag is not stored.
-** Pros: Easy to implement.
-** Cons: Created group tag is lost once the NoteNote instance is restarted.
-* **Alternative 2:** Storing results of define tag.
-** Pros: Created group tag can be used between all instances of NoteNote.
-** Cons: Harder to implement.
+|Pros
+|Easy to implement
+|Better user experience since group tags established in previous instances of `NoteNote` can still be reused.
+
+|Cons
+|All group tags created in `DefineTagCommand` will be lost once the instance of `NoteNote` is closed.
+|Harder to implement, can be considered for future version in v2.0
+
+|Implementation Choice
+|*Implemented*
+|
+|===
 // end::definetag[]
 
 // tag::addtag[]
 === Add Tag feature
+The `addtag` feature allows users to apply existing group tag to multiple tasks. It should be used in conjunction with `definetag` feature. It requires users to do the following:
+
+* Navigate to a project first with `select` command before executing the `addtag` command
+* Add only an existing group tag defined previously at `definetag`
+
+Failure to do any of the above would trigger an error message prompting users to do so.
+
 ==== Current Implementation
+The `addTag` feature obtains the target task from `FilteredTaskList` based on the task index given by the user. It then adds the child tags associated to the group tag defined previously at `definetag` into the task.
 
-The `addtag` feature allows users to apply existing group tag to multiple tasks. It should be used in conjuction with `definetag` feature.
+Additionally, it implements the following operations:
 
-Step 1: User selects task index and its favoured group tag with `addtag`. `AddTagCommandParser` parses the arguements and return them `AddTagCommand#AddTagCommand()`
+* `VersionedProject#commit()` — Saves the current project state in its history
+* `VersionedProjectList#commit()` — Saves the current project list state in its history
 
-Step 2: `AddTagCommand` gets a updated task list with `Model#getFilteredTaskList()` and iterate to add tags in the `GroupTag` object to chosen task.
+These operations are exposed in the Model interface as `Model#commitProject()` and `Model#commitProjectList()` respectively.
+
+Step 1. The user launches the application. `projectList` will be populated by invoking `StorageManager#readProjectList`.
+
+Step 2. The user selects a project. `setProject()` is invoked based on `Model#filteredProjectList`, and the tasks for that project are displayed via invoking `Model#filteredTaskList`.
+
+Step 3: User applies the group tag and its associated child tags in the selected task by entering `addtag`. The following operations are carried out:
+
+* `AddTagCommandParser` parses the arguments and return them `AddTagCommand#AddTagCommand()`
+* `lastShownList` of all tasks in the current project is obtained from `Model` using `getFilteredTaskList()`
+* Two identical tasks, `targetTask` and `taskToAdd` are created based on `lastShownList` using the index from user's input.
+* `AddTagCommand` will then call `Model#getGroupTagList` which returns a list of all group tags. Names from the list of group tags will be iterated and checked if it matches the name given by user's input.
+* Tags in the group tag will be added `taskToAdd` if the checks passes.
+
+The following sequence diagram shows how the Add Tag operation works:
+
+image::AddTagSequenceDiagram.png[width="900", title="Sequence Diagram for `addtag` Command"]
+
 
 ==== Design Considerations
+Two designs was considered for the implementation of `definetag`. The pros and cons of the designs are listed in the table below
+and our *chosen option is Alternative 1*
+|===
+| |Alternative 1 | Alternative 2
+|Design
+|Tags in group tag are added to the task by a separate command and remain visible in Task List
+|`addTagCommand` to be incoperated in `addCommand` directly. (i.e. users can add a group tag into a task via the existing `add` and `edit` command with `gt/GROUPTAG` as a parameter)
 
-* **Alternative 1 (current choice):** Results is stored.
-** Pros: Easy to implement.
+|Pros
+|Easy to implement
+|Better user experience by utilizing existing command that users are already familiar with.
+
+|Cons
+|Might be confusing to users since tags are usually added via `add` or `edit` commands
+|Harder to implement, can be considered for future version in v2.0
+
+|Implementation Choice
+|*Implemented*
+|
+|===
 // end::addtag[]
 
 // tag::taskhistory[]
