@@ -14,7 +14,7 @@
 Other than keeping track of your projects and tasks, NoteNote also allows you to analyze your productivity, categorize your tasks, share tasks with you friends and many more.
 
 .Application Layout
-image::applayoutclean.png[width="800"]
+image::DemoLayout.png[width="800"]
 
 == Summary of contributions
 My contributions to NoteNote consists of the implementation of the `import` and `export` feature and
